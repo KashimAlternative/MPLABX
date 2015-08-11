@@ -1,7 +1,5 @@
 // ----------------------------------------------------------------
 // AQM0802
-// Revision 2015/03/15
-//
 // ----------------------------------------------------------------
 // Description
 //
@@ -14,6 +12,7 @@
 //#  define WaitFlag()
 //#  define ClearFlag()
 //#  define IsError()
+//#  define AQM0802_USE_RETURN_CODE
 
 #ifndef AQM0802_H
 #  define	AQM0802_H
@@ -22,30 +21,29 @@
 
 #  define I2C_ADDRESS 0x7c
 
-//#  define RETURN_ERROR_CODE
 
 #  define ROW_SELECT_0 0x80
 #  define ROW_SELECT_1 0xC0
 
-const uint08 ROW_SELECT[] = {
+const uint08_t ROW_SELECT[] = {
   ROW_SELECT_0 ,
   ROW_SELECT_1 ,
 } ;
 
 // ----------------------------------------------------------------
 // [Prototypes]
-uint08 _private_aqm0802_SendData( uint08 controlByte , uint08 dataByte ) ;
+PRIVATE uint08_t _private_aqm0802_SendData( uint08_t controlByte , uint08_t dataByte ) ;
 
 // ----------------------------------------------------------------
 // [Function] Send String
-uint08 _aqm0802_SendString( uint08 position , char* stringPtr ) {
-#  ifdef RETURN_ERROR_CODE
+uint08_t _aqm0802_SendString( uint08_t position , const char* stringPtr ) {
+#  ifdef AQM0802_USE_RETURN_CODE
 
-  uint08 errorCode = 0x00 ;
+  uint08_t errorCode = 0x00 ;
 
   if ( errorCode = _private_aqm0802_SendData( 0x00 , position ) ) return errorCode ;
 
-  uint08 i = 1 ;
+  uint08_t i = 1 ;
   while ( *stringPtr ) {
     if ( errorCode = _private_aqm0802_SendData( 0x40 , *stringPtr ) ) return (errorCode | ( i << 4 ) ) ;
     stringPtr++ ;
@@ -69,17 +67,17 @@ uint08 _aqm0802_SendString( uint08 position , char* stringPtr ) {
 
 // ----------------------------------------------------------------
 // [Function] Send String Clearing
-uint08 _aqm0802_SendStringClearing( uint08 position , char* stringPtr ) {
+uint08_t _aqm0802_SendStringClearing( uint08_t position ,const char* stringPtr ) {
 
-  uint08 col = 0 ;
+  uint08_t col = 0 ;
 
-#  ifdef RETURN_ERROR_CODE
+#  ifdef AQM0802_USE_RETURN_CODE
 
-  uint08 errorCode = 0x00 ;
+  uint08_t errorCode = 0x00 ;
 
   if ( errorCode = _private_aqm0802_SendData( 0x00 , position & 0xF0 ) ) return errorCode ;
 
-  uint08 i = 1 ;
+  uint08_t i = 1 ;
   while ( col != 16 ) {
     if ( col++ >= ( position & 0x0F ) && ( *stringPtr ) ) {
       if ( errorCode = _private_aqm0802_SendData( 0x40 , *stringPtr ) ) return (errorCode | ( i << 4 ) ) ;
@@ -112,10 +110,10 @@ uint08 _aqm0802_SendStringClearing( uint08 position , char* stringPtr ) {
 
 // ----------------------------------------------------------------
 // [Function] Send Character
-uint08 _aqm0802_SendCharacter( uint08 position , char character ) {
-#  ifdef RETURN_ERROR_CODE
+uint08_t _aqm0802_SendCharacter( uint08_t position , char character ) {
+#  ifdef AQM0802_USE_RETURN_CODE
 
-  uint08 errorCode = 0x00 ;
+  uint08_t errorCode = 0x00 ;
 
   if ( errorCode = _private_aqm0802_SendData( 0x00 , position ) ) return errorCode ;
   if ( errorCode = _private_aqm0802_SendData( 0x40 , character ) ) return errorCode ;
@@ -135,13 +133,13 @@ uint08 _aqm0802_SendCharacter( uint08 position , char character ) {
 
 // ----------------------------------------------------------------
 // [Function] ClearRow
-uint08 _aqm0802_ClearRow( uint08 rowSelect ) {
-#  ifdef RETURN_ERROR_CODE
+uint08_t _aqm0802_ClearRow( uint08_t rowSelect ) {
+#  ifdef AQM0802_USE_RETURN_CODE
 
-  uint08 errorCode = 0x00 ;
+  uint08_t errorCode = 0x00 ;
   if ( errorCode = _private_aqm0802_SendData( 0x00 , rowSelect & 0xF0 ) ) return errorCode ;
 
-  uint08 count = 0 ;
+  uint08_t count = 0 ;
   while ( count++ != 16 )
     if ( errorCode = _private_aqm0802_SendData( 0x40 , ' ' ) ) return (errorCode | ( count << 4 ) ) ;
 
@@ -149,7 +147,7 @@ uint08 _aqm0802_ClearRow( uint08 rowSelect ) {
 
   _private_aqm0802_SendData( 0x00 , rowSelect & 0xF0 ) ;
 
-  uint08 count = 0 ;
+  uint08_t count = 0 ;
   while ( count++ != 16 )
     _private_aqm0802_SendData( 0x40 , ' ' ) ;
 
@@ -160,13 +158,13 @@ uint08 _aqm0802_ClearRow( uint08 rowSelect ) {
 
 // ----------------------------------------------------------------
 // [Function] Initialize
-uint08 _aqm0802_Initialize( ) {
+uint08_t _aqm0802_Initialize( ) {
 
-#  ifdef RETURN_ERROR_CODE
-  uint08 errorCode = 0x00 ;
+#  ifdef AQM0802_USE_RETURN_CODE
+  uint08_t errorCode = 0x00 ;
 #  endif
 
-#  ifdef RETURN_ERROR_CODE
+#  ifdef AQM0802_USE_RETURN_CODE
   if ( errorCode = _private_aqm0802_SendData( 0x00 , 0x39 ) ) return errorCode | 0x10 ;
   if ( errorCode = _private_aqm0802_SendData( 0x00 , 0x14 ) ) return errorCode | 0x20 ;
   if ( errorCode = _private_aqm0802_SendData( 0x00 , 0x70 ) ) return errorCode | 0x30 ;
@@ -182,7 +180,7 @@ uint08 _aqm0802_Initialize( ) {
 
   __delay_ms( 200 ) ;
 
-#  ifdef RETURN_ERROR_CODE
+#  ifdef AQM0802_USE_RETURN_CODE
   if ( errorCode = _private_aqm0802_SendData( 0x00 , 0x38 ) ) return errorCode | 0x60 ;
   if ( errorCode = _private_aqm0802_SendData( 0x00 , 0x0C ) ) return errorCode | 0x70 ;
 #  else
@@ -196,10 +194,10 @@ uint08 _aqm0802_Initialize( ) {
 
 // ----------------------------------------------------------------
 // [Function] Clear
-uint08 _aqm0802_Clear( ) {
+uint08_t _aqm0802_Clear( ) {
 
-#  ifdef RETURN_ERROR_CODE
-  uint08 errorCode = 0x00 ;
+#  ifdef AQM0802_USE_RETURN_CODE
+  uint08_t errorCode = 0x00 ;
   if ( errorCode = _private_aqm0802_SendData( 0x00 , 0x01 ) ) return errorCode ;
 #  else
   _private_aqm0802_SendData( 0x00 , 0x01 ) ;
@@ -212,21 +210,21 @@ uint08 _aqm0802_Clear( ) {
 
 // ----------------------------------------------------------------
 // [Function] Set CGRAM
-uint08 _aqm0802_SetCgram( char charCode , uint08 data[] ) {
-#  ifdef RETURN_ERROR_CODE
+uint08_t _aqm0802_SetCgram( char charCode , uint08_t data[] ) {
+#  ifdef AQM0802_USE_RETURN_CODE
 
-  uint08 errorCode = 0x00 ;
+  uint08_t errorCode = 0x00 ;
 
   if ( errorCode = _private_aqm0802_SendData( 0x00 , ( ( charCode << 3 ) & 0b00111111 ) | 0b01000000 ) ) return errorCode ;
 
-  for ( uint08 i = 0 ; i < 8 ; i++ )
+  for ( uint08_t i = 0 ; i < 8 ; i++ )
     if ( errorCode = _private_aqm0802_SendData( 0x40 , data[i] ) ) return (errorCode | ( i << 4 ) ) ;
 
 #  else
 
   _private_aqm0802_SendData( 0x00 , ( ( charCode << 3 ) & 0b00111111 ) | 0b01000000 ) ;
 
-  for ( uint08 i = 0 ; i < 8 ; i++ )
+  for ( uint08_t i = 0 ; i < 8 ; i++ )
     _private_aqm0802_SendData( 0x40 , data[i] ) ;
 
 #  endif
@@ -236,16 +234,16 @@ uint08 _aqm0802_SetCgram( char charCode , uint08 data[] ) {
 
 // ----------------------------------------------------------------
 // [Function] SendData
-uint08 _private_aqm0802_SendData( uint08 controlByte , uint08 dataByte ) {
+PRIVATE uint08_t _private_aqm0802_SendData( uint08_t controlByte , uint08_t dataByte ) {
 
   WaitTimer( ) ;
 
   EnableStartBit( ) ;
   ClearFlag( ) ;
 
-#  ifdef RETURN_ERROR_CODE
+#  ifdef AQM0802_USE_RETURN_CODE
 
-  uint08 errorCode = 0x00 ;
+  uint08_t errorCode = 0x00 ;
 
   // Send Address
   if ( !errorCode ) {
@@ -287,7 +285,7 @@ uint08 _private_aqm0802_SendData( uint08 controlByte , uint08 dataByte ) {
   EnableStopBit( ) ;
   ResetTimer( ) ;
 
-#  ifdef RETURN_ERROR_CODE
+#  ifdef AQM0802_USE_RETURN_CODE
   return errorCode ;
 #  else
   return 0x00 ;

@@ -1,6 +1,5 @@
 // ----------------------------------------------------------------
 // Type Def
-// Revision 2015/03/04
 
 #ifndef TYPEDEF_H
 #  define TYPEDEF_H
@@ -10,32 +9,30 @@
 #  define NULL 0
 
 // ----------------------------------------------------------------
+// [Define] Private
+#define PRIVATE static
+
+// ----------------------------------------------------------------
 // [Type-Def] Bool
 typedef enum {
   BOOL_FALSE = 0 ,
   BOOL_TRUE = 1 ,
-} Bool ;
-
-// ----------------------------------------------------------------
-// [Type-Def] Bit
-typedef enum {
-  BIT_CLEAR = 0 ,
-  BIT_SET = 1 ,
-} Bit ;
+} EnBool ;
+typedef EnBool Bool_t;
 
 // ----------------------------------------------------------------
 // [Type-Def] Unsigned Integer
-typedef unsigned char uint08 ;
-typedef unsigned int uint16 ;
-typedef unsigned short long uint24 ;
-typedef unsigned long uint32 ;
+typedef unsigned char uint08_t ;
+typedef unsigned int uint16_t ;
+typedef unsigned short long uint24_t ;
+typedef unsigned long uint32_t ;
 
 // ----------------------------------------------------------------
 // [Type-Def] Signed Integer
-typedef signed char sint08 ;
-typedef signed int sint16 ;
-typedef signed short long uint24 ;
-typedef signed long sint32 ;
+typedef signed char sint08_t ;
+typedef signed int sint16_t ;
+typedef signed short long sint24_t ;
+typedef signed long sint32_t ;
 
 #endif	/* TYPEDEF_H */
 

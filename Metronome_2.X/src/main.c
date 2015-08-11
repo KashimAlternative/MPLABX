@@ -90,8 +90,8 @@ typedef enum {
   STATE_ERROR ,
 } MachineState ;
 MachineState machineState_ = STATE_BOOT ;
-uint08 stateReturnCounter_ = 0 ;
-uint08 isMute_ ;
+uint08_t stateReturnCounter_ = 0 ;
+uint08_t isMute_ ;
 
 // ----------------------------------------------------------------
 // Metronome Counter
@@ -100,53 +100,41 @@ uint08 isMute_ ;
 #if TOTAL_TEMOPO_COUNT > 0xFFFFFF
 #  error [ERROR] Too Large Tempo Count !!
 #endif
-static uint24 tempoCounter_ = 0 ;
-static uint08 beatCounter_ = 0 ;
-static uint08 duration_ = 0 ;
+static uint24_t tempoCounter_ = 0 ;
+static uint08_t beatCounter_ = 0 ;
+static uint08_t duration_ = 0 ;
 
 // ----------------------------------------------------------------
 // Keys
 typedef union {
-  uint08 all ;
+  uint08_t all ;
   struct {
-    uint08 _ : 5 ;
-    uint08 keyMenu : 1 ;
-    uint08 keyDown : 1 ;
-    uint08 keyUp : 1 ;
+    unsigned : 5 ;
+    unsigned keyMenu : 1 ;
+    unsigned keyDown : 1 ;
+    unsigned keyUp : 1 ;
   } ;
 } UniPortAState ;
 #define ReadKeyState() (~PORTA&0xE0)
 UniPortAState portAState_ = { 0x00 } ;
-uint08 keyBeepCounter_ = 0 ;
+uint08_t keyBeepCounter_ = 0 ;
 #define KEY_BEEP_DURATION 0x20
 
 // ----------------------------------------------------------------
 // Key Count
 #define KEY_COUNT_LOOP_START 0x3C
 #define KEY_COUNT_LOOP_END 0x40
-union {
-  uint32 all ;
-  struct {
-    uint08 Up ;
-    uint08 UpDown ;
-    uint08 Down ;
-    uint08 Mode ;
-  } ;
-  struct {
-    uint16 exceptDown ;
-  } ;
-  struct {
-    uint08 ;
-    uint16 exceptUp ;
-  } ;
+struct {
+  uint08_t Up ;
+  uint08_t Down ;
 } keyCount_ = 0 ;
 
 // ----------------------------------------------------------------
 // Menu State
 typedef struct {
-  uint08 select ;
-  uint08 cursorPosition ;
-  const uint08 limit ;
+  uint08_t select ;
+  uint08_t cursorPosition ;
+  const uint08_t limit ;
   const char** menuMessage ;
 } MenuState ;
 MenuState menuStateMain_ = { 0 , 0 , MENU_SIZE_MAIN - 1 , &MESSAGE_MENU_ITEM_MAIN } ;
@@ -161,10 +149,10 @@ ConfigurationData configration_ = CONFIG_DEFAULT ;
 
 // ----------------------------------------------------------------
 // Value
-uint08* currentValuePtr ;
+uint08_t* currentValuePtr ;
 struct {
-  uint08 upper ;
-  uint08 lower ;
+  uint08_t upper ;
+  uint08_t lower ;
 } valueLimit_ ;
 
 // ----------------------------------------------------------------
@@ -173,27 +161,27 @@ struct {
 #define SetEvent( event )   event = 1
 #define EvalEvent( event )  (event&&!(event=0))
 union {
-  uint08 all ;
+  uint08_t all ;
   struct {
-    uint08 keyPressUp : 1 ;
-    uint08 keyPressDown : 1 ;
-    uint08 keyPressMenu : 1 ;
-    uint08 keyPressUpDown : 1 ;
-    uint08 keyPressHeldUp : 1 ;
-    uint08 keyPressHeldDown : 1 ;
+    unsigned keyPressUp : 1 ;
+    unsigned keyPressDown : 1 ;
+    unsigned keyPressMenu : 1 ;
+    unsigned keyPressUpDown : 1 ;
+    unsigned keyPressHeldUp : 1 ;
+    unsigned keyPressHeldDown : 1 ;
   } ;
 } inputEvent_ ;
 union {
-  uint08 all ;
+  uint08_t all ;
   struct {
-    uint08 changeState : 1 ;
-    uint08 changeMessage : 1 ;
-    uint08 changeValue : 1 ;
-    uint08 resetMetronome : 1 ;
-    uint08 soundClickOn : 1 ;
-    uint08 soundOn : 1 ;
-    uint08 soundOff : 1 ;
-    uint08 accessEeprom : 1 ;
+    unsigned changeState : 1 ;
+    unsigned changeMessage : 1 ;
+    unsigned changeValue : 1 ;
+    unsigned resetMetronome : 1 ;
+    unsigned soundClickOn : 1 ;
+    unsigned soundOn : 1 ;
+    unsigned soundOff : 1 ;
+    unsigned accessEeprom : 1 ;
   } ;
 } outputEvent_ ;
 
@@ -211,11 +199,10 @@ void main( void ) {
   initialize( ) ;
 
   // Read or Write Configuration from EEPROM
-  if( ( ReadKeyState( ) & 0xE0 ) == 0xC0 )
+  if( ReadKeyState( ) == 0xC0 )
     machineState_ = STATE_INITIALIZE ;
   else
     machineState_ = STATE_BOOT ;
-
   SetEvent( outputEvent_.accessEeprom ) ;
 
   // Boot Beep
@@ -229,7 +216,7 @@ void main( void ) {
   T1CONbits.TMR1ON = 1 ;
 
   // Execute Boot Sequence
-  for( uint08 phase = 0 ; phase < 0xE ; phase++ ) {
+  for( uint08_t phase = 0 ; phase < 0xE ; phase++ ) {
 
     CLRWDT( ) ;
 
@@ -251,7 +238,7 @@ void main( void ) {
       case 0x3:
         // Read User ID
       {
-        uint08 userId ;
+        uint08_t userId ;
         userId = _configuration_ReadByte( 0 , MEMORY_SELECT_CONFIGURATION ) ;
         informationValueBuffer[ INFORMATION_ITEM_VERSION ][1] = ( ( userId >> 4 ) | '0' ) ;
         informationValueBuffer[ INFORMATION_ITEM_VERSION ][2] = ( ( userId & 0x0F ) | '0' ) ;
@@ -369,7 +356,7 @@ void main( void ) {
       }
       SetEvent( outputEvent_.resetMetronome ) ;
 
-      uint08 romOffset = _configuration_GetRomOffset( ) ;
+      uint08_t romOffset = _configuration_GetRomOffset( ) ;
       informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][3] = HEX_TABLE[ romOffset >> 4 ] ;
       informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][4] = HEX_TABLE[ romOffset & 0x0F ] ;
       informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][3] = HEX_TABLE[ configration_.writeCount >> 4 ] ;
@@ -387,7 +374,7 @@ void main( void ) {
     // Both Up & Donw ----------------
     if( EvalEvent( inputEvent_.keyPressUpDown ) ) {
       if( machineState_ == STATE_METRONOME ) {
-        Toggle( isMute_ ) ;
+        ToggleBool( isMute_ ) ;
         SetEvent( outputEvent_.changeMessage ) ;
       }
     }
@@ -446,19 +433,31 @@ void main( void ) {
           break ;
 
         case STATE_MENU_TONE:
-          machineState_ = ( menuStateTone_.select == MENU_ITEM_TONE_RETURN ) ? STATE_MENU_MAIN : STATE_ADJUST_TONE ;
+          if( menuStateTone_.select == MENU_ITEM_TONE_RETURN )
+            machineState_ = STATE_MENU_MAIN ;
+          else
+            machineState_ = STATE_ADJUST_TONE ;
           break ;
 
         case STATE_CONFIRM_LOAD:
-          machineState_ = menuStateConfirm_.select ? STATE_LOAD : STATE_MENU_MAIN ;
+          if( menuStateConfirm_.select )
+            machineState_ = STATE_LOAD ;
+          else
+            machineState_ = STATE_MENU_MAIN ;
           break ;
 
         case STATE_CONFIRM_SAVE:
-          machineState_ = menuStateConfirm_.select ? STATE_SAVE : STATE_MENU_MAIN ;
+          if( menuStateConfirm_.select )
+            machineState_ = STATE_SAVE ;
+          else
+            machineState_ = STATE_MENU_MAIN ;
           break ;
 
         case STATE_CONFIRM_RESET:
-          machineState_ = menuStateConfirm_.select ? STATE_RESET : STATE_MENU_MAIN ;
+          if( menuStateConfirm_.select )
+            machineState_ = STATE_RESET ;
+          else
+            machineState_ = STATE_MENU_MAIN ;
           break ;
 
         case STATE_METRONOME:
@@ -542,9 +541,9 @@ void main( void ) {
 
         case STATE_ADJUST_OSCILLATOR_TUNE:
           SetEvent( outputEvent_.changeValue ) ;
-          currentValuePtr = ( uint08* ) & configration_.oscillatorTune ;
-          valueLimit_.upper = (uint08)30 ;
-          valueLimit_.lower = ( uint08 ) - 30 ;
+          currentValuePtr = ( uint08_t* ) & configration_.oscillatorTune ;
+          valueLimit_.upper = (uint08_t)30 ;
+          valueLimit_.lower = (uint08_t)( -30 ) ;
           SetEvent( outputEvent_.soundOn ) ;
           break ;
 
@@ -682,21 +681,19 @@ void main( void ) {
         break ;
 
       default:
-        if( EvalEvent( outputEvent_.soundClickOn ) ) {
-          if( !isMute_ ) {
-            if( beatCounter_ == 0 )
-              SetSoundTimerPeriod( configration_.tone[ 1 ] ) ;
-            else if( beatCounter_ == configration_.beatCount )
-              SetSoundTimerPeriod( configration_.tone[ 2 ] ) ;
-            else
-              SetSoundTimerPeriod( configration_.tone[ 0 ] ) ;
+        if( EvalEvent( outputEvent_.soundClickOn ) && !isMute_ ) {
+          if( beatCounter_ == 0 )
+            SetSoundTimerPeriod( configration_.tone[ 1 ] ) ;
+          else if( beatCounter_ == configration_.beatCount )
+            SetSoundTimerPeriod( configration_.tone[ 2 ] ) ;
+          else
+            SetSoundTimerPeriod( configration_.tone[ 0 ] ) ;
 
-            SetSoundPulseWidth( configration_.pulseWidth ) ;
-            SoundOn( ) ;
-          }
+          SetSoundPulseWidth( configration_.pulseWidth ) ;
+          SoundOn( ) ;
         }
-
         break ;
+
     }
 
     // Sound Off ----------------
@@ -836,7 +833,7 @@ void main( void ) {
     // Display Value ----------------
     if( EvalEvent( outputEvent_.changeValue ) ) {
 
-      uint16 tmpValue ;
+      uint16_t tmpValue ;
       char valueString[6] = "= 000" ;
 
       switch( machineState_ ) {
@@ -846,12 +843,12 @@ void main( void ) {
           break ;
 
         case STATE_ADJUST_OSCILLATOR_TUNE:
-          if( (uint08)configration_.oscillatorTune & 0x80 ) {
+          if( (uint08_t)configration_.oscillatorTune & 0x80 ) {
             tmpValue = -configration_.oscillatorTune ;
             valueString[1] = '-' ;
           }
           else {
-            tmpValue = (uint16)configration_.oscillatorTune ;
+            tmpValue = (uint16_t)configration_.oscillatorTune ;
           }
           break ;
 
@@ -860,9 +857,9 @@ void main( void ) {
           break ;
       }
 
-      uint08 isNonZero = BOOL_FALSE ;
-      for( uint08 i = 2 ; i != 5 ; i++ ) {
-        uint08 compareUnit ;
+      uint08_t isNonZero = BOOL_FALSE ;
+      for( uint08_t i = 2 ; i != 5 ; i++ ) {
+        uint08_t compareUnit ;
         switch( i ) {
           case 2: compareUnit = 100 ;
             break ;
@@ -913,7 +910,7 @@ void interrupt isr( void ) {
   if( !ISR_FLAG ) return ;
   ISR_FLAG = 0 ;
 
-  static uint16 eventPrescaler = 0 ;
+  static uint16_t eventPrescaler = 0 ;
 
   // Metronome Count ----------------
   tempoCounter_ += configration_.tempo ;

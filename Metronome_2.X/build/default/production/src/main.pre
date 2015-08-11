@@ -3828,35 +3828,29 @@ TRISB = 0b00000000 ;
 
 }
 
-# 14 "src/../../_Common/typedef.h"
+# 17 "src/../../_Common/typedef.h"
 typedef enum {
 BOOL_FALSE = 0 ,
 BOOL_TRUE = 1 ,
-} Bool ;
+} EnBool ;
+typedef EnBool Bool_t;
 
 
 
-typedef enum {
-BIT_CLEAR = 0 ,
-BIT_SET = 1 ,
-} Bit ;
+typedef unsigned char uint08_t ;
+typedef unsigned int uint16_t ;
+typedef unsigned short long uint24_t ;
+typedef unsigned long uint32_t ;
 
 
 
-typedef unsigned char uint08 ;
-typedef unsigned int uint16 ;
-typedef unsigned short long uint24 ;
-typedef unsigned long uint32 ;
+typedef signed char sint08_t ;
+typedef signed int sint16_t ;
+typedef signed short long sint24_t ;
+typedef signed long sint32_t ;
 
-
-
-typedef signed char sint08 ;
-typedef signed int sint16 ;
-typedef signed short long uint24 ;
-typedef signed long sint32 ;
-
-# 33 "src/../../_Common/parallel_LCD.h"
-const uint08 PARALLEL_LCD_ROW_SELECT[] = {
+# 32 "src/../../_Common/parallel_LCD.h"
+const uint08_t PARALLEL_LCD_ROW_SELECT[] = {
 0x80 ,
 0xC0 ,
 } ;
@@ -3867,7 +3861,7 @@ const char HEX_TABLE[] = { '0' , '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' ,
 
 
 
-void _private_parallel_lcd_WriteByte( uint08 data , uint08 r ) ;
+void _private_parallel_lcd_WriteByte( uint08_t data , uint08_t r ) ;
 
 
 
@@ -3880,14 +3874,14 @@ _private_parallel_lcd_WriteByte( 0x04 | 0x02 | 0x00 , 0 ) ;
 
 
 
-void _parallel_lcd_WriteCharacter( uint08 position , char character ) {
+void _parallel_lcd_WriteCharacter( uint08_t position , char character ) {
 _private_parallel_lcd_WriteByte( position , 0 ) ;
 _private_parallel_lcd_WriteByte( character , 1 ) ;
 }
 
 
 
-void _parallel_lcd_WriteString( uint08 position , const char* stringPtr ) {
+void _parallel_lcd_WriteString( uint08_t position , const char* stringPtr ) {
 _private_parallel_lcd_WriteByte( position , 0 ) ;
 while ( *stringPtr ) {
 _private_parallel_lcd_WriteByte( *stringPtr++ , 1 ) ;
@@ -3896,9 +3890,9 @@ _private_parallel_lcd_WriteByte( *stringPtr++ , 1 ) ;
 
 
 
-void _parallel_lcd_WriteStringClearing( uint08 position , const char* stringPtr ) {
+void _parallel_lcd_WriteStringClearing( uint08_t position , const char* stringPtr ) {
 _private_parallel_lcd_WriteByte( position & 0xF0 , 0 ) ;
-for ( uint08 i = 0 ; i != 16 ; i++ ) {
+for ( uint08_t i = 0 ; i != 16 ; i++ ) {
 if ( i >= ( position & 0x0F ) && ( *stringPtr ) )
 _private_parallel_lcd_WriteByte( *stringPtr++ , 1 ) ;
 else
@@ -3909,7 +3903,7 @@ _private_parallel_lcd_WriteByte( ' ' , 1 ) ;
 
 
 
-void _parallel_lcd_WriteHexNumber( uint08 position , uint08 number ) {
+void _parallel_lcd_WriteHexNumber( uint08_t position , uint08_t number ) {
 _private_parallel_lcd_WriteByte( position , 0 ) ;
 _private_parallel_lcd_WriteByte( HEX_TABLE[ number >> 4 ] , 1 ) ;
 _private_parallel_lcd_WriteByte( HEX_TABLE[ number & 0x0F ] , 1 ) ;
@@ -3917,17 +3911,17 @@ _private_parallel_lcd_WriteByte( HEX_TABLE[ number & 0x0F ] , 1 ) ;
 
 
 
-void _parallel_lcd_ClearRow( uint08 rowSelect ) {
+void _parallel_lcd_ClearRow( uint08_t rowSelect ) {
 _private_parallel_lcd_WriteByte( rowSelect & 0xF0 , 0 ) ;
-for ( uint08 i = 0 ; i != 16 ; i++ )
+for ( uint08_t i = 0 ; i != 16 ; i++ )
 _private_parallel_lcd_WriteByte( ' ' , 1 ) ;
 }
 
 
 
-void _parallel_lcd_ClearPartial( uint08 position , uint08 length ) {
+void _parallel_lcd_ClearPartial( uint08_t position , uint08_t length ) {
 _private_parallel_lcd_WriteByte( position , 0 ) ;
-for ( uint08 i = 0 ; i != length ; i++ )
+for ( uint08_t i = 0 ; i != length ; i++ )
 _private_parallel_lcd_WriteByte( ' ' , 1 ) ;
 }
 
@@ -3935,12 +3929,12 @@ _private_parallel_lcd_WriteByte( ' ' , 1 ) ;
 
 void _parallel_lcd_SetCgram( char charCode , const char* bitmap ) {
 _private_parallel_lcd_WriteByte( ( ( charCode << 3 ) & 0b00111111 ) | 0b01000000 , 0 ) ;
-for ( uint08 i = 0 ; i != 8 ; i++ , bitmap++ )
+for ( uint08_t i = 0 ; i != 8 ; i++ , bitmap++ )
 _private_parallel_lcd_WriteByte( *bitmap , 1 ) ;
 }
 
-# 131
-void _private_parallel_lcd_WriteByte( uint08 data , uint08 r ) {
+# 130
+void _private_parallel_lcd_WriteByte( uint08_t data , uint08_t r ) {
 {while(!PIR3bits.TMR4IF);} ;
 {LATB=data;} ;
 {if(r)LATAbits.LATA1=1;else LATAbits.LATA1=0;} ;
@@ -3950,14 +3944,14 @@ void _private_parallel_lcd_WriteByte( uint08 data , uint08 r ) {
 
 # 28 "src/configuration.h"
 typedef struct {
-uint08 writeCount ;
-uint16 tempo ;
-uint08 beatCount ;
-uint08 duration ;
-uint08 pulseWidth ;
-uint08 tone[3] ;
-sint08 oscillatorTune ;
-uint08 checkSum ;
+uint08_t writeCount ;
+uint16_t tempo ;
+uint08_t beatCount ;
+uint08_t duration ;
+uint08_t pulseWidth ;
+uint08_t tone[3] ;
+sint08_t oscillatorTune ;
+uint08_t checkSum ;
 } ConfigurationData ;
 
 # 43
@@ -3974,15 +3968,15 @@ MEMORY_SELECT_CONFIGURATION ,
 
 
 
-void _configuration_WriteByte( uint08 address , uint08 data ) ;
-uint08 _configuration_ReadByte( uint08 address , MemorySelect memorySelect ) ;
+void _configuration_WriteByte( uint08_t address , uint08_t data ) ;
+uint08_t _configuration_ReadByte( uint08_t address , MemorySelect memorySelect ) ;
 
 
 
 ReturnCode _configuration_Save( ConfigurationData* config ) {
 
-uint08* ptrConfig = (uint08*) config ;
-uint08 romOffset ;
+uint08_t* ptrConfig = (uint08_t*) config ;
+uint08_t romOffset ;
 ReturnCode returnCode = RETURN_CODE_NOERROR ;
 
 
@@ -4009,7 +4003,7 @@ EECON1bits.WREN=1; ;
 config->checkSum = 0x00 ;
 
 
-for ( uint08 i = 0 ; i != sizeof(ConfigurationData) ; i++ ) {
+for ( uint08_t i = 0 ; i != sizeof(ConfigurationData) ; i++ ) {
 _configuration_WriteByte( romOffset + i , ptrConfig[i] ) ;
 config->checkSum ^= ptrConfig[i] ;
 if ( EECON1bits.WRERR ) {
@@ -4038,8 +4032,8 @@ return RETURN_CODE_NOERROR ;
 
 ReturnCode _configuration_Load( ConfigurationData* config ) {
 
-uint08* ptrConfig = (uint08*) config ;
-uint08 romOffset ;
+uint08_t* ptrConfig = (uint08_t*) config ;
+uint08_t romOffset ;
 
 
 INTCONbits.GIE=0; ;
@@ -4053,7 +4047,7 @@ if ( romOffset >= ( 0x100 - sizeof(ConfigurationData) ) ) return RETURN_CODE_INV
 config->checkSum = 0x00 ;
 
 
-for ( uint08 i = 0 ; i != sizeof(ConfigurationData) ; i++ ) {
+for ( uint08_t i = 0 ; i != sizeof(ConfigurationData) ; i++ ) {
 ptrConfig[i] = _configuration_ReadByte( romOffset + i , MEMORY_SELECT_EEPROM ) ;
 config->checkSum ^= ptrConfig[i] ;
 }
@@ -4069,13 +4063,13 @@ return RETURN_CODE_NOERROR ;
 
 
 
-uint08 _configuration_GetRomOffset( ) {
+uint08_t _configuration_GetRomOffset( ) {
 return _configuration_ReadByte( 0x00 , MEMORY_SELECT_EEPROM ) ;
 }
 
 
 
-void _configuration_WriteByte( uint08 address , uint08 data ) {
+void _configuration_WriteByte( uint08_t address , uint08_t data ) {
 EEADRH=0x00;EEADRL=(address); ;
 EEDATH=0x00;EEDATL=(data); ;
 EECON2=0x55;EECON2=0xAA; ;
@@ -4085,7 +4079,7 @@ while(!PIR2bits.EEIF);PIR2bits.EEIF=0; ;
 
 
 
-uint08 _configuration_ReadByte( uint08 address , MemorySelect memorySelect ) {
+uint08_t _configuration_ReadByte( uint08_t address , MemorySelect memorySelect ) {
 EEADRH=0x00;EEADRL=(address); ;
 EECON1bits.EEPGD=0;if(memorySelect)EECON1bits.CFGS=1;else EECON1bits.CFGS=0; ;
 EECON1bits.RD=1; ;
@@ -4302,53 +4296,41 @@ STATE_RESET ,
 STATE_ERROR ,
 } MachineState ;
 MachineState machineState_ = STATE_BOOT ;
-uint08 stateReturnCounter_ = 0 ;
-uint08 isMute_ ;
+uint08_t stateReturnCounter_ = 0 ;
+uint08_t isMute_ ;
 
 # 103
-static uint24 tempoCounter_ = 0 ;
-static uint08 beatCounter_ = 0 ;
-static uint08 duration_ = 0 ;
+static uint24_t tempoCounter_ = 0 ;
+static uint08_t beatCounter_ = 0 ;
+static uint08_t duration_ = 0 ;
 
 
 
 typedef union {
-uint08 all ;
+uint08_t all ;
 struct {
-uint08 _ : 5 ;
-uint08 keyMenu : 1 ;
-uint08 keyDown : 1 ;
-uint08 keyUp : 1 ;
+unsigned : 5 ;
+unsigned keyMenu : 1 ;
+unsigned keyDown : 1 ;
+unsigned keyUp : 1 ;
 } ;
 } UniPortAState ;
 
 UniPortAState portAState_ = { 0x00 } ;
-uint08 keyBeepCounter_ = 0 ;
+uint08_t keyBeepCounter_ = 0 ;
 
 # 127
-union {
-uint32 all ;
 struct {
-uint08 Up ;
-uint08 UpDown ;
-uint08 Down ;
-uint08 Mode ;
-} ;
-struct {
-uint16 exceptDown ;
-} ;
-struct {
-uint08 ;
-uint16 exceptUp ;
-} ;
+uint08_t Up ;
+uint08_t Down ;
 } keyCount_ = 0 ;
 
 
 
 typedef struct {
-uint08 select ;
-uint08 cursorPosition ;
-const uint08 limit ;
+uint08_t select ;
+uint08_t cursorPosition ;
+const uint08_t limit ;
 const char** menuMessage ;
 } MenuState ;
 MenuState menuStateMain_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_MAIN ) / sizeof( MESSAGE_MENU_ITEM_MAIN[0] ) ) - 1 , &MESSAGE_MENU_ITEM_MAIN } ;
@@ -4363,50 +4345,49 @@ ConfigurationData configration_ = { 0 , 120 , 4 , 32 , 1 , { 249 , 62 , 82 , }, 
 
 
 
-uint08* currentValuePtr ;
+uint08_t* currentValuePtr ;
 struct {
-uint08 upper ;
-uint08 lower ;
+uint08_t upper ;
+uint08_t lower ;
 } valueLimit_ ;
 
-# 175
+# 163
 union {
-uint08 all ;
+uint08_t all ;
 struct {
-uint08 keyPressUp : 1 ;
-uint08 keyPressDown : 1 ;
-uint08 keyPressMenu : 1 ;
-uint08 keyPressUpDown : 1 ;
-uint08 keyPressHeldUp : 1 ;
-uint08 keyPressHeldDown : 1 ;
+unsigned keyPressUp : 1 ;
+unsigned keyPressDown : 1 ;
+unsigned keyPressMenu : 1 ;
+unsigned keyPressUpDown : 1 ;
+unsigned keyPressHeldUp : 1 ;
+unsigned keyPressHeldDown : 1 ;
 } ;
 } inputEvent_ ;
 union {
-uint08 all ;
+uint08_t all ;
 struct {
-uint08 changeState : 1 ;
-uint08 changeMessage : 1 ;
-uint08 changeValue : 1 ;
-uint08 resetMetronome : 1 ;
-uint08 soundClickOn : 1 ;
-uint08 soundOn : 1 ;
-uint08 soundOff : 1 ;
-uint08 accessEeprom : 1 ;
+unsigned changeState : 1 ;
+unsigned changeMessage : 1 ;
+unsigned changeValue : 1 ;
+unsigned resetMetronome : 1 ;
+unsigned soundClickOn : 1 ;
+unsigned soundOn : 1 ;
+unsigned soundOff : 1 ;
+unsigned accessEeprom : 1 ;
 } ;
 } outputEvent_ ;
 
-# 208
+# 196
 void main( void ) {
 
 
 initialize( ) ;
 
 
-if( ( (~PORTA&0xE0) & 0xE0 ) == 0xC0 )
+if( (~PORTA&0xE0) == 0xC0 )
 machineState_ = STATE_INITIALIZE ;
 else
 machineState_ = STATE_BOOT ;
-
 outputEvent_.accessEeprom = 1 ;
 
 
@@ -4420,7 +4401,7 @@ T4CONbits.TMR4ON = 1 ;
 T1CONbits.TMR1ON = 1 ;
 
 
-for( uint08 phase = 0 ; phase < 0xE ; phase++ ) {
+for( uint08_t phase = 0 ; phase < 0xE ; phase++ ) {
 
 asm("clrwdt") ;
 
@@ -4442,7 +4423,7 @@ break ;
 case 0x3:
 
 {
-uint08 userId ;
+uint08_t userId ;
 userId = _configuration_ReadByte( 0 , MEMORY_SELECT_CONFIGURATION ) ;
 informationValueBuffer[ INFORMATION_ITEM_VERSION ][1] = ( ( userId >> 4 ) | '0' ) ;
 informationValueBuffer[ INFORMATION_ITEM_VERSION ][2] = ( ( userId & 0x0F ) | '0' ) ;
@@ -4560,7 +4541,7 @@ break ;
 }
 outputEvent_.resetMetronome = 1 ;
 
-uint08 romOffset = _configuration_GetRomOffset( ) ;
+uint08_t romOffset = _configuration_GetRomOffset( ) ;
 informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][3] = HEX_TABLE[ romOffset >> 4 ] ;
 informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][4] = HEX_TABLE[ romOffset & 0x0F ] ;
 informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][3] = HEX_TABLE[ configration_.writeCount >> 4 ] ;
@@ -4637,19 +4618,31 @@ break ;
 break ;
 
 case STATE_MENU_TONE:
-machineState_ = ( menuStateTone_.select == MENU_ITEM_TONE_RETURN ) ? STATE_MENU_MAIN : STATE_ADJUST_TONE ;
+if( menuStateTone_.select == MENU_ITEM_TONE_RETURN )
+machineState_ = STATE_MENU_MAIN ;
+else
+machineState_ = STATE_ADJUST_TONE ;
 break ;
 
 case STATE_CONFIRM_LOAD:
-machineState_ = menuStateConfirm_.select ? STATE_LOAD : STATE_MENU_MAIN ;
+if( menuStateConfirm_.select )
+machineState_ = STATE_LOAD ;
+else
+machineState_ = STATE_MENU_MAIN ;
 break ;
 
 case STATE_CONFIRM_SAVE:
-machineState_ = menuStateConfirm_.select ? STATE_SAVE : STATE_MENU_MAIN ;
+if( menuStateConfirm_.select )
+machineState_ = STATE_SAVE ;
+else
+machineState_ = STATE_MENU_MAIN ;
 break ;
 
 case STATE_CONFIRM_RESET:
-machineState_ = menuStateConfirm_.select ? STATE_RESET : STATE_MENU_MAIN ;
+if( menuStateConfirm_.select )
+machineState_ = STATE_RESET ;
+else
+machineState_ = STATE_MENU_MAIN ;
 break ;
 
 case STATE_METRONOME:
@@ -4733,9 +4726,9 @@ break ;
 
 case STATE_ADJUST_OSCILLATOR_TUNE:
 outputEvent_.changeValue = 1 ;
-currentValuePtr = ( uint08* ) & configration_.oscillatorTune ;
-valueLimit_.upper = (uint08)30 ;
-valueLimit_.lower = ( uint08 ) - 30 ;
+currentValuePtr = ( uint08_t* ) & configration_.oscillatorTune ;
+valueLimit_.upper = (uint08_t)30 ;
+valueLimit_.lower = (uint08_t)( -30 ) ;
 outputEvent_.soundOn = 1 ;
 break ;
 
@@ -4873,8 +4866,7 @@ T2CONbits.TMR2ON = 1 ;
 break ;
 
 default:
-if( (outputEvent_.soundClickOn&&!(outputEvent_.soundClickOn=0)) ) {
-if( !isMute_ ) {
+if( (outputEvent_.soundClickOn&&!(outputEvent_.soundClickOn=0)) && !isMute_ ) {
 if( beatCounter_ == 0 )
 PR2 = configration_.tone[ 1 ] ;
 else if( beatCounter_ == configration_.beatCount )
@@ -4885,9 +4877,8 @@ PR2 = configration_.tone[ 0 ] ;
 {CCPR4L=(PR2>>configration_.pulseWidth);} ;
 T2CONbits.TMR2ON = 1 ;
 }
-}
-
 break ;
+
 }
 
 
@@ -5027,7 +5018,7 @@ break ;
 
 if( (outputEvent_.changeValue&&!(outputEvent_.changeValue=0)) ) {
 
-uint16 tmpValue ;
+uint16_t tmpValue ;
 char valueString[6] = "= 000" ;
 
 switch( machineState_ ) {
@@ -5037,12 +5028,12 @@ tmpValue = configration_.tempo ;
 break ;
 
 case STATE_ADJUST_OSCILLATOR_TUNE:
-if( (uint08)configration_.oscillatorTune & 0x80 ) {
+if( (uint08_t)configration_.oscillatorTune & 0x80 ) {
 tmpValue = -configration_.oscillatorTune ;
 valueString[1] = '-' ;
 }
 else {
-tmpValue = (uint16)configration_.oscillatorTune ;
+tmpValue = (uint16_t)configration_.oscillatorTune ;
 }
 break ;
 
@@ -5051,9 +5042,9 @@ tmpValue = *currentValuePtr ;
 break ;
 }
 
-uint08 isNonZero = BOOL_FALSE ;
-for( uint08 i = 2 ; i != 5 ; i++ ) {
-uint08 compareUnit ;
+uint08_t isNonZero = BOOL_FALSE ;
+for( uint08_t i = 2 ; i != 5 ; i++ ) {
+uint08_t compareUnit ;
 switch( i ) {
 case 2: compareUnit = 100 ;
 break ;
@@ -5094,12 +5085,12 @@ break ;
 
 }
 
-# 912
+# 909
 void interrupt isr( void ) {
 if( !PIR3bits.TMR6IF ) return ;
 PIR3bits.TMR6IF = 0 ;
 
-static uint16 eventPrescaler = 0 ;
+static uint16_t eventPrescaler = 0 ;
 
 
 tempoCounter_ += configration_.tempo ;

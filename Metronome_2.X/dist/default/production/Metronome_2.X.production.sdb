@@ -3,20 +3,20 @@
 [d edition pro ]
 [d chip 16F1827 ]
 [d frameptr 6 ]
-"61 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/configuration.h
-[e E2826 . `uc
+"61 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/configuration.h
+[e E2824 . `uc
 RETURN_CODE_NOERROR 0
 RETURN_CODE_WRITE_ERROR 16
 RETURN_CODE_CHECKSUM_ERROR 32
 RETURN_CODE_INVALID_OFFSET 48
 ]
 "71
-[e E2832 . `uc
+[e E2830 . `uc
 MEMORY_SELECT_EEPROM 0
 MEMORY_SELECT_CONFIGURATION 1
 ]
-"92 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/main.c
-[e E2934 . `uc
+"92 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
+[e E2932 . `uc
 STATE_BOOT 0
 STATE_METRONOME 1
 STATE_MENU_MAIN 2
@@ -36,15 +36,15 @@ STATE_INITIALIZE 15
 STATE_RESET 16
 STATE_ERROR 17
 ]
-"256
-[e E2886 . `uc
+"243
+[e E2884 . `uc
 INFORMATION_ITEM_VERSION 0
 INFORMATION_ITEM_ROM_OFFSET 1
 INFORMATION_ITEM_WRITE_COUNT 2
 INFORMATION_ITEM_ERROR_CODE 3
 ]
-"402
-[e E2866 . `uc
+"389
+[e E2864 . `uc
 MENU_ITEM_MAIN_RETURN 0
 MENU_ITEM_MAIN_BEAT_COUNT 1
 MENU_ITEM_MAIN_TONE_MENU 2
@@ -56,14 +56,14 @@ MENU_ITEM_MAIN_SAVE_CONFIGURATION 7
 MENU_ITEM_MAIN_INFORMATION 8
 MENU_ITEM_MAIN_RESET 9
 ]
-"449
-[e E2878 . `uc
+"436
+[e E2876 . `uc
 MENU_ITEM_TONE_RETURN 0
 MENU_ITEM_TONE_ADJUST_TONE0 1
 MENU_ITEM_TONE_ADJUST_TONE1 2
 MENU_ITEM_TONE_ADJUST_TONE2 3
 ]
-"863
+"860
 [e E2769 . `uc
 BOOL_FALSE 0
 BOOL_TRUE 1
@@ -78,35 +78,35 @@ BOOL_TRUE 1
 [v _eecpymem eecpymem `(v  1 e 0 0 ]
 "24
 [v _memcpyee memcpyee `(v  1 e 0 0 ]
-"48 /Users/kshimada/Development/MPLAB X/_Common/parallel_LCD.h
+"47 /Users/kshimada/Development/MPLABX/_Common/parallel_LCD.h
 [v __parallel_lcd_Initialize _parallel_lcd_Initialize `(v  1 e 0 0 ]
-"57
+"56
 [v __parallel_lcd_WriteCharacter _parallel_lcd_WriteCharacter `(v  1 e 0 0 ]
-"64
+"63
 [v __parallel_lcd_WriteString _parallel_lcd_WriteString `(v  1 e 0 0 ]
-"73
+"72
 [v __parallel_lcd_WriteStringClearing _parallel_lcd_WriteStringClearing `(v  1 e 0 0 ]
-"94
+"93
 [v __parallel_lcd_ClearRow _parallel_lcd_ClearRow `(v  1 e 0 0 ]
-"110
+"109
 [v __parallel_lcd_SetCgram _parallel_lcd_SetCgram `(v  1 e 0 0 ]
-"131
+"130
 [v __private_parallel_lcd_WriteByte _private_parallel_lcd_WriteByte `(v  1 e 0 0 ]
-"61 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/configuration.h
-[v __configuration_Save _configuration_Save `(E2826  1 e 1 0 ]
+"61 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/configuration.h
+[v __configuration_Save _configuration_Save `(E2824  1 e 1 0 ]
 "118
-[v __configuration_Load _configuration_Load `(E2826  1 e 1 0 ]
+[v __configuration_Load _configuration_Load `(E2824  1 e 1 0 ]
 "151
 [v __configuration_GetRomOffset _configuration_GetRomOffset `(uc  1 e 1 0 ]
 "157
 [v __configuration_WriteByte _configuration_WriteByte `(v  1 e 0 0 ]
 "167
 [v __configuration_ReadByte _configuration_ReadByte `(uc  1 e 1 0 ]
-"208 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/main.c
+"196 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
 [v _main main `(v  1 e 0 0 ]
-"912
+"909
 [v _isr isr `II(v  1 e 0 0 ]
-"5 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/pic16f1827_init.h
+"5 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/pic16f1827_init.h
 [v _initialize initialize `(v  1 e 0 0 ]
 [s S95 . 1 `uc 1 IOCIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
@@ -444,12 +444,12 @@ BOOL_TRUE 1
 ]
 [u S339 . 1 `S327 1 . 1 0 `S335 1 . 1 0 ]
 [v _T6CONbits T6CONbits `VES339  1 e 1 @1054 ]
-"33 /Users/kshimada/Development/MPLAB X/_Common/parallel_LCD.h
+"32 /Users/kshimada/Development/MPLABX/_Common/parallel_LCD.h
 [v _PARALLEL_LCD_ROW_SELECT PARALLEL_LCD_ROW_SELECT `DCC[2]uc  1 e 2 0 ]
-"40
+"39
 [v _HEX_TABLE HEX_TABLE `DCC[16]uc  1 e 16 0 ]
-"92 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/main.c
-[v _machineState_ machineState_ `E2934  1 e 1 0 ]
+"92 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
+[v _machineState_ machineState_ `E2932  1 e 1 0 ]
 "93
 [v _stateReturnCounter_ stateReturnCounter_ `uc  1 e 1 0 ]
 "94
@@ -460,7 +460,7 @@ BOOL_TRUE 1
 [v _beatCounter_ beatCounter_ `uc  1 s 1 beatCounter_ ]
 "105
 [v _duration_ duration_ `uc  1 s 1 duration_ ]
-[s S666 . 1 `uc 1 _ 1 0 :5:0 
+[s S666 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 keyMenu 1 0 :1:5 
 `uc 1 keyDown 1 0 :1:6 
 `uc 1 keyUp 1 0 :1:7 
@@ -470,42 +470,39 @@ BOOL_TRUE 1
 [v _portAState_ portAState_ `S671  1 e 1 0 ]
 "120
 [v _keyBeepCounter_ keyBeepCounter_ `uc  1 e 1 0 ]
-[s S674 . 4 `uc 1 Up 1 0 `uc 1 UpDown 1 1 `uc 1 Down 1 2 `uc 1 Mode 1 3 ]
+[s S674 . 2 `uc 1 Up 1 0 `uc 1 Down 1 1 ]
+"130
+[v _keyCount_ keyCount_ `S674  1 e 2 0 ]
+[s S677 . 4 `uc 1 select 1 0 `uc 1 cursorPosition 1 1 `DCCuc 1 limit 1 2 `*.4*.25DCCuc 1 menuMessage 1 3 ]
+"140
+[v _menuStateMain_ menuStateMain_ `S677  1 e 4 0 ]
+"141
+[v _menuStateTone_ menuStateTone_ `S677  1 e 4 0 ]
 "142
-[s S679 . 2 `ui 1 exceptDown 2 0 ]
-[s S681 . 3 `uc 1 . 1 0 `ui 1 exceptUp 2 1 ]
-[u S684 . 4 `ul 1 all 4 0 `S674 1 . 4 0 `S679 1 . 2 0 `S681 1 . 3 0 ]
-[v _keyCount_ keyCount_ `S684  1 e 4 0 ]
-[s S689 . 4 `uc 1 select 1 0 `uc 1 cursorPosition 1 1 `DCCuc 1 limit 1 2 `*.4*.25DCCuc 1 menuMessage 1 3 ]
-"152
-[v _menuStateMain_ menuStateMain_ `S689  1 e 4 0 ]
-"153
-[v _menuStateTone_ menuStateTone_ `S689  1 e 4 0 ]
-"154
-[v _menuStateConfirm_ menuStateConfirm_ `S689  1 e 4 0 ]
-"155
-[v _menuStateInformation_ menuStateInformation_ `S689  1 e 4 0 ]
-"156
-[v _currentMenuStatePtr_ currentMenuStatePtr_ `*.4S689  1 e 1 0 ]
+[v _menuStateConfirm_ menuStateConfirm_ `S677  1 e 4 0 ]
+"143
+[v _menuStateInformation_ menuStateInformation_ `S677  1 e 4 0 ]
+"144
+[v _currentMenuStatePtr_ currentMenuStatePtr_ `*.4S677  1 e 1 0 ]
 [s S536 . 11 `uc 1 writeCount 1 0 `ui 1 tempo 2 1 `uc 1 beatCount 1 3 `uc 1 duration 1 4 `uc 1 pulseWidth 1 5 `[3]uc 1 tone 3 6 `c 1 oscillatorTune 1 9 `uc 1 checkSum 1 10 ]
-"160
+"148
 [v _configration_ configration_ `S536  1 e 11 0 ]
-"164
+"152
 [v _currentValuePtr currentValuePtr `*.4uc  1 e 1 0 ]
-[s S694 . 2 `uc 1 upper 1 0 `uc 1 lower 1 1 ]
-"168
-[v _valueLimit_ valueLimit_ `S694  1 e 2 0 ]
-[s S697 . 1 `uc 1 keyPressUp 1 0 :1:0 
+[s S682 . 2 `uc 1 upper 1 0 `uc 1 lower 1 1 ]
+"156
+[v _valueLimit_ valueLimit_ `S682  1 e 2 0 ]
+[s S685 . 1 `uc 1 keyPressUp 1 0 :1:0 
 `uc 1 keyPressDown 1 0 :1:1 
 `uc 1 keyPressMenu 1 0 :1:2 
 `uc 1 keyPressUpDown 1 0 :1:3 
 `uc 1 keyPressHeldUp 1 0 :1:4 
 `uc 1 keyPressHeldDown 1 0 :1:5 
 ]
-"185
-[u S704 . 1 `uc 1 all 1 0 `S697 1 . 1 0 ]
-[v _inputEvent_ inputEvent_ `S704  1 e 1 0 ]
-[s S707 . 1 `uc 1 changeState 1 0 :1:0 
+"173
+[u S692 . 1 `uc 1 all 1 0 `S685 1 . 1 0 ]
+[v _inputEvent_ inputEvent_ `S692  1 e 1 0 ]
+[s S695 . 1 `uc 1 changeState 1 0 :1:0 
 `uc 1 changeMessage 1 0 :1:1 
 `uc 1 changeValue 1 0 :1:2 
 `uc 1 resetMetronome 1 0 :1:3 
@@ -514,10 +511,10 @@ BOOL_TRUE 1
 `uc 1 soundOff 1 0 :1:6 
 `uc 1 accessEeprom 1 0 :1:7 
 ]
-"198
-[u S716 . 1 `uc 1 all 1 0 `S707 1 . 1 0 ]
-[v _outputEvent_ outputEvent_ `S716  1 e 1 0 ]
-"9 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/menu.h
+"186
+[u S704 . 1 `uc 1 all 1 0 `S695 1 . 1 0 ]
+[v _outputEvent_ outputEvent_ `S704  1 e 1 0 ]
+"9 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/menu.h
 [v _MESSAGE_MENU_ITEM_MAIN MESSAGE_MENU_ITEM_MAIN `[10]*.25DCCuc  1 e 20 0 ]
 "38
 [v _MESSAGE_MENU_ITEM_TONE MESSAGE_MENU_ITEM_TONE `[4]*.25DCCuc  1 e 8 0 ]
@@ -526,7 +523,7 @@ BOOL_TRUE 1
 "61
 [v _informationValueBuffer informationValueBuffer `[4][7]uc  1 e 28 0 ]
 [s S610 . 6 `*.25DCCuc 1 TILE 2 0 `*.25DCCuc 1 MUTE 2 2 `*.25DCCuc 1 TEMPO 2 4 ]
-"36 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/message.h
+"36 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/message.h
 [s S614 . 12 `*.25DCCuc 1 TITLE 2 0 `*.25DCCuc 1 BEAT_COUNT 2 2 `*.25DCCuc 1 TONE 2 4 `*.25DCCuc 1 DURATION 2 6 `*.25DCCuc 1 PULSE_WIDTH 2 8 `*.25DCCuc 1 OSCILLATOR_TUNE 2 10 ]
 [s S621 . 10 `*.25DCCuc 1 LOAD 2 0 `*.25DCCuc 1 SAVE 2 2 `*.25DCCuc 1 RESET 2 4 `*.25DCCuc 1 NO 2 6 `*.25DCCuc 1 YES 2 8 ]
 [s S627 . 6 `*.25DCCuc 1 LOAD 2 0 `*.25DCCuc 1 SAVE 2 2 `*.25DCCuc 1 LOAD_DEFAULT 2 4 ]
@@ -539,131 +536,131 @@ BOOL_TRUE 1
 [s S643 . 24 `DCC[8]uc 1 CURSOR_RIGHT 8 0 `DCC[8]uc 1 CURSOR_UP 8 8 `DCC[8]uc 1 CURSOR_DOWN 8 16 ]
 "84
 [v _BITMAP BITMAP `DCCS643  1 e 24 0 ]
-"208 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/main.c
+"196 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
 [v _main main `(v  1 e 0 0 ]
 {
-"865
-[v main@compareUnit compareUnit `uc  1 a 1 27 ]
-"864
-[v main@i i `uc  1 a 1 32 ]
-"254
-[v main@userId userId `uc  1 a 1 31 ]
-"840
-[v main@valueString valueString `[6]uc  1 a 6 9 ]
-"839
-[v main@tmpValue tmpValue `ui  1 a 2 24 ]
-"863
-[v main@isNonZero isNonZero `uc  1 a 1 23 ]
-"352
-[v main@returnCode returnCode `E2826  1 a 1 30 ]
-"372
-[v main@romOffset romOffset `uc  1 a 1 26 ]
-[s S666 . 1 `uc 1 _ 1 0 :5:0 
+"862
+[v main@compareUnit compareUnit `uc  1 a 1 21 ]
+"861
+[v main@i i `uc  1 a 1 26 ]
+"241
+[v main@userId userId `uc  1 a 1 25 ]
+"837
+[v main@valueString valueString `[6]uc  1 a 6 11 ]
+"836
+[v main@tmpValue tmpValue `ui  1 a 2 18 ]
+"860
+[v main@isNonZero isNonZero `uc  1 a 1 17 ]
+"339
+[v main@returnCode returnCode `E2824  1 a 1 24 ]
+"359
+[v main@romOffset romOffset `uc  1 a 1 20 ]
+[s S666 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 keyMenu 1 0 :1:5 
 `uc 1 keyDown 1 0 :1:6 
 `uc 1 keyUp 1 0 :1:7 
 ]
-"301
+"288
 [u S671 . 1 `uc 1 all 1 0 `S666 1 . 1 0 ]
-[v main@keyPressed keyPressed `S671  1 a 1 28 ]
-"232
-[v main@phase phase `uc  1 a 1 29 ]
-"300
+[v main@keyPressed keyPressed `S671  1 a 1 22 ]
+"219
+[v main@phase phase `uc  1 a 1 23 ]
+"287
 [v main@prevPortAState prevPortAState `S671  1 s 1 prevPortAState ]
-"839
-[v main@F3067 F3067 `[6]uc  1 s 6 F3067 ]
-"904
+"836
+[v main@F3053 F3053 `[6]uc  1 s 6 F3053 ]
+"901
 } 0
-"5 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/pic16f1827_init.h
+"5 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/pic16f1827_init.h
 [v _initialize initialize `(v  1 e 0 0 ]
 {
 "84
 } 0
-"73 /Users/kshimada/Development/MPLAB X/_Common/parallel_LCD.h
+"72 /Users/kshimada/Development/MPLABX/_Common/parallel_LCD.h
 [v __parallel_lcd_WriteStringClearing _parallel_lcd_WriteStringClearing `(v  1 e 0 0 ]
 {
 [v __parallel_lcd_WriteStringClearing@position position `uc  1 a 1 wreg ]
-"75
-[v __parallel_lcd_WriteStringClearing@i i `uc  1 a 1 2 ]
-"73
+"74
+[v __parallel_lcd_WriteStringClearing@i i `uc  1 a 1 4 ]
+"72
 [v __parallel_lcd_WriteStringClearing@position position `uc  1 a 1 wreg ]
-[v __parallel_lcd_WriteStringClearing@stringPtr stringPtr `*.25DCCuc  1 p 2 6 ]
-[v __parallel_lcd_WriteStringClearing@position position `uc  1 a 1 1 ]
-"82
+[v __parallel_lcd_WriteStringClearing@stringPtr stringPtr `*.25DCCuc  1 p 2 0 ]
+[v __parallel_lcd_WriteStringClearing@position position `uc  1 a 1 3 ]
+"81
 } 0
-"64
+"63
 [v __parallel_lcd_WriteString _parallel_lcd_WriteString `(v  1 e 0 0 ]
 {
 [v __parallel_lcd_WriteString@position position `uc  1 a 1 wreg ]
 [v __parallel_lcd_WriteString@position position `uc  1 a 1 wreg ]
-[v __parallel_lcd_WriteString@stringPtr stringPtr `*.26DCCuc  1 p 2 0 ]
-[v __parallel_lcd_WriteString@position position `uc  1 a 1 3 ]
-"69
+[v __parallel_lcd_WriteString@stringPtr stringPtr `*.26DCCuc  1 p 2 2 ]
+[v __parallel_lcd_WriteString@position position `uc  1 a 1 5 ]
+"68
 } 0
-"57
+"56
 [v __parallel_lcd_WriteCharacter _parallel_lcd_WriteCharacter `(v  1 e 0 0 ]
 {
 [v __parallel_lcd_WriteCharacter@position position `uc  1 a 1 wreg ]
 [v __parallel_lcd_WriteCharacter@position position `uc  1 a 1 wreg ]
-[v __parallel_lcd_WriteCharacter@character character `uc  1 p 1 6 ]
-[v __parallel_lcd_WriteCharacter@position position `uc  1 a 1 7 ]
-"60
+[v __parallel_lcd_WriteCharacter@character character `uc  1 p 1 0 ]
+[v __parallel_lcd_WriteCharacter@position position `uc  1 a 1 1 ]
+"59
 } 0
-"110
+"109
 [v __parallel_lcd_SetCgram _parallel_lcd_SetCgram `(v  1 e 0 0 ]
 {
 [v __parallel_lcd_SetCgram@charCode charCode `uc  1 a 1 wreg ]
-"112
-[v __parallel_lcd_SetCgram@i i `uc  1 a 1 2 ]
-"110
+"111
+[v __parallel_lcd_SetCgram@i i `uc  1 a 1 4 ]
+"109
 [v __parallel_lcd_SetCgram@charCode charCode `uc  1 a 1 wreg ]
-[v __parallel_lcd_SetCgram@bitmap bitmap `*.25DCCuc  1 p 2 6 ]
-[v __parallel_lcd_SetCgram@charCode charCode `uc  1 a 1 1 ]
-"114
+[v __parallel_lcd_SetCgram@bitmap bitmap `*.25DCCuc  1 p 2 0 ]
+[v __parallel_lcd_SetCgram@charCode charCode `uc  1 a 1 3 ]
+"113
 } 0
-"48
+"47
 [v __parallel_lcd_Initialize _parallel_lcd_Initialize `(v  1 e 0 0 ]
 {
-"53
+"52
 } 0
-"94
+"93
 [v __parallel_lcd_ClearRow _parallel_lcd_ClearRow `(v  1 e 0 0 ]
 {
 [v __parallel_lcd_ClearRow@rowSelect rowSelect `uc  1 a 1 wreg ]
-"96
-[v __parallel_lcd_ClearRow@i i `uc  1 a 1 1 ]
-"94
+"95
+[v __parallel_lcd_ClearRow@i i `uc  1 a 1 2 ]
+"93
 [v __parallel_lcd_ClearRow@rowSelect rowSelect `uc  1 a 1 wreg ]
-[v __parallel_lcd_ClearRow@rowSelect rowSelect `uc  1 a 1 0 ]
-"98
+[v __parallel_lcd_ClearRow@rowSelect rowSelect `uc  1 a 1 1 ]
+"97
 } 0
-"131
+"130
 [v __private_parallel_lcd_WriteByte _private_parallel_lcd_WriteByte `(v  1 e 0 0 ]
 {
 [v __private_parallel_lcd_WriteByte@data data `uc  1 a 1 wreg ]
 [v __private_parallel_lcd_WriteByte@data data `uc  1 a 1 wreg ]
 [v __private_parallel_lcd_WriteByte@r r `uc  1 p 1 4 ]
 [v __private_parallel_lcd_WriteByte@data data `uc  1 a 1 5 ]
-"137
+"136
 } 0
-"61 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/configuration.h
-[v __configuration_Save _configuration_Save `(E2826  1 e 1 0 ]
+"61 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/configuration.h
+[v __configuration_Save _configuration_Save `(E2824  1 e 1 0 ]
 {
 [s S536 . 11 `uc 1 writeCount 1 0 `ui 1 tempo 2 1 `uc 1 beatCount 1 3 `uc 1 duration 1 4 `uc 1 pulseWidth 1 5 `[3]uc 1 tone 3 6 `c 1 oscillatorTune 1 9 `uc 1 checkSum 1 10 ]
 [v __configuration_Save@config config `*.4S536  1 a 1 wreg ]
 "91
-[v __configuration_Save@i i `uc  1 a 1 3 ]
+[v __configuration_Save@i i `uc  1 a 1 5 ]
 "64
-[v __configuration_Save@romOffset romOffset `uc  1 a 1 2 ]
+[v __configuration_Save@romOffset romOffset `uc  1 a 1 4 ]
 "63
-[v __configuration_Save@ptrConfig ptrConfig `*.4uc  1 a 1 1 ]
+[v __configuration_Save@ptrConfig ptrConfig `*.4uc  1 a 1 3 ]
 "65
-[v __configuration_Save@returnCode returnCode `E2826  1 a 1 0 ]
+[v __configuration_Save@returnCode returnCode `E2824  1 a 1 2 ]
 "61
 [v __configuration_Save@config config `*.4S536  1 a 1 wreg ]
 "63
 "61
-[v __configuration_Save@config config `*.4S536  1 a 1 4 ]
+[v __configuration_Save@config config `*.4S536  1 a 1 6 ]
 "114
 } 0
 "157
@@ -676,21 +673,21 @@ BOOL_TRUE 1
 "163
 } 0
 "118
-[v __configuration_Load _configuration_Load `(E2826  1 e 1 0 ]
+[v __configuration_Load _configuration_Load `(E2824  1 e 1 0 ]
 {
 [s S536 . 11 `uc 1 writeCount 1 0 `ui 1 tempo 2 1 `uc 1 beatCount 1 3 `uc 1 duration 1 4 `uc 1 pulseWidth 1 5 `[3]uc 1 tone 3 6 `c 1 oscillatorTune 1 9 `uc 1 checkSum 1 10 ]
 [v __configuration_Load@config config `*.4S536  1 a 1 wreg ]
 "135
-[v __configuration_Load@i i `uc  1 a 1 3 ]
+[v __configuration_Load@i i `uc  1 a 1 5 ]
 "121
-[v __configuration_Load@romOffset romOffset `uc  1 a 1 1 ]
+[v __configuration_Load@romOffset romOffset `uc  1 a 1 3 ]
 "120
-[v __configuration_Load@ptrConfig ptrConfig `*.4uc  1 a 1 0 ]
+[v __configuration_Load@ptrConfig ptrConfig `*.4uc  1 a 1 2 ]
 "118
 [v __configuration_Load@config config `*.4S536  1 a 1 wreg ]
 "120
 "118
-[v __configuration_Load@config config `*.4S536  1 a 1 2 ]
+[v __configuration_Load@config config `*.4S536  1 a 1 4 ]
 "147
 } 0
 "151
@@ -703,7 +700,7 @@ BOOL_TRUE 1
 {
 [v __configuration_ReadByte@address address `uc  1 a 1 wreg ]
 [v __configuration_ReadByte@address address `uc  1 a 1 wreg ]
-[v __configuration_ReadByte@memorySelect memorySelect `E2832  1 p 1 4 ]
+[v __configuration_ReadByte@memorySelect memorySelect `E2830  1 p 1 4 ]
 [v __configuration_ReadByte@address address `uc  1 a 1 5 ]
 "174
 } 0
@@ -712,18 +709,18 @@ BOOL_TRUE 1
 {
 [v ___bmul@multiplier multiplier `uc  1 a 1 wreg ]
 "6
-[v ___bmul@product product `uc  1 a 1 6 ]
+[v ___bmul@product product `uc  1 a 1 0 ]
 "4
 [v ___bmul@multiplier multiplier `uc  1 a 1 wreg ]
 [v ___bmul@multiplicand multiplicand `uc  1 p 1 4 ]
 "6
-[v ___bmul@multiplier multiplier `uc  1 a 1 7 ]
+[v ___bmul@multiplier multiplier `uc  1 a 1 1 ]
 "51
 } 0
-"912 /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/main.c
+"909 /Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
 [v _isr isr `II(v  1 e 0 0 ]
 {
-"916
+"913
 [v isr@eventPrescaler eventPrescaler `ui  1 s 2 eventPrescaler ]
-"974
+"971
 } 0

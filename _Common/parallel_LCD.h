@@ -1,6 +1,5 @@
 // ----------------------------------------------------------------
 // Parallel LCD (with 8-bit mode)
-// Revision 2015/08/09
 // ----------------------------------------------------------------
 // Description
 //
@@ -30,7 +29,7 @@
 #  define PARALLEL_LCD_ROW_SELECT_0 0x80
 #  define PARALLEL_LCD_ROW_SELECT_1 0xC0
 
-const uint08 PARALLEL_LCD_ROW_SELECT[] = {
+const uint08_t PARALLEL_LCD_ROW_SELECT[] = {
   PARALLEL_LCD_ROW_SELECT_0 ,
   PARALLEL_LCD_ROW_SELECT_1 ,
 } ;
@@ -41,7 +40,7 @@ const char HEX_TABLE[] = { '0' , '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' ,
 
 // ----------------------------------------------------------------
 // [Prototypes]
-void _private_parallel_lcd_WriteByte( uint08 data , uint08 r ) ;
+void _private_parallel_lcd_WriteByte( uint08_t data , uint08_t r ) ;
 
 // ----------------------------------------------------------------
 // [Function] Initialize
@@ -54,14 +53,14 @@ void _parallel_lcd_Initialize( ) {
 
 // ----------------------------------------------------------------
 // [Function] Write Character
-void _parallel_lcd_WriteCharacter( uint08 position , char character ) {
+void _parallel_lcd_WriteCharacter( uint08_t position , char character ) {
   _private_parallel_lcd_WriteByte( position , 0 ) ;
   _private_parallel_lcd_WriteByte( character , 1 ) ;
 }
 
 // ----------------------------------------------------------------
 // [Function] Write String
-void _parallel_lcd_WriteString( uint08 position , const char* stringPtr ) {
+void _parallel_lcd_WriteString( uint08_t position , const char* stringPtr ) {
   _private_parallel_lcd_WriteByte( position , 0 ) ;
   while ( *stringPtr ) {
     _private_parallel_lcd_WriteByte( *stringPtr++ , 1 ) ;
@@ -70,9 +69,9 @@ void _parallel_lcd_WriteString( uint08 position , const char* stringPtr ) {
 
 // ----------------------------------------------------------------
 // [Function] Write String Clearing
-void _parallel_lcd_WriteStringClearing( uint08 position , const char* stringPtr ) {
+void _parallel_lcd_WriteStringClearing( uint08_t position , const char* stringPtr ) {
   _private_parallel_lcd_WriteByte( position & 0xF0 , 0 ) ;
-  for ( uint08 i = 0 ; i != PARALLEL_LCD_WIDTH ; i++ ) {
+  for ( uint08_t i = 0 ; i != PARALLEL_LCD_WIDTH ; i++ ) {
     if ( i >= ( position & 0x0F ) && ( *stringPtr ) )
       _private_parallel_lcd_WriteByte( *stringPtr++ , 1 ) ;
     else
@@ -83,7 +82,7 @@ void _parallel_lcd_WriteStringClearing( uint08 position , const char* stringPtr 
 
 // ----------------------------------------------------------------
 // [Function] Write Hex Number
-void _parallel_lcd_WriteHexNumber( uint08 position , uint08 number ) {
+void _parallel_lcd_WriteHexNumber( uint08_t position , uint08_t number ) {
   _private_parallel_lcd_WriteByte( position , 0 ) ;
   _private_parallel_lcd_WriteByte( HEX_TABLE[ number >> 4 ] , 1 ) ;
   _private_parallel_lcd_WriteByte( HEX_TABLE[ number & 0x0F ] , 1 ) ;
@@ -91,17 +90,17 @@ void _parallel_lcd_WriteHexNumber( uint08 position , uint08 number ) {
 
 // ----------------------------------------------------------------
 // [Function] Clear Row
-void _parallel_lcd_ClearRow( uint08 rowSelect ) {
+void _parallel_lcd_ClearRow( uint08_t rowSelect ) {
   _private_parallel_lcd_WriteByte( rowSelect & 0xF0 , 0 ) ;
-  for ( uint08 i = 0 ; i != PARALLEL_LCD_WIDTH ; i++ )
+  for ( uint08_t i = 0 ; i != PARALLEL_LCD_WIDTH ; i++ )
     _private_parallel_lcd_WriteByte( ' ' , 1 ) ;
 }
 
 // ----------------------------------------------------------------
 // [Function] Clear Partial
-void _parallel_lcd_ClearPartial( uint08 position , uint08 length ) {
+void _parallel_lcd_ClearPartial( uint08_t position , uint08_t length ) {
   _private_parallel_lcd_WriteByte( position , 0 ) ;
-  for ( uint08 i = 0 ; i != length ; i++ )
+  for ( uint08_t i = 0 ; i != length ; i++ )
     _private_parallel_lcd_WriteByte( ' ' , 1 ) ;
 }
 
@@ -109,7 +108,7 @@ void _parallel_lcd_ClearPartial( uint08 position , uint08 length ) {
 // [Function] Set CGRAM
 void _parallel_lcd_SetCgram( char charCode , const char* bitmap ) {
   _private_parallel_lcd_WriteByte( ( ( charCode << 3 ) & 0b00111111 ) | 0b01000000 , 0 ) ;
-  for ( uint08 i = 0 ; i != 8 ; i++ , bitmap++ )
+  for ( uint08_t i = 0 ; i != 8 ; i++ , bitmap++ )
     _private_parallel_lcd_WriteByte( *bitmap , 1 ) ;
 }
 
@@ -128,7 +127,7 @@ void _parallel_lcd_Clear( ) {
 
 // ----------------------------------------------------------------
 // [Function] Write Byte
-void _private_parallel_lcd_WriteByte( uint08 data , uint08 r ) {
+void _private_parallel_lcd_WriteByte( uint08_t data , uint08_t r ) {
   PARALLEL_LCD_WaitTimer( ) ;
   PARALLEL_LCD_SetData( data ) ;
   PARALLEL_LCD_SelectResister( r ) ;

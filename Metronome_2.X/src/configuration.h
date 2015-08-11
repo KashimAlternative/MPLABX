@@ -26,14 +26,14 @@
 #  define SIZE_OF_EEPROM 0x100
 #  define ADDRESS_OF_OFFSET 0x00
 typedef struct {
-  uint08 writeCount ;
-  uint16 tempo ;
-  uint08 beatCount ;
-  uint08 duration ;
-  uint08 pulseWidth ;
-  uint08 tone[3] ;
-  sint08 oscillatorTune ;
-  uint08 checkSum ;
+  uint08_t writeCount ;
+  uint16_t tempo ;
+  uint08_t beatCount ;
+  uint08_t duration ;
+  uint08_t pulseWidth ;
+  uint08_t tone[3] ;
+  sint08_t oscillatorTune ;
+  uint08_t checkSum ;
 } ConfigurationData ;
 #  define CONFIG_DEFAULT { 0 , 120 , 4 , 32 , 1 , { 249 , 62 , 82 , }, 0 , 0 }
 #  define CONFIG_DATA_SIZE sizeof(ConfigurationData)
@@ -53,15 +53,15 @@ typedef enum {
 
 // ----------------------------------------------------------------
 // [Prototypes]
-void _configuration_WriteByte( uint08 address , uint08 data ) ;
-uint08 _configuration_ReadByte( uint08 address , MemorySelect memorySelect ) ;
+void _configuration_WriteByte( uint08_t address , uint08_t data ) ;
+uint08_t _configuration_ReadByte( uint08_t address , MemorySelect memorySelect ) ;
 
 // ----------------------------------------------------------------
 // [Function] Save
 ReturnCode _configuration_Save( ConfigurationData* config ) {
 
-  uint08* ptrConfig = (uint08*) config ;
-  uint08 romOffset ;
+  uint08_t* ptrConfig = (uint08_t*) config ;
+  uint08_t romOffset ;
   ReturnCode returnCode = RETURN_CODE_NOERROR ;
 
   // Disable All Interrupt
@@ -88,7 +88,7 @@ ReturnCode _configuration_Save( ConfigurationData* config ) {
   config->checkSum = 0x00 ;
 
   // Write Each Byte of Config
-  for ( uint08 i = 0 ; i != CONFIG_DATA_SIZE ; i++ ) {
+  for ( uint08_t i = 0 ; i != CONFIG_DATA_SIZE ; i++ ) {
     _configuration_WriteByte( romOffset + i , ptrConfig[i] ) ;
     config->checkSum ^= ptrConfig[i] ;
     if ( _private_IsError( ) ) {
@@ -117,8 +117,8 @@ ReturnCode _configuration_Save( ConfigurationData* config ) {
 // [Function] Load
 ReturnCode _configuration_Load( ConfigurationData* config ) {
 
-  uint08* ptrConfig = (uint08*) config ;
-  uint08 romOffset ;
+  uint08_t* ptrConfig = (uint08_t*) config ;
+  uint08_t romOffset ;
 
   // Disable All Interrupt
   _private_DisableInterrupt( ) ;
@@ -132,7 +132,7 @@ ReturnCode _configuration_Load( ConfigurationData* config ) {
   config->checkSum = 0x00 ;
 
   // Read Each Byte of Config
-  for ( uint08 i = 0 ; i != CONFIG_DATA_SIZE ; i++ ) {
+  for ( uint08_t i = 0 ; i != CONFIG_DATA_SIZE ; i++ ) {
     ptrConfig[i] = _configuration_ReadByte( romOffset + i , MEMORY_SELECT_EEPROM ) ;
     config->checkSum ^= ptrConfig[i] ;
   }
@@ -148,13 +148,13 @@ ReturnCode _configuration_Load( ConfigurationData* config ) {
 
 // ----------------------------------------------------------------
 // [Function] Get Rom Offset
-uint08 _configuration_GetRomOffset( ) {
+uint08_t _configuration_GetRomOffset( ) {
   return _configuration_ReadByte( ADDRESS_OF_OFFSET , MEMORY_SELECT_EEPROM ) ;
 }
 
 // ----------------------------------------------------------------
 // [Function] Write Byte
-void _configuration_WriteByte( uint08 address , uint08 data ) {
+void _configuration_WriteByte( uint08_t address , uint08_t data ) {
   _private_SetAddress( address ) ;
   _private_SetData( data ) ;
   _private_UnlockFlashProgram( ) ;
@@ -164,7 +164,7 @@ void _configuration_WriteByte( uint08 address , uint08 data ) {
 
 // ----------------------------------------------------------------
 // [Function] Read Byte
-uint08 _configuration_ReadByte( uint08 address , MemorySelect memorySelect ) {
+uint08_t _configuration_ReadByte( uint08_t address , MemorySelect memorySelect ) {
   _private_SetAddress( address ) ;
   _private_ConfugureReading( memorySelect ) ;
   _private_StartRead( ) ;

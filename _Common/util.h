@@ -12,7 +12,7 @@
 extern "C" {
 #  endif
 
-#define Toggle( bit ) {if(bit){bit=0;}else{bit=1;}}
+#define ToggleBool( bit ) {if(bit){bit=0;}else{bit=1;}}
 
 #  ifdef	__cplusplus
 }

@@ -1,0 +1,429 @@
+[p LITE_MODE AUTOSTATIC PIC14 PIC14E ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 12F1822 ]
+[d frameptr 6 ]
+"57 /Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
+[e E2232 . `uc
+STATE_BOOT 0
+STATE_MEASURE 1
+STATE_MENU 2
+STATE_VERSION 3
+STATE_ERROR 4
+]
+"58
+[e E2181 . `uc
+BOOL_FALSE 0
+BOOL_TRUE 1
+]
+"67
+[e E2241 . `uc
+MEASURE_MODE_VOLTAGE 0
+MEASURE_MODE_AD_VALUE 1
+MEASURE_MODE_BAR 2
+]
+"235
+[e E2255 Menu `uc
+MENU_RETURN 0
+MENU_VOLTAGE 1
+MENU_BAR 2
+MENU_AD_VALUE 3
+MENU_VERSION 4
+]
+"62 /Applications/microchip/xc8/v1.34/sources/common/float.c
+[v ___ftpack __ftpack `(f  1 e 3 0 ]
+"86 /Applications/microchip/xc8/v1.34/sources/common/ftadd.c
+[v ___ftadd __ftadd `(f  1 e 3 0 ]
+"6 /Applications/microchip/xc8/v1.34/sources/common/lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+"6 /Applications/microchip/xc8/v1.34/sources/pic/eeprom.c
+[v _eecpymem eecpymem `(v  1 e 0 0 ]
+"24
+[v _memcpyee memcpyee `(v  1 e 0 0 ]
+"39 /Users/kshimada/Development/MPLABX/_Common/aqm0802.h
+[v __aqm0802_SendString _aqm0802_SendString `(uc  1 e 1 0 ]
+"70
+[v __aqm0802_SendStringClearing _aqm0802_SendStringClearing `(uc  1 e 1 0 ]
+"113
+[v __aqm0802_SendCharacter _aqm0802_SendCharacter `(uc  1 e 1 0 ]
+"136
+[v __aqm0802_ClearRow _aqm0802_ClearRow `(uc  1 e 1 0 ]
+"161
+[v __aqm0802_Initialize _aqm0802_Initialize `(uc  1 e 1 0 ]
+"237
+[v __private_aqm0802_SendData _private_aqm0802_SendData `(uc  1 s 1 _private_aqm0802_SendData ]
+"137 /Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
+[v _main main `(i  1 e 2 0 ]
+"391
+[v __ _ `II(v  1 e 0 0 ]
+"9 /Users/kshimada/Development/MPLABX/Voltmeter.X/src/pic12f1822_init.h
+[v _initialize initialize `(v  1 e 0 0 ]
+[s S49 . 1 `uc 1 IOCIF 1 0 :1:0 
+`uc 1 INTF 1 0 :1:1 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 IOCIE 1 0 :1:3 
+`uc 1 INTE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"360 /Applications/microchip/xc8/v1.34/include/pic12f1822.h
+[s S58 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 T0IE 1 0 :1:5 
+]
+[u S63 . 1 `S49 1 . 1 0 `S58 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES63  1 e 1 @11 ]
+"414
+[v _PORTA PORTA `VEuc  1 e 1 @12 ]
+[s S174 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 CCP1IF 1 0 :1:2 
+`uc 1 SSP1IF 1 0 :1:3 
+`uc 1 TXIF 1 0 :1:4 
+`uc 1 RCIF 1 0 :1:5 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 TMR1GIF 1 0 :1:7 
+]
+"720
+[u S183 . 1 `S174 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES183  1 e 1 @17 ]
+"803
+[v _TMR0 TMR0 `VEuc  1 e 1 @21 ]
+[s S114 . 1 `uc 1 TMR1ON 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 nT1SYNC 1 0 :1:2 
+`uc 1 T1OSCEN 1 0 :1:3 
+`uc 1 T1CKPS0 1 0 :1:4 
+`uc 1 T1CKPS1 1 0 :1:5 
+`uc 1 TMR1CS0 1 0 :1:6 
+`uc 1 TMR1CS1 1 0 :1:7 
+]
+"888
+[s S123 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 T1CKPS 1 0 :2:4 
+`uc 1 TMR1CS 1 0 :2:6 
+]
+[u S127 . 1 `S114 1 . 1 0 `S123 1 . 1 0 ]
+[v _T1CONbits T1CONbits `VES127  1 e 1 @24 ]
+"1013
+[v _TMR2 TMR2 `VEuc  1 e 1 @26 ]
+"1032
+[v _PR2 PR2 `VEuc  1 e 1 @27 ]
+[s S144 . 1 `uc 1 T2CKPS0 1 0 :1:0 
+`uc 1 T2CKPS1 1 0 :1:1 
+`uc 1 TMR2ON 1 0 :1:2 
+`uc 1 T2OUTPS0 1 0 :1:3 
+`uc 1 T2OUTPS1 1 0 :1:4 
+`uc 1 T2OUTPS2 1 0 :1:5 
+`uc 1 T2OUTPS3 1 0 :1:6 
+]
+"1072
+[s S152 . 1 `uc 1 T2CKPS 1 0 :2:0 
+`uc 1 . 1 0 :1:2 
+`uc 1 T2OUTPS 1 0 :4:3 
+]
+[u S156 . 1 `S144 1 . 1 0 `S152 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES156  1 e 1 @28 ]
+"1213
+[v _TRISA TRISA `VEuc  1 e 1 @140 ]
+[s S195 . 1 `uc 1 TMR1IE 1 0 :1:0 
+`uc 1 TMR2IE 1 0 :1:1 
+`uc 1 CCP1IE 1 0 :1:2 
+`uc 1 SSP1IE 1 0 :1:3 
+`uc 1 TXIE 1 0 :1:4 
+`uc 1 RCIE 1 0 :1:5 
+`uc 1 ADIE 1 0 :1:6 
+`uc 1 TMR1GIE 1 0 :1:7 
+]
+"1279
+[u S204 . 1 `S195 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES204  1 e 1 @145 ]
+[s S81 . 1 `uc 1 PS0 1 0 :1:0 
+`uc 1 PS1 1 0 :1:1 
+`uc 1 PS2 1 0 :1:2 
+`uc 1 PSA 1 0 :1:3 
+`uc 1 TMR0SE 1 0 :1:4 
+`uc 1 TMR0CS 1 0 :1:5 
+`uc 1 INTEDG 1 0 :1:6 
+`uc 1 nWPUEN 1 0 :1:7 
+]
+"1385
+[s S90 . 1 `uc 1 PS 1 0 :3:0 
+`uc 1 . 1 0 :1:3 
+`uc 1 T0SE 1 0 :1:4 
+`uc 1 T0CS 1 0 :1:5 
+]
+[u S95 . 1 `S81 1 . 1 0 `S90 1 . 1 0 ]
+[v _OPTION_REGbits OPTION_REGbits `VES95  1 e 1 @149 ]
+[s S19 . 1 `uc 1 SCS0 1 0 :1:0 
+`uc 1 SCS1 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 IRCF0 1 0 :1:3 
+`uc 1 IRCF1 1 0 :1:4 
+`uc 1 IRCF2 1 0 :1:5 
+`uc 1 IRCF3 1 0 :1:6 
+`uc 1 SPLLEN 1 0 :1:7 
+]
+"1631
+[s S28 . 1 `uc 1 SCS 1 0 :2:0 
+`uc 1 . 1 0 :1:2 
+`uc 1 IRCF 1 0 :4:3 
+]
+[u S32 . 1 `S19 1 . 1 0 `S28 1 . 1 0 ]
+[v _OSCCONbits OSCCONbits `VES32  1 e 1 @153 ]
+"1747
+[v _ADRESL ADRESL `VEuc  1 e 1 @155 ]
+"1766
+[v _ADRESH ADRESH `VEuc  1 e 1 @156 ]
+[s S272 . 1 `uc 1 ADON 1 0 :1:0 
+`uc 1 GO_nDONE 1 0 :1:1 
+`uc 1 CHS0 1 0 :1:2 
+`uc 1 CHS1 1 0 :1:3 
+`uc 1 CHS2 1 0 :1:4 
+`uc 1 CHS3 1 0 :1:5 
+`uc 1 CHS4 1 0 :1:6 
+]
+"1814
+[s S280 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 ADGO 1 0 :1:1 
+`uc 1 CHS 1 0 :5:2 
+]
+[s S284 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 GO 1 0 :1:1 
+]
+[s S287 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 nDONE 1 0 :1:1 
+]
+[u S290 . 1 `S272 1 . 1 0 `S280 1 . 1 0 `S284 1 . 1 0 `S287 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES290  1 e 1 @157 ]
+[s S314 . 1 `uc 1 ADPREF0 1 0 :1:0 
+`uc 1 ADPREF1 1 0 :1:1 
+`uc 1 . 1 0 :2:2 
+`uc 1 ADCS0 1 0 :1:4 
+`uc 1 ADCS1 1 0 :1:5 
+`uc 1 ADCS2 1 0 :1:6 
+`uc 1 ADFM 1 0 :1:7 
+]
+"1894
+[s S322 . 1 `uc 1 ADPREF 1 0 :2:0 
+`uc 1 . 1 0 :2:2 
+`uc 1 ADCS 1 0 :3:4 
+]
+[u S326 . 1 `S314 1 . 1 0 `S322 1 . 1 0 ]
+[v _ADCON1bits ADCON1bits `VES326  1 e 1 @158 ]
+[s S244 . 1 `uc 1 ADFVR0 1 0 :1:0 
+`uc 1 ADFVR1 1 0 :1:1 
+`uc 1 CDAFVR0 1 0 :1:2 
+`uc 1 CDAFVR1 1 0 :1:3 
+`uc 1 TSRNG 1 0 :1:4 
+`uc 1 TSEN 1 0 :1:5 
+`uc 1 FVRRDY 1 0 :1:6 
+`uc 1 FVREN 1 0 :1:7 
+]
+"2157
+[s S253 . 1 `uc 1 ADFVR 1 0 :2:0 
+`uc 1 CDAFVR 1 0 :2:2 
+]
+[u S256 . 1 `S244 1 . 1 0 `S253 1 . 1 0 ]
+[v _FVRCONbits FVRCONbits `VES256  1 e 1 @279 ]
+"2578
+[v _ANSELA ANSELA `VEuc  1 e 1 @396 ]
+"3174
+[v _SSP1BUF SSP1BUF `VEuc  1 e 1 @529 ]
+"3211
+[v _SSP1ADD SSP1ADD `VEuc  1 e 1 @530 ]
+"3290
+[v _SSPSTAT SSPSTAT `VEuc  1 e 1 @532 ]
+[s S217 . 1 `uc 1 SSPM0 1 0 :1:0 
+`uc 1 SSPM1 1 0 :1:1 
+`uc 1 SSPM2 1 0 :1:2 
+`uc 1 SSPM3 1 0 :1:3 
+`uc 1 CKP 1 0 :1:4 
+`uc 1 SSPEN 1 0 :1:5 
+`uc 1 SSPOV 1 0 :1:6 
+`uc 1 WCOL 1 0 :1:7 
+]
+"3435
+[s S226 . 1 `uc 1 SSPM 1 0 :4:0 
+]
+[u S228 . 1 `S217 1 . 1 0 `S226 1 . 1 0 ]
+[v _SSP1CON1bits SSP1CON1bits `VES228  1 e 1 @533 ]
+[s S356 . 1 `uc 1 SEN 1 0 :1:0 
+`uc 1 RSEN 1 0 :1:1 
+`uc 1 PEN 1 0 :1:2 
+`uc 1 RCEN 1 0 :1:3 
+`uc 1 ACKEN 1 0 :1:4 
+`uc 1 ACKDT 1 0 :1:5 
+`uc 1 ACKSTAT 1 0 :1:6 
+`uc 1 GCEN 1 0 :1:7 
+]
+"3631
+[u S365 . 1 `S356 1 . 1 0 ]
+[v _SSP1CON2bits SSP1CON2bits `VES365  1 e 1 @534 ]
+"5606
+[v _TMR0IE TMR0IE `VEb  1 e 0 @93 ]
+"28 /Users/kshimada/Development/MPLABX/_Common/aqm0802.h
+[v _ROW_SELECT ROW_SELECT `DCC[2]uc  1 e 2 0 ]
+[s S378 . 1 `uc 1 down 1 0 :1:0 
+`uc 1 . 1 0 :2:1 
+`uc 1 menu 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 up 1 0 :1:5 
+]
+"37 /Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
+[u S384 . 1 `uc 1 byte 1 0 `S378 1 . 1 0 ]
+[v _portAState_ portAState_ `S384  1 e 1 0 ]
+"57
+[v _machineState_ machineState_ `E2232  1 e 1 0 ]
+"58
+[v _isHold_ isHold_ `E2181  1 e 1 0 ]
+"67
+[v _measureMode_ measureMode_ `E2241  1 e 1 0 ]
+[s S400 . 12 `*.25DCCuc 1 BOOT 2 0 `*.25DCCuc 1 VOLTAGE 2 2 `*.25DCCuc 1 BAR 2 4 `*.25DCCuc 1 AD_VALUE 2 6 `*.25DCCuc 1 VERSION 2 8 `*.25DCCuc 1 ERROR 2 10 ]
+"79
+[v _MESSAGE MESSAGE `DCCS400  1 e 12 0 ]
+"98
+[v _MESSAGE_MENU MESSAGE_MENU `[5]*.25DCCuc  1 e 10 0 ]
+[s S407 . 2 `uc 1 select 1 0 `uc 1 cursor 1 1 ]
+"108
+[v _menuState_ menuState_ `S407  1 e 2 0 ]
+"114
+[v _sumOfBuffer_ sumOfBuffer_ `ui  1 e 2 0 ]
+[s S410 . 1 `uc 1 keyPressMenu 1 0 :1:0 
+`uc 1 keyPressUp 1 0 :1:1 
+`uc 1 keyPressDown 1 0 :1:2 
+`uc 1 keyPressUpDown 1 0 :1:3 
+`uc 1 changeValue 1 0 :1:4 
+`uc 1 changeMessage 1 0 :1:5 
+`uc 1 error 1 0 :1:6 
+]
+"132
+[u S418 . 1 `uc 1 all 1 0 `S410 1 . 1 0 ]
+[v _events_ events_ `S418  1 e 1 0 ]
+"137
+[v _main main `(i  1 e 2 0 ]
+{
+"369
+[v main@i_661 i `uc  1 a 1 29 ]
+"346
+[v main@compareUnit compareUnit `ui  1 a 2 21 ]
+"334
+[v main@string string `[8]uc  1 a 8 12 ]
+"332
+[v main@adValue adValue `ui  1 a 2 26 ]
+"333
+[v main@digit digit `uc  1 a 1 25 ]
+"161
+[v main@j j `uc  1 a 1 28 ]
+[s S378 . 1 `uc 1 down 1 0 :1:0 
+`uc 1 . 1 0 :2:1 
+`uc 1 menu 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 up 1 0 :1:5 
+]
+"181
+[u S384 . 1 `uc 1 byte 1 0 `S378 1 . 1 0 ]
+[v main@keyPressed keyPressed `S384  1 a 1 23 ]
+"158
+[v main@i i `uc  1 a 1 24 ]
+"153
+[v main@barImage barImage `uc  1 a 1 20 ]
+"180
+[v main@prevPortAState prevPortAState `S384  1 s 1 prevPortAState ]
+"333
+[v main@F2296 F2296 `[8]uc  1 s 8 F2296 ]
+"335
+[v main@compareUnits compareUnits `DCC[5]ui  1 s 10 compareUnits ]
+"386
+} 0
+"9 /Users/kshimada/Development/MPLABX/Voltmeter.X/src/pic12f1822_init.h
+[v _initialize initialize `(v  1 e 0 0 ]
+{
+"67
+} 0
+"70 /Users/kshimada/Development/MPLABX/_Common/aqm0802.h
+[v __aqm0802_SendStringClearing _aqm0802_SendStringClearing `(uc  1 e 1 0 ]
+{
+[v __aqm0802_SendStringClearing@position position `uc  1 a 1 wreg ]
+"72
+[v __aqm0802_SendStringClearing@col col `uc  1 a 1 5 ]
+"70
+[v __aqm0802_SendStringClearing@position position `uc  1 a 1 wreg ]
+[v __aqm0802_SendStringClearing@stringPtr stringPtr `*.25DCCuc  1 p 2 0 ]
+"72
+[v __aqm0802_SendStringClearing@position position `uc  1 a 1 4 ]
+"109
+} 0
+"39
+[v __aqm0802_SendString _aqm0802_SendString `(uc  1 e 1 0 ]
+{
+[v __aqm0802_SendString@position position `uc  1 a 1 wreg ]
+[v __aqm0802_SendString@position position `uc  1 a 1 wreg ]
+[v __aqm0802_SendString@stringPtr stringPtr `*.4DCCuc  1 p 1 0 ]
+"55
+[v __aqm0802_SendString@position position `uc  1 a 1 2 ]
+"65
+} 0
+"113
+[v __aqm0802_SendCharacter _aqm0802_SendCharacter `(uc  1 e 1 0 ]
+{
+[v __aqm0802_SendCharacter@position position `uc  1 a 1 wreg ]
+[v __aqm0802_SendCharacter@position position `uc  1 a 1 wreg ]
+[v __aqm0802_SendCharacter@character character `uc  1 p 1 7 ]
+"125
+[v __aqm0802_SendCharacter@position position `uc  1 a 1 9 ]
+"131
+} 0
+"161
+[v __aqm0802_Initialize _aqm0802_Initialize `(uc  1 e 1 0 ]
+{
+"193
+} 0
+"136
+[v __aqm0802_ClearRow _aqm0802_ClearRow `(uc  1 e 1 0 ]
+{
+[v __aqm0802_ClearRow@rowSelect rowSelect `uc  1 a 1 wreg ]
+"150
+[v __aqm0802_ClearRow@count count `uc  1 a 1 2 ]
+"136
+[v __aqm0802_ClearRow@rowSelect rowSelect `uc  1 a 1 wreg ]
+"148
+[v __aqm0802_ClearRow@rowSelect rowSelect `uc  1 a 1 1 ]
+"157
+} 0
+"237
+[v __private_aqm0802_SendData _private_aqm0802_SendData `(uc  1 s 1 _private_aqm0802_SendData ]
+{
+[v __private_aqm0802_SendData@controlByte controlByte `uc  1 a 1 wreg ]
+[v __private_aqm0802_SendData@controlByte controlByte `uc  1 a 1 wreg ]
+[v __private_aqm0802_SendData@dataByte dataByte `uc  1 p 1 5 ]
+[v __private_aqm0802_SendData@controlByte controlByte `uc  1 a 1 6 ]
+"294
+} 0
+"6 /Applications/microchip/xc8/v1.34/sources/common/lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+{
+"11
+[v ___lwdiv@quotient quotient `ui  1 a 2 5 ]
+"12
+[v ___lwdiv@counter counter `uc  1 a 1 4 ]
+"6
+[v ___lwdiv@divisor divisor `ui  1 p 2 0 ]
+[v ___lwdiv@dividend dividend `ui  1 p 2 2 ]
+"31
+} 0
+"391 /Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
+[v __ _ `II(v  1 e 0 0 ]
+{
+"407
+[v __@adValue adValue `ui  1 a 2 3 ]
+"396
+[v __@interruptCount interruptCount `uc  1 s 1 interruptCount ]
+"405
+[v __@bufferPostiion bufferPostiion `uc  1 s 1 bufferPostiion ]
+"406
+[v __@adBuffer adBuffer `[16]ui  1 s 32 adBuffer ]
+"425
+} 0
