@@ -7,9 +7,9 @@
 [v ___ftpack __ftpack `(f  1 e 3 0 ]
 "86 /Applications/microchip/xc8/v1.34/sources/common/ftadd.c
 [v ___ftadd __ftadd `(f  1 e 3 0 ]
-"51 /Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
+"49 /Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
 [v _countNeighbors countNeighbors `(v  1 e 0 0 ]
-"58
+"57
 [v _main main `(i  1 e 2 0 ]
 "68 /Applications/microchip/xc8/v1.34/include/pic16f54.h
 [v _TMR0 TMR0 `VEuc  1 e 1 @1 ]
@@ -23,31 +23,32 @@
 [v _TRISA TRISA `VEWuc  1 e 1 @5 ]
 "322
 [v _TRISB TRISB `VEWuc  1 e 1 @6 ]
-[u S19 . 1 `uc 1 prescaler 1 0 `uc 1 bitMask 1 0 ]
-"18 /Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-[v _Union Union `S19  1 e 1 0 ]
-[s S22 . 1 `uc 1 x 1 0 :4:0 
+"14 /Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+[v _prescaler_ prescaler_ `uc  1 e 1 0 ]
+"15
+[v _bitMask_ bitMask_ `uc  1 e 1 0 ]
+[s S19 . 1 `uc 1 x 1 0 :4:0 
 `uc 1 y 1 0 :4:4 
 ]
-"26
-[u S25 . 1 `uc 1 all 1 0 `S22 1 . 1 0 ]
-[v _Position Position `S25  1 e 1 0 ]
-"28
-[v _displayBuffer displayBuffer `[8]uc  1 e 8 0 ]
-"29
-[v _calcBuffer calcBuffer `[8]uc  1 e 8 0 ]
-"50
-[v _count count `uc  1 e 1 0 ]
-"58
+"22
+[u S22 . 1 `uc 1 all 1 0 `S19 1 . 1 0 ]
+[v _position_ position_ `S22  1 e 1 0 ]
+"24
+[v _displayBuffer_ displayBuffer_ `[8]uc  1 e 8 0 ]
+"25
+[v _calcBuffer_ calcBuffer_ `[8]uc  1 e 8 0 ]
+"46
+[v _count_ count_ `uc  1 e 1 0 ]
+"57
 [v _main main `(i  1 e 2 0 ]
 {
-"105
+"104
 } 0
-"51
+"49
 [v _countNeighbors countNeighbors `(v  1 e 0 0 ]
 {
 [v countNeighbors@add add `uc  1 a 1 wreg ]
 [v countNeighbors@add add `uc  1 a 1 wreg ]
 [v countNeighbors@add add `uc  1 a 1 0 ]
-"56
+"54
 } 0

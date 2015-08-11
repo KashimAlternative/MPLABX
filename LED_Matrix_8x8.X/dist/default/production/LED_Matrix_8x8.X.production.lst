@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC LITE Macro Assembler V1.34 build -361300703 
-                                                                                               Sat Jul 18 16:50:48 2015
+                                                                                               Wed Aug 12 02:04:22 2015
 
 Microchip Technology Omniscient Code Generator (Lite mode) build 201502162209
      1                           	processor	16F54
@@ -29,7 +29,7 @@ Microchip Technology Omniscient Code Generator (Lite mode) build 201502162209
     23                           	psect	idataBANK0
     24  022                     __pidataBANK0:	
     25                           
-    26                           ;initializer for _calcBuffer
+    26                           ;initializer for _calcBuffer_
     27  022  81C                	retlw	28
     28  023  810                	retlw	16
     29  024  808                	retlw	8
@@ -54,26 +54,26 @@ Microchip Technology Omniscient Code Generator (Lite mode) build 201502162209
     48                           ; Clear objects allocated to BANK0
     49  003  C07                	movlw	__pbssBANK0
     50  004  024                	movwf	4
-    51  005  C12                	movlw	(__pbssBANK0+11)& (0+255)
+    51  005  C13                	movlw	(__pbssBANK0+12)& (0+255)
     52  006  919                	fcall	clear_ram0
     53                           
     54                           ; Initialize objects allocated to BANK0
     55  007  922                	fcall	__pidataBANK0	;fetch initializer
-    56  008  032                	movwf	__pdataBANK0& (0+31)
+    56  008  033                	movwf	__pdataBANK0& (0+31)
     57  009  923                	fcall	__pidataBANK0+1	;fetch initializer
-    58  00A  033                	movwf	(__pdataBANK0+1)& (0+31)
+    58  00A  034                	movwf	(__pdataBANK0+1)& (0+31)
     59  00B  924                	fcall	__pidataBANK0+2	;fetch initializer
-    60  00C  034                	movwf	(__pdataBANK0+2)& (0+31)
+    60  00C  035                	movwf	(__pdataBANK0+2)& (0+31)
     61  00D  925                	fcall	__pidataBANK0+3	;fetch initializer
-    62  00E  035                	movwf	(__pdataBANK0+3)& (0+31)
+    62  00E  036                	movwf	(__pdataBANK0+3)& (0+31)
     63  00F  926                	fcall	__pidataBANK0+4	;fetch initializer
-    64  010  036                	movwf	(__pdataBANK0+4)& (0+31)
+    64  010  037                	movwf	(__pdataBANK0+4)& (0+31)
     65  011  927                	fcall	__pidataBANK0+5	;fetch initializer
-    66  012  037                	movwf	(__pdataBANK0+5)& (0+31)
+    66  012  038                	movwf	(__pdataBANK0+5)& (0+31)
     67  013  928                	fcall	__pidataBANK0+6	;fetch initializer
-    68  014  038                	movwf	(__pdataBANK0+6)& (0+31)
+    68  014  039                	movwf	(__pdataBANK0+6)& (0+31)
     69  015  929                	fcall	__pidataBANK0+7	;fetch initializer
-    70  016  039                	movwf	(__pdataBANK0+7)& (0+31)
+    70  016  03A                	movwf	(__pdataBANK0+7)& (0+31)
     71  017                     end_of_initialization:	
     72                           ;End of C runtime variable initialization code
     73                           
@@ -83,407 +83,409 @@ Microchip Technology Omniscient Code Generator (Lite mode) build 201502162209
     77                           
     78                           	psect	bssBANK0
     79  007                     __pbssBANK0:	
-    80  007                     _displayBuffer:	
+    80  007                     _displayBuffer_:	
     81  007                     	ds	8
-    82  00F                     _Position:	
+    82  00F                     _bitMask_:	
     83  00F                     	ds	1
-    84  010                     _Union:	
+    84  010                     _count_:	
     85  010                     	ds	1
-    86  011                     _count:	
+    86  011                     _position_:	
     87  011                     	ds	1
-    88                           
-    89                           	psect	dataBANK0
-    90  012                     __pdataBANK0:	
-    91  012                     _calcBuffer:	
-    92  012                     	ds	8
-    93                           
-    94                           	psect	clrtext
-    95  019                     clear_ram0:	
-    96                           ;	Called with FSR containing the base address, and
-    97                           ;	W with the last address+1
-    98                           
-    99  019  004                	clrwdt	;clear the watchdog before getting into this loop
-   100  01A                     clrloop0:	
-   101  01A  060                	clrf	0	;clear RAM location pointed to by FSR
-   102  01B  2A4                	incf	4,f	;increment pointer
-   103  01C  184                	xorwf	4,w	;XOR with final address
-   104  01D  E1F                	andlw	31	;Test low bits only
-   105  01E  643                	btfsc	3,2	;have we reached the end yet?
-   106  01F  800                	retlw	0	;all done for this memory range, return
-   107  020  184                	xorwf	4,w	;XOR again to restore value
-   108  021  A1A                	goto	clrloop0	;do the next byte
-   109                           
-   110                           	psect	cstackCOMMON
-   111  000                     __pcstackCOMMON:	
-   112  000                     ??_countNeighbors:	
-   113  000                     ??_main:	
-   114                           ; 0 bytes @ 0x0
-   115                           
-   116                           
-   117                           	psect	cstackBANK0
-   118  01A                     __pcstackBANK0:	
-   119                           ; 0 bytes @ 0x0
-   120                           
-   121  01A                     ?_countNeighbors:	
-   122  01A                     ?_main:	
-   123                           ; 0 bytes @ 0x0
-   124                           
-   125  01A                     countNeighbors@add:	
-   126                           ; 2 bytes @ 0x0
-   127                           
-   128                           
-   129                           ; 1 bytes @ 0x0
-   130  01A                     	ds	1
-   131                           
-   132                           	psect	maintext
-   133  18C                     __pmaintext:	
-   134 ;;
-   135 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+    88  012                     _prescaler_:	
+    89  012                     	ds	1
+    90                           
+    91                           	psect	dataBANK0
+    92  013                     __pdataBANK0:	
+    93  013                     _calcBuffer_:	
+    94  013                     	ds	8
+    95                           
+    96                           	psect	clrtext
+    97  019                     clear_ram0:	
+    98                           ;	Called with FSR containing the base address, and
+    99                           ;	W with the last address+1
+   100                           
+   101  019  004                	clrwdt	;clear the watchdog before getting into this loop
+   102  01A                     clrloop0:	
+   103  01A  060                	clrf	0	;clear RAM location pointed to by FSR
+   104  01B  2A4                	incf	4,f	;increment pointer
+   105  01C  184                	xorwf	4,w	;XOR with final address
+   106  01D  E1F                	andlw	31	;Test low bits only
+   107  01E  643                	btfsc	3,2	;have we reached the end yet?
+   108  01F  800                	retlw	0	;all done for this memory range, return
+   109  020  184                	xorwf	4,w	;XOR again to restore value
+   110  021  A1A                	goto	clrloop0	;do the next byte
+   111                           
+   112                           	psect	cstackCOMMON
+   113  000                     __pcstackCOMMON:	
+   114  000                     ??_countNeighbors:	
+   115  000                     ??_main:	
+   116                           ; 0 bytes @ 0x0
+   117                           
+   118                           
+   119                           	psect	cstackBANK0
+   120  01B                     __pcstackBANK0:	
+   121                           ; 0 bytes @ 0x0
+   122                           
+   123  01B                     ?_countNeighbors:	
+   124  01B                     ?_main:	
+   125                           ; 0 bytes @ 0x0
+   126                           
+   127  01B                     countNeighbors@add:	
+   128                           ; 2 bytes @ 0x0
+   129                           
+   130                           
+   131                           ; 1 bytes @ 0x0
+   132  01B                     	ds	1
+   133                           
+   134                           	psect	maintext
+   135  18C                     __pmaintext:	
    136 ;;
-   137 ;; *************** function _main *****************
-   138 ;; Defined at:
-   139 ;;		line 58 in file "main.c"
-   140 ;; Parameters:    Size  Location     Type
-   141 ;;		None
-   142 ;; Auto vars:     Size  Location     Type
+   137 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   138 ;;
+   139 ;; *************** function _main *****************
+   140 ;; Defined at:
+   141 ;;		line 57 in file "src/main.c"
+   142 ;; Parameters:    Size  Location     Type
    143 ;;		None
-   144 ;; Return value:  Size  Location     Type
-   145 ;;                  2   30[None  ] int 
-   146 ;; Registers used:
-   147 ;;		wreg, fsr0l, fsr0h, status,2, status,0, btemp+0, btemp+2, btemp+3, pclath, cstack
-   148 ;; Tracked objects:
-   149 ;;		On entry : B00/0
-   150 ;;		On exit  : 0/0
-   151 ;;		Unchanged: 0/0
-   152 ;; Data sizes:     COMMON   BANK0
-   153 ;;      Params:         0       0
-   154 ;;      Locals:         0       0
-   155 ;;      Temps:          0       0
-   156 ;;      Totals:         0       0
-   157 ;;Total ram usage:        0 bytes
-   158 ;; Hardware stack levels required when called:    1
-   159 ;; This function calls:
-   160 ;;		_countNeighbors
-   161 ;; This function is called by:
-   162 ;;		Startup code after reset
-   163 ;; This function uses a non-reentrant model
-   164 ;;
-   165                           
-   166                           
-   167                           ;psect for function _main
-   168  18C                     _main:	
-   169                           
-   170                           ;main.c: 61: OPTION = 0b00011111 ;
+   144 ;; Auto vars:     Size  Location     Type
+   145 ;;		None
+   146 ;; Return value:  Size  Location     Type
+   147 ;;                  2   32[None  ] int 
+   148 ;; Registers used:
+   149 ;;		wreg, fsr0l, fsr0h, status,2, status,0, btemp+0, btemp+2, btemp+3, pclath, cstack
+   150 ;; Tracked objects:
+   151 ;;		On entry : B00/0
+   152 ;;		On exit  : 0/0
+   153 ;;		Unchanged: 0/0
+   154 ;; Data sizes:     COMMON   BANK0
+   155 ;;      Params:         0       0
+   156 ;;      Locals:         0       0
+   157 ;;      Temps:          0       0
+   158 ;;      Totals:         0       0
+   159 ;;Total ram usage:        0 bytes
+   160 ;; Hardware stack levels required when called:    1
+   161 ;; This function calls:
+   162 ;;		_countNeighbors
+   163 ;; This function is called by:
+   164 ;;		Startup code after reset
+   165 ;; This function uses a non-reentrant model
+   166 ;;
+   167                           
+   168                           
+   169                           ;psect for function _main
+   170  18C                     _main:	
    171                           
-   172                           ;incstack = 0
-   173                           ; Regs used in _main: [wreg-fsr0h+status,2-btemp+0+btemp+2+btemp+3+pclath+cstack]
-   174  18C  C1F                	movlw	31
-   175  18D  002                	option
-   176                           
-   177                           ;main.c: 62: TRISB = 0x00 ;
-   178  18E  C00                	movlw	0
-   179  18F  006                	tris	6
-   180                           
-   181                           ;main.c: 63: TRISA = 0x00 ;
-   182  190  C00                	movlw	0
-   183  191  005                	tris	5
-   184  192                     l501:	
-   185                           ;main.c: 65: for( ; ; ) {
-   186                           
-   187                           
-   188                           ;main.c: 67: PORTA = Union.prescaler & 0x07 ;
-   189  192  210                	movf	_Union,w
-   190  193  E07                	andlw	7
-   191  194  025                	movwf	5	;volatile
-   192                           
-   193                           ;main.c: 68: PORTB = displayBuffer[ PORTA ] = calcBuffer[ PORTA ] ;
-   194  195  C12                	movlw	low (_calcBuffer| 0)
-   195  196  1C5                	addwf	5,w
-   196  197  024                	movwf	4
-   197  198  200                	movf	0,w
-   198  199  03F                	movwf	31
-   199  19A  C07                	movlw	low (_displayBuffer| 0)
-   200  19B  1C5                	addwf	5,w
-   201  19C  024                	movwf	4
-   202  19D  21F                	movf	31,w
-   203  19E  020                	movwf	0
-   204  19F  200                	movf	0,w
-   205  1A0  026                	movwf	6	;volatile
-   206                           
-   207                           ;main.c: 69: PORTA |= 0x08 ;
-   208  1A1  565                	bsf	5,3	;volatile
-   209                           
-   210                           ;main.c: 71: TMR0 = 0xC0 ;
-   211  1A2  CC0                	movlw	192
-   212  1A3  021                	movwf	1	;volatile
-   213  1A4                     l509:	
-   214                           ;main.c: 72: while( TMR0 ) __nop() ;
-   215                           
-   216  1A4  201                	movf	1,w	;volatile
-   217  1A5  643                	btfsc	3,2
-   218  1A6  BA9                	goto	l511
-   219  1A7  000                	nop
-   220  1A8  BA4                	goto	l509
-   221  1A9                     l511:	
-   222                           
-   223                           ;main.c: 74: if( ++Union.prescaler ) continue ;
-   224  1A9  C01                	movlw	1
-   225  1AA  03F                	movwf	31
-   226  1AB  21F                	movf	31,w
-   227  1AC  1F0                	addwf	_Union,f
-   228  1AD  743                	btfss	3,2
-   229  1AE  B92                	goto	l501
-   230                           
-   231                           ;main.c: 76: PORTA = 0x00 ;
-   232  1AF  065                	clrf	5	;volatile
-   233                           
-   234                           ;main.c: 78: for( Position.all = 0x00 ; !( Position.all & 0x08 ) ; Position.all++ ) {
-   235  1B0  06F                	clrf	_Position
-   236  1B1                     l561:	
-   237  1B1  66F                	btfsc	_Position,3
-   238  1B2  B92                	goto	l501
-   239                           
-   240                           ;main.c: 79: calcBuffer[ Position.all & 0x0F ] = 0x00 ;
-   241  1B3  20F                	movf	_Position,w
-   242  1B4  E0F                	andlw	15
-   243  1B5  03C                	movwf	28
-   244  1B6  C12                	movlw	low (_calcBuffer| 0)
-   245  1B7  1DC                	addwf	28,w
-   246  1B8  024                	movwf	4
-   247  1B9  060                	clrf	0
-   248                           
-   249                           ;main.c: 80: Union.bitMask = 0x01 ;
-   250  1BA  070                	clrf	_Union
-   251  1BB  2B0                	incf	_Union,f
-   252                           
-   253                           ;main.c: 81: for( Position.all &= 0x0F ; !( Position.all & 0x80 ) ; Position.all += 0x10
-      +                           ) {
-   254  1BC  C0F                	movlw	15
-   255  1BD  03F                	movwf	31
-   256  1BE  21F                	movf	31,w
-   257  1BF  16F                	andwf	_Position,f
-   258  1C0                     l557:	
-   259  1C0  6EF                	btfsc	_Position,7
-   260  1C1  BFA                	goto	l559
-   261                           
-   262                           ;main.c: 83: count = 0 ;
-   263  1C2  071                	clrf	_count
-   264                           
-   265                           ;main.c: 85: countNeighbors( 0x01 ) ;
-   266  1C3  C01                	movlw	1
-   267  1C4  92A                	fcall	entry__countNeighbors
-   268                           
-   269                           ;main.c: 86: countNeighbors( 0x16 ) ;
-   270  1C5  C16                	movlw	22
-   271  1C6  92A                	fcall	entry__countNeighbors
-   272                           
-   273                           ;main.c: 87: countNeighbors( 0x01 ) ;
-   274  1C7  C01                	movlw	1
-   275  1C8  92A                	fcall	entry__countNeighbors
-   276                           
-   277                           ;main.c: 88: countNeighbors( 0x01 ) ;
-   278  1C9  C01                	movlw	1
-   279  1CA  92A                	fcall	entry__countNeighbors
-   280                           
-   281                           ;main.c: 89: countNeighbors( 0x66 ) ;
-   282  1CB  C66                	movlw	102
-   283  1CC  92A                	fcall	entry__countNeighbors
-   284                           
-   285                           ;main.c: 90: countNeighbors( 0x01 ) ;
-   286  1CD  C01                	movlw	1
-   287  1CE  92A                	fcall	entry__countNeighbors
-   288                           
-   289                           ;main.c: 91: countNeighbors( 0x01 ) ;
-   290  1CF  C01                	movlw	1
-   291  1D0  92A                	fcall	entry__countNeighbors
-   292                           
-   293                           ;main.c: 92: countNeighbors( 0x16 ) ;
-   294  1D1  C16                	movlw	22
-   295  1D2  92A                	fcall	entry__countNeighbors
-   296                           
-   297                           ;main.c: 93: countNeighbors( 0x01 ) ;
-   298  1D3  C01                	movlw	1
-   299  1D4  92A                	fcall	entry__countNeighbors
-   300                           
-   301                           ;main.c: 95: if( ( count == 3 ) || ( displayBuffer[ Position.x ] & Union.bitMask ) && ( 
-      +                          count == 4 ) )
-   302  1D5  C03                	movlw	3
-   303  1D6  191                	xorwf	_count,w
-   304  1D7  643                	btfsc	3,2
-   305  1D8  BE9                	goto	l551
-   306  1D9  210                	movf	_Union,w
-   307  1DA  03F                	movwf	31
-   308  1DB  20F                	movf	_Position,w
-   309  1DC  E0F                	andlw	15
-   310  1DD  03C                	movwf	28
-   311  1DE  C07                	movlw	low (_displayBuffer| 0)
-   312  1DF  1DC                	addwf	28,w
-   313  1E0  024                	movwf	4
-   314  1E1  200                	movf	0,w
-   315  1E2  15F                	andwf	31,w
-   316  1E3  643                	btfsc	3,2
-   317  1E4  BF3                	goto	l553
-   318  1E5  C04                	movlw	4
-   319  1E6  191                	xorwf	_count,w
-   320  1E7  743                	btfss	3,2
-   321  1E8  BF3                	goto	l553
-   322  1E9                     l551:	
-   323                           
-   324                           ;main.c: 96: calcBuffer[ Position.x ] |= Union.bitMask ;
-   325  1E9  210                	movf	_Union,w
-   326  1EA  03F                	movwf	31
-   327  1EB  20F                	movf	_Position,w
-   328  1EC  E0F                	andlw	15
-   329  1ED  03C                	movwf	28
-   330  1EE  C12                	movlw	low (_calcBuffer| 0)
-   331  1EF  1DC                	addwf	28,w
-   332  1F0  024                	movwf	4
-   333  1F1  21F                	movf	31,w
-   334  1F2  120                	iorwf	0,f
-   335  1F3                     l553:	
-   336                           
-   337                           ;main.c: 98: Union.bitMask <<= 1 ;
-   338  1F3  403                	clrc
-   339  1F4  370                	rlf	_Union,f
-   340  1F5  C10                	movlw	16
-   341  1F6  03F                	movwf	31
-   342  1F7  21F                	movf	31,w
-   343  1F8  1EF                	addwf	_Position,f
-   344  1F9  BC0                	goto	l557
-   345  1FA                     l559:	
-   346  1FA  C01                	movlw	1
-   347  1FB  03F                	movwf	31
-   348  1FC  21F                	movf	31,w
-   349  1FD  1EF                	addwf	_Position,f
-   350  1FE  BB1                	goto	l561
-   351  1FF                     __end_of_main:	
-   352                           ;main.c: 100: }
-   353                           ;main.c: 101: }
-   354                           ;main.c: 103: }
-   355                           
-   356                           
-   357                           	psect	text1
-   358  16B                     __ptext1:	
-   359 ;; *************** function _countNeighbors *****************
-   360 ;; Defined at:
-   361 ;;		line 51 in file "main.c"
-   362 ;; Parameters:    Size  Location     Type
-   363 ;;  add             1    wreg     unsigned char 
-   364 ;; Auto vars:     Size  Location     Type
-   365 ;;  add             1    0[BANK0 ] unsigned char 
-   366 ;; Return value:  Size  Location     Type
-   367 ;;		None               void
-   368 ;; Registers used:
-   369 ;;		wreg, fsr0l, fsr0h, status,2, status,0, btemp+0, btemp+2, btemp+3
-   370 ;; Tracked objects:
-   371 ;;		On entry : 0/0
-   372 ;;		On exit  : 0/0
-   373 ;;		Unchanged: 0/0
-   374 ;; Data sizes:     COMMON   BANK0
-   375 ;;      Params:         0       0
-   376 ;;      Locals:         0       1
-   377 ;;      Temps:          0       0
-   378 ;;      Totals:         0       1
-   379 ;;Total ram usage:        1 bytes
-   380 ;; Hardware stack levels used:    1
-   381 ;; This function calls:
-   382 ;;		Nothing
-   383 ;; This function is called by:
-   384 ;;		_main
-   385 ;; This function uses a non-reentrant model
-   386 ;;
-   387                           
-   388                           
-   389                           ;psect for function _countNeighbors
-   390  16B                     _countNeighbors:	
-   391                           
-   392                           ;countNeighbors@add stored from wreg
-   393  16B  03A                	movwf	countNeighbors@add
-   394                           
-   395                           ;main.c: 52: Position.all += add ;
-   396  16C  21A                	movf	countNeighbors@add,w
-   397  16D  03F                	movwf	31
-   398  16E  21F                	movf	31,w
-   399  16F  1EF                	addwf	_Position,f
-   400                           
-   401                           ;main.c: 53: Position.all &= 0x77 ;
-   402  170  C77                	movlw	119
-   403  171  03F                	movwf	31
-   404  172  21F                	movf	31,w
-   405  173  16F                	andwf	_Position,f
-   406                           
-   407                           ;main.c: 54: if( ( displayBuffer[ Position.x ] >> ( Position.y ) ) & 0x01 )
-   408  174  38F                	swapf	_Position,w
-   409  175  E0F                	andlw	15
-   410  176  03F                	movwf	31
-   411  177  2BF                	incf	31,f
-   412  178  20F                	movf	_Position,w
-   413  179  E0F                	andlw	15
-   414  17A  03C                	movwf	28
-   415  17B  C07                	movlw	low (_displayBuffer| 0)
-   416  17C  1DC                	addwf	28,w
-   417  17D  024                	movwf	4
-   418  17E  200                	movf	0,w
-   419  17F  03E                	movwf	30
-   420  180  B83                	goto	u104
-   421  181                     u105:	
-   422  181  403                	clrc
-   423  182  33E                	rrf	30,f
-   424  183                     u104:	
-   425  183  2FF                	decfsz	31,f
-   426  184  B81                	goto	u105
-   427  185  71E                	btfss	30,0
-   428  186  800                	retlw	0
-   429                           
-   430                           ;main.c: 55: count++ ;
-   431  187  C01                	movlw	1
-   432  188  03F                	movwf	31
-   433  189  21F                	movf	31,w
-   434  18A  1F1                	addwf	_count,f
-   435  18B  800                	retlw	0
-   436  18C                     __end_of_countNeighbors:	
-   437  001C                     btemp	set	28	;btemp
-   438  001C                     wtemp	set	28
-   439  001C                     wtemp0	set	28
-   440  001E                     wtemp1	set	30
-   441  0020                     wtemp2	set	32
-   442  0022                     wtemp3	set	34
-   443  0024                     wtemp4	set	36
-   444  0026                     wtemp5	set	38
-   445  001D                     wtemp6	set	29
-   446  001C                     ttemp	set	28
-   447  001C                     ttemp0	set	28
-   448  001F                     ttemp1	set	31
-   449  0022                     ttemp2	set	34
-   450  0025                     ttemp3	set	37
-   451  001D                     ttemp4	set	29
-   452  001C                     ltemp	set	28
-   453  001C                     ltemp0	set	28
-   454  0020                     ltemp1	set	32
-   455  0024                     ltemp2	set	36
-   456  001E                     ltemp3	set	30
-   457                           
-   458                           	psect	jmp_tab
-   459  02A                     __pjmp_tab:	
-   460                           ;incstack = 0
-   461                           ; Regs used in _countNeighbors: [wreg-fsr0h+status,2-btemp+0+btemp+2+btemp+3]
-   462                           
-   463  02A                     entry__countNeighbors:	
-   464  02A  B6B                	ljmp	_countNeighbors
+   172                           ;main.c: 60: OPTION = 0b00011111 ;
+   173                           
+   174                           ;incstack = 0
+   175                           ; Regs used in _main: [wreg-fsr0h+status,2-btemp+0+btemp+2+btemp+3+pclath+cstack]
+   176  18C  C1F                	movlw	31
+   177  18D  002                	option
+   178                           
+   179                           ;main.c: 61: TRISB = 0x00 ;
+   180  18E  C00                	movlw	0
+   181  18F  006                	tris	6
+   182                           
+   183                           ;main.c: 62: TRISA = 0x00 ;
+   184  190  C00                	movlw	0
+   185  191  005                	tris	5
+   186  192                     l503:	
+   187                           ;main.c: 64: for( ; ; ) {
+   188                           
+   189                           
+   190                           ;main.c: 66: PORTA = prescaler_ & 0x07 ;
+   191  192  212                	movf	_prescaler_,w
+   192  193  E07                	andlw	7
+   193  194  025                	movwf	5	;volatile
+   194                           
+   195                           ;main.c: 67: PORTB = displayBuffer_[ PORTA ] = calcBuffer_[ PORTA ] ;
+   196  195  C13                	movlw	low (_calcBuffer_| 0)
+   197  196  1C5                	addwf	5,w
+   198  197  024                	movwf	4
+   199  198  200                	movf	0,w
+   200  199  03F                	movwf	31
+   201  19A  C07                	movlw	low (_displayBuffer_| 0)
+   202  19B  1C5                	addwf	5,w
+   203  19C  024                	movwf	4
+   204  19D  21F                	movf	31,w
+   205  19E  020                	movwf	0
+   206  19F  200                	movf	0,w
+   207  1A0  026                	movwf	6	;volatile
+   208                           
+   209                           ;main.c: 68: PORTA |= 0x08 ;
+   210  1A1  565                	bsf	5,3	;volatile
+   211                           
+   212                           ;main.c: 70: TMR0 = 0xC0 ;
+   213  1A2  CC0                	movlw	192
+   214  1A3  021                	movwf	1	;volatile
+   215  1A4                     l511:	
+   216                           ;main.c: 71: while( TMR0 ) __nop() ;
+   217                           
+   218  1A4  201                	movf	1,w	;volatile
+   219  1A5  643                	btfsc	3,2
+   220  1A6  BA9                	goto	l513
+   221  1A7  000                	nop
+   222  1A8  BA4                	goto	l511
+   223  1A9                     l513:	
+   224                           
+   225                           ;main.c: 73: if( ++prescaler_ ) continue ;
+   226  1A9  C01                	movlw	1
+   227  1AA  03F                	movwf	31
+   228  1AB  21F                	movf	31,w
+   229  1AC  1F2                	addwf	_prescaler_,f
+   230  1AD  743                	btfss	3,2
+   231  1AE  B92                	goto	l503
+   232                           
+   233                           ;main.c: 75: PORTA = 0x00 ;
+   234  1AF  065                	clrf	5	;volatile
+   235                           
+   236                           ;main.c: 77: for( position_.all = 0x00 ; !( position_.all & 0x08 ) ; position_.all++ ) {
+   237  1B0  071                	clrf	_position_
+   238  1B1                     l563:	
+   239  1B1  671                	btfsc	_position_,3
+   240  1B2  B92                	goto	l503
+   241                           
+   242                           ;main.c: 78: calcBuffer_[ position_.all & 0x0F ] = 0x00 ;
+   243  1B3  211                	movf	_position_,w
+   244  1B4  E0F                	andlw	15
+   245  1B5  03C                	movwf	28
+   246  1B6  C13                	movlw	low (_calcBuffer_| 0)
+   247  1B7  1DC                	addwf	28,w
+   248  1B8  024                	movwf	4
+   249  1B9  060                	clrf	0
+   250                           
+   251                           ;main.c: 79: bitMask_ = 0x01 ;
+   252  1BA  06F                	clrf	_bitMask_
+   253  1BB  2AF                	incf	_bitMask_,f
+   254                           
+   255                           ;main.c: 80: for( position_.all &= 0x0F ; !( position_.all & 0x80 ) ; position_.all += 0
+      +                          x10 ) {
+   256  1BC  C0F                	movlw	15
+   257  1BD  03F                	movwf	31
+   258  1BE  21F                	movf	31,w
+   259  1BF  171                	andwf	_position_,f
+   260  1C0                     l559:	
+   261  1C0  6F1                	btfsc	_position_,7
+   262  1C1  BFA                	goto	l561
+   263                           
+   264                           ;main.c: 82: count_ = 0 ;
+   265  1C2  070                	clrf	_count_
+   266                           
+   267                           ;main.c: 84: countNeighbors( 0x01 ) ;
+   268  1C3  C01                	movlw	1
+   269  1C4  92A                	fcall	entry__countNeighbors
+   270                           
+   271                           ;main.c: 85: countNeighbors( 0x16 ) ;
+   272  1C5  C16                	movlw	22
+   273  1C6  92A                	fcall	entry__countNeighbors
+   274                           
+   275                           ;main.c: 86: countNeighbors( 0x01 ) ;
+   276  1C7  C01                	movlw	1
+   277  1C8  92A                	fcall	entry__countNeighbors
+   278                           
+   279                           ;main.c: 87: countNeighbors( 0x01 ) ;
+   280  1C9  C01                	movlw	1
+   281  1CA  92A                	fcall	entry__countNeighbors
+   282                           
+   283                           ;main.c: 88: countNeighbors( 0x66 ) ;
+   284  1CB  C66                	movlw	102
+   285  1CC  92A                	fcall	entry__countNeighbors
+   286                           
+   287                           ;main.c: 89: countNeighbors( 0x01 ) ;
+   288  1CD  C01                	movlw	1
+   289  1CE  92A                	fcall	entry__countNeighbors
+   290                           
+   291                           ;main.c: 90: countNeighbors( 0x01 ) ;
+   292  1CF  C01                	movlw	1
+   293  1D0  92A                	fcall	entry__countNeighbors
+   294                           
+   295                           ;main.c: 91: countNeighbors( 0x16 ) ;
+   296  1D1  C16                	movlw	22
+   297  1D2  92A                	fcall	entry__countNeighbors
+   298                           
+   299                           ;main.c: 92: countNeighbors( 0x01 ) ;
+   300  1D3  C01                	movlw	1
+   301  1D4  92A                	fcall	entry__countNeighbors
+   302                           
+   303                           ;main.c: 94: if( ( count_ == 3 ) || ( displayBuffer_[ position_.x ] & bitMask_ ) && ( co
+      +                          unt_ == 4 ) )
+   304  1D5  C03                	movlw	3
+   305  1D6  190                	xorwf	_count_,w
+   306  1D7  643                	btfsc	3,2
+   307  1D8  BE9                	goto	l553
+   308  1D9  20F                	movf	_bitMask_,w
+   309  1DA  03F                	movwf	31
+   310  1DB  211                	movf	_position_,w
+   311  1DC  E0F                	andlw	15
+   312  1DD  03C                	movwf	28
+   313  1DE  C07                	movlw	low (_displayBuffer_| 0)
+   314  1DF  1DC                	addwf	28,w
+   315  1E0  024                	movwf	4
+   316  1E1  200                	movf	0,w
+   317  1E2  15F                	andwf	31,w
+   318  1E3  643                	btfsc	3,2
+   319  1E4  BF3                	goto	l555
+   320  1E5  C04                	movlw	4
+   321  1E6  190                	xorwf	_count_,w
+   322  1E7  743                	btfss	3,2
+   323  1E8  BF3                	goto	l555
+   324  1E9                     l553:	
+   325                           
+   326                           ;main.c: 95: calcBuffer_[ position_.x ] |= bitMask_ ;
+   327  1E9  20F                	movf	_bitMask_,w
+   328  1EA  03F                	movwf	31
+   329  1EB  211                	movf	_position_,w
+   330  1EC  E0F                	andlw	15
+   331  1ED  03C                	movwf	28
+   332  1EE  C13                	movlw	low (_calcBuffer_| 0)
+   333  1EF  1DC                	addwf	28,w
+   334  1F0  024                	movwf	4
+   335  1F1  21F                	movf	31,w
+   336  1F2  120                	iorwf	0,f
+   337  1F3                     l555:	
+   338                           
+   339                           ;main.c: 97: bitMask_ <<= 1 ;
+   340  1F3  403                	clrc
+   341  1F4  36F                	rlf	_bitMask_,f
+   342  1F5  C10                	movlw	16
+   343  1F6  03F                	movwf	31
+   344  1F7  21F                	movf	31,w
+   345  1F8  1F1                	addwf	_position_,f
+   346  1F9  BC0                	goto	l559
+   347  1FA                     l561:	
+   348  1FA  C01                	movlw	1
+   349  1FB  03F                	movwf	31
+   350  1FC  21F                	movf	31,w
+   351  1FD  1F1                	addwf	_position_,f
+   352  1FE  BB1                	goto	l563
+   353  1FF                     __end_of_main:	
+   354                           ;main.c: 99: }
+   355                           ;main.c: 100: }
+   356                           ;main.c: 102: }
+   357                           
+   358                           
+   359                           	psect	text1
+   360  16B                     __ptext1:	
+   361 ;; *************** function _countNeighbors *****************
+   362 ;; Defined at:
+   363 ;;		line 49 in file "src/main.c"
+   364 ;; Parameters:    Size  Location     Type
+   365 ;;  add             1    wreg     unsigned char 
+   366 ;; Auto vars:     Size  Location     Type
+   367 ;;  add             1    0[BANK0 ] unsigned char 
+   368 ;; Return value:  Size  Location     Type
+   369 ;;		None               void
+   370 ;; Registers used:
+   371 ;;		wreg, fsr0l, fsr0h, status,2, status,0, btemp+0, btemp+2, btemp+3
+   372 ;; Tracked objects:
+   373 ;;		On entry : 0/0
+   374 ;;		On exit  : 0/0
+   375 ;;		Unchanged: 0/0
+   376 ;; Data sizes:     COMMON   BANK0
+   377 ;;      Params:         0       0
+   378 ;;      Locals:         0       1
+   379 ;;      Temps:          0       0
+   380 ;;      Totals:         0       1
+   381 ;;Total ram usage:        1 bytes
+   382 ;; Hardware stack levels used:    1
+   383 ;; This function calls:
+   384 ;;		Nothing
+   385 ;; This function is called by:
+   386 ;;		_main
+   387 ;; This function uses a non-reentrant model
+   388 ;;
+   389                           
+   390                           
+   391                           ;psect for function _countNeighbors
+   392  16B                     _countNeighbors:	
+   393                           
+   394                           ;countNeighbors@add stored from wreg
+   395  16B  03B                	movwf	countNeighbors@add
+   396                           
+   397                           ;main.c: 50: position_.all += add ;
+   398  16C  21B                	movf	countNeighbors@add,w
+   399  16D  03F                	movwf	31
+   400  16E  21F                	movf	31,w
+   401  16F  1F1                	addwf	_position_,f
+   402                           
+   403                           ;main.c: 51: position_.all &= 0x77 ;
+   404  170  C77                	movlw	119
+   405  171  03F                	movwf	31
+   406  172  21F                	movf	31,w
+   407  173  171                	andwf	_position_,f
+   408                           
+   409                           ;main.c: 52: if( ( displayBuffer_[ position_.x ] >> ( position_.y ) ) & 0x01 )
+   410  174  391                	swapf	_position_,w
+   411  175  E0F                	andlw	15
+   412  176  03F                	movwf	31
+   413  177  2BF                	incf	31,f
+   414  178  211                	movf	_position_,w
+   415  179  E0F                	andlw	15
+   416  17A  03C                	movwf	28
+   417  17B  C07                	movlw	low (_displayBuffer_| 0)
+   418  17C  1DC                	addwf	28,w
+   419  17D  024                	movwf	4
+   420  17E  200                	movf	0,w
+   421  17F  03E                	movwf	30
+   422  180  B83                	goto	u104
+   423  181                     u105:	
+   424  181  403                	clrc
+   425  182  33E                	rrf	30,f
+   426  183                     u104:	
+   427  183  2FF                	decfsz	31,f
+   428  184  B81                	goto	u105
+   429  185  71E                	btfss	30,0
+   430  186  800                	retlw	0
+   431                           
+   432                           ;main.c: 53: count_++ ;
+   433  187  C01                	movlw	1
+   434  188  03F                	movwf	31
+   435  189  21F                	movf	31,w
+   436  18A  1F0                	addwf	_count_,f
+   437  18B  800                	retlw	0
+   438  18C                     __end_of_countNeighbors:	
+   439  001C                     btemp	set	28	;btemp
+   440  001C                     wtemp	set	28
+   441  001C                     wtemp0	set	28
+   442  001E                     wtemp1	set	30
+   443  0020                     wtemp2	set	32
+   444  0022                     wtemp3	set	34
+   445  0024                     wtemp4	set	36
+   446  0026                     wtemp5	set	38
+   447  001D                     wtemp6	set	29
+   448  001C                     ttemp	set	28
+   449  001C                     ttemp0	set	28
+   450  001F                     ttemp1	set	31
+   451  0022                     ttemp2	set	34
+   452  0025                     ttemp3	set	37
+   453  001D                     ttemp4	set	29
+   454  001C                     ltemp	set	28
+   455  001C                     ltemp0	set	28
+   456  0020                     ltemp1	set	32
+   457  0024                     ltemp2	set	36
+   458  001E                     ltemp3	set	30
+   459                           
+   460                           	psect	jmp_tab
+   461  02A                     __pjmp_tab:	
+   462                           ;incstack = 0
+   463                           ; Regs used in _countNeighbors: [wreg-fsr0h+status,2-btemp+0+btemp+2+btemp+3]
+   464                           
+   465  02A                     entry__countNeighbors:	
+   466  02A  B6B                	ljmp	_countNeighbors
 
 
 Data Sizes:
     Strings     0
     Constant    0
     Data        8
-    BSS         11
+    BSS         12
     Persistent  0
     Stack       0
 
 Auto Spaces:
     Space          Size  Autos    Used
     COMMON            0      0       0
-    BANK0            23      1      20
+    BANK0            23      1      21
 
 Pointer List with Targets:
 
@@ -523,40 +525,40 @@ NULL                 0      0       0       0        0.0%
 CODE                 0      0       0       0        0.0%
 BITSFR0              0      0       0       1        0.0%
 SFR0                 0      0       0       1        0.0%
-DATA                 0      0      14       1        0.0%
+DATA                 0      0      15       1        0.0%
 BITCOMMON            0      0       0       2        0.0%
 BITBANK0            17      0       0       3        0.0%
 COMMON               0      0       0       4        0.0%
-BANK0               17      1      14       5       87.0%
-ABS                  0      0      14       6        0.0%
+BANK0               17      1      15       5       91.3%
+ABS                  0      0      15       6        0.0%
 
 
 Microchip Technology PIC Macro Assembler V1.34 build -361300703 
-Symbol Table                                                                                   Sat Jul 18 16:50:48 2015
+Symbol Table                                                                                   Wed Aug 12 02:04:22 2015
 
             __CFG_CP$OFF 0000                       fsr 0004              __CFG_OSC$HS 0000  
-                    l501 0192                      l511 01A9                      l509 01A4  
-                    l551 01E9                      l553 01F3                      l561 01B1  
-                    l557 01C0                      l559 01FA                      u104 0183  
+                    l511 01A4                      l503 0192                      l513 01A9  
+                    l561 01FA                      l553 01E9                      l555 01F3  
+                    l563 01B1                      l559 01C0                      u104 0183  
                     u105 0181  __size_of_countNeighbors 0021                      fsr0 0004  
                     indf 0000             __CFG_WDT$OFF 0000                     _TMR0 0001  
                    _main 018C                     btemp 001C                     ltemp 001C  
                    start 0002                     ttemp 001C                     wtemp 001C  
-                  ?_main 001A                    _PORTA 0005                    _PORTB 0006  
-                  _TRISA 0005                    _TRISB 0006                    _Union 0010  
-                  _count 0011                    ltemp0 001C                    ltemp1 0020  
-                  ltemp2 0024                    ltemp3 001E                    ttemp0 001C  
-                  ttemp1 001F                    ttemp2 0022                    ttemp3 0025  
-                  ttemp4 001D                    status 0003                    wtemp0 001C  
-                  wtemp1 001E                    wtemp2 0020                    wtemp3 0022  
-                  wtemp4 0024                    wtemp5 0026                    wtemp6 001D  
-        __initialization 0003             __end_of_main 01FF                   ??_main 0000  
-                 _OPTION 0000           _countNeighbors 016B  __end_of__initialization 0017  
-         __pcstackCOMMON 0000             __pidataBANK0 0022   __end_of_countNeighbors 018C  
-             _calcBuffer 0012               __pbssBANK0 0007               __pmaintext 018C  
-        ?_countNeighbors 001A                  __ptext1 016B                  clrloop0 001A  
-   end_of_initialization 0017     entry__countNeighbors 002A      start_initialization 0003  
-       ??_countNeighbors 0000              __pdataBANK0 0012                ___latbits 0000  
-          __pcstackBANK0 001A                __pjmp_tab 002A                clear_ram0 0019  
-               _Position 000F            __size_of_main 0073        countNeighbors@add 001A  
-          _displayBuffer 0007  
+                  ?_main 001B                    _PORTA 0005                    _PORTB 0006  
+                  _TRISA 0005                    _TRISB 0006                    ltemp0 001C  
+                  ltemp1 0020                    ltemp2 0024                    ltemp3 001E  
+                  ttemp0 001C                    ttemp1 001F                    ttemp2 0022  
+                  ttemp3 0025                    ttemp4 001D                    status 0003  
+                  wtemp0 001C                    wtemp1 001E                    wtemp2 0020  
+                  wtemp3 0022                    wtemp4 0024                    wtemp5 0026  
+                  wtemp6 001D          __initialization 0003             __end_of_main 01FF  
+                 ??_main 0000                   _OPTION 0000                   _count_ 0010  
+         _countNeighbors 016B  __end_of__initialization 0017           __pcstackCOMMON 0000  
+           __pidataBANK0 0022   __end_of_countNeighbors 018C               __pbssBANK0 0007  
+             __pmaintext 018C          ?_countNeighbors 001B                  __ptext1 016B  
+                clrloop0 001A     end_of_initialization 0017               _prescaler_ 0012  
+   entry__countNeighbors 002A      start_initialization 0003              _calcBuffer_ 0013  
+       ??_countNeighbors 0000              __pdataBANK0 0013                ___latbits 0000  
+          __pcstackBANK0 001B                __pjmp_tab 002A                clear_ram0 0019  
+              _position_ 0011                 _bitMask_ 000F            __size_of_main 0073  
+      countNeighbors@add 001B           _displayBuffer_ 0007  

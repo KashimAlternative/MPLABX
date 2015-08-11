@@ -1,0 +1,2541 @@
+
+
+Microchip Technology PIC LITE Macro Assembler V1.34 build -361300703 
+                                                                                               Wed Aug 12 02:14:58 2015
+
+Microchip Technology Omniscient Code Generator (Lite mode) build 201502162209
+     1                           	processor	16F1827
+     2                           	opt	pw 120
+     3                           	opt	lm
+     4                           	psect	idataBANK0,global,class=CODE,delta=2
+     5                           	psect	stringtext,global,reloc=256,class=STRCODE,delta=2
+     6                           	psect	cinit,global,class=CODE,merge=1,delta=2
+     7                           	psect	bssBANK0,global,class=BANK0,space=1,delta=1
+     8                           	psect	dataBANK0,global,class=BANK0,space=1,delta=1
+     9                           	psect	clrtext,global,class=CODE,delta=2
+    10                           	psect	inittext,global,class=CODE,delta=2
+    11                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1
+    12                           	psect	cstackBANK0,global,class=BANK0,space=1,delta=1
+    13                           	psect	maintext,global,class=CODE,merge=1,split=1,delta=2
+    14                           	psect	text1,local,class=CODE,merge=1,delta=2
+    15                           	psect	text2,local,class=CODE,merge=1,delta=2
+    16                           	psect	text3,local,class=CODE,merge=1,delta=2
+    17                           	psect	intentry,global,class=CODE,delta=2
+    18                           	psect	text5,local,class=CODE,merge=1,delta=2
+    19                           	psect	text6,local,class=CODE,merge=1,delta=2
+    20                           	psect	text7,local,class=CODE,merge=1,delta=2
+    21                           	dabs	1,0x7E,2
+    22  0000                     	;# 
+    23  0001                     	;# 
+    24  0002                     	;# 
+    25  0003                     	;# 
+    26  0004                     	;# 
+    27  0005                     	;# 
+    28  0006                     	;# 
+    29  0007                     	;# 
+    30  0008                     	;# 
+    31  0009                     	;# 
+    32  000A                     	;# 
+    33  000B                     	;# 
+    34  000C                     	;# 
+    35  000D                     	;# 
+    36  0011                     	;# 
+    37  0012                     	;# 
+    38  0013                     	;# 
+    39  0014                     	;# 
+    40  0015                     	;# 
+    41  0016                     	;# 
+    42  0016                     	;# 
+    43  0017                     	;# 
+    44  0018                     	;# 
+    45  0019                     	;# 
+    46  001A                     	;# 
+    47  001B                     	;# 
+    48  001C                     	;# 
+    49  001E                     	;# 
+    50  001F                     	;# 
+    51  008C                     	;# 
+    52  008D                     	;# 
+    53  0091                     	;# 
+    54  0092                     	;# 
+    55  0093                     	;# 
+    56  0094                     	;# 
+    57  0095                     	;# 
+    58  0096                     	;# 
+    59  0097                     	;# 
+    60  0098                     	;# 
+    61  0099                     	;# 
+    62  009A                     	;# 
+    63  009B                     	;# 
+    64  009B                     	;# 
+    65  009C                     	;# 
+    66  009D                     	;# 
+    67  009E                     	;# 
+    68  010C                     	;# 
+    69  010D                     	;# 
+    70  0111                     	;# 
+    71  0112                     	;# 
+    72  0113                     	;# 
+    73  0114                     	;# 
+    74  0115                     	;# 
+    75  0116                     	;# 
+    76  0117                     	;# 
+    77  0118                     	;# 
+    78  0119                     	;# 
+    79  011A                     	;# 
+    80  011B                     	;# 
+    81  011D                     	;# 
+    82  011E                     	;# 
+    83  018C                     	;# 
+    84  018D                     	;# 
+    85  0191                     	;# 
+    86  0191                     	;# 
+    87  0192                     	;# 
+    88  0193                     	;# 
+    89  0193                     	;# 
+    90  0193                     	;# 
+    91  0194                     	;# 
+    92  0195                     	;# 
+    93  0196                     	;# 
+    94  0199                     	;# 
+    95  019A                     	;# 
+    96  019B                     	;# 
+    97  019B                     	;# 
+    98  019B                     	;# 
+    99  019B                     	;# 
+   100  019C                     	;# 
+   101  019C                     	;# 
+   102  019D                     	;# 
+   103  019E                     	;# 
+   104  019F                     	;# 
+   105  020C                     	;# 
+   106  020D                     	;# 
+   107  0211                     	;# 
+   108  0211                     	;# 
+   109  0212                     	;# 
+   110  0212                     	;# 
+   111  0213                     	;# 
+   112  0213                     	;# 
+   113  0214                     	;# 
+   114  0214                     	;# 
+   115  0215                     	;# 
+   116  0215                     	;# 
+   117  0215                     	;# 
+   118  0216                     	;# 
+   119  0216                     	;# 
+   120  0217                     	;# 
+   121  0217                     	;# 
+   122  0219                     	;# 
+   123  021A                     	;# 
+   124  021B                     	;# 
+   125  021C                     	;# 
+   126  021D                     	;# 
+   127  021E                     	;# 
+   128  021F                     	;# 
+   129  0291                     	;# 
+   130  0291                     	;# 
+   131  0292                     	;# 
+   132  0293                     	;# 
+   133  0294                     	;# 
+   134  0295                     	;# 
+   135  0295                     	;# 
+   136  0296                     	;# 
+   137  0298                     	;# 
+   138  0298                     	;# 
+   139  0299                     	;# 
+   140  029A                     	;# 
+   141  029B                     	;# 
+   142  029C                     	;# 
+   143  029C                     	;# 
+   144  029D                     	;# 
+   145  029E                     	;# 
+   146  029E                     	;# 
+   147  0311                     	;# 
+   148  0311                     	;# 
+   149  0312                     	;# 
+   150  0313                     	;# 
+   151  0318                     	;# 
+   152  0318                     	;# 
+   153  0319                     	;# 
+   154  031A                     	;# 
+   155  0394                     	;# 
+   156  0395                     	;# 
+   157  0396                     	;# 
+   158  039A                     	;# 
+   159  039C                     	;# 
+   160  039D                     	;# 
+   161  039E                     	;# 
+   162  039F                     	;# 
+   163  0415                     	;# 
+   164  0416                     	;# 
+   165  0417                     	;# 
+   166  041C                     	;# 
+   167  041D                     	;# 
+   168  041E                     	;# 
+   169  0FE4                     	;# 
+   170  0FE5                     	;# 
+   171  0FE6                     	;# 
+   172  0FE7                     	;# 
+   173  0FE8                     	;# 
+   174  0FE9                     	;# 
+   175  0FEA                     	;# 
+   176  0FEB                     	;# 
+   177  0FED                     	;# 
+   178  0FEE                     	;# 
+   179  0FEF                     	;# 
+   180                           
+   181                           	psect	idataBANK0
+   182  0441                     __pidataBANK0:	
+   183                           
+   184                           ;initializer for _displayBuffer
+   185  0441  340A               	retlw	10
+   186  0442  340A               	retlw	10
+   187  0443  340A               	retlw	10
+   188  0444  340A               	retlw	10
+   189                           
+   190                           ;initializer for _config
+   191  0445  3478               	retlw	120
+   192  0446  3400               	retlw	0
+   193  0447  3402               	retlw	2
+   194  0448  3420               	retlw	32
+   195  0449  3400               	retlw	0
+   196                           
+   197                           	psect	stringtext
+   198  0400                     __pstringtext:	
+   199  0400                     _SEGMENT_BIT:	
+   200  0400  34FC               	retlw	252
+   201  0401  3460               	retlw	96
+   202  0402  34DA               	retlw	218
+   203  0403  34F2               	retlw	242
+   204  0404  3466               	retlw	102
+   205  0405  34B6               	retlw	182
+   206  0406  34BE               	retlw	190
+   207  0407  34E4               	retlw	228
+   208  0408  34FE               	retlw	254
+   209  0409  34F6               	retlw	246
+   210  040A  3400               	retlw	0
+   211  040B                     __end_of_SEGMENT_BIT:	
+   212  040B                     _SEGMET_BIT2:	
+   213  040B  3407               	retlw	7
+   214  040C  340B               	retlw	11
+   215  040D  340D               	retlw	13
+   216  040E  340E               	retlw	14
+   217  040F                     __end_of_SEGMET_BIT2:	
+   218  040F                     __@COMPARE_UNITS:	
+   219  040F  3401               	retlw	1
+   220  0410  340A               	retlw	10
+   221  0411  3464               	retlw	100
+   222  0412                     __end_of__@COMPARE_UNITS:	
+   223  000B                     _INTCON	set	11
+   224  000B                     _INTCONbits	set	11
+   225  0012                     _PIR2bits	set	18
+   226  000C                     _PORTA	set	12
+   227  001B                     _PR2	set	27
+   228  001C                     _T2CON	set	28
+   229  0015                     _TMR0	set	21
+   230  001A                     _TMR2	set	26
+   231  005F                     _GIE	set	95
+   232  005E                     _PEIE	set	94
+   233  005D                     _TMR0IE	set	93
+   234  005A                     _TMR0IF	set	90
+   235  0089                     _TMR2IF	set	137
+   236  00E2                     _TMR2ON	set	226
+   237  0099                     _TMR4IF	set	153
+   238  009B                     _TMR6IF	set	155
+   239  0099                     _OSCCONbits	set	153
+   240  0098                     _OSCTUNE	set	152
+   241  008C                     _TRISA	set	140
+   242  008D                     _TRISB	set	141
+   243  04AB                     _PSA	set	1195
+   244  04AD                     _TMR0CS	set	1197
+   245  04AC                     _TMR0SE	set	1196
+   246  0489                     _TMR2IE	set	1161
+   247  0499                     _TMR4IE	set	1177
+   248  049B                     _TMR6IE	set	1179
+   249  010C                     _LATA	set	268
+   250  010D                     _LATB	set	269
+   251  08EB                     _CCP2SEL	set	2283
+   252  018C                     _ANSELA	set	396
+   253  018D                     _ANSELB	set	397
+   254  0192                     _EEADRH	set	402
+   255  0191                     _EEADRL	set	401
+   256  0195                     _EECON1bits	set	405
+   257  0196                     _EECON2	set	406
+   258  0194                     _EEDATH	set	404
+   259  0193                     _EEDATL	set	403
+   260  029A                     _CCP2CON	set	666
+   261  0299                     _CCPR2H	set	665
+   262  0298                     _CCPR2L	set	664
+   263  029E                     _CCPTMRS	set	670
+   264  029D                     _PSTR2CON	set	669
+   265  0416                     _PR4	set	1046
+   266  041D                     _PR6	set	1053
+   267  0417                     _T4CON	set	1047
+   268  041E                     _T6CON	set	1054
+   269  0415                     _TMR4	set	1045
+   270  041C                     _TMR6	set	1052
+   271  20BA                     _TMR4ON	set	8378
+   272  20F2                     _TMR6ON	set	8434
+   273                           
+   274                           ; #config settings
+   275  0000                     
+   276                           	psect	cinit
+   277  0210                     start_initialization:	
+   278  0210                     __initialization:	
+   279                           
+   280                           ; Clear objects allocated to BANK0
+   281  0210  302F               	movlw	low __pbssBANK0
+   282  0211  0084               	movwf	4
+   283  0212  3000               	movlw	high __pbssBANK0
+   284  0213  0085               	movwf	5
+   285  0214  300D               	movlw	13
+   286  0215  3184  244A  3182   	fcall	clear_ram0
+   287                           
+   288                           ; Initialize objects allocated to BANK0
+   289  0218  3041               	movlw	low __pidataBANK0
+   290  0219  0084               	movwf	4
+   291  021A  3084               	movlw	(high __pidataBANK0)| (0+128)
+   292  021B  0085               	movwf	5
+   293  021C  303C               	movlw	low __pdataBANK0
+   294  021D  0086               	movwf	6
+   295  021E  3000               	movlw	high __pdataBANK0
+   296  021F  0087               	movwf	7
+   297  0220  3009               	movlw	9
+   298  0221  3184  2450         	fcall	init_ram
+   299  0223                     end_of_initialization:	
+   300                           ;End of C runtime variable initialization code
+   301                           
+   302  0223                     __end_of__initialization:	
+   303  0223  0020               	movlb	0
+   304  0224  3182  2AFC         	ljmp	_main	;jump to C main() function
+   305                           
+   306                           	psect	bssBANK0
+   307  002F                     __pbssBANK0:	
+   308  002F                     _keyCount:	
+   309  002F                     	ds	4
+   310  0033                     _tempoCounter:	
+   311  0033                     	ds	3
+   312  0036                     _beatCounter:	
+   313  0036                     	ds	1
+   314  0037                     _displayDigit:	
+   315  0037                     	ds	1
+   316  0038                     _events_:	
+   317  0038                     	ds	1
+   318  0039                     _machineState:	
+   319  0039                     	ds	1
+   320  003A                     _porta:	
+   321  003A                     	ds	1
+   322  003B                     _prescaleEvent:	
+   323  003B                     	ds	1
+   324                           
+   325                           	psect	dataBANK0
+   326  003C                     __pdataBANK0:	
+   327  003C                     _displayBuffer:	
+   328  003C                     	ds	4
+   329  0040                     _config:	
+   330  0040                     	ds	5
+   331                           
+   332                           	psect	clrtext
+   333  044A                     clear_ram0:	
+   334                           ;	Called with FSR0 containing the base address, and
+   335                           ;	WREG with the size to clear
+   336                           
+   337  044A  0064               	clrwdt	;clear the watchdog before getting into this loop
+   338  044B                     clrloop0:	
+   339  044B  0180               	clrf	0	;clear RAM location pointed to by FSR
+   340  044C  3101               	addfsr 0,1
+   341  044D  0B89               	decfsz	9,f	;Have we reached the end of clearing yet?
+   342  044E  2C4B               	goto	clrloop0	;have we reached the end yet?
+   343  044F  3400               	retlw	0	;all done for this memory range, return
+   344                           
+   345                           	psect	inittext
+   346  0450                     init_ram:	
+   347  0450  00FE               	movwf	126
+   348  0451                     initloop:	
+   349  0451  0012               	moviw fsr0++
+   350  0452  001E               	movwi fsr1++
+   351  0453  0BFE               	decfsz	126,f
+   352  0454  2C51               	goto	initloop
+   353  0455  3400               	retlw	0
+   354                           
+   355                           	psect	cstackCOMMON
+   356  0070                     __pcstackCOMMON:	
+   357  0070                     ?__private_WriteByte:	
+   358  0070                     ?_initialize:	
+   359                           ; 0 bytes @ 0x0
+   360                           
+   361  0070                     ?__configuration_Save:	
+   362                           ; 0 bytes @ 0x0
+   363                           
+   364  0070                     ?__configuration_Load:	
+   365                           ; 0 bytes @ 0x0
+   366                           
+   367  0070                     ?__:	
+   368                           ; 0 bytes @ 0x0
+   369                           
+   370  0070                     ??i1__private_ReadByte:	
+   371                           ; 0 bytes @ 0x0
+   372                           
+   373  0070                     ?__private_ReadByte:	
+   374                           ; 0 bytes @ 0x0
+   375                           
+   376  0070                     ?i1__private_ReadByte:	
+   377                           ; 1 bytes @ 0x0
+   378                           
+   379  0070                     ?_main:	
+   380                           ; 1 bytes @ 0x0
+   381                           
+   382  0070                     __private_WriteByte@data:	
+   383                           ; 2 bytes @ 0x0
+   384                           
+   385  0070                     i1__private_ReadByte@address:	
+   386                           ; 1 bytes @ 0x0
+   387                           
+   388                           
+   389                           ; 1 bytes @ 0x0
+   390  0070                     	ds	1
+   391  0071                     ??__private_WriteByte:	
+   392  0071                     __private_WriteByte@address:	
+   393                           ; 0 bytes @ 0x1
+   394                           
+   395                           
+   396                           ; 1 bytes @ 0x1
+   397  0071                     	ds	1
+   398  0072                     ??__configuration_Save:	
+   399                           
+   400                           ; 0 bytes @ 0x2
+   401  0072                     	ds	1
+   402  0073                     __configuration_Save@saveIntcon:	
+   403                           
+   404                           ; 1 bytes @ 0x3
+   405  0073                     	ds	1
+   406  0074                     __configuration_Save@ptrConfig:	
+   407                           
+   408                           ; 1 bytes @ 0x4
+   409  0074                     	ds	1
+   410  0075                     __configuration_Save@isPositionChanged:	
+   411                           
+   412                           ; 1 bytes @ 0x5
+   413  0075                     	ds	1
+   414  0076                     __configuration_Save@config:	
+   415                           
+   416                           ; 1 bytes @ 0x6
+   417  0076                     	ds	1
+   418  0077                     __configuration_Save@i:	
+   419                           
+   420                           ; 1 bytes @ 0x7
+   421  0077                     	ds	1
+   422  0078                     __configuration_Save@romPosition:	
+   423                           
+   424                           ; 1 bytes @ 0x8
+   425  0078                     	ds	1
+   426  0079                     ??__:	
+   427                           
+   428                           ; 0 bytes @ 0x9
+   429  0079                     	ds	4
+   430                           
+   431                           	psect	cstackBANK0
+   432  0020                     __pcstackBANK0:	
+   433  0020                     __@isNonZero:	
+   434                           
+   435                           ; 1 bytes @ 0x0
+   436  0020                     	ds	1
+   437  0021                     __@tmpValue:	
+   438                           
+   439                           ; 2 bytes @ 0x1
+   440  0021                     	ds	2
+   441  0023                     __@compareUnit:	
+   442                           
+   443                           ; 2 bytes @ 0x3
+   444  0023                     	ds	2
+   445  0025                     __@i_379:	
+   446                           
+   447                           ; 1 bytes @ 0x5
+   448  0025                     	ds	1
+   449  0026                     __@i_378:	
+   450                           
+   451                           ; 1 bytes @ 0x6
+   452  0026                     	ds	1
+   453  0027                     __@i:	
+   454                           
+   455                           ; 1 bytes @ 0x7
+   456  0027                     	ds	1
+   457  0028                     ??__private_ReadByte:	
+   458  0028                     ??_initialize:	
+   459                           ; 0 bytes @ 0x8
+   460                           
+   461  0028                     __private_ReadByte@address:	
+   462                           ; 0 bytes @ 0x8
+   463                           
+   464                           
+   465                           ; 1 bytes @ 0x8
+   466  0028                     	ds	1
+   467  0029                     ??__configuration_Load:	
+   468                           
+   469                           ; 0 bytes @ 0x9
+   470  0029                     	ds	1
+   471  002A                     __configuration_Load@config:	
+   472                           
+   473                           ; 1 bytes @ 0xA
+   474  002A                     	ds	1
+   475  002B                     __configuration_Load@ptrConfig:	
+   476                           
+   477                           ; 1 bytes @ 0xB
+   478  002B                     	ds	1
+   479  002C                     __configuration_Load@romPosition:	
+   480                           
+   481                           ; 1 bytes @ 0xC
+   482  002C                     	ds	1
+   483  002D                     __configuration_Load@i:	
+   484                           
+   485                           ; 1 bytes @ 0xD
+   486  002D                     	ds	1
+   487  002E                     ??_main:	
+   488                           
+   489                           ; 0 bytes @ 0xE
+   490  002E                     	ds	1
+   491                           
+   492                           	psect	maintext
+   493  02FC                     __pmaintext:	
+   494 ;;
+   495 ;;Main: autosize = 0, tempsize = 1, incstack = 0, save=0
+   496 ;;
+   497 ;; *************** function _main *****************
+   498 ;; Defined at:
+   499 ;;		line 126 in file "src/main.c"
+   500 ;; Parameters:    Size  Location     Type
+   501 ;;		None
+   502 ;; Auto vars:     Size  Location     Type
+   503 ;;		None
+   504 ;; Return value:  Size  Location     Type
+   505 ;;                  2  160[None  ] int 
+   506 ;; Registers used:
+   507 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
+   508 ;; Tracked objects:
+   509 ;;		On entry : B1F/0
+   510 ;;		On exit  : 0/0
+   511 ;;		Unchanged: 0/0
+   512 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4
+   513 ;;      Params:         0       0       0       0       0       0
+   514 ;;      Locals:         0       0       0       0       0       0
+   515 ;;      Temps:          0       1       0       0       0       0
+   516 ;;      Totals:         0       1       0       0       0       0
+   517 ;;Total ram usage:        1 bytes
+   518 ;; Hardware stack levels required when called:    5
+   519 ;; This function calls:
+   520 ;;		__configuration_Load
+   521 ;;		_initialize
+   522 ;; This function is called by:
+   523 ;;		Startup code after reset
+   524 ;; This function uses a non-reentrant model
+   525 ;;
+   526                           
+   527                           
+   528                           ;psect for function _main
+   529  02FC                     _main:	
+   530                           
+   531                           ;main.c: 128: initialize( ) ;
+   532                           
+   533                           ;incstack = 0
+   534                           ; Regs used in _main: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
+   535  02FC  3182  2286  3182   	fcall	_initialize
+   536                           
+   537                           ;main.c: 130: porta.byte=~PORTA; ;
+   538  02FF  0020               	movlb	0	; select bank0
+   539  0300  090C               	comf	12,w	;volatile
+   540  0301  00AE               	movwf	??_main
+   541  0302  082E               	movf	??_main,w
+   542  0303  00BA               	movwf	_porta
+   543                           
+   544                           ;main.c: 132: _configuration_Load( &config ) ;
+   545  0304  3040               	movlw	(low (_config| 0))& (0+255)
+   546  0305  3182  22CB  3182   	fcall	__configuration_Load
+   547                           
+   548                           ;main.c: 134: machineState = STATE_METRONOME ;
+   549  0308  0020               	movlb	0	; select bank0
+   550  0309  01B9               	clrf	_machineState
+   551                           
+   552                           ;main.c: 135: tempoCounter = 0 ;
+   553  030A  3000               	movlw	0
+   554  030B  00B3               	movwf	_tempoCounter
+   555  030C  3000               	movlw	0
+   556  030D  00B4               	movwf	_tempoCounter+1
+   557  030E  3000               	movlw	0
+   558  030F  00B5               	movwf	_tempoCounter+2
+   559                           
+   560                           ;main.c: 136: beatCounter.all = 0 ;
+   561  0310  01B6               	clrf	_beatCounter
+   562                           
+   563                           ;main.c: 138: events_.displayValue = 1; ;
+   564  0311  15B8               	bsf	_events_,3
+   565                           
+   566                           ;main.c: 141: TMR6IE = 1 ;
+   567  0312  0021               	movlb	1	; select bank1
+   568  0313  1593               	bsf	19,3	;volatile
+   569  0314                     l161:	
+   570                           ;main.c: 143: for( ; ; ) ;
+   571                           
+   572  0314  2B14               	goto	l161
+   573  0315                     __end_of_main:	
+   574                           
+   575                           	psect	text1
+   576  0286                     __ptext1:	
+   577 ;; *************** function _initialize *****************
+   578 ;; Defined at:
+   579 ;;		line 23 in file "src/pic16f1827_init.h"
+   580 ;; Parameters:    Size  Location     Type
+   581 ;;		None
+   582 ;; Auto vars:     Size  Location     Type
+   583 ;;		None
+   584 ;; Return value:  Size  Location     Type
+   585 ;;		None               void
+   586 ;; Registers used:
+   587 ;;		wreg, status,2, status,0
+   588 ;; Tracked objects:
+   589 ;;		On entry : 0/0
+   590 ;;		On exit  : 0/0
+   591 ;;		Unchanged: 0/0
+   592 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4
+   593 ;;      Params:         0       0       0       0       0       0
+   594 ;;      Locals:         0       0       0       0       0       0
+   595 ;;      Temps:          0       0       0       0       0       0
+   596 ;;      Totals:         0       0       0       0       0       0
+   597 ;;Total ram usage:        0 bytes
+   598 ;; Hardware stack levels used:    1
+   599 ;; Hardware stack levels required when called:    3
+   600 ;; This function calls:
+   601 ;;		Nothing
+   602 ;; This function is called by:
+   603 ;;		_main
+   604 ;; This function uses a non-reentrant model
+   605 ;;
+   606                           
+   607                           
+   608                           ;psect for function _initialize
+   609  0286                     _initialize:	
+   610                           
+   611                           ;pic16f1827_init.h: 27: OSCCONbits.SPLLEN = 1 ;
+   612                           
+   613                           ;incstack = 0
+   614                           ; Regs used in _initialize: [wreg+status,2+status,0]
+   615  0286  0021               	movlb	1	; select bank1
+   616  0287  1799               	bsf	25,7	;volatile
+   617                           
+   618                           ;pic16f1827_init.h: 28: OSCCONbits.IRCF = 0b1110 ;
+   619  0288  0819               	movf	25,w	;volatile
+   620  0289  3987               	andlw	-121
+   621  028A  3870               	iorlw	112
+   622  028B  0099               	movwf	25	;volatile
+   623                           
+   624                           ;pic16f1827_init.h: 29: OSCCONbits.SCS = 0b00 ;
+   625  028C  30FC               	movlw	-4
+   626  028D  0599               	andwf	25,f	;volatile
+   627                           
+   628                           ;pic16f1827_init.h: 30: OSCTUNE = 0b00000000 ;
+   629  028E  0198               	clrf	24	;volatile
+   630                           
+   631                           ;pic16f1827_init.h: 33: GIE = 1 ;
+   632  028F  178B               	bsf	11,7	;volatile
+   633                           
+   634                           ;pic16f1827_init.h: 34: PEIE = 1 ;
+   635  0290  170B               	bsf	11,6	;volatile
+   636                           
+   637                           ;pic16f1827_init.h: 37: PSA = 1 ;
+   638  0291  1595               	bsf	21,3	;volatile
+   639                           
+   640                           ;pic16f1827_init.h: 38: TMR0CS = 0 ;
+   641  0292  1295               	bcf	21,5	;volatile
+   642                           
+   643                           ;pic16f1827_init.h: 39: TMR0SE = 1 ;
+   644  0293  1615               	bsf	21,4	;volatile
+   645                           
+   646                           ;pic16f1827_init.h: 40: TMR0 = 0 ;
+   647  0294  0020               	movlb	0	; select bank0
+   648  0295  0195               	clrf	21	;volatile
+   649                           
+   650                           ;pic16f1827_init.h: 41: TMR0IF = 0 ;
+   651  0296  110B               	bcf	11,2	;volatile
+   652                           
+   653                           ;pic16f1827_init.h: 42: TMR0IE = 0 ;
+   654  0297  128B               	bcf	11,5	;volatile
+   655                           
+   656                           ;pic16f1827_init.h: 45: T2CON = 0b00000011 ;
+   657  0298  3003               	movlw	3
+   658  0299  009C               	movwf	28	;volatile
+   659                           
+   660                           ;pic16f1827_init.h: 46: PR2 = 124 ;
+   661  029A  307C               	movlw	124
+   662  029B  009B               	movwf	27	;volatile
+   663                           
+   664                           ;pic16f1827_init.h: 47: TMR2 = 0 ;
+   665  029C  019A               	clrf	26	;volatile
+   666                           
+   667                           ;pic16f1827_init.h: 48: TMR2IF = 0 ;
+   668  029D  1091               	bcf	17,1	;volatile
+   669                           
+   670                           ;pic16f1827_init.h: 49: TMR2IE = 1 ;
+   671  029E  0021               	movlb	1	; select bank1
+   672  029F  1491               	bsf	17,1	;volatile
+   673                           
+   674                           ;pic16f1827_init.h: 50: TMR2ON = 1 ;
+   675  02A0  0020               	movlb	0	; select bank0
+   676  02A1  151C               	bsf	28,2	;volatile
+   677                           
+   678                           ;pic16f1827_init.h: 53: T4CON = 0b00000010 ;
+   679  02A2  3002               	movlw	2
+   680  02A3  0028               	movlb	8	; select bank8
+   681  02A4  0097               	movwf	23	;volatile
+   682                           
+   683                           ;pic16f1827_init.h: 54: PR4 = 124 ;
+   684  02A5  307C               	movlw	124
+   685  02A6  0096               	movwf	22	;volatile
+   686                           
+   687                           ;pic16f1827_init.h: 55: TMR4 = 0 ;
+   688  02A7  0195               	clrf	21	;volatile
+   689                           
+   690                           ;pic16f1827_init.h: 56: TMR4IF = 0 ;
+   691  02A8  0020               	movlb	0	; select bank0
+   692  02A9  1093               	bcf	19,1	;volatile
+   693                           
+   694                           ;pic16f1827_init.h: 57: TMR4IE = 1 ;
+   695  02AA  0021               	movlb	1	; select bank1
+   696  02AB  1493               	bsf	19,1	;volatile
+   697                           
+   698                           ;pic16f1827_init.h: 58: TMR4ON = 0 ;
+   699  02AC  0028               	movlb	8	; select bank8
+   700  02AD  1117               	bcf	23,2	;volatile
+   701                           
+   702                           ;pic16f1827_init.h: 61: T6CON = 0b00000000 ;
+   703  02AE  019E               	clrf	30	;volatile
+   704                           
+   705                           ;pic16f1827_init.h: 62: PR6 = 249 ;
+   706  02AF  30F9               	movlw	249
+   707  02B0  009D               	movwf	29	;volatile
+   708                           
+   709                           ;pic16f1827_init.h: 63: TMR6 = 0 ;
+   710  02B1  019C               	clrf	28	;volatile
+   711                           
+   712                           ;pic16f1827_init.h: 64: TMR6IF = 0 ;
+   713  02B2  0020               	movlb	0	; select bank0
+   714  02B3  1193               	bcf	19,3	;volatile
+   715                           
+   716                           ;pic16f1827_init.h: 65: TMR6IE = 1 ;
+   717  02B4  0021               	movlb	1	; select bank1
+   718  02B5  1593               	bsf	19,3	;volatile
+   719                           
+   720                           ;pic16f1827_init.h: 66: TMR6ON = 1 ;
+   721  02B6  0028               	movlb	8	; select bank8
+   722  02B7  151E               	bsf	30,2	;volatile
+   723                           
+   724                           ;pic16f1827_init.h: 69: CCP2CON = 0B00001100 ;
+   725  02B8  300C               	movlw	12
+   726  02B9  0025               	movlb	5	; select bank5
+   727  02BA  009A               	movwf	26	;volatile
+   728                           
+   729                           ;pic16f1827_init.h: 70: CCP2SEL = 1 ;
+   730  02BB  0022               	movlb	2	; select bank2
+   731  02BC  159D               	bsf	29,3	;volatile
+   732                           
+   733                           ;pic16f1827_init.h: 71: PSTR2CON = 0b00000001 ;
+   734  02BD  3001               	movlw	1
+   735  02BE  0025               	movlb	5	; select bank5
+   736  02BF  009D               	movwf	29	;volatile
+   737                           
+   738                           ;pic16f1827_init.h: 72: CCPTMRS = 0b00000000 ;
+   739  02C0  019E               	clrf	30	;volatile
+   740                           
+   741                           ;pic16f1827_init.h: 73: CCPR2L = 0 ;
+   742  02C1  0198               	clrf	24	;volatile
+   743                           
+   744                           ;pic16f1827_init.h: 74: CCPR2H = 0 ;
+   745  02C2  0199               	clrf	25	;volatile
+   746                           
+   747                           ;pic16f1827_init.h: 77: ANSELA = 0b00000000 ;
+   748  02C3  0023               	movlb	3	; select bank3
+   749  02C4  018C               	clrf	12	;volatile
+   750                           
+   751                           ;pic16f1827_init.h: 78: ANSELB = 0b00000000 ;
+   752  02C5  018D               	clrf	13	;volatile
+   753                           
+   754                           ;pic16f1827_init.h: 80: TRISA = 0b01110000 ;
+   755  02C6  3070               	movlw	112
+   756  02C7  0021               	movlb	1	; select bank1
+   757  02C8  008C               	movwf	12	;volatile
+   758                           
+   759                           ;pic16f1827_init.h: 81: TRISB = 0b00000000 ;
+   760  02C9  018D               	clrf	13	;volatile
+   761  02CA  0008               	return
+   762  02CB                     __end_of_initialize:	
+   763                           
+   764                           	psect	text2
+   765  02CB                     __ptext2:	
+   766 ;; *************** function __configuration_Load *****************
+   767 ;; Defined at:
+   768 ;;		line 72 in file "src/configuration.h"
+   769 ;; Parameters:    Size  Location     Type
+   770 ;;  config          1    wreg     PTR struct .
+   771 ;;		 -> config(5), 
+   772 ;; Auto vars:     Size  Location     Type
+   773 ;;  config          1   10[BANK0 ] PTR struct .
+   774 ;;		 -> config(5), 
+   775 ;;  i               1   13[BANK0 ] unsigned char 
+   776 ;;  romPosition     1   12[BANK0 ] unsigned char 
+   777 ;;  ptrConfig       1   11[BANK0 ] PTR unsigned char 
+   778 ;;		 -> config(5), 
+   779 ;; Return value:  Size  Location     Type
+   780 ;;		None               void
+   781 ;; Registers used:
+   782 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
+   783 ;; Tracked objects:
+   784 ;;		On entry : 0/0
+   785 ;;		On exit  : 0/0
+   786 ;;		Unchanged: 0/0
+   787 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4
+   788 ;;      Params:         0       0       0       0       0       0
+   789 ;;      Locals:         0       4       0       0       0       0
+   790 ;;      Temps:          0       1       0       0       0       0
+   791 ;;      Totals:         0       5       0       0       0       0
+   792 ;;Total ram usage:        5 bytes
+   793 ;; Hardware stack levels used:    1
+   794 ;; Hardware stack levels required when called:    4
+   795 ;; This function calls:
+   796 ;;		__private_ReadByte
+   797 ;; This function is called by:
+   798 ;;		_main
+   799 ;; This function uses a non-reentrant model
+   800 ;;
+   801                           
+   802                           
+   803                           ;psect for function __configuration_Load
+   804  02CB                     __configuration_Load:	
+   805                           
+   806                           ;incstack = 0
+   807                           ; Regs used in __configuration_Load: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
+   808                           ;__configuration_Load@config stored from wreg
+   809  02CB  0020               	movlb	0	; select bank0
+   810  02CC  00AA               	movwf	__configuration_Load@config
+   811                           
+   812                           ;configuration.h: 74: uint08_t* ptrConfig = (uint08_t*) config ;
+   813  02CD  082A               	movf	__configuration_Load@config,w
+   814  02CE  00A9               	movwf	??__configuration_Load
+   815  02CF  0829               	movf	??__configuration_Load,w
+   816  02D0  00AB               	movwf	__configuration_Load@ptrConfig
+   817                           
+   818                           ;configuration.h: 75: uint08_t romPosition = 0xFF ;
+   819  02D1  30FF               	movlw	255
+   820  02D2  00A9               	movwf	??__configuration_Load
+   821  02D3  0829               	movf	??__configuration_Load,w
+   822  02D4  00AC               	movwf	__configuration_Load@romPosition
+   823                           
+   824                           ;configuration.h: 78: romPosition = _private_ReadByte( 0xFF ) & 0xF0 ;
+   825  02D5  30FF               	movlw	255
+   826  02D6  3184  2424  3182   	fcall	__private_ReadByte
+   827  02D9  39F0               	andlw	240
+   828  02DA  0020               	movlb	0	; select bank0
+   829  02DB  00A9               	movwf	??__configuration_Load
+   830  02DC  0829               	movf	??__configuration_Load,w
+   831  02DD  00AC               	movwf	__configuration_Load@romPosition
+   832                           
+   833                           ;configuration.h: 79: if ( romPosition == 0xF0 ) return ;
+   834  02DE  30F0               	movlw	240
+   835  02DF  062C               	xorwf	__configuration_Load@romPosition,w
+   836  02E0  1903               	btfsc	3,2
+   837  02E1  0008               	return
+   838                           
+   839                           ;configuration.h: 82: for ( uint08_t i = 0 ; i < sizeof ( ConfigurationData ) ; i++ , pt
+      +                          rConfig++ ) {
+   840  02E2  01AD               	clrf	__configuration_Load@i
+   841  02E3                     L1:	
+   842  02E3  3005               	movlw	5
+   843  02E4  022D               	subwf	__configuration_Load@i,w
+   844  02E5  1803               	btfsc	3,0
+   845  02E6  0008               	return
+   846                           
+   847                           ;configuration.h: 83: *ptrConfig = _private_ReadByte( i + romPosition ) ;
+   848  02E7  082D               	movf	__configuration_Load@i,w
+   849  02E8  072C               	addwf	__configuration_Load@romPosition,w
+   850  02E9  3184  2424  3182   	fcall	__private_ReadByte
+   851  02EC  0020               	movlb	0	; select bank0
+   852  02ED  00A9               	movwf	??__configuration_Load
+   853  02EE  082B               	movf	__configuration_Load@ptrConfig,w
+   854  02EF  0086               	movwf	6
+   855  02F0  0187               	clrf	7
+   856  02F1  0829               	movf	??__configuration_Load,w
+   857  02F2  0081               	movwf	1
+   858  02F3  3001               	movlw	1
+   859  02F4  00A9               	movwf	??__configuration_Load
+   860  02F5  0829               	movf	??__configuration_Load,w
+   861  02F6  07AD               	addwf	__configuration_Load@i,f
+   862  02F7  3001               	movlw	1
+   863  02F8  00A9               	movwf	??__configuration_Load
+   864  02F9  0829               	movf	??__configuration_Load,w
+   865  02FA  07AB               	addwf	__configuration_Load@ptrConfig,f
+   866  02FB  2AE3               	goto	L1
+   867  02FC                     __end_of__configuration_Load:	
+   868                           
+   869                           	psect	text3
+   870  0424                     __ptext3:	
+   871 ;; *************** function __private_ReadByte *****************
+   872 ;; Defined at:
+   873 ;;		line 109 in file "src/configuration.h"
+   874 ;; Parameters:    Size  Location     Type
+   875 ;;  address         1    wreg     unsigned char 
+   876 ;; Auto vars:     Size  Location     Type
+   877 ;;  address         1    8[BANK0 ] unsigned char 
+   878 ;; Return value:  Size  Location     Type
+   879 ;;                  1    wreg      unsigned char 
+   880 ;; Registers used:
+   881 ;;		wreg, status,2
+   882 ;; Tracked objects:
+   883 ;;		On entry : 0/0
+   884 ;;		On exit  : 0/0
+   885 ;;		Unchanged: 0/0
+   886 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4
+   887 ;;      Params:         0       0       0       0       0       0
+   888 ;;      Locals:         0       1       0       0       0       0
+   889 ;;      Temps:          0       0       0       0       0       0
+   890 ;;      Totals:         0       1       0       0       0       0
+   891 ;;Total ram usage:        1 bytes
+   892 ;; Hardware stack levels used:    1
+   893 ;; Hardware stack levels required when called:    3
+   894 ;; This function calls:
+   895 ;;		Nothing
+   896 ;; This function is called by:
+   897 ;;		__configuration_Load
+   898 ;; This function uses a non-reentrant model
+   899 ;;
+   900                           
+   901                           
+   902                           ;psect for function __private_ReadByte
+   903  0424                     __private_ReadByte:	
+   904                           
+   905                           ;incstack = 0
+   906                           ; Regs used in __private_ReadByte: [wreg+status,2]
+   907                           ;__private_ReadByte@address stored from wreg
+   908  0424  0020               	movlb	0	; select bank0
+   909  0425  00A8               	movwf	__private_ReadByte@address
+   910                           
+   911                           ;configuration.h: 110: EEADRH = 0x00 ;
+   912  0426  0023               	movlb	3	; select bank3
+   913  0427  0192               	clrf	18	;volatile
+   914                           
+   915                           ;configuration.h: 111: EEADRL = address ;
+   916  0428  0020               	movlb	0	; select bank0
+   917  0429  0828               	movf	__private_ReadByte@address,w
+   918  042A  0023               	movlb	3	; select bank3
+   919  042B  0091               	movwf	17	;volatile
+   920                           
+   921                           ;configuration.h: 112: EECON1bits.EEPGD = 0 ;
+   922  042C  1395               	bcf	21,7	;volsfr
+   923                           
+   924                           ;configuration.h: 113: EECON1bits.CFGS = 0 ;
+   925  042D  1315               	bcf	21,6	;volsfr
+   926                           
+   927                           ;configuration.h: 114: EECON1bits.RD = 1 ;
+   928  042E  1415               	bsf	21,0	;volsfr
+   929                           
+   930                           ;configuration.h: 115: __nop() ;
+   931  042F  0000               	nop
+   932                           
+   933                           ;configuration.h: 116: __nop() ;
+   934  0430  0000               	nop
+   935                           
+   936                           ;configuration.h: 117: return EEDATL ;
+   937  0431  0023               	movlb	3	; select bank3
+   938  0432  0813               	movf	19,w	;volatile
+   939  0433  0008               	return
+   940  0434                     __end_of__private_ReadByte:	
+   941                           
+   942                           	psect	intentry
+   943  0004                     __pintentry:	
+   944 ;; *************** function __ *****************
+   945 ;; Defined at:
+   946 ;;		line 148 in file "src/main.c"
+   947 ;; Parameters:    Size  Location     Type
+   948 ;;		None
+   949 ;; Auto vars:     Size  Location     Type
+   950 ;;  compareUnit     2    3[BANK0 ] unsigned int 
+   951 ;;  i               1    5[BANK0 ] unsigned char 
+   952 ;;  i               1    6[BANK0 ] unsigned char 
+   953 ;;  i               1    7[BANK0 ] unsigned char 
+   954 ;;  tmpValue        2    1[BANK0 ] unsigned int 
+   955 ;;  isNonZero       1    0[BANK0 ] unsigned char 
+   956 ;; Return value:  Size  Location     Type
+   957 ;;		None               void
+   958 ;; Registers used:
+   959 ;;		wreg, fsr0l, fsr0h, fsr1l, fsr1h, status,2, status,0, pclath, cstack
+   960 ;; Tracked objects:
+   961 ;;		On entry : 0/0
+   962 ;;		On exit  : 0/0
+   963 ;;		Unchanged: 0/0
+   964 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4
+   965 ;;      Params:         0       0       0       0       0       0
+   966 ;;      Locals:         0       8       0       0       0       0
+   967 ;;      Temps:          4       0       0       0       0       0
+   968 ;;      Totals:         4       8       0       0       0       0
+   969 ;;Total ram usage:       12 bytes
+   970 ;; Hardware stack levels used:    1
+   971 ;; Hardware stack levels required when called:    2
+   972 ;; This function calls:
+   973 ;;		__configuration_Save
+   974 ;; This function is called by:
+   975 ;;		Interrupt level 1
+   976 ;; This function uses a non-reentrant model
+   977 ;;
+   978                           
+   979  0004                     __:	
+   980                           
+   981                           ;incstack = 0
+   982                           ; Regs used in __: [wreg-fsr1h+status,2+status,0+pclath+cstack]
+   983  0004  3180               	pagesel	$
+   984  0005  0020               	movlb	0	; select bank0
+   985  0006  087F               	movf	127,w
+   986  0007  00FC               	movwf	??__+3
+   987                           
+   988                           ;main.c: 149: if( !TMR6IF ) return ;
+   989  0008  1D93               	btfss	19,3	;volatile
+   990  0009  2A0A               	goto	i1l167
+   991                           
+   992                           ;main.c: 150: TMR6IF = 0 ;
+   993  000A  1193               	bcf	19,3	;volatile
+   994                           
+   995                           ;main.c: 153: tempoCounter += config.tempo ;
+   996  000B  0840               	movf	_config,w
+   997  000C  00F9               	movwf	??__
+   998  000D  0841               	movf	_config+1,w
+   999  000E  00FA               	movwf	??__+1
+  1000  000F  01FB               	clrf	??__+2
+  1001  0010  0879               	movf	??__,w
+  1002  0011  07B3               	addwf	_tempoCounter,f
+  1003  0012  087A               	movf	??__+1,w
+  1004  0013  3DB4               	addwfc	_tempoCounter+1,f
+  1005  0014  087B               	movf	??__+2,w
+  1006  0015  3DB5               	addwfc	_tempoCounter+2,f
+  1007                           
+  1008                           ;main.c: 154: if( ++tempoCounter >= ( 32000000L * 3 / 800 ) ) {
+  1009  0016  3001               	movlw	1
+  1010  0017  07B3               	addwf	_tempoCounter,f
+  1011  0018  3000               	movlw	0
+  1012  0019  1803               	skipnc
+  1013  001A  3001               	movlw	1
+  1014  001B  07B4               	addwf	_tempoCounter+1,f
+  1015  001C  3000               	movlw	0
+  1016  001D  1803               	skipnc
+  1017  001E  3001               	movlw	1
+  1018  001F  07B5               	addwf	_tempoCounter+2,f
+  1019  0020  3001               	movlw	1
+  1020  0021  0235               	subwf	_tempoCounter+2,w
+  1021  0022  1D03               	skipz
+  1022  0023  282A               	goto	u76_25
+  1023  0024  30D4               	movlw	212
+  1024  0025  0234               	subwf	_tempoCounter+1,w
+  1025  0026  1D03               	skipz
+  1026  0027  282A               	goto	u76_25
+  1027  0028  30C0               	movlw	192
+  1028  0029  0233               	subwf	_tempoCounter,w
+  1029  002A                     u76_25:	
+  1030  002A  1C03               	skipc
+  1031  002B  283C               	goto	i1l1392
+  1032                           
+  1033                           ;main.c: 155: tempoCounter -= ( 32000000L * 3 / 800 ) ;
+  1034  002C  30C0               	movlw	192
+  1035  002D  00F9               	movwf	??__
+  1036  002E  30D4               	movlw	212
+  1037  002F  00FA               	movwf	??__+1
+  1038  0030  3001               	movlw	1
+  1039  0031  00FB               	movwf	??__+2
+  1040  0032  0879               	movf	??__,w
+  1041  0033  02B3               	subwf	_tempoCounter,f
+  1042  0034  087A               	movf	??__+1,w
+  1043  0035  3BB4               	subwfb	_tempoCounter+1,f
+  1044  0036  087B               	movf	??__+2,w
+  1045  0037  3BB5               	subwfb	_tempoCounter+2,f
+  1046                           
+  1047                           ;main.c: 156: beatCounter.all++ ;
+  1048  0038  3001               	movlw	1
+  1049  0039  00F9               	movwf	??__
+  1050  003A  0879               	movf	??__,w
+  1051  003B  07B6               	addwf	_beatCounter,f
+  1052  003C                     i1l1392:	
+  1053                           
+  1054                           ;main.c: 157: }
+  1055                           ;main.c: 160: if( ++prescaleEvent & 0x3F ) return ;
+  1056  003C  3001               	movlw	1
+  1057  003D  00F9               	movwf	??__
+  1058  003E  0879               	movf	??__,w
+  1059  003F  07BB               	addwf	_prescaleEvent,f
+  1060  0040  083B               	movf	_prescaleEvent,w
+  1061  0041  393F               	andlw	63
+  1062  0042  1D03               	btfss	3,2
+  1063  0043  2A0A               	goto	i1l167
+  1064  0044  0064               	clrwdt	;# 
+  1065                           
+  1066                           ;main.c: 166: porta.byte=~PORTA; ;
+  1067  0045  0020               	movlb	0	; select bank0
+  1068  0046  090C               	comf	12,w	;volatile
+  1069  0047  00F9               	movwf	??__
+  1070  0048  0879               	movf	??__,w
+  1071  0049  00BA               	movwf	_porta
+  1072                           
+  1073                           ;main.c: 169: if( porta.keyMode ) {
+  1074  004A  1EBA               	btfss	_porta,5
+  1075  004B  285D               	goto	i1l1408
+  1076                           
+  1077                           ;main.c: 170: if( ++keyCount.mode == 0xFF ) keyCount.mode = 0xF0 ;
+  1078  004C  3001               	movlw	1
+  1079  004D  00F9               	movwf	??__
+  1080  004E  0879               	movf	??__,w
+  1081  004F  07B2               	addwf	_keyCount+3,f
+  1082  0050  0A32               	incf	_keyCount+3,w
+  1083  0051  1D03               	btfss	3,2
+  1084  0052  2857               	goto	i1l1404
+  1085  0053  30F0               	movlw	240
+  1086  0054  00F9               	movwf	??__
+  1087  0055  0879               	movf	??__,w
+  1088  0056  00B2               	movwf	_keyCount+3
+  1089  0057                     i1l1404:	
+  1090                           
+  1091                           ;main.c: 171: if( keyCount.mode == 0x10 ) events_.changeState = 1; ;
+  1092  0057  3010               	movlw	16
+  1093  0058  0632               	xorwf	_keyCount+3,w
+  1094  0059  1D03               	btfss	3,2
+  1095  005A  285E               	goto	i1l1410
+  1096  005B  1538               	bsf	_events_,2
+  1097                           
+  1098                           ;main.c: 172: }
+  1099  005C  285E               	goto	i1l1410
+  1100  005D                     i1l1408:	
+  1101                           
+  1102                           ;main.c: 173: else
+  1103                           ;main.c: 174: keyCount.mode = 0 ;
+  1104  005D  01B2               	clrf	_keyCount+3
+  1105  005E                     i1l1410:	
+  1106                           
+  1107                           ;main.c: 177: if( porta.keyUp && !keyCount.exceptUp ) {
+  1108  005E  1F3A               	btfss	_porta,6
+  1109  005F  2879               	goto	i1l1422
+  1110  0060  0830               	movf	_keyCount+1,w
+  1111  0061  0431               	iorwf	_keyCount+2,w
+  1112  0062  1D03               	btfss	3,2
+  1113  0063  2879               	goto	i1l1422
+  1114                           
+  1115                           ;main.c: 178: if( ++keyCount.up == 0xFF ) keyCount.up = 0xF0 ;
+  1116  0064  3001               	movlw	1
+  1117  0065  00F9               	movwf	??__
+  1118  0066  0879               	movf	??__,w
+  1119  0067  07AF               	addwf	_keyCount,f
+  1120  0068  0A2F               	incf	_keyCount,w
+  1121  0069  1D03               	btfss	3,2
+  1122  006A  286F               	goto	i1l1418
+  1123  006B  30F0               	movlw	240
+  1124  006C  00F9               	movwf	??__
+  1125  006D  0879               	movf	??__,w
+  1126  006E  00AF               	movwf	_keyCount
+  1127  006F                     i1l1418:	
+  1128                           
+  1129                           ;main.c: 179: if( keyCount.up == 0x10 || keyCount.up == 0xF0 ) events_.valuePlus = 1; ;
+  1130  006F  3010               	movlw	16
+  1131  0070  062F               	xorwf	_keyCount,w
+  1132  0071  1903               	btfsc	3,2
+  1133  0072  2877               	goto	i1l178
+  1134  0073  30F0               	movlw	240
+  1135  0074  062F               	xorwf	_keyCount,w
+  1136  0075  1D03               	btfss	3,2
+  1137  0076  287A               	goto	i1l1424
+  1138  0077                     i1l178:	
+  1139  0077  1438               	bsf	_events_,0
+  1140                           
+  1141                           ;main.c: 182: }
+  1142  0078  287A               	goto	i1l1424
+  1143  0079                     i1l1422:	
+  1144                           
+  1145                           ;main.c: 183: else
+  1146                           ;main.c: 184: keyCount.up = 0 ;
+  1147  0079  01AF               	clrf	_keyCount
+  1148  007A                     i1l1424:	
+  1149                           
+  1150                           ;main.c: 187: if( porta.keyDown && !keyCount.exceptDown ) {
+  1151  007A  1E3A               	btfss	_porta,4
+  1152  007B  2895               	goto	i1l1436
+  1153  007C  082F               	movf	_keyCount,w
+  1154  007D  0430               	iorwf	_keyCount+1,w
+  1155  007E  1D03               	btfss	3,2
+  1156  007F  2895               	goto	i1l1436
+  1157                           
+  1158                           ;main.c: 188: if( ++keyCount.down == 0xFF ) keyCount.down = 0xF0 ;
+  1159  0080  3001               	movlw	1
+  1160  0081  00F9               	movwf	??__
+  1161  0082  0879               	movf	??__,w
+  1162  0083  07B1               	addwf	_keyCount+2,f
+  1163  0084  0A31               	incf	_keyCount+2,w
+  1164  0085  1D03               	btfss	3,2
+  1165  0086  288B               	goto	i1l1432
+  1166  0087  30F0               	movlw	240
+  1167  0088  00F9               	movwf	??__
+  1168  0089  0879               	movf	??__,w
+  1169  008A  00B1               	movwf	_keyCount+2
+  1170  008B                     i1l1432:	
+  1171                           
+  1172                           ;main.c: 189: if( keyCount.down == 0x10 || keyCount.down == 0xF0 ) events_.valueMinus = 
+      +                          1; ;
+  1173  008B  3010               	movlw	16
+  1174  008C  0631               	xorwf	_keyCount+2,w
+  1175  008D  1903               	btfsc	3,2
+  1176  008E  2893               	goto	i1l184
+  1177  008F  30F0               	movlw	240
+  1178  0090  0631               	xorwf	_keyCount+2,w
+  1179  0091  1D03               	btfss	3,2
+  1180  0092  2896               	goto	i1l1438
+  1181  0093                     i1l184:	
+  1182  0093  14B8               	bsf	_events_,1
+  1183                           
+  1184                           ;main.c: 192: }
+  1185  0094  2896               	goto	i1l1438
+  1186  0095                     i1l1436:	
+  1187                           
+  1188                           ;main.c: 193: else
+  1189                           ;main.c: 194: keyCount.down = 0 ;
+  1190  0095  01B1               	clrf	_keyCount+2
+  1191  0096                     i1l1438:	
+  1192                           
+  1193                           ;main.c: 197: if( porta.keyDown && porta.keyUp ) {
+  1194  0096  1A3A               	btfsc	_porta,4
+  1195  0097  1F3A               	btfss	_porta,6
+  1196  0098  28A6               	goto	i1l186
+  1197                           
+  1198                           ;main.c: 198: if( keyCount.upDown != 0xFF ) keyCount.upDown++ ;
+  1199  0099  0A30               	incf	_keyCount+1,w
+  1200  009A  1903               	btfsc	3,2
+  1201  009B  28A0               	goto	i1l187
+  1202  009C  3001               	movlw	1
+  1203  009D  00F9               	movwf	??__
+  1204  009E  0879               	movf	??__,w
+  1205  009F  07B0               	addwf	_keyCount+1,f
+  1206  00A0                     i1l187:	
+  1207                           
+  1208                           ;main.c: 199: if( keyCount.upDown == 0xF0 ) events_.saveConfig = 1; ;
+  1209  00A0  30F0               	movlw	240
+  1210  00A1  0630               	xorwf	_keyCount+1,w
+  1211  00A2  1D03               	btfss	3,2
+  1212  00A3  28AA               	goto	i1l1452
+  1213  00A4  1638               	bsf	_events_,4
+  1214                           
+  1215                           ;main.c: 200: }
+  1216  00A5  28AA               	goto	i1l1452
+  1217  00A6                     i1l186:	
+  1218                           
+  1219                           ;main.c: 201: else if( !( porta.keyDown && porta.keyUp ) )
+  1220  00A6  1E3A               	btfss	_porta,4
+  1221  00A7  28A9               	goto	i1l1450
+  1222  00A8  1F3A               	btfss	_porta,6
+  1223  00A9                     i1l1450:	
+  1224                           
+  1225                           ;main.c: 202: keyCount.upDown = 0 ;
+  1226  00A9  01B0               	clrf	_keyCount+1
+  1227  00AA                     i1l1452:	
+  1228                           
+  1229                           ;main.c: 205: if( (events_.changeState&&!(events_.changeState=0)) ) {
+  1230  00AA  1D38               	btfss	_events_,2
+  1231  00AB  28BE               	goto	i1l1464
+  1232  00AC  1138               	bcf	_events_,2
+  1233                           
+  1234                           ;main.c: 206: events_.displayValue = 1; ;
+  1235  00AD  15B8               	bsf	_events_,3
+  1236                           
+  1237                           ;main.c: 208: if( ++machineState == STATE_VOID ) {
+  1238  00AE  3001               	movlw	1
+  1239  00AF  00F9               	movwf	??__
+  1240  00B0  0879               	movf	??__,w
+  1241  00B1  07B9               	addwf	_machineState,f
+  1242  00B2  3003               	movlw	3
+  1243  00B3  0639               	xorwf	_machineState,w
+  1244  00B4  1D03               	btfss	3,2
+  1245  00B5  28BE               	goto	i1l1464
+  1246                           
+  1247                           ;main.c: 209: machineState = STATE_METRONOME ;
+  1248  00B6  01B9               	clrf	_machineState
+  1249                           
+  1250                           ;main.c: 210: tempoCounter = 0 ;
+  1251  00B7  3000               	movlw	0
+  1252  00B8  00B3               	movwf	_tempoCounter
+  1253  00B9  3000               	movlw	0
+  1254  00BA  00B4               	movwf	_tempoCounter+1
+  1255  00BB  3000               	movlw	0
+  1256  00BC  00B5               	movwf	_tempoCounter+2
+  1257                           
+  1258                           ;main.c: 211: beatCounter.all = 0 ;
+  1259  00BD  01B6               	clrf	_beatCounter
+  1260  00BE                     i1l1464:	
+  1261                           
+  1262                           ;main.c: 212: }
+  1263                           ;main.c: 214: }
+  1264                           ;main.c: 217: if( (events_.saveConfig&&!(events_.saveConfig=0)) ) {
+  1265  00BE  1E38               	btfss	_events_,4
+  1266  00BF  28C6               	goto	i1l1470
+  1267  00C0  1238               	bcf	_events_,4
+  1268                           
+  1269                           ;main.c: 218: _configuration_Save( &config ) ;
+  1270  00C1  3040               	movlw	(low (_config| 0))& (0+255)
+  1271  00C2  3182  2226  3180   	fcall	__configuration_Save
+  1272  00C5  0001               	reset	;# 
+  1273  00C6                     i1l1470:	
+  1274                           
+  1275                           ;main.c: 220: }
+  1276                           ;main.c: 223: if( (events_.valueChange&&!(events_.valueChange=0)) ) {
+  1277  00C6  0020               	movlb	0	; select bank0
+  1278  00C7  0838               	movf	_events_,w
+  1279  00C8  3903               	andlw	3
+  1280  00C9  3A00               	xorlw	0
+  1281  00CA  1903               	skipnz
+  1282  00CB  2924               	goto	i1l196
+  1283  00CC  30FC               	movlw	-4
+  1284  00CD  05B8               	andwf	_events_,f
+  1285                           
+  1286                           ;main.c: 225: events_.displayValue = 1; ;
+  1287  00CE  15B8               	bsf	_events_,3
+  1288                           
+  1289                           ;main.c: 227: switch( machineState ) {
+  1290  00CF  2919               	goto	i1l1522
+  1291  00D0                     i1l198:	
+  1292                           ;main.c: 229: case STATE_METRONOME:
+  1293                           
+  1294                           
+  1295                           ;main.c: 230: if( (events_.valuePlus&&!(events_.valuePlus=0)) && config.tempo != 999 ) c
+      +                          onfig.tempo++ ;
+  1296  00D0  1C38               	btfss	_events_,0
+  1297  00D1  28DE               	goto	i1l1482
+  1298  00D2  1038               	bcf	_events_,0
+  1299  00D3  30E7               	movlw	231
+  1300  00D4  0640               	xorwf	_config,w
+  1301  00D5  3003               	movlw	3
+  1302  00D6  1903               	skipnz
+  1303  00D7  0641               	xorwf	_config+1,w
+  1304  00D8  1903               	btfsc	3,2
+  1305  00D9  28DE               	goto	i1l1482
+  1306  00DA  3001               	movlw	1
+  1307  00DB  07C0               	addwf	_config,f
+  1308  00DC  3000               	movlw	0
+  1309  00DD  3DC1               	addwfc	_config+1,f
+  1310  00DE                     i1l1482:	
+  1311                           
+  1312                           ;main.c: 231: if( (events_.valueMinus&&!(events_.valueMinus=0)) && config.tempo != 0 ) c
+      +                          onfig.tempo-- ;
+  1313  00DE  1CB8               	btfss	_events_,1
+  1314  00DF  28E9               	goto	i1l200
+  1315  00E0  10B8               	bcf	_events_,1
+  1316  00E1  0840               	movf	_config,w
+  1317  00E2  0441               	iorwf	_config+1,w
+  1318  00E3  1903               	btfsc	3,2
+  1319  00E4  28E9               	goto	i1l200
+  1320  00E5  3001               	movlw	1
+  1321  00E6  02C0               	subwf	_config,f
+  1322  00E7  3000               	movlw	0
+  1323  00E8  3BC1               	subwfb	_config+1,f
+  1324  00E9                     i1l200:	
+  1325                           
+  1326                           ;main.c: 232: tempoCounter = 0 ;
+  1327  00E9  3000               	movlw	0
+  1328  00EA  00B3               	movwf	_tempoCounter
+  1329  00EB  3000               	movlw	0
+  1330  00EC  00B4               	movwf	_tempoCounter+1
+  1331  00ED  3000               	movlw	0
+  1332  00EE  00B5               	movwf	_tempoCounter+2
+  1333                           
+  1334                           ;main.c: 233: beatCounter.all = 0 ;
+  1335  00EF  01B6               	clrf	_beatCounter
+  1336                           
+  1337                           ;main.c: 234: break ;
+  1338  00F0  2924               	goto	i1l196
+  1339  00F1                     i1l202:	
+  1340                           ;main.c: 236: case STATE_CONFIG_DURATION:
+  1341                           
+  1342                           
+  1343                           ;main.c: 237: if( (events_.valuePlus&&!(events_.valuePlus=0)) && config.duration != 0x10
+      +                           ) config.duration++ ;
+  1344  00F1  1C38               	btfss	_events_,0
+  1345  00F2  28FC               	goto	i1l1498
+  1346  00F3  1038               	bcf	_events_,0
+  1347  00F4  3010               	movlw	16
+  1348  00F5  0642               	xorwf	_config+2,w
+  1349  00F6  1903               	btfsc	3,2
+  1350  00F7  28FC               	goto	i1l1498
+  1351  00F8  3001               	movlw	1
+  1352  00F9  00F9               	movwf	??__
+  1353  00FA  0879               	movf	??__,w
+  1354  00FB  07C2               	addwf	_config+2,f
+  1355  00FC                     i1l1498:	
+  1356                           
+  1357                           ;main.c: 238: if( (events_.valueMinus&&!(events_.valueMinus=0)) && config.duration != 0x
+      +                          00 ) config.duration-- ;
+  1358  00FC  1CB8               	btfss	_events_,1
+  1359  00FD  2924               	goto	i1l196
+  1360  00FE  10B8               	bcf	_events_,1
+  1361  00FF  0842               	movf	_config+2,w
+  1362  0100  1903               	btfsc	3,2
+  1363  0101  2924               	goto	i1l196
+  1364  0102  3001               	movlw	1
+  1365  0103  02C2               	subwf	_config+2,f
+  1366                           
+  1367                           ;main.c: 239: break ;
+  1368  0104  2924               	goto	i1l196
+  1369  0105                     i1l205:	
+  1370                           ;main.c: 241: case STATE_TUNE:
+  1371                           
+  1372                           
+  1373                           ;main.c: 242: if( (events_.valuePlus&&!(events_.valuePlus=0)) && config.oscillatorTune !
+      +                          = 63 ) config.oscillatorTune++ ;
+  1374  0105  1C38               	btfss	_events_,0
+  1375  0106  2910               	goto	i1l1512
+  1376  0107  1038               	bcf	_events_,0
+  1377  0108  303F               	movlw	63
+  1378  0109  0643               	xorwf	_config+3,w
+  1379  010A  1903               	btfsc	3,2
+  1380  010B  2910               	goto	i1l1512
+  1381  010C  3001               	movlw	1
+  1382  010D  00F9               	movwf	??__
+  1383  010E  0879               	movf	??__,w
+  1384  010F  07C3               	addwf	_config+3,f
+  1385  0110                     i1l1512:	
+  1386                           
+  1387                           ;main.c: 243: if( (events_.valueMinus&&!(events_.valueMinus=0)) && config.oscillatorTune
+      +                           != 0 ) config.oscillatorTune-- ;
+  1388  0110  1CB8               	btfss	_events_,1
+  1389  0111  2924               	goto	i1l196
+  1390  0112  10B8               	bcf	_events_,1
+  1391  0113  0843               	movf	_config+3,w
+  1392  0114  1903               	btfsc	3,2
+  1393  0115  2924               	goto	i1l196
+  1394  0116  3001               	movlw	1
+  1395  0117  02C3               	subwf	_config+3,f
+  1396                           
+  1397                           ;main.c: 245: }
+  1398                           
+  1399                           ;main.c: 244: break ;
+  1400  0118  2924               	goto	i1l196
+  1401  0119                     i1l1522:	
+  1402  0119  0839               	movf	_machineState,w
+  1403                           
+  1404                           ; Switch size 1, requested type "space"
+  1405                           ; Number of cases is 3, Range of values is 0 to 2
+  1406                           ; switch strategies available:
+  1407                           ; Name         Instructions Cycles
+  1408                           ; simple_byte           10     6 (average)
+  1409                           ; direct_byte           12     6 (fixed)
+  1410                           ; jumptable            260     6 (fixed)
+  1411                           ;	Chosen strategy is simple_byte
+  1412  011A  3A00               	xorlw	0	; case 0
+  1413  011B  1903               	skipnz
+  1414  011C  28D0               	goto	i1l198
+  1415  011D  3A01               	xorlw	1	; case 1
+  1416  011E  1903               	skipnz
+  1417  011F  28F1               	goto	i1l202
+  1418  0120  3A03               	xorlw	3	; case 2
+  1419  0121  1903               	skipnz
+  1420  0122  2905               	goto	i1l205
+  1421  0123  2924               	goto	i1l196
+  1422  0124                     i1l196:	
+  1423                           
+  1424                           ;main.c: 247: }
+  1425                           ;main.c: 250: if( (events_.displayValue&&!(events_.displayValue=0)) ) {
+  1426  0124  1DB8               	btfss	_events_,3
+  1427  0125  29EE               	goto	i1l1620
+  1428  0126  11B8               	bcf	_events_,3
+  1429                           
+  1430                           ;main.c: 252: displayBuffer[0] = 0 ;
+  1431  0127  01BC               	clrf	_displayBuffer
+  1432                           
+  1433                           ;main.c: 253: displayBuffer[1] = 0 ;
+  1434  0128  01BD               	clrf	_displayBuffer+1
+  1435                           
+  1436                           ;main.c: 254: displayBuffer[2] = 0 ;
+  1437  0129  01BE               	clrf	_displayBuffer+2
+  1438                           
+  1439                           ;main.c: 255: displayBuffer[3] = 10 ;
+  1440  012A  300A               	movlw	10
+  1441  012B  00F9               	movwf	??__
+  1442  012C  0879               	movf	??__,w
+  1443  012D  00BF               	movwf	_displayBuffer+3
+  1444                           
+  1445                           ;main.c: 257: uint16_t tmpValue ;
+  1446                           ;main.c: 258: switch( machineState ) {
+  1447  012E  293E               	goto	i1l1538
+  1448  012F                     i1l1530:	
+  1449                           ;main.c: 259: case STATE_METRONOME:
+  1450                           
+  1451                           
+  1452                           ;main.c: 260: tmpValue = config.tempo ;
+  1453  012F  0841               	movf	_config+1,w
+  1454  0130  00A2               	movwf	__@tmpValue+1
+  1455  0131  0840               	movf	_config,w
+  1456  0132  00A1               	movwf	__@tmpValue
+  1457                           
+  1458                           ;main.c: 261: break ;
+  1459  0133  2949               	goto	i1l1540
+  1460  0134                     i1l1532:	
+  1461                           ;main.c: 263: case STATE_CONFIG_DURATION:
+  1462                           
+  1463                           
+  1464                           ;main.c: 264: tmpValue = config.duration ;
+  1465  0134  0842               	movf	_config+2,w
+  1466  0135  2937               	goto	L2
+  1467  0136                     i1l1534:	
+  1468                           ;main.c: 267: case STATE_TUNE:
+  1469                           
+  1470                           ;main.c: 265: break ;
+  1471                           
+  1472                           
+  1473                           ;main.c: 268: tmpValue = config.oscillatorTune ;
+  1474  0136  0843               	movf	_config+3,w
+  1475  0137                     L2:	
+  1476  0137  00F9               	movwf	??__
+  1477  0138  01FA               	clrf	??__+1
+  1478  0139  0879               	movf	??__,w
+  1479  013A  00A1               	movwf	__@tmpValue
+  1480  013B  087A               	movf	??__+1,w
+  1481  013C  00A2               	movwf	__@tmpValue+1
+  1482                           
+  1483                           ;main.c: 271: }
+  1484                           
+  1485                           ;main.c: 269: break ;
+  1486  013D  2949               	goto	i1l1540
+  1487  013E                     i1l1538:	
+  1488  013E  0839               	movf	_machineState,w
+  1489                           
+  1490                           ; Switch size 1, requested type "space"
+  1491                           ; Number of cases is 3, Range of values is 0 to 2
+  1492                           ; switch strategies available:
+  1493                           ; Name         Instructions Cycles
+  1494                           ; simple_byte           10     6 (average)
+  1495                           ; direct_byte           12     6 (fixed)
+  1496                           ; jumptable            260     6 (fixed)
+  1497                           ;	Chosen strategy is simple_byte
+  1498  013F  3A00               	xorlw	0	; case 0
+  1499  0140  1903               	skipnz
+  1500  0141  292F               	goto	i1l1530
+  1501  0142  3A01               	xorlw	1	; case 1
+  1502  0143  1903               	skipnz
+  1503  0144  2934               	goto	i1l1532
+  1504  0145  3A03               	xorlw	3	; case 2
+  1505  0146  1903               	skipnz
+  1506  0147  2936               	goto	i1l1534
+  1507  0148  2949               	goto	i1l1540
+  1508  0149                     i1l1540:	
+  1509                           
+  1510                           ;main.c: 273: static const uint08_t COMPARE_UNITS[] = { 1 , 10 , 100 } ;
+  1511                           ;main.c: 275: uint08_t isNonZero = 0 ;
+  1512  0149  01A0               	clrf	__@isNonZero
+  1513                           
+  1514                           ;main.c: 276: for( uint08_t i = 2 ; i != 0xFF ; i-- ) {
+  1515  014A  3002               	movlw	2
+  1516  014B  00F9               	movwf	??__
+  1517  014C  0879               	movf	??__,w
+  1518  014D  00A7               	movwf	__@i
+  1519  014E  0A27               	incf	__@i,w
+  1520  014F  1903               	btfsc	3,2
+  1521  0150  2989               	goto	i1l1572
+  1522  0151                     i1l1548:	
+  1523                           
+  1524                           ;main.c: 277: uint16_t compareUnit = COMPARE_UNITS[i] ;
+  1525  0151  0827               	movf	__@i,w
+  1526  0152  3E0F               	addlw	low (__@COMPARE_UNITS| (0+32768))
+  1527  0153  0084               	movwf	4
+  1528  0154  3084               	movlw	high (__@COMPARE_UNITS| (0+32768))
+  1529  0155  1803               	skipnc
+  1530  0156  3E01               	addlw	1
+  1531  0157  0085               	movwf	5
+  1532  0158  0800               	movf	0,w	;code access
+  1533  0159  00F9               	movwf	??__
+  1534  015A  01FA               	clrf	??__+1
+  1535  015B  0879               	movf	??__,w
+  1536  015C  00A3               	movwf	__@compareUnit
+  1537  015D  087A               	movf	??__+1,w
+  1538  015E  00A4               	movwf	__@compareUnit+1
+  1539  015F                     i1l1556:	
+  1540                           ;main.c: 278: while( tmpValue >= compareUnit ) {
+  1541                           
+  1542  015F  0824               	movf	__@compareUnit+1,w
+  1543  0160  0222               	subwf	__@tmpValue+1,w
+  1544  0161  1D03               	skipz
+  1545  0162  2965               	goto	u115_25
+  1546  0163  0823               	movf	__@compareUnit,w
+  1547  0164  0221               	subwf	__@tmpValue,w
+  1548  0165                     u115_25:	
+  1549  0165  1C03               	btfss	3,0
+  1550  0166  2976               	goto	i1l1558
+  1551                           
+  1552                           ;main.c: 279: tmpValue -= compareUnit ;
+  1553  0167  0823               	movf	__@compareUnit,w
+  1554  0168  02A1               	subwf	__@tmpValue,f
+  1555  0169  0824               	movf	__@compareUnit+1,w
+  1556  016A  3BA2               	subwfb	__@tmpValue+1,f
+  1557                           
+  1558                           ;main.c: 280: displayBuffer[i]++ ;
+  1559  016B  3001               	movlw	1
+  1560  016C  00F9               	movwf	??__
+  1561  016D  0827               	movf	__@i,w
+  1562  016E  3E3C               	addlw	(low (_displayBuffer| 0))& (0+255)
+  1563  016F  0086               	movwf	6
+  1564  0170  0187               	clrf	7
+  1565  0171  0879               	movf	??__,w
+  1566  0172  0781               	addwf	1,f
+  1567                           
+  1568                           ;main.c: 281: isNonZero = 1 ;
+  1569  0173  01A0               	clrf	__@isNonZero
+  1570  0174  0AA0               	incf	__@isNonZero,f
+  1571  0175  295F               	goto	i1l1556
+  1572  0176                     i1l1558:	
+  1573                           
+  1574                           ;main.c: 282: }
+  1575                           ;main.c: 284: if( i == 0 ) break ;
+  1576  0176  0827               	movf	__@i,w
+  1577  0177  1903               	btfsc	3,2
+  1578  0178  2989               	goto	i1l1572
+  1579                           
+  1580                           ;main.c: 285: if( isNonZero ) continue ;
+  1581  0179  0820               	movf	__@isNonZero,w
+  1582  017A  1D03               	btfss	3,2
+  1583  017B  2984               	goto	i1l1568
+  1584                           
+  1585                           ;main.c: 287: displayBuffer[i] = 10 ;
+  1586  017C  300A               	movlw	10
+  1587  017D  00F9               	movwf	??__
+  1588  017E  0827               	movf	__@i,w
+  1589  017F  3E3C               	addlw	(low (_displayBuffer| 0))& (0+255)
+  1590  0180  0086               	movwf	6
+  1591  0181  0187               	clrf	7
+  1592  0182  0879               	movf	??__,w
+  1593  0183  0081               	movwf	1
+  1594  0184                     i1l1568:	
+  1595  0184  3001               	movlw	1
+  1596  0185  02A7               	subwf	__@i,f
+  1597  0186  0A27               	incf	__@i,w
+  1598  0187  1D03               	btfss	3,2
+  1599  0188  2951               	goto	i1l1548
+  1600  0189                     i1l1572:	
+  1601                           
+  1602                           ;main.c: 288: }
+  1603                           ;main.c: 290: for( uint08_t i = 0 ; i != 4 ; i++ )
+  1604  0189  01A6               	clrf	__@i_378
+  1605  018A                     L5:	
+  1606  018A  3004               	movlw	4
+  1607  018B  0626               	xorwf	__@i_378,w
+  1608  018C  1903               	btfsc	3,2
+  1609  018D  29EE               	goto	i1l1620
+  1610                           
+  1611                           ;main.c: 291: displayBuffer[i] = SEGMENT_BIT[ displayBuffer[ i ] ] ;
+  1612  018E  0826               	movf	__@i_378,w
+  1613  018F  3E3C               	addlw	(low (_displayBuffer| 0))& (0+255)
+  1614  0190  0086               	movwf	6
+  1615  0191  0187               	clrf	7
+  1616  0192  0801               	movf	1,w
+  1617  0193  3E00               	addlw	low (_SEGMENT_BIT| (0+32768))
+  1618  0194  0084               	movwf	4
+  1619  0195  3084               	movlw	high (_SEGMENT_BIT| (0+32768))
+  1620  0196  1803               	skipnc
+  1621  0197  3E01               	addlw	1
+  1622  0198  0085               	movwf	5
+  1623  0199  0800               	movf	0,w	;code access
+  1624  019A  00F9               	movwf	??__
+  1625  019B  0826               	movf	__@i_378,w
+  1626  019C  3E3C               	addlw	(low (_displayBuffer| 0))& (0+255)
+  1627  019D  0086               	movwf	6
+  1628  019E  0187               	clrf	7
+  1629  019F  0879               	movf	??__,w
+  1630  01A0  0081               	movwf	1
+  1631  01A1  3001               	movlw	1
+  1632  01A2  00F9               	movwf	??__
+  1633  01A3  0879               	movf	??__,w
+  1634  01A4  07A6               	addwf	__@i_378,f
+  1635  01A5  298A               	goto	L5
+  1636  01A6                     i1l1584:	
+  1637                           ;main.c: 298: case STATE_TUNE:
+  1638                           
+  1639                           ;main.c: 293: }
+  1640                           ;main.c: 296: switch( machineState ) {
+  1641                           
+  1642                           
+  1643                           ;main.c: 299: OSCTUNE = config.oscillatorTune - 32 ;
+  1644  01A6  0843               	movf	_config+3,w
+  1645  01A7  3EE0               	addlw	224
+  1646  01A8  0021               	movlb	1	; select bank1
+  1647  01A9  0098               	movwf	24	;volatile
+  1648                           
+  1649                           ;main.c: 300: PR2 = 141 ;
+  1650  01AA  308D               	movlw	141
+  1651  01AB  0020               	movlb	0	; select bank0
+  1652  01AC  009B               	movwf	27	;volatile
+  1653                           
+  1654                           ;main.c: 301: for( uint08_t i = 0 ; i != 4 ; i++ )
+  1655  01AD  01A5               	clrf	__@i_379
+  1656  01AE                     L6:	
+  1657  01AE  3004               	movlw	4
+  1658  01AF  0625               	xorwf	__@i_379,w
+  1659  01B0  1903               	btfsc	3,2
+  1660  01B1  29F3               	goto	i1l1622
+  1661                           
+  1662                           ;main.c: 302: displayBuffer[i] &= 0xFE ;
+  1663  01B2  30FE               	movlw	254
+  1664  01B3  00F9               	movwf	??__
+  1665  01B4  0825               	movf	__@i_379,w
+  1666  01B5  3E3C               	addlw	(low (_displayBuffer| 0))& (0+255)
+  1667  01B6  0086               	movwf	6
+  1668  01B7  0187               	clrf	7
+  1669  01B8  0879               	movf	??__,w
+  1670  01B9  0581               	andwf	1,f
+  1671  01BA  3001               	movlw	1
+  1672  01BB  00F9               	movwf	??__
+  1673  01BC  0879               	movf	??__,w
+  1674  01BD  07A5               	addwf	__@i_379,f
+  1675  01BE  29AE               	goto	L6
+  1676  01BF                     i1l1600:	
+  1677                           ;main.c: 305: default:
+  1678                           
+  1679                           ;main.c: 303: break ;
+  1680                           
+  1681                           
+  1682                           ;main.c: 306: displayBuffer[3] = SEGMENT_BIT[ ( beatCounter.beat ) + 1 ] ;
+  1683  01BF  0E36               	swapf	_beatCounter,w
+  1684  01C0  3903               	andlw	3
+  1685  01C1  3E01               	addlw	1
+  1686  01C2  00F9               	movwf	??__
+  1687  01C3  3000               	movlw	0
+  1688  01C4  1803               	skipnc
+  1689  01C5  3001               	movlw	1
+  1690  01C6  00FA               	movwf	??__+1
+  1691  01C7  3000               	movlw	low (_SEGMENT_BIT| (0+32768))
+  1692  01C8  0779               	addwf	??__,w
+  1693  01C9  0084               	movwf	4
+  1694  01CA  3084               	movlw	high (_SEGMENT_BIT| (0+32768))
+  1695  01CB  3D7A               	addwfc	??__+1,w
+  1696  01CC  0085               	movwf	5
+  1697  01CD  0800               	movf	0,w	;code access
+  1698  01CE  00FB               	movwf	??__+2
+  1699  01CF  087B               	movf	??__+2,w
+  1700  01D0  00BF               	movwf	_displayBuffer+3
+  1701                           
+  1702                           ;main.c: 308: if( beatCounter.duration < config.duration ) {
+  1703  01D1  0836               	movf	_beatCounter,w
+  1704  01D2  390F               	andlw	15
+  1705  01D3  00F9               	movwf	??__
+  1706  01D4  0842               	movf	_config+2,w
+  1707  01D5  0279               	subwf	??__,w
+  1708  01D6  1803               	skipnc
+  1709  01D7  29EC               	goto	i1l1616
+  1710                           
+  1711                           ;main.c: 309: if( !beatCounter.beat ) {
+  1712  01D8  0E36               	swapf	_beatCounter,w
+  1713  01D9  3903               	andlw	3
+  1714  01DA  3A00               	xorlw	0
+  1715  01DB  1D03               	skipz
+  1716  01DC  29E8               	goto	i1l1612
+  1717                           
+  1718                           ;main.c: 310: if( beatCounter.measure & 0x01 )
+  1719  01DD  0E36               	swapf	_beatCounter,w
+  1720  01DE  0C89               	rrf	9,f
+  1721  01DF  0C89               	rrf	9,f
+  1722  01E0  3903               	andlw	3
+  1723  01E1  3901               	andlw	1
+  1724  01E2  1903               	btfsc	3,2
+  1725  01E3  29E6               	goto	i1l1610
+  1726                           
+  1727                           ;main.c: 311: PR2 = 167 ;
+  1728  01E4  30A7               	movlw	167
+  1729  01E5  29E9               	goto	L4
+  1730  01E6                     i1l1610:	
+  1731                           
+  1732                           ;main.c: 312: else
+  1733                           ;main.c: 313: PR2 = 125 ;
+  1734  01E6  307D               	movlw	125
+  1735  01E7  29E9               	goto	L4
+  1736  01E8                     i1l1612:	
+  1737                           ;main.c: 314: }
+  1738                           
+  1739                           
+  1740                           ;main.c: 315: else {
+  1741                           ;main.c: 316: PR2 = 251 ;
+  1742  01E8  30FB               	movlw	251
+  1743  01E9                     L4:	
+  1744  01E9  009B               	movwf	27	;volatile
+  1745                           
+  1746                           ;main.c: 317: }
+  1747                           ;main.c: 318: displayBuffer[3] |= 0x01 ;
+  1748  01EA  143F               	bsf	_displayBuffer+3,0
+  1749                           
+  1750                           ;main.c: 319: }
+  1751  01EB  29F3               	goto	i1l1622
+  1752  01EC                     i1l1616:	
+  1753                           
+  1754                           ;main.c: 320: else {
+  1755                           ;main.c: 321: PR2 = 0 ;
+  1756  01EC  019B               	clrf	27	;volatile
+  1757                           
+  1758                           ;main.c: 325: }
+  1759                           
+  1760                           ;main.c: 322: }
+  1761                           ;main.c: 324: break ;
+  1762  01ED  29F3               	goto	i1l1622
+  1763  01EE                     i1l1620:	
+  1764  01EE  0839               	movf	_machineState,w
+  1765                           
+  1766                           ; Switch size 1, requested type "space"
+  1767                           ; Number of cases is 1, Range of values is 2 to 2
+  1768                           ; switch strategies available:
+  1769                           ; Name         Instructions Cycles
+  1770                           ; simple_byte            4     3 (average)
+  1771                           ; direct_byte           11     9 (fixed)
+  1772                           ; jumptable            263     9 (fixed)
+  1773                           ;	Chosen strategy is simple_byte
+  1774  01EF  3A02               	xorlw	2	; case 2
+  1775  01F0  1903               	skipnz
+  1776  01F1  29A6               	goto	i1l1584
+  1777  01F2  29BF               	goto	i1l1600
+  1778  01F3                     i1l1622:	
+  1779                           
+  1780                           ;main.c: 326: CCPR2L = ( PR2 >> 1 ) ;
+  1781  01F3  361B               	lsrf	27,w	;volatile
+  1782  01F4  0025               	movlb	5	; select bank5
+  1783  01F5  0098               	movwf	24	;volatile
+  1784                           
+  1785                           ;main.c: 329: if( prescaleEvent & 0x7F ) return ;
+  1786  01F6  0020               	movlb	0	; select bank0
+  1787  01F7  083B               	movf	_prescaleEvent,w
+  1788  01F8  397F               	andlw	127
+  1789  01F9  1D03               	btfss	3,2
+  1790  01FA  2A0A               	goto	i1l167
+  1791                           
+  1792                           ;main.c: 332: displayDigit = ( displayDigit + 1 ) & 0x03 ;
+  1793  01FB  0837               	movf	_displayDigit,w
+  1794  01FC  3E01               	addlw	1
+  1795  01FD  3903               	andlw	3
+  1796  01FE  00F9               	movwf	??__
+  1797  01FF  0879               	movf	??__,w
+  1798  0200  00B7               	movwf	_displayDigit
+  1799                           
+  1800                           ;main.c: 336: LATB = displayBuffer[ 3 ] ;
+  1801  0201  083F               	movf	_displayBuffer+3,w
+  1802  0202  0022               	movlb	2	; select bank2
+  1803  0203  008D               	movwf	13	;volatile
+  1804                           
+  1805                           ;main.c: 337: LATA = SEGMET_BIT2[ 3 ] ;
+  1806  0204  300E               	movlw	low ((_SEGMET_BIT2+3)| (0+32768))
+  1807  0205  0084               	movwf	4
+  1808  0206  3084               	movlw	high ((_SEGMET_BIT2+3)| (0+32768))
+  1809  0207  0085               	movwf	5
+  1810  0208  0800               	movf	0,w	;code access
+  1811  0209  008C               	movwf	12	;volatile
+  1812  020A                     i1l167:	
+  1813  020A  087C               	movf	??__+3,w
+  1814  020B  0020               	movlb	0	; select bank0
+  1815  020C  00FF               	movwf	127
+  1816  020D  0009               	retfie
+  1817  020E                     __end_of__:	
+  1818                           
+  1819                           	psect	text5
+  1820  0226                     __ptext5:	
+  1821 ;; *************** function __configuration_Save *****************
+  1822 ;; Defined at:
+  1823 ;;		line 24 in file "src/configuration.h"
+  1824 ;; Parameters:    Size  Location     Type
+  1825 ;;  config          1    wreg     PTR struct .
+  1826 ;;		 -> config(5), 
+  1827 ;; Auto vars:     Size  Location     Type
+  1828 ;;  config          1    6[COMMON] PTR struct .
+  1829 ;;		 -> config(5), 
+  1830 ;;  i               1    7[COMMON] unsigned char 
+  1831 ;;  romPosition     1    8[COMMON] unsigned char 
+  1832 ;;  isPositionCh    1    5[COMMON] unsigned char 
+  1833 ;;  ptrConfig       1    4[COMMON] PTR unsigned char 
+  1834 ;;		 -> config(5), 
+  1835 ;;  saveIntcon      1    3[COMMON] unsigned char 
+  1836 ;; Return value:  Size  Location     Type
+  1837 ;;		None               void
+  1838 ;; Registers used:
+  1839 ;;		wreg, fsr1l, fsr1h, status,2, status,0, pclath, cstack
+  1840 ;; Tracked objects:
+  1841 ;;		On entry : 0/0
+  1842 ;;		On exit  : 0/0
+  1843 ;;		Unchanged: 0/0
+  1844 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4
+  1845 ;;      Params:         0       0       0       0       0       0
+  1846 ;;      Locals:         6       0       0       0       0       0
+  1847 ;;      Temps:          1       0       0       0       0       0
+  1848 ;;      Totals:         7       0       0       0       0       0
+  1849 ;;Total ram usage:        7 bytes
+  1850 ;; Hardware stack levels used:    1
+  1851 ;; Hardware stack levels required when called:    1
+  1852 ;; This function calls:
+  1853 ;;		__private_WriteByte
+  1854 ;;		i1__private_ReadByte
+  1855 ;; This function is called by:
+  1856 ;;		__
+  1857 ;; This function uses a non-reentrant model
+  1858 ;;
+  1859                           
+  1860                           
+  1861                           ;psect for function __configuration_Save
+  1862  0226                     __configuration_Save:	
+  1863                           
+  1864                           ;incstack = 0
+  1865                           ; Regs used in __configuration_Save: [wreg+fsr1l+fsr1h+status,2+status,0+pclath+cstack]
+  1866                           ;__configuration_Save@config stored from wreg
+  1867  0226  00F6               	movwf	__configuration_Save@config
+  1868                           
+  1869                           ;configuration.h: 26: uint08_t* ptrConfig = (uint08_t*) config ;
+  1870  0227  0876               	movf	__configuration_Save@config,w
+  1871  0228  00F2               	movwf	??__configuration_Save
+  1872  0229  0872               	movf	??__configuration_Save,w
+  1873  022A  00F4               	movwf	__configuration_Save@ptrConfig
+  1874                           
+  1875                           ;configuration.h: 27: uint08_t romPosition = 0xFF ;
+  1876  022B  30FF               	movlw	255
+  1877  022C  00F2               	movwf	??__configuration_Save
+  1878  022D  0872               	movf	??__configuration_Save,w
+  1879  022E  00F8               	movwf	__configuration_Save@romPosition
+  1880                           
+  1881                           ;configuration.h: 28: uint08_t isPositionChanged = 0 ;
+  1882  022F  01F5               	clrf	__configuration_Save@isPositionChanged
+  1883                           
+  1884                           ;configuration.h: 29: uint08_t saveIntcon ;
+  1885                           ;configuration.h: 32: saveIntcon = INTCON ;
+  1886  0230  080B               	movf	11,w	;volatile
+  1887  0231  00F2               	movwf	??__configuration_Save
+  1888  0232  0872               	movf	??__configuration_Save,w
+  1889  0233  00F3               	movwf	__configuration_Save@saveIntcon
+  1890                           
+  1891                           ;configuration.h: 33: INTCONbits.GIE = 0 ;
+  1892  0234  138B               	bcf	11,7	;volatile
+  1893                           
+  1894                           ;configuration.h: 36: romPosition = _private_ReadByte( 0xFF ) & 0xF0 ;
+  1895  0235  30FF               	movlw	255
+  1896  0236  3184  2434  3182   	fcall	i1__private_ReadByte
+  1897  0239  39F0               	andlw	240
+  1898  023A  00F2               	movwf	??__configuration_Save
+  1899  023B  0872               	movf	??__configuration_Save,w
+  1900  023C  00F8               	movwf	__configuration_Save@romPosition
+  1901                           
+  1902                           ;configuration.h: 37: if ( romPosition == 0xF0 ) romPosition = 0x00 ;
+  1903  023D  30F0               	movlw	240
+  1904  023E  0678               	xorwf	__configuration_Save@romPosition,w
+  1905  023F  1903               	btfsc	3,2
+  1906  0240  01F8               	clrf	__configuration_Save@romPosition
+  1907                           
+  1908                           ;configuration.h: 40: EECON1bits.WREN = 1 ;
+  1909  0241  0023               	movlb	3	; select bank3
+  1910  0242  1515               	bsf	21,2	;volsfr
+  1911                           
+  1912                           ;configuration.h: 43: if ( ++( config->writeCount ) == 0x00 ) {
+  1913  0243  3001               	movlw	1
+  1914  0244  00F2               	movwf	??__configuration_Save
+  1915  0245  0876               	movf	__configuration_Save@config,w
+  1916  0246  3E04               	addlw	4
+  1917  0247  0086               	movwf	6
+  1918  0248  0187               	clrf	7
+  1919  0249  0872               	movf	??__configuration_Save,w
+  1920  024A  0781               	addwf	1,f
+  1921  024B  1D03               	btfss	3,2
+  1922  024C  2A59               	goto	i1l113
+  1923                           
+  1924                           ;configuration.h: 44: isPositionChanged = 1 ;
+  1925  024D  01F5               	clrf	__configuration_Save@isPositionChanged
+  1926  024E  0AF5               	incf	__configuration_Save@isPositionChanged,f
+  1927                           
+  1928                           ;configuration.h: 45: config->writeCount = 0 ;
+  1929  024F  0876               	movf	__configuration_Save@config,w
+  1930  0250  3E04               	addlw	4
+  1931  0251  0086               	movwf	6
+  1932  0252  0187               	clrf	7
+  1933  0253  0181               	clrf	1
+  1934                           
+  1935                           ;configuration.h: 46: romPosition += 0x10 ;
+  1936  0254  3010               	movlw	16
+  1937  0255  00F2               	movwf	??__configuration_Save
+  1938  0256  0872               	movf	??__configuration_Save,w
+  1939  0257  07F8               	addwf	__configuration_Save@romPosition,f
+  1940                           
+  1941                           ;configuration.h: 48: romPosition = 0x00 ;
+  1942  0258  01F8               	clrf	__configuration_Save@romPosition
+  1943  0259                     i1l113:	
+  1944                           
+  1945                           ;configuration.h: 49: } ;
+  1946                           ;configuration.h: 52: for ( uint08_t i = 0 ; i < sizeof ( ConfigurationData ) ; i++ , pt
+      +                          rConfig++ ) {
+  1947  0259  01F7               	clrf	__configuration_Save@i
+  1948  025A  2A63               	goto	L7
+  1949  025B                     i1l1330:	
+  1950  025B  3001               	movlw	1
+  1951  025C  00F2               	movwf	??__configuration_Save
+  1952  025D  0872               	movf	??__configuration_Save,w
+  1953  025E  07F7               	addwf	__configuration_Save@i,f
+  1954  025F  3001               	movlw	1
+  1955  0260  00F2               	movwf	??__configuration_Save
+  1956  0261  0872               	movf	??__configuration_Save,w
+  1957  0262  07F4               	addwf	__configuration_Save@ptrConfig,f
+  1958  0263                     L7:	
+  1959  0263  3005               	movlw	5
+  1960  0264  0277               	subwf	__configuration_Save@i,w
+  1961  0265  1803               	btfsc	3,0
+  1962  0266  2A76               	goto	i1l1334
+  1963                           
+  1964                           ;configuration.h: 53: _private_WriteByte( romPosition + i , *ptrConfig ) ;
+  1965  0267  0874               	movf	__configuration_Save@ptrConfig,w
+  1966  0268  0086               	movwf	6
+  1967  0269  0187               	clrf	7
+  1968  026A  0801               	movf	1,w
+  1969  026B  00F2               	movwf	??__configuration_Save
+  1970  026C  0872               	movf	??__configuration_Save,w
+  1971  026D  00F0               	movwf	__private_WriteByte@data
+  1972  026E  0878               	movf	__configuration_Save@romPosition,w
+  1973  026F  0777               	addwf	__configuration_Save@i,w
+  1974  0270  3184  2412  3182   	fcall	__private_WriteByte
+  1975                           
+  1976                           ;configuration.h: 54: if ( EECON1bits.WRERR ) break ;
+  1977  0273  0023               	movlb	3	; select bank3
+  1978  0274  1D95               	btfss	21,3	;volsfr
+  1979  0275  2A5B               	goto	i1l1330
+  1980  0276                     i1l1334:	
+  1981                           
+  1982                           ;configuration.h: 55: }
+  1983                           ;configuration.h: 58: if ( isPositionChanged && ( !EECON1bits.WRERR ) ) {
+  1984  0276  0875               	movf	__configuration_Save@isPositionChanged,w
+  1985  0277  1D03               	btfss	3,2
+  1986  0278  1995               	btfsc	21,3	;volsfr
+  1987  0279  2A81               	goto	i1l1340
+  1988                           
+  1989                           ;configuration.h: 59: _private_WriteByte( 0xFF , romPosition ) ;
+  1990  027A  0878               	movf	__configuration_Save@romPosition,w
+  1991  027B  00F2               	movwf	??__configuration_Save
+  1992  027C  0872               	movf	??__configuration_Save,w
+  1993  027D  00F0               	movwf	__private_WriteByte@data
+  1994  027E  30FF               	movlw	255
+  1995  027F  3184  2412         	fcall	__private_WriteByte
+  1996  0281                     i1l1340:	
+  1997                           
+  1998                           ;configuration.h: 60: }
+  1999                           ;configuration.h: 63: EECON1bits.WREN = 0 ;
+  2000  0281  0023               	movlb	3	; select bank3
+  2001  0282  1115               	bcf	21,2	;volsfr
+  2002                           
+  2003                           ;configuration.h: 66: INTCON = saveIntcon ;
+  2004  0283  0873               	movf	__configuration_Save@saveIntcon,w
+  2005  0284  008B               	movwf	11	;volatile
+  2006  0285  0008               	return
+  2007  0286                     __end_of__configuration_Save:	
+  2008                           
+  2009                           	psect	text6
+  2010  0434                     __ptext6:	
+  2011 ;; *************** function i1__private_ReadByte *****************
+  2012 ;; Defined at:
+  2013 ;;		line 109 in file "src/configuration.h"
+  2014 ;; Parameters:    Size  Location     Type
+  2015 ;;  address         1    wreg     unsigned char 
+  2016 ;; Auto vars:     Size  Location     Type
+  2017 ;;  address         1    0[COMMON] unsigned char 
+  2018 ;; Return value:  Size  Location     Type
+  2019 ;;                  1    wreg      unsigned char 
+  2020 ;; Registers used:
+  2021 ;;		wreg, status,2
+  2022 ;; Tracked objects:
+  2023 ;;		On entry : 0/0
+  2024 ;;		On exit  : 0/0
+  2025 ;;		Unchanged: 0/0
+  2026 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4
+  2027 ;;      Params:         0       0       0       0       0       0
+  2028 ;;      Locals:         1       0       0       0       0       0
+  2029 ;;      Temps:          0       0       0       0       0       0
+  2030 ;;      Totals:         1       0       0       0       0       0
+  2031 ;;Total ram usage:        1 bytes
+  2032 ;; Hardware stack levels used:    1
+  2033 ;; This function calls:
+  2034 ;;		Nothing
+  2035 ;; This function is called by:
+  2036 ;;		__configuration_Save
+  2037 ;; This function uses a non-reentrant model
+  2038 ;;
+  2039                           
+  2040                           
+  2041                           ;psect for function i1__private_ReadByte
+  2042  0434                     i1__private_ReadByte:	
+  2043                           
+  2044                           ;incstack = 0
+  2045                           ; Regs used in i1__private_ReadByte: [wreg+status,2]
+  2046                           ;i1__private_ReadByte@address stored from wreg
+  2047  0434  00F0               	movwf	i1__private_ReadByte@address
+  2048                           
+  2049                           ;configuration.h: 110: EEADRH = 0x00 ;
+  2050  0435  0023               	movlb	3	; select bank3
+  2051  0436  0192               	clrf	18	;volatile
+  2052                           
+  2053                           ;configuration.h: 111: EEADRL = address ;
+  2054  0437  0870               	movf	i1__private_ReadByte@address,w
+  2055  0438  0091               	movwf	17	;volatile
+  2056                           
+  2057                           ;configuration.h: 112: EECON1bits.EEPGD = 0 ;
+  2058  0439  1395               	bcf	21,7	;volsfr
+  2059                           
+  2060                           ;configuration.h: 113: EECON1bits.CFGS = 0 ;
+  2061  043A  1315               	bcf	21,6	;volsfr
+  2062                           
+  2063                           ;configuration.h: 114: EECON1bits.RD = 1 ;
+  2064  043B  1415               	bsf	21,0	;volsfr
+  2065                           
+  2066                           ;configuration.h: 115: __nop() ;
+  2067  043C  0000               	nop
+  2068                           
+  2069                           ;configuration.h: 116: __nop() ;
+  2070  043D  0000               	nop
+  2071                           
+  2072                           ;configuration.h: 117: return EEDATL ;
+  2073  043E  0023               	movlb	3	; select bank3
+  2074  043F  0813               	movf	19,w	;volatile
+  2075  0440  0008               	return
+  2076  0441                     __end_ofi1__private_ReadByte:	
+  2077                           
+  2078                           	psect	text7
+  2079  0412                     __ptext7:	
+  2080 ;; *************** function __private_WriteByte *****************
+  2081 ;; Defined at:
+  2082 ;;		line 94 in file "src/configuration.h"
+  2083 ;; Parameters:    Size  Location     Type
+  2084 ;;  address         1    wreg     unsigned char 
+  2085 ;;  data            1    0[COMMON] unsigned char 
+  2086 ;; Auto vars:     Size  Location     Type
+  2087 ;;  address         1    1[COMMON] unsigned char 
+  2088 ;; Return value:  Size  Location     Type
+  2089 ;;		None               void
+  2090 ;; Registers used:
+  2091 ;;		wreg, status,2
+  2092 ;; Tracked objects:
+  2093 ;;		On entry : 0/0
+  2094 ;;		On exit  : 0/0
+  2095 ;;		Unchanged: 0/0
+  2096 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2   BANK3   BANK4
+  2097 ;;      Params:         1       0       0       0       0       0
+  2098 ;;      Locals:         1       0       0       0       0       0
+  2099 ;;      Temps:          0       0       0       0       0       0
+  2100 ;;      Totals:         2       0       0       0       0       0
+  2101 ;;Total ram usage:        2 bytes
+  2102 ;; Hardware stack levels used:    1
+  2103 ;; This function calls:
+  2104 ;;		Nothing
+  2105 ;; This function is called by:
+  2106 ;;		__configuration_Save
+  2107 ;; This function uses a non-reentrant model
+  2108 ;;
+  2109                           
+  2110                           
+  2111                           ;psect for function __private_WriteByte
+  2112  0412                     __private_WriteByte:	
+  2113                           
+  2114                           ;incstack = 0
+  2115                           ; Regs used in __private_WriteByte: [wreg+status,2]
+  2116                           ;__private_WriteByte@address stored from wreg
+  2117  0412  00F1               	movwf	__private_WriteByte@address
+  2118                           
+  2119                           ;configuration.h: 95: EEADRH = 0x00 ;
+  2120  0413  0023               	movlb	3	; select bank3
+  2121  0414  0192               	clrf	18	;volatile
+  2122                           
+  2123                           ;configuration.h: 96: EEDATH = 0x00 ;
+  2124  0415  0194               	clrf	20	;volatile
+  2125                           
+  2126                           ;configuration.h: 97: EEADRL = address ;
+  2127  0416  0871               	movf	__private_WriteByte@address,w
+  2128  0417  0091               	movwf	17	;volatile
+  2129                           
+  2130                           ;configuration.h: 98: EEDATL = data ;
+  2131  0418  0870               	movf	__private_WriteByte@data,w
+  2132  0419  0093               	movwf	19	;volatile
+  2133                           
+  2134                           ;configuration.h: 99: EECON2 = 0x55 ;
+  2135  041A  3055               	movlw	85
+  2136  041B  0096               	movwf	22	;volsfr
+  2137                           
+  2138                           ;configuration.h: 100: EECON2 = 0xAA ;
+  2139  041C  30AA               	movlw	170
+  2140  041D  0096               	movwf	22	;volsfr
+  2141                           
+  2142                           ;configuration.h: 102: EECON1bits.WR = 1 ;
+  2143  041E  1495               	bsf	21,1	;volsfr
+  2144  041F                     i1l128:	
+  2145                           ;configuration.h: 103: while ( !PIR2bits.EEIF ) ;
+  2146                           
+  2147  041F  0020               	movlb	0	; select bank0
+  2148  0420  1E12               	btfss	18,4	;volatile
+  2149  0421  2C1F               	goto	i1l128
+  2150                           
+  2151                           ;configuration.h: 104: PIR2bits.EEIF = 0 ;
+  2152  0422  1212               	bcf	18,4	;volatile
+  2153  0423  0008               	return
+  2154  0424                     __end_of__private_WriteByte:	
+  2155  007E                     btemp	set	126	;btemp
+  2156  007E                     wtemp	set	126
+  2157  007E                     wtemp0	set	126
+  2158  0080                     wtemp1	set	128
+  2159  0082                     wtemp2	set	130
+  2160  0084                     wtemp3	set	132
+  2161  0086                     wtemp4	set	134
+  2162  0088                     wtemp5	set	136
+  2163  007F                     wtemp6	set	127
+  2164  007E                     ttemp	set	126
+  2165  007E                     ttemp0	set	126
+  2166  0081                     ttemp1	set	129
+  2167  0084                     ttemp2	set	132
+  2168  0087                     ttemp3	set	135
+  2169  007F                     ttemp4	set	127
+  2170  007E                     ltemp	set	126
+  2171  007E                     ltemp0	set	126
+  2172  0082                     ltemp1	set	130
+  2173  0086                     ltemp2	set	134
+  2174  0080                     ltemp3	set	128
+
+
+Data Sizes:
+    Strings     0
+    Constant    18
+    Data        9
+    BSS         13
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMMON           14     13      13
+    BANK0            80     15      37
+    BANK1            80      0       0
+    BANK2            80      0       0
+    BANK3            80      0       0
+    BANK4            48      0       0
+
+Pointer List with Targets:
+
+    _configuration_Load@config	PTR struct . size(1) Largest target is 5
+		 -> config(BANK0[5]), 
+
+    _configuration_Load@ptrConfig	PTR unsigned char  size(1) Largest target is 5
+		 -> config(BANK0[5]), 
+
+    _configuration_Save@config	PTR struct . size(1) Largest target is 5
+		 -> config(BANK0[5]), 
+
+    _configuration_Save@ptrConfig	PTR unsigned char  size(1) Largest target is 5
+		 -> config(BANK0[5]), 
+
+
+Critical Paths under _main in COMMON
+
+    None.
+
+Critical Paths under __ in COMMON
+
+    __->__configuration_Save
+    __configuration_Save->__private_WriteByte
+
+Critical Paths under _main in BANK0
+
+    _main->__configuration_Load
+    __configuration_Load->__private_ReadByte
+
+Critical Paths under __ in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under __ in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under __ in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under __ in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under __ in BANK4
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 1     1      0     209
+                                             14 BANK0      1     1      0
+                __configuration_Load
+                         _initialize
+ ---------------------------------------------------------------------------------
+ (1) _initialize                                           0     0      0       0
+ ---------------------------------------------------------------------------------
+ (1) __configuration_Load                                  5     5      0     209
+                                              9 BANK0      5     5      0
+                  __private_ReadByte
+ ---------------------------------------------------------------------------------
+ (2) __private_ReadByte                                    1     1      0      22
+                                              8 BANK0      1     1      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (3) __                                                   12    12      0     884
+                                              9 COMMON     4     4      0
+                                              0 BANK0      8     8      0
+                __configuration_Save
+ ---------------------------------------------------------------------------------
+ (4) __configuration_Save                                  7     7      0     497
+                                              2 COMMON     7     7      0
+                 __private_WriteByte
+                i1__private_ReadByte
+ ---------------------------------------------------------------------------------
+ (5) i1__private_ReadByte                                  1     1      0      22
+                                              0 COMMON     1     1      0
+ ---------------------------------------------------------------------------------
+ (5) __private_WriteByte                                   2     1      1     150
+                                              0 COMMON     2     1      1
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 5
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   __configuration_Load
+     __private_ReadByte
+   _initialize
+
+ __ (ROOT)
+   __configuration_Save
+     __private_WriteByte
+     i1__private_ReadByte
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             170      0       0       0        0.0%
+EEDATA             100      0       0       0        0.0%
+NULL                 0      0       0       0        0.0%
+CODE                 0      0       0       0        0.0%
+BITCOMMON            E      0       0       1        0.0%
+BITSFR0              0      0       0       1        0.0%
+SFR0                 0      0       0       1        0.0%
+COMMON               E      D       D       2       92.9%
+BITSFR1              0      0       0       2        0.0%
+SFR1                 0      0       0       2        0.0%
+BITSFR2              0      0       0       3        0.0%
+SFR2                 0      0       0       3        0.0%
+STACK                0      0       0       3        0.0%
+BITSFR3              0      0       0       4        0.0%
+SFR3                 0      0       0       4        0.0%
+ABS                  0      0      32       4        0.0%
+BITBANK0            50      0       0       5        0.0%
+BITSFR4              0      0       0       5        0.0%
+SFR4                 0      0       0       5        0.0%
+BANK0               50      F      25       6       46.2%
+BITSFR5              0      0       0       6        0.0%
+SFR5                 0      0       0       6        0.0%
+BITBANK1            50      0       0       7        0.0%
+BITSFR6              0      0       0       7        0.0%
+SFR6                 0      0       0       7        0.0%
+BANK1               50      0       0       8        0.0%
+BITSFR7              0      0       0       8        0.0%
+SFR7                 0      0       0       8        0.0%
+BITBANK2            50      0       0       9        0.0%
+BITSFR8              0      0       0       9        0.0%
+SFR8                 0      0       0       9        0.0%
+BANK2               50      0       0      10        0.0%
+BITSFR9              0      0       0      10        0.0%
+SFR9                 0      0       0      10        0.0%
+BITBANK3            50      0       0      11        0.0%
+BITSFR10             0      0       0      11        0.0%
+SFR10                0      0       0      11        0.0%
+BANK3               50      0       0      12        0.0%
+BITSFR11             0      0       0      12        0.0%
+SFR11                0      0       0      12        0.0%
+BITBANK4            30      0       0      13        0.0%
+BITSFR12             0      0       0      13        0.0%
+SFR12                0      0       0      13        0.0%
+BANK4               30      0       0      14        0.0%
+BITSFR13             0      0       0      14        0.0%
+SFR13                0      0       0      14        0.0%
+BITSFR14             0      0       0      15        0.0%
+SFR14                0      0       0      15        0.0%
+DATA                 0      0      32      15        0.0%
+BITSFR15             0      0       0      16        0.0%
+SFR15                0      0       0      16        0.0%
+BITSFR16             0      0       0      17        0.0%
+SFR16                0      0       0      17        0.0%
+BITSFR17             0      0       0      18        0.0%
+SFR17                0      0       0      18        0.0%
+BITSFR18             0      0       0      19        0.0%
+SFR18                0      0       0      19        0.0%
+BITSFR19             0      0       0      20        0.0%
+SFR19                0      0       0      20        0.0%
+BITSFR20             0      0       0      21        0.0%
+SFR20                0      0       0      21        0.0%
+BITSFR21             0      0       0      22        0.0%
+SFR21                0      0       0      22        0.0%
+BITSFR22             0      0       0      23        0.0%
+SFR22                0      0       0      23        0.0%
+BITSFR23             0      0       0      24        0.0%
+SFR23                0      0       0      24        0.0%
+BITSFR24             0      0       0      25        0.0%
+SFR24                0      0       0      25        0.0%
+BITSFR25             0      0       0      26        0.0%
+SFR25                0      0       0      26        0.0%
+BITSFR26             0      0       0      27        0.0%
+SFR26                0      0       0      27        0.0%
+BITSFR27             0      0       0      28        0.0%
+SFR27                0      0       0      28        0.0%
+BITSFR28             0      0       0      29        0.0%
+SFR28                0      0       0      29        0.0%
+BITSFR29             0      0       0      30        0.0%
+SFR29                0      0       0      30        0.0%
+BITSFR30             0      0       0      31        0.0%
+SFR30                0      0       0      31        0.0%
+BITSFR31             0      0       0      32        0.0%
+SFR31                0      0       0      32        0.0%
+
+
+Microchip Technology PIC Macro Assembler V1.34 build -361300703 
+Symbol Table                                                                                   Wed Aug 12 02:14:58 2015
+
+                                    __ 0004                            __CFG_CP$OFF 0000  
+                                   ?__ 0070                                    ??__ 0079  
+                                  l161 0314                                    _GIE 005F  
+                                  _PR2 001B                                    _PR4 0416  
+                         __CFG_CPD$OFF 0000                                    _PR6 041D  
+                                  _PSA 04AB                                    __@i 0027  
+                         __CFG_BORV$HI 0000                                    wreg 0009  
+                         __CFG_LVP$OFF 0000                           __CFG_WDTE$ON 0000  
+                                 _LATA 010C                                   _LATB 010D  
+                                 _PEIE 005E                                   _TMR0 0015  
+                                 _TMR2 001A                                   _TMR4 0415  
+                                 _TMR6 041C                           __CFG_WRT$OFF 0000  
+                        __CFG_FCMEN$ON 0000                                   _main 02FC  
+                                 fsr0h 0005                                   fsr1h 0007  
+                                 fsr0l 0004                                   indf0 0000  
+                                 indf1 0001                                   fsr1l 0006  
+                                 btemp 007E                          __CFG_BOREN$ON 0000  
+                                 ltemp 007E                                   start 020E  
+                                 ttemp 007E                                   wtemp 007E  
+                        __CFG_IESO$OFF 0000                          __CFG_PLLEN$ON 0000  
+                                ?_main 0070                                  _T2CON 001C  
+                                _T4CON 0417                                  _T6CON 041E  
+                                i1l200 00E9                                  i1l113 0259  
+                                i1l202 00F1                                  i1l205 0105  
+                                i1l128 041F                                  i1l167 020A  
+                                i1l184 0093                                  i1l186 00A6  
+                                i1l178 0077                                  i1l187 00A0  
+                                i1l196 0124                                  i1l198 00D0  
+                                _PORTA 000C                                  _TRISA 008C  
+                                _TRISB 008D                                  u76_25 002A  
+                        __CFG_PWRTE$ON 0000                                  _porta 003A  
+                                ltemp0 007E                                  ltemp1 0082  
+                                ltemp2 0086                                  ltemp3 0080  
+                                ttemp0 007E                                  ttemp1 0081  
+                                ttemp2 0084                                  ttemp3 0087  
+                                ttemp4 007F                                  status 0003  
+                                wtemp0 007E                                  wtemp1 0080  
+                                wtemp2 0082                                  wtemp3 0084  
+                                wtemp4 0086                                  wtemp5 0088  
+                                wtemp6 007F                         __CFG_MCLRE$OFF 0000  
+                      __initialization 0210                           __end_of_main 0315  
+                               ??_main 002E                             __@tmpValue 0021  
+                               _EEADRH 0192                                 _EEADRL 0191  
+                               _CCPR2H 0299                                 _EEDATH 0194  
+                               _CCPR2L 0298                                 _EEDATL 0193  
+                               _EECON2 0196                                 _ANSELA 018C  
+                               _ANSELB 018D            __end_ofi1__private_ReadByte 0441  
+                               i1l1330 025B                                 i1l1410 005E  
+                               i1l1340 0281                                 i1l1404 0057  
+                               i1l1334 0276                                 i1l1422 0079  
+                               i1l1600 01BF                                 i1l1512 0110  
+                               i1l1432 008B                                 i1l1424 007A  
+                               i1l1408 005D                                 i1l1610 01E6  
+                               i1l1530 012F                                 i1l1522 0119  
+                               i1l1450 00A9                                 i1l1418 006F  
+                               i1l1612 01E8                                 i1l1532 0134  
+                               i1l1540 0149                                 i1l1620 01EE  
+                               i1l1452 00AA                                 i1l1436 0095  
+                               i1l1622 01F3                                 i1l1534 0136  
+                               i1l1470 00C6                                 i1l1438 0096  
+                               i1l1616 01EC                                 i1l1464 00BE  
+                               i1l1392 003C                                 i1l1538 013E  
+                               i1l1482 00DE                                 i1l1556 015F  
+                               i1l1572 0189                                 i1l1548 0151  
+                               i1l1558 0176                                 i1l1584 01A6  
+                               i1l1568 0184                                 i1l1498 00FC  
+                               u115_25 0165                                 _INTCON 000B  
+                               _TMR0IE 005D                                 _TMR0IF 005A  
+                               _TMR0CS 04AD                                 _TMR2IE 0489  
+                               _TMR2IF 0089                                 _TMR4IE 0499  
+                               _TMR4IF 0099                                 _TMR0SE 04AC  
+                               _TMR6IE 049B                                 _TMR6IF 009B  
+                               _TMR2ON 00E2                                 _TMR4ON 20BA  
+                               _TMR6ON 20F2                         __CFG_STVREN$ON 0000  
+                               _config 0040            __size_of__private_WriteByte 0012  
+                          __@isNonZero 0020                __end_of__initialization 0223  
+          __end_of__configuration_Load 02FC            __end_of__configuration_Save 0286  
+                       __pcstackCOMMON 0070                           __pidataBANK0 0441  
+                           __pbssBANK0 002F                             __pmaintext 02FC  
+                           __pintentry 0004                                _CCP2CON 029A  
+                              _CCP2SEL 08EB                                _CCPTMRS 029E  
+                           __size_of__ 020A                                _OSCTUNE 0098  
+       __configuration_Save@saveIntcon 0073                                __@i_378 0026  
+                              __@i_379 0025             __private_WriteByte@address 0071  
+                __configuration_Load@i 002D                      __private_ReadByte 0424  
+                __configuration_Save@i 0077        __configuration_Save@romPosition 0078  
+                   ?__private_ReadByte 0070                             _initialize 0286  
+                              __ptext1 0286                                __ptext2 02CB  
+                              __ptext3 0424                                __ptext5 0226  
+                              __ptext6 0434                                __ptext7 0412  
+                  ??__private_ReadByte 0028                                _events_ 0038  
+                              clrloop0 044B                   end_of_initialization 0223  
+                              init_ram 0450                                initloop 0451  
+            __end_of__private_ReadByte 0434                           __pstringtext 0400  
+                         _displayDigit 0037                           _machineState 0039  
+      __configuration_Load@romPosition 002C             __configuration_Load@config 002A  
+                     __CFG_FOSC$INTOSC 0000           __size_ofi1__private_ReadByte 000D  
+                          ?_initialize 0070                    start_initialization 0210  
+           __end_of__private_WriteByte 0424                            _beatCounter 0036  
+           __configuration_Save@config 0076             __size_of__private_ReadByte 0010  
+            __private_ReadByte@address 0028                            __pdataBANK0 003C  
+         __size_of__configuration_Load 0031           __size_of__configuration_Save 0060  
+                            ___latbits 0001                          __pcstackBANK0 0020  
+                            __end_of__ 020E                    __size_of_initialize 0045  
+                      __@COMPARE_UNITS 040F            i1__private_ReadByte@address 0070  
+        __configuration_Save@ptrConfig 0074                __private_WriteByte@data 0070  
+                  __end_of_SEGMENT_BIT 040B                    __end_of_SEGMET_BIT2 040F  
+                            clear_ram0 044A                               _PIR2bits 0012  
+                             _PSTR2CON 029D                    i1__private_ReadByte 0434  
+              __end_of__@COMPARE_UNITS 0412                             _EECON1bits 0195  
+                 ?i1__private_ReadByte 0070                           ??_initialize 0028  
+                          _SEGMENT_BIT 0400                            _SEGMET_BIT2 040B  
+                        _prescaleEvent 003B  __configuration_Save@isPositionChanged 0075  
+                             _keyCount 002F                    __configuration_Load 02CB  
+                  __configuration_Save 0226                          __size_of_main 0019  
+                   __end_of_initialize 02CB                  ??i1__private_ReadByte 0070  
+                   __private_WriteByte 0412                   ?__configuration_Load 0070  
+                  ?__private_WriteByte 0070                   ?__configuration_Save 0070  
+                         _tempoCounter 0033                             _INTCONbits 000B  
+                             intlevel1 0000                   ??__private_WriteByte 0071  
+                    __CFG_CLKOUTEN$OFF 0000                             _OSCCONbits 0099  
+                ??__configuration_Load 0029                  ??__configuration_Save 0072  
+                        _displayBuffer 003C          __configuration_Load@ptrConfig 002B  
+                        __@compareUnit 0023  

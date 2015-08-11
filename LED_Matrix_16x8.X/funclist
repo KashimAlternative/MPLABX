@@ -1,0 +1,8 @@
+__: CODE, 1195 0 186
+__stringtab: STRCODE, 256 0 18
+_main: CODE, 1381 0 39
+__initialization: CODE, 17 0 12
+_STRINGS: STRCODE, 939 0 256
+_FONT_IMAGE: STRCODE, 274 0 665
+___wmul: CODE, 1420 0 35
+Total: 1211

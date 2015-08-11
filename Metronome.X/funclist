@@ -1,0 +1,13 @@
+__@COMPARE_UNITS: STRCODE, 1039 0 3
+__: CODE, 4 0 523
+__private_ReadByte: CODE, 1060 0 16
+_SEGMET_BIT2: STRCODE, 1035 0 4
+_main: CODE, 771 0 25
+i1__private_ReadByte: CODE, 1076 0 13
+__private_WriteByte: CODE, 1042 0 18
+__initialization: CODE, 529 0 23
+__configuration_Load: CODE, 722 0 49
+_SEGMENT_BIT: STRCODE, 1024 0 11
+_initialize: CODE, 653 0 69
+__configuration_Save: CODE, 556 0 97
+Total: 851

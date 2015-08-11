@@ -11,7 +11,7 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
-$/tmp/cgtiDECN1.obj
+$/tmp/cgt794RTY.obj
 idloc IDLOC 0 8000 8000 4 2
 reset_vec CODE 0 0 0 2 2
 end_init CODE 0 AE AE 2 2
@@ -170,41 +170,41 @@ A6 intentry CODE >965:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.
 A7 intentry CODE >967:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
 A8 intentry CODE >969:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
 AA intentry CODE >971:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
-B0 cinit CODE >1212:/tmp/cgt56Brcm
-B0 cinit CODE >1215:/tmp/cgt56Brcm
-B0 cinit CODE >1351:/tmp/cgt56Brcm
-B1 cinit CODE >1352:/tmp/cgt56Brcm
-B2 cinit CODE >1353:/tmp/cgt56Brcm
-B3 cinit CODE >1354:/tmp/cgt56Brcm
-B4 cinit CODE >1358:/tmp/cgt56Brcm
-B5 cinit CODE >1359:/tmp/cgt56Brcm
-B6 cinit CODE >1360:/tmp/cgt56Brcm
-B7 cinit CODE >1361:/tmp/cgt56Brcm
-B8 cinit CODE >1362:/tmp/cgt56Brcm
-B9 cinit CODE >1363:/tmp/cgt56Brcm
-BC cinit CODE >1378:/tmp/cgt56Brcm
-BD cinit CODE >1379:/tmp/cgt56Brcm
-BE cinit CODE >1380:/tmp/cgt56Brcm
-BF cinit CODE >1381:/tmp/cgt56Brcm
-C0 cinit CODE >1382:/tmp/cgt56Brcm
-C1 cinit CODE >1383:/tmp/cgt56Brcm
-C2 cinit CODE >1384:/tmp/cgt56Brcm
-C3 cinit CODE >1385:/tmp/cgt56Brcm
-C4 cinit CODE >1386:/tmp/cgt56Brcm
-C5 cinit CODE >1387:/tmp/cgt56Brcm
-C8 cinit CODE >1391:/tmp/cgt56Brcm
-C9 cinit CODE >1392:/tmp/cgt56Brcm
-CA cinit CODE >1393:/tmp/cgt56Brcm
-CB cinit CODE >1394:/tmp/cgt56Brcm
-CC cinit CODE >1395:/tmp/cgt56Brcm
-CD cinit CODE >1396:/tmp/cgt56Brcm
-CE cinit CODE >1397:/tmp/cgt56Brcm
-CF cinit CODE >1398:/tmp/cgt56Brcm
-D0 cinit CODE >1399:/tmp/cgt56Brcm
-D1 cinit CODE >1400:/tmp/cgt56Brcm
-D3 cinit CODE >1406:/tmp/cgt56Brcm
-D3 cinit CODE >1407:/tmp/cgt56Brcm
-D4 cinit CODE >1408:/tmp/cgt56Brcm
+B0 cinit CODE >1212:/tmp/cgtEpcaX6
+B0 cinit CODE >1215:/tmp/cgtEpcaX6
+B0 cinit CODE >1351:/tmp/cgtEpcaX6
+B1 cinit CODE >1352:/tmp/cgtEpcaX6
+B2 cinit CODE >1353:/tmp/cgtEpcaX6
+B3 cinit CODE >1354:/tmp/cgtEpcaX6
+B4 cinit CODE >1358:/tmp/cgtEpcaX6
+B5 cinit CODE >1359:/tmp/cgtEpcaX6
+B6 cinit CODE >1360:/tmp/cgtEpcaX6
+B7 cinit CODE >1361:/tmp/cgtEpcaX6
+B8 cinit CODE >1362:/tmp/cgtEpcaX6
+B9 cinit CODE >1363:/tmp/cgtEpcaX6
+BC cinit CODE >1378:/tmp/cgtEpcaX6
+BD cinit CODE >1379:/tmp/cgtEpcaX6
+BE cinit CODE >1380:/tmp/cgtEpcaX6
+BF cinit CODE >1381:/tmp/cgtEpcaX6
+C0 cinit CODE >1382:/tmp/cgtEpcaX6
+C1 cinit CODE >1383:/tmp/cgtEpcaX6
+C2 cinit CODE >1384:/tmp/cgtEpcaX6
+C3 cinit CODE >1385:/tmp/cgtEpcaX6
+C4 cinit CODE >1386:/tmp/cgtEpcaX6
+C5 cinit CODE >1387:/tmp/cgtEpcaX6
+C8 cinit CODE >1391:/tmp/cgtEpcaX6
+C9 cinit CODE >1392:/tmp/cgtEpcaX6
+CA cinit CODE >1393:/tmp/cgtEpcaX6
+CB cinit CODE >1394:/tmp/cgtEpcaX6
+CC cinit CODE >1395:/tmp/cgtEpcaX6
+CD cinit CODE >1396:/tmp/cgtEpcaX6
+CE cinit CODE >1397:/tmp/cgtEpcaX6
+CF cinit CODE >1398:/tmp/cgtEpcaX6
+D0 cinit CODE >1399:/tmp/cgtEpcaX6
+D1 cinit CODE >1400:/tmp/cgtEpcaX6
+D3 cinit CODE >1406:/tmp/cgtEpcaX6
+D3 cinit CODE >1407:/tmp/cgtEpcaX6
+D4 cinit CODE >1408:/tmp/cgtEpcaX6
 D6 maintext CODE >196:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
 D6 maintext CODE >199:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
 D9 maintext CODE >202:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
@@ -641,22 +641,22 @@ FF maintext CODE >242:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.
 9D8 swtext1 CONST >389:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/main.c
 DC9 text12 CODE >151:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/configuration.h
 DC9 text12 CODE >152:/Users/kshimada/Development/MPLABX/Metronome_2.X/src/configuration.h
-DCE inittext CODE >1367:/tmp/cgt56Brcm
-DCE inittext CODE >1368:/tmp/cgt56Brcm
-DCF inittext CODE >1369:/tmp/cgt56Brcm
-DCF inittext CODE >1370:/tmp/cgt56Brcm
-DD0 inittext CODE >1371:/tmp/cgt56Brcm
-DD1 inittext CODE >1372:/tmp/cgt56Brcm
-DD2 inittext CODE >1373:/tmp/cgt56Brcm
-DD3 inittext CODE >1374:/tmp/cgt56Brcm
-DD4 clrtext CODE >1340:/tmp/cgt56Brcm
-DD4 clrtext CODE >1341:/tmp/cgt56Brcm
-DD5 clrtext CODE >1342:/tmp/cgt56Brcm
-DD5 clrtext CODE >1343:/tmp/cgt56Brcm
-DD6 clrtext CODE >1344:/tmp/cgt56Brcm
-DD7 clrtext CODE >1345:/tmp/cgt56Brcm
-DD8 clrtext CODE >1346:/tmp/cgt56Brcm
-DD9 clrtext CODE >1347:/tmp/cgt56Brcm
+DCE inittext CODE >1367:/tmp/cgtEpcaX6
+DCE inittext CODE >1368:/tmp/cgtEpcaX6
+DCF inittext CODE >1369:/tmp/cgtEpcaX6
+DCF inittext CODE >1370:/tmp/cgtEpcaX6
+DD0 inittext CODE >1371:/tmp/cgtEpcaX6
+DD1 inittext CODE >1372:/tmp/cgtEpcaX6
+DD2 inittext CODE >1373:/tmp/cgtEpcaX6
+DD3 inittext CODE >1374:/tmp/cgtEpcaX6
+DD4 clrtext CODE >1340:/tmp/cgtEpcaX6
+DD4 clrtext CODE >1341:/tmp/cgtEpcaX6
+DD5 clrtext CODE >1342:/tmp/cgtEpcaX6
+DD5 clrtext CODE >1343:/tmp/cgtEpcaX6
+DD6 clrtext CODE >1344:/tmp/cgtEpcaX6
+DD7 clrtext CODE >1345:/tmp/cgtEpcaX6
+DD8 clrtext CODE >1346:/tmp/cgtEpcaX6
+DD9 clrtext CODE >1347:/tmp/cgtEpcaX6
 DDA text4 CODE >56:/Users/kshimada/Development/MPLABX/_Common/parallel_LCD.h
 DDC text4 CODE >57:/Users/kshimada/Development/MPLABX/_Common/parallel_LCD.h
 DE1 text4 CODE >58:/Users/kshimada/Development/MPLABX/_Common/parallel_LCD.h
@@ -797,12 +797,12 @@ _TMR1 16 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 _TMR2 1A 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 _TMR4 415 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 _TMR6 41C 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
-___sp 0 0 STACK 2 stack /tmp/cgtiDECN1.obj
+___sp 0 0 STACK 2 stack /tmp/cgt794RTY.obj
 _main 1AC 0 CODE 0 maintext dist/default/production/Metronome_2.X.production.obj
 btemp 7E 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 __parallel_lcd_WriteString 1CC4 0 CODE 0 text3 dist/default/production/Metronome_2.X.production.obj
 ltemp 7E 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
-start 15C 0 CODE 0 init /tmp/cgtiDECN1.obj
+start 15C 0 CODE 0 init /tmp/cgt794RTY.obj
 ttemp 7E 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 wtemp 7E 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 __size_of_main 0 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
@@ -817,12 +817,12 @@ ttemp1 81 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 ttemp2 84 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 ttemp3 87 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 ttemp4 7F 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
-intlevel0 0 0 CODE 0 functab /tmp/cgtiDECN1.obj
-intlevel1 0 0 CODE 0 functab /tmp/cgtiDECN1.obj
-intlevel2 0 0 CODE 0 functab /tmp/cgtiDECN1.obj
-intlevel3 0 0 CODE 0 functab /tmp/cgtiDECN1.obj
-intlevel4 0 0 CODE 0 functab /tmp/cgtiDECN1.obj
-intlevel5 0 0 CODE 0 functab /tmp/cgtiDECN1.obj
+intlevel0 0 0 CODE 0 functab /tmp/cgt794RTY.obj
+intlevel1 0 0 CODE 0 functab /tmp/cgt794RTY.obj
+intlevel2 0 0 CODE 0 functab /tmp/cgt794RTY.obj
+intlevel3 0 0 CODE 0 functab /tmp/cgt794RTY.obj
+intlevel4 0 0 CODE 0 functab /tmp/cgt794RTY.obj
+intlevel5 0 0 CODE 0 functab /tmp/cgt794RTY.obj
 _WDTCONbits 97 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 __LbssCOMMON 0 0 ABS 0 bssCOMMON -
 ___bmul@multiplicand 74 0 COMMON 1 cstackCOMMON dist/default/production/Metronome_2.X.production.obj
@@ -889,7 +889,7 @@ __configuration_ReadByte 1BF4 0 CODE 0 text13 dist/default/production/Metronome_
 _duration_ 66 0 BANK0 1 bssBANK0 dist/default/production/Metronome_2.X.production.obj
 __end_of__parallel_lcd_ClearRow 1CC4 0 CODE 0 text7 dist/default/production/Metronome_2.X.production.obj
 __end_of__configuration_ReadByte 1C18 0 CODE 0 text13 dist/default/production/Metronome_2.X.production.obj
-___int_sp 0 0 STACK 2 stack /tmp/cgtiDECN1.obj
+___int_sp 0 0 STACK 2 stack /tmp/cgt794RTY.obj
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
 __Hbank2 0 0 ABS 0 bank2 -
@@ -1045,7 +1045,7 @@ __configuration_Load@ptrConfig 45 0 BANK0 1 cstackBANK0 dist/default/production/
 __CFG_BOREN$ON 0 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 __Lintentry 8 0 CODE 0 intentry -
 main@returnCode 5B 0 BANK0 1 cstackBANK0 dist/default/production/Metronome_2.X.production.obj
-reset_vec 0 0 CODE 0 reset_vec /tmp/cgtiDECN1.obj
+reset_vec 0 0 CODE 0 reset_vec /tmp/cgt794RTY.obj
 __parallel_lcd_WriteStringClearing@stringPtr 43 0 BANK0 1 cstackBANK0 dist/default/production/Metronome_2.X.production.obj
 __pdataBANK0 20 0 BANK0 1 dataBANK0 dist/default/production/Metronome_2.X.production.obj
 __pdataBANK1 A0 0 BANK1 1 dataBANK1 dist/default/production/Metronome_2.X.production.obj
@@ -1108,8 +1108,8 @@ _T6CONbits 41E 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 __size_of__parallel_lcd_WriteCharacter 0 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 __size_of__configuration_GetRomOffset 0 0 ABS 0 - dist/default/production/Metronome_2.X.production.obj
 main@phase 5A 0 BANK0 1 cstackBANK0 dist/default/production/Metronome_2.X.production.obj
-stackhi 216F 0 ABS 0 - /tmp/cgtiDECN1.obj
-stacklo 208E 0 ABS 0 - /tmp/cgtiDECN1.obj
+stackhi 216F 0 ABS 0 - /tmp/cgt794RTY.obj
+stacklo 208E 0 ABS 0 - /tmp/cgt794RTY.obj
 _tempoCounter_ 5E 0 BANK0 1 bssBANK0 dist/default/production/Metronome_2.X.production.obj
 __end_of__parallel_lcd_WriteCharacter 1BD0 0 CODE 0 text4 dist/default/production/Metronome_2.X.production.obj
 __parallel_lcd_SetCgram@charCode 46 0 BANK0 1 cstackBANK0 dist/default/production/Metronome_2.X.production.obj

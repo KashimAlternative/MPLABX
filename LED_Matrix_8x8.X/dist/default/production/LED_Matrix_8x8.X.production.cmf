@@ -11,7 +11,7 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
-$/tmp/cgtaWpUWe.obj
+$/tmp/cgthL97Hs.obj
 reset_wrap ENTRY 0 0 0 2 2
 reset_vec CODE 0 1FF 1FF 1 2
 end_init ENTRY 0 2 2 1 2
@@ -20,10 +20,10 @@ $dist/default/production/LED_Matrix_8x8.X.production.obj
 cinit ENTRY 0 3 3 16 2
 text1 CODE 0 16B 16B 21 2
 maintext CODE 0 18C 18C 73 2
-cstackBANK0 BANK0 1 1A 1A 1 1
-bssBANK0 BANK0 1 7 7 B 1
+cstackBANK0 BANK0 1 1B 1B 1 1
+bssBANK0 BANK0 1 7 7 C 1
 idataBANK0 ENTRY 0 22 22 8 2
-dataBANK0 BANK0 1 12 12 8 1
+dataBANK0 BANK0 1 13 13 8 1
 clrtext ENTRY 0 19 19 9 2
 jmp_tab ENTRY 0 2A 2A 1 2
 # %UNUSED Section
@@ -32,8 +32,6 @@ jmp_tab ENTRY 0 2A 2A 1 2
 #    <class name> <range> <delta>
 # Addresses given in the range are in hexadecimal and units of delta.
 %UNUSED
-RAM 1B-1B 1
-BANK0 1B-1B 1
 ENTRY 2B-FF 2
 IDLOC 200-203 2
 STACK 0-0 1
@@ -55,80 +53,80 @@ STRING 2B-FF 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production/LED_Matrix_8x8.X.production.obj
-3 cinit ENTRY >100:/tmp/cgt8urGvZ
-3 cinit ENTRY >103:/tmp/cgt8urGvZ
-3 cinit ENTRY >147:/tmp/cgt8urGvZ
-4 cinit ENTRY >148:/tmp/cgt8urGvZ
-5 cinit ENTRY >149:/tmp/cgt8urGvZ
-6 cinit ENTRY >150:/tmp/cgt8urGvZ
-7 cinit ENTRY >155:/tmp/cgt8urGvZ
-8 cinit ENTRY >156:/tmp/cgt8urGvZ
-9 cinit ENTRY >157:/tmp/cgt8urGvZ
-A cinit ENTRY >158:/tmp/cgt8urGvZ
-B cinit ENTRY >159:/tmp/cgt8urGvZ
-C cinit ENTRY >160:/tmp/cgt8urGvZ
-D cinit ENTRY >161:/tmp/cgt8urGvZ
-E cinit ENTRY >162:/tmp/cgt8urGvZ
-F cinit ENTRY >163:/tmp/cgt8urGvZ
-10 cinit ENTRY >164:/tmp/cgt8urGvZ
-11 cinit ENTRY >165:/tmp/cgt8urGvZ
-12 cinit ENTRY >166:/tmp/cgt8urGvZ
-13 cinit ENTRY >167:/tmp/cgt8urGvZ
-14 cinit ENTRY >168:/tmp/cgt8urGvZ
-15 cinit ENTRY >169:/tmp/cgt8urGvZ
-16 cinit ENTRY >170:/tmp/cgt8urGvZ
-17 cinit ENTRY >176:/tmp/cgt8urGvZ
-17 cinit ENTRY >177:/tmp/cgt8urGvZ
-18 cinit ENTRY >178:/tmp/cgt8urGvZ
-19 clrtext ENTRY >133:/tmp/cgt8urGvZ
-19 clrtext ENTRY >134:/tmp/cgt8urGvZ
-1A clrtext ENTRY >135:/tmp/cgt8urGvZ
-1A clrtext ENTRY >136:/tmp/cgt8urGvZ
-1B clrtext ENTRY >137:/tmp/cgt8urGvZ
-1C clrtext ENTRY >138:/tmp/cgt8urGvZ
-1D clrtext ENTRY >139:/tmp/cgt8urGvZ
-1E clrtext ENTRY >140:/tmp/cgt8urGvZ
-1F clrtext ENTRY >141:/tmp/cgt8urGvZ
-20 clrtext ENTRY >142:/tmp/cgt8urGvZ
-21 clrtext ENTRY >143:/tmp/cgt8urGvZ
+3 cinit ENTRY >101:/tmp/cgtQMWaPm
+3 cinit ENTRY >104:/tmp/cgtQMWaPm
+3 cinit ENTRY >151:/tmp/cgtQMWaPm
+4 cinit ENTRY >152:/tmp/cgtQMWaPm
+5 cinit ENTRY >153:/tmp/cgtQMWaPm
+6 cinit ENTRY >154:/tmp/cgtQMWaPm
+7 cinit ENTRY >159:/tmp/cgtQMWaPm
+8 cinit ENTRY >160:/tmp/cgtQMWaPm
+9 cinit ENTRY >161:/tmp/cgtQMWaPm
+A cinit ENTRY >162:/tmp/cgtQMWaPm
+B cinit ENTRY >163:/tmp/cgtQMWaPm
+C cinit ENTRY >164:/tmp/cgtQMWaPm
+D cinit ENTRY >165:/tmp/cgtQMWaPm
+E cinit ENTRY >166:/tmp/cgtQMWaPm
+F cinit ENTRY >167:/tmp/cgtQMWaPm
+10 cinit ENTRY >168:/tmp/cgtQMWaPm
+11 cinit ENTRY >169:/tmp/cgtQMWaPm
+12 cinit ENTRY >170:/tmp/cgtQMWaPm
+13 cinit ENTRY >171:/tmp/cgtQMWaPm
+14 cinit ENTRY >172:/tmp/cgtQMWaPm
+15 cinit ENTRY >173:/tmp/cgtQMWaPm
+16 cinit ENTRY >174:/tmp/cgtQMWaPm
+17 cinit ENTRY >180:/tmp/cgtQMWaPm
+17 cinit ENTRY >181:/tmp/cgtQMWaPm
+18 cinit ENTRY >182:/tmp/cgtQMWaPm
+19 clrtext ENTRY >137:/tmp/cgtQMWaPm
+19 clrtext ENTRY >138:/tmp/cgtQMWaPm
+1A clrtext ENTRY >139:/tmp/cgtQMWaPm
+1A clrtext ENTRY >140:/tmp/cgtQMWaPm
+1B clrtext ENTRY >141:/tmp/cgtQMWaPm
+1C clrtext ENTRY >142:/tmp/cgtQMWaPm
+1D clrtext ENTRY >143:/tmp/cgtQMWaPm
+1E clrtext ENTRY >144:/tmp/cgtQMWaPm
+1F clrtext ENTRY >145:/tmp/cgtQMWaPm
+20 clrtext ENTRY >146:/tmp/cgtQMWaPm
+21 clrtext ENTRY >147:/tmp/cgtQMWaPm
 22 idataBANK0 ENTRY >257:/Applications/microchip/xc8/v1.34/include/pic16f54.h
-22 idataBANK0 ENTRY >29:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-2A jmp_tab ENTRY >51:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-16B text1 CODE >51:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-16C text1 CODE >52:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-170 text1 CODE >53:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-174 text1 CODE >54:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-187 text1 CODE >55:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-18C maintext CODE >58:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-18C maintext CODE >61:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-18E maintext CODE >62:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-190 maintext CODE >63:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-192 maintext CODE >67:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-195 maintext CODE >68:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1A1 maintext CODE >69:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1A2 maintext CODE >71:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1A4 maintext CODE >72:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1A9 maintext CODE >74:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1AF maintext CODE >76:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1B0 maintext CODE >78:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1B3 maintext CODE >79:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1BA maintext CODE >80:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1BC maintext CODE >81:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1C2 maintext CODE >83:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1C3 maintext CODE >85:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1C5 maintext CODE >86:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1C7 maintext CODE >87:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1C9 maintext CODE >88:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1CB maintext CODE >89:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1CD maintext CODE >90:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1CF maintext CODE >91:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1D1 maintext CODE >92:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1D3 maintext CODE >93:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1D5 maintext CODE >95:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1E9 maintext CODE >96:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1F3 maintext CODE >98:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1F5 maintext CODE >81:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
-1FA maintext CODE >78:/Users/kshimada/Development/MPLAB X/LED_Matrix_8x8.X/main.c
+22 idataBANK0 ENTRY >25:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+2A jmp_tab ENTRY >49:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+16B text1 CODE >49:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+16C text1 CODE >50:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+170 text1 CODE >51:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+174 text1 CODE >52:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+187 text1 CODE >53:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+18C maintext CODE >57:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+18C maintext CODE >60:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+18E maintext CODE >61:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+190 maintext CODE >62:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+192 maintext CODE >66:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+195 maintext CODE >67:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1A1 maintext CODE >68:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1A2 maintext CODE >70:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1A4 maintext CODE >71:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1A9 maintext CODE >73:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1AF maintext CODE >75:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1B0 maintext CODE >77:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1B3 maintext CODE >78:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1BA maintext CODE >79:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1BC maintext CODE >80:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1C2 maintext CODE >82:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1C3 maintext CODE >84:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1C5 maintext CODE >85:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1C7 maintext CODE >86:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1C9 maintext CODE >87:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1CB maintext CODE >88:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1CD maintext CODE >89:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1CF maintext CODE >90:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1D1 maintext CODE >91:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1D3 maintext CODE >92:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1D5 maintext CODE >94:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1E9 maintext CODE >95:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1F3 maintext CODE >97:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1F5 maintext CODE >80:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
+1FA maintext CODE >77:/Users/kshimada/Development/MPLABX/LED_Matrix_8x8.X/src/main.c
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -144,7 +142,7 @@ F cinit ENTRY >163:/tmp/cgt8urGvZ
 ___latbits 0 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 __LdataBANK0 0 0 ABS 0 dataBANK0 -
 __Hspace_0 1000 0 ABS 0 - -
-__Hspace_1 1B 0 ABS 0 - -
+__Hspace_1 1C 0 ABS 0 - -
 __Hspace_2 0 0 ABS 0 - -
 __HidataBANK0 0 0 ABS 0 idataBANK0 -
 ltemp0 1C 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
@@ -153,12 +151,13 @@ ltemp2 24 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 ltemp3 1E 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 __Hstrings 0 0 STRING 0 strings -
 _TMR0 1 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
-___sp 0 0 STACK 2 stack /tmp/cgtaWpUWe.obj
+___sp 0 0 STACK 2 stack /tmp/cgthL97Hs.obj
 _main 318 0 CODE 0 maintext dist/default/production/LED_Matrix_8x8.X.production.obj
 btemp 1C 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 ltemp 1C 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
-start 4 0 ENTRY 0 init /tmp/cgtaWpUWe.obj
+start 4 0 ENTRY 0 init /tmp/cgthL97Hs.obj
 ttemp 1C 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
+_calcBuffer_ 13 0 BANK0 1 dataBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 wtemp 1C 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 __size_of_main 0 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 __LidataBANK0 0 0 ABS 0 idataBANK0 -
@@ -177,17 +176,17 @@ wtemp5 26 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 wtemp6 1D 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 __Hfunctab 0 0 ENTRY 0 functab -
 __Hclrtext 44 0 ENTRY 0 clrtext -
-_calcBuffer 12 0 BANK0 1 dataBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 __pjmp_tab 54 0 ENTRY 0 jmp_tab dist/default/production/LED_Matrix_8x8.X.production.obj
 __Lmaintext 0 0 ABS 0 maintext -
+_bitMask_ F 0 BANK0 1 bssBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 _countNeighbors 2D6 0 CODE 0 text1 dist/default/production/LED_Matrix_8x8.X.production.obj
 __Hjmp_tab 0 0 ABS 0 jmp_tab -
 start_initialization 6 0 ENTRY 0 cinit dist/default/production/LED_Matrix_8x8.X.production.obj
 _OPTION 0 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 clear_ram0 32 0 ENTRY 0 clrtext dist/default/production/LED_Matrix_8x8.X.production.obj
-__pcstackBANK0 1A 0 BANK0 1 cstackBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
+__pcstackBANK0 1B 0 BANK0 1 cstackBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 __end_of_countNeighbors 318 0 CODE 0 text1 dist/default/production/LED_Matrix_8x8.X.production.obj
-___int_sp 0 0 STACK 2 stack /tmp/cgtaWpUWe.obj
+___int_sp 0 0 STACK 2 stack /tmp/cgthL97Hs.obj
 __Hbank0 0 0 ABS 0 bank0 -
 __Hcinit 32 0 ENTRY 0 cinit -
 __Hidloc 0 0 IDLOC 0 idloc -
@@ -199,7 +198,6 @@ __Lbank0 0 0 ABS 0 bank0 -
 __Lcinit 6 0 ENTRY 0 cinit -
 __Lidloc 0 0 IDLOC 0 idloc -
 __Lstack 0 0 STACK 2 stack -
-_Position F 0 BANK0 1 bssBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 __Habs1 0 0 ABS 0 abs1 -
 __Hcode 0 0 ABS 0 code -
 __Hinit 4 0 ENTRY 0 init -
@@ -210,21 +208,23 @@ __Lcode 0 0 ABS 0 code -
 __Linit 4 0 ENTRY 0 init -
 __Lsfr0 0 0 ABS 0 sfr0 -
 __Ltext 0 0 ABS 0 text -
-_displayBuffer 7 0 BANK0 1 bssBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 __LcstackBANK0 0 0 ABS 0 cstackBANK0 -
 __HcstackCOMMON 0 0 ABS 0 cstackCOMMON -
 __S0 1000 0 ABS 0 - -
-__S1 1B 0 ABS 0 - -
+__S1 1C 0 ABS 0 - -
 __S2 0 0 ABS 0 - -
-reset_vec 3FE 0 CODE 0 reset_vec /tmp/cgtaWpUWe.obj
-__pdataBANK0 12 0 BANK0 1 dataBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
+_count_ 10 0 BANK0 1 bssBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
+reset_vec 3FE 0 CODE 0 reset_vec /tmp/cgthL97Hs.obj
+__pdataBANK0 13 0 BANK0 1 dataBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 __LbssBANK0 0 0 ABS 0 bssBANK0 -
 __pmaintext 318 0 CODE 0 maintext dist/default/production/LED_Matrix_8x8.X.production.obj
 __Lcommon 0 0 ABS 0 common -
 __Lconfig 1FFE 0 CONFIG 0 config -
 __CFG_CP$OFF 0 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
-stackhi 0 0 ABS 0 - /tmp/cgtaWpUWe.obj
-stacklo 0 0 ABS 0 - /tmp/cgtaWpUWe.obj
+_displayBuffer_ 7 0 BANK0 1 bssBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
+stackhi 0 0 ABS 0 - /tmp/cgthL97Hs.obj
+stacklo 0 0 ABS 0 - /tmp/cgthL97Hs.obj
+_position_ 11 0 BANK0 1 bssBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 __Lspace_0 0 0 ABS 0 - -
 __Lspace_1 0 0 ABS 0 - -
 __Lspace_2 0 0 ABS 0 - -
@@ -232,11 +232,12 @@ __HcstackBANK0 0 0 ABS 0 cstackBANK0 -
 __Lend_init 4 0 ENTRY 0 end_init -
 __LcstackCOMMON 0 0 ABS 0 cstackCOMMON -
 end_of_initialization 2E 0 ENTRY 0 cinit dist/default/production/LED_Matrix_8x8.X.production.obj
-countNeighbors@add 1A 0 BANK0 1 cstackBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
+countNeighbors@add 1B 0 BANK0 1 cstackBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 __CFG_OSC$HS 0 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 __Lstrings 0 0 STRING 0 strings -
 __Hreset_vec 400 0 CODE 0 reset_vec -
 __HbssBANK0 0 0 ABS 0 bssBANK0 -
+_prescaler_ 12 0 BANK0 1 bssBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 __ptext1 2D6 0 CODE 0 text1 dist/default/production/LED_Matrix_8x8.X.production.obj
 __Lpowerup 0 0 CODE 0 powerup -
 __Lreset_vec 3FE 0 CODE 0 reset_vec -
@@ -255,10 +256,8 @@ _PORTA 5 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 _PORTB 6 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 _TRISA 5 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
 _TRISB 6 0 ABS 0 - dist/default/production/LED_Matrix_8x8.X.production.obj
-_Union 10 0 BANK0 1 bssBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 __Hram 0 0 ABS 0 ram -
 __Lram 0 0 ABS 0 ram -
-_count 11 0 BANK0 1 bssBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
 __HdataBANK0 0 0 ABS 0 dataBANK0 -
 __initialization 6 0 ENTRY 0 cinit dist/default/production/LED_Matrix_8x8.X.production.obj
 __pbssBANK0 7 0 BANK0 1 bssBANK0 dist/default/production/LED_Matrix_8x8.X.production.obj
@@ -293,5 +292,5 @@ text1 0 16B 2D6 21 2
 maintext 0 18C 318 73 2
 reset_wrap 0 0 0 2B 2
 reset_vec 0 1FF 3FE 1 2
-bssBANK0 1 7 7 14 1
+bssBANK0 1 7 7 15 1
 config 0 FFF 1FFE 1 2

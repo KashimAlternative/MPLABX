@@ -1,13 +1,10 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"15 main.c
-[u S18 `uc 1 `uc 1 ]
-[n S18 . prescaler bitMask ]
-"22
-[s S20 :4 `uc 1 :4 `uc 1 ]
-[n S20 . x y ]
-"20
-[u S19 `uc 1 `S20 1 ]
-[n S19 . all . ]
+"18 src/main.c
+[s S19 :4 `uc 1 :4 `uc 1 ]
+[n S19 . x y ]
+"16
+[u S18 `uc 1 `S19 1 ]
+[n S18 . all . ]
 [p mainexit ]
 "316 /Applications/microchip/xc8/v1.34/include/pic16f54.h
 [v _OPTION `VWuc ~T0 @X0 0 e@0 ]
@@ -24,7 +21,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "28 /Applications/microchip/xc8/v1.34/include/pic.h
 [v ___nop `(v ~T0 @X0 0 ef ]
 [p i ___nop ]
-"2 main.c
+"2 src/main.c
 [p x OSC=HS ]
 "3
 [p x WDT=OFF ]
@@ -160,224 +157,224 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 184: extern unsigned char __resetbits;
 [; ;pic.h: 185: extern __bit __powerdown;
 [; ;pic.h: 186: extern __bit __timeout;
-[; ;main.c: 14: typedef unsigned char byte ;
-"18 main.c
-[v _Union `S18 ~T0 @X0 1 e ]
-[; ;main.c: 15: union {
-[; ;main.c: 16: byte prescaler ;
-[; ;main.c: 17: byte bitMask ;
-[; ;main.c: 18: } Union ;
-"26
-[v _Position `S19 ~T0 @X0 1 e ]
-[; ;main.c: 20: union {
-[; ;main.c: 21: byte all ;
-[; ;main.c: 22: struct {
-[; ;main.c: 23: unsigned x : 4 ;
-[; ;main.c: 24: unsigned y : 4 ;
-[; ;main.c: 25: } ;
-[; ;main.c: 26: } Position ;
-"28
-[v _displayBuffer `uc ~T0 @X0 -> 8 `i e ]
-[; ;main.c: 28: byte displayBuffer[8] ;
-"29
-[v _calcBuffer `uc ~T0 @X0 -> 8 `i e ]
-[i _calcBuffer
+[; ;main.c: 13: typedef unsigned char byte ;
+"14 src/main.c
+[v _prescaler_ `uc ~T0 @X0 1 e ]
+[; ;main.c: 14: byte prescaler_ ;
+"15
+[v _bitMask_ `uc ~T0 @X0 1 e ]
+[; ;main.c: 15: byte bitMask_ ;
+"22
+[v _position_ `S18 ~T0 @X0 1 e ]
+[; ;main.c: 16: union {
+[; ;main.c: 17: byte all ;
+[; ;main.c: 18: struct {
+[; ;main.c: 19: unsigned x : 4 ;
+[; ;main.c: 20: unsigned y : 4 ;
+[; ;main.c: 21: } ;
+[; ;main.c: 22: } position_ ;
+"24
+[v _displayBuffer_ `uc ~T0 @X0 -> 8 `i e ]
+[; ;main.c: 24: byte displayBuffer_[8] ;
+"25
+[v _calcBuffer_ `uc ~T0 @X0 -> 8 `i e ]
+[i _calcBuffer_
 :U ..
-"31
+"27
 -> -> 28 `i `uc
-"32
+"28
 -> -> 16 `i `uc
-"33
+"29
 -> -> 8 `i `uc
+"30
+-> -> 0 `i `uc
+"31
+-> -> 0 `i `uc
+"32
+-> -> 0 `i `uc
+"33
+-> -> 0 `i `uc
 "34
--> -> 0 `i `uc
-"35
--> -> 0 `i `uc
-"36
--> -> 0 `i `uc
-"37
--> -> 0 `i `uc
-"38
 -> -> 0 `i `uc
 ..
 ]
-[; ;main.c: 29: byte calcBuffer[8]
-[; ;main.c: 30: = {
-[; ;main.c: 31: 0b00011100 ,
-[; ;main.c: 32: 0b00010000 ,
-[; ;main.c: 33: 0b00001000 ,
+[; ;main.c: 25: byte calcBuffer_[8]
+[; ;main.c: 26: = {
+[; ;main.c: 27: 0b00011100 ,
+[; ;main.c: 28: 0b00010000 ,
+[; ;main.c: 29: 0b00001000 ,
+[; ;main.c: 30: 0b00000000 ,
+[; ;main.c: 31: 0b00000000 ,
+[; ;main.c: 32: 0b00000000 ,
+[; ;main.c: 33: 0b00000000 ,
 [; ;main.c: 34: 0b00000000 ,
-[; ;main.c: 35: 0b00000000 ,
-[; ;main.c: 36: 0b00000000 ,
-[; ;main.c: 37: 0b00000000 ,
-[; ;main.c: 38: 0b00000000 ,
-[; ;main.c: 39: } ;
-"50
-[v _count `uc ~T0 @X0 1 e ]
-[i _count
+[; ;main.c: 35: } ;
+"46
+[v _count_ `uc ~T0 @X0 1 e ]
+[i _count_
 -> -> 0 `i `uc
 ]
-[; ;main.c: 50: byte count = 0 ;
-"51
+[; ;main.c: 46: byte count_ = 0 ;
+"49
 [v _countNeighbors `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 51: void countNeighbors( byte add ) {
+[; ;main.c: 49: void countNeighbors( byte add ) {
 [e :U _countNeighbors ]
 [v _add `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 52: Position.all += add ;
+[; ;main.c: 50: position_.all += add ;
+"50
+[e =+ . _position_ 0 _add ]
+[; ;main.c: 51: position_.all &= 0x77 ;
+"51
+[e =& . _position_ 0 -> -> 119 `i `uc ]
+[; ;main.c: 52: if( ( displayBuffer_[ position_.x ] >> ( position_.y ) ) & 0x01 )
 "52
-[e =+ . _Position 0 _add ]
-[; ;main.c: 53: Position.all &= 0x77 ;
+[e $ ! != & >> -> *U + &U _displayBuffer_ * -> . . _position_ 1 0 `ux -> -> # *U &U _displayBuffer_ `ui `ux `i . . _position_ 1 1 -> 1 `i -> 0 `i 21  ]
+[; ;main.c: 53: count_++ ;
 "53
-[e =& . _Position 0 -> -> 119 `i `uc ]
-[; ;main.c: 54: if( ( displayBuffer[ Position.x ] >> ( Position.y ) ) & 0x01 )
+[e ++ _count_ -> -> 1 `i `uc ]
+[e :U 21 ]
+[; ;main.c: 54: }
 "54
-[e $ ! != & >> -> *U + &U _displayBuffer * -> . . _Position 1 0 `ux -> -> # *U &U _displayBuffer `ui `ux `i . . _Position 1 1 -> 1 `i -> 0 `i 22  ]
-[; ;main.c: 55: count++ ;
-"55
-[e ++ _count -> -> 1 `i `uc ]
-[e :U 22 ]
-[; ;main.c: 56: }
-"56
-[e :UE 21 ]
+[e :UE 20 ]
 }
-"58
+"57
 [v _main `(i ~T0 @X0 1 ef ]
 {
-[; ;main.c: 58: int main( void ) {
+[; ;main.c: 57: int main( void ) {
 [e :U _main ]
 [f ]
-[; ;main.c: 61: OPTION = 0b00011111 ;
-"61
+[; ;main.c: 60: OPTION = 0b00011111 ;
+"60
 [e = _OPTION -> -> 31 `i `uc ]
-[; ;main.c: 62: TRISB = 0x00 ;
-"62
+[; ;main.c: 61: TRISB = 0x00 ;
+"61
 [e = _TRISB -> -> 0 `i `uc ]
-[; ;main.c: 63: TRISA = 0x00 ;
-"63
+[; ;main.c: 62: TRISA = 0x00 ;
+"62
 [e = _TRISA -> -> 0 `i `uc ]
-[; ;main.c: 65: for( ; ; ) {
-"65
+[; ;main.c: 64: for( ; ; ) {
+"64
 {
-[e :U 24 ]
+[e :U 23 ]
 {
-[; ;main.c: 67: PORTA = Union.prescaler & 0x07 ;
+[; ;main.c: 66: PORTA = prescaler_ & 0x07 ;
+"66
+[e = _PORTA -> & -> _prescaler_ `i -> 7 `i `uc ]
+[; ;main.c: 67: PORTB = displayBuffer_[ PORTA ] = calcBuffer_[ PORTA ] ;
 "67
-[e = _PORTA -> & -> . _Union 0 `i -> 7 `i `uc ]
-[; ;main.c: 68: PORTB = displayBuffer[ PORTA ] = calcBuffer[ PORTA ] ;
+[e = _PORTB = *U + &U _displayBuffer_ * -> _PORTA `ux -> -> # *U &U _displayBuffer_ `ui `ux *U + &U _calcBuffer_ * -> _PORTA `ux -> -> # *U &U _calcBuffer_ `ui `ux ]
+[; ;main.c: 68: PORTA |= 0x08 ;
 "68
-[e = _PORTB = *U + &U _displayBuffer * -> _PORTA `ux -> -> # *U &U _displayBuffer `ui `ux *U + &U _calcBuffer * -> _PORTA `ux -> -> # *U &U _calcBuffer `ui `ux ]
-[; ;main.c: 69: PORTA |= 0x08 ;
-"69
 [e =| _PORTA -> -> 8 `i `uc ]
-[; ;main.c: 71: TMR0 = 0xC0 ;
-"71
+[; ;main.c: 70: TMR0 = 0xC0 ;
+"70
 [e = _TMR0 -> -> 192 `i `uc ]
-[; ;main.c: 72: while( TMR0 ) __nop() ;
-"72
-[e $U 27  ]
-[e :U 28 ]
-[e ( ___nop ..  ]
-[e :U 27 ]
-[e $ != -> _TMR0 `i -> -> -> 0 `i `Vuc `i 28  ]
-[e :U 29 ]
-[; ;main.c: 74: if( ++Union.prescaler ) continue ;
-"74
-[e $ ! != -> =+ . _Union 0 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 30  ]
+[; ;main.c: 71: while( TMR0 ) __nop() ;
+"71
 [e $U 26  ]
-[e :U 30 ]
-[; ;main.c: 76: PORTA = 0x00 ;
-"76
+[e :U 27 ]
+[e ( ___nop ..  ]
+[e :U 26 ]
+[e $ != -> _TMR0 `i -> -> -> 0 `i `Vuc `i 27  ]
+[e :U 28 ]
+[; ;main.c: 73: if( ++prescaler_ ) continue ;
+"73
+[e $ ! != -> =+ _prescaler_ -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 29  ]
+[e $U 25  ]
+[e :U 29 ]
+[; ;main.c: 75: PORTA = 0x00 ;
+"75
 [e = _PORTA -> -> 0 `i `uc ]
-[; ;main.c: 78: for( Position.all = 0x00 ; !( Position.all & 0x08 ) ; Position.all++ ) {
+[; ;main.c: 77: for( position_.all = 0x00 ; !( position_.all & 0x08 ) ; position_.all++ ) {
+"77
+{
+[e = . _position_ 0 -> -> 0 `i `uc ]
+[e $U 33  ]
+[e :U 30 ]
+{
+[; ;main.c: 78: calcBuffer_[ position_.all & 0x0F ] = 0x00 ;
 "78
-{
-[e = . _Position 0 -> -> 0 `i `uc ]
-[e $U 34  ]
-[e :U 31 ]
-{
-[; ;main.c: 79: calcBuffer[ Position.all & 0x0F ] = 0x00 ;
+[e = *U + &U _calcBuffer_ * -> -> & -> . _position_ 0 `i -> 15 `i `ui `ux -> -> # *U &U _calcBuffer_ `ui `ux -> -> 0 `i `uc ]
+[; ;main.c: 79: bitMask_ = 0x01 ;
 "79
-[e = *U + &U _calcBuffer * -> -> & -> . _Position 0 `i -> 15 `i `ui `ux -> -> # *U &U _calcBuffer `ui `ux -> -> 0 `i `uc ]
-[; ;main.c: 80: Union.bitMask = 0x01 ;
+[e = _bitMask_ -> -> 1 `i `uc ]
+[; ;main.c: 80: for( position_.all &= 0x0F ; !( position_.all & 0x80 ) ; position_.all += 0x10 ) {
 "80
-[e = . _Union 1 -> -> 1 `i `uc ]
-[; ;main.c: 81: for( Position.all &= 0x0F ; !( Position.all & 0x80 ) ; Position.all += 0x10 ) {
-"81
 {
-[e =& . _Position 0 -> -> 15 `i `uc ]
-[e $U 38  ]
-[e :U 35 ]
+[e =& . _position_ 0 -> -> 15 `i `uc ]
+[e $U 37  ]
+[e :U 34 ]
 {
-[; ;main.c: 83: count = 0 ;
-"83
-[e = _count -> -> 0 `i `uc ]
-[; ;main.c: 85: countNeighbors( 0x01 ) ;
-"85
+[; ;main.c: 82: count_ = 0 ;
+"82
+[e = _count_ -> -> 0 `i `uc ]
+[; ;main.c: 84: countNeighbors( 0x01 ) ;
+"84
 [e ( _countNeighbors (1 -> -> 1 `i `uc ]
-[; ;main.c: 86: countNeighbors( 0x16 ) ;
-"86
+[; ;main.c: 85: countNeighbors( 0x16 ) ;
+"85
 [e ( _countNeighbors (1 -> -> 22 `i `uc ]
+[; ;main.c: 86: countNeighbors( 0x01 ) ;
+"86
+[e ( _countNeighbors (1 -> -> 1 `i `uc ]
 [; ;main.c: 87: countNeighbors( 0x01 ) ;
 "87
 [e ( _countNeighbors (1 -> -> 1 `i `uc ]
-[; ;main.c: 88: countNeighbors( 0x01 ) ;
+[; ;main.c: 88: countNeighbors( 0x66 ) ;
 "88
-[e ( _countNeighbors (1 -> -> 1 `i `uc ]
-[; ;main.c: 89: countNeighbors( 0x66 ) ;
-"89
 [e ( _countNeighbors (1 -> -> 102 `i `uc ]
+[; ;main.c: 89: countNeighbors( 0x01 ) ;
+"89
+[e ( _countNeighbors (1 -> -> 1 `i `uc ]
 [; ;main.c: 90: countNeighbors( 0x01 ) ;
 "90
 [e ( _countNeighbors (1 -> -> 1 `i `uc ]
-[; ;main.c: 91: countNeighbors( 0x01 ) ;
+[; ;main.c: 91: countNeighbors( 0x16 ) ;
 "91
-[e ( _countNeighbors (1 -> -> 1 `i `uc ]
-[; ;main.c: 92: countNeighbors( 0x16 ) ;
-"92
 [e ( _countNeighbors (1 -> -> 22 `i `uc ]
-[; ;main.c: 93: countNeighbors( 0x01 ) ;
-"93
+[; ;main.c: 92: countNeighbors( 0x01 ) ;
+"92
 [e ( _countNeighbors (1 -> -> 1 `i `uc ]
-[; ;main.c: 95: if( ( count == 3 ) || ( displayBuffer[ Position.x ] & Union.bitMask ) && ( count == 4 ) )
+[; ;main.c: 94: if( ( count_ == 3 ) || ( displayBuffer_[ position_.x ] & bitMask_ ) && ( count_ == 4 ) )
+"94
+[e $ ! || == -> _count_ `i -> 3 `i && != & -> *U + &U _displayBuffer_ * -> . . _position_ 1 0 `ux -> -> # *U &U _displayBuffer_ `ui `ux `i -> _bitMask_ `i -> 0 `i == -> _count_ `i -> 4 `i 38  ]
+[; ;main.c: 95: calcBuffer_[ position_.x ] |= bitMask_ ;
 "95
-[e $ ! || == -> _count `i -> 3 `i && != & -> *U + &U _displayBuffer * -> . . _Position 1 0 `ux -> -> # *U &U _displayBuffer `ui `ux `i -> . _Union 1 `i -> 0 `i == -> _count `i -> 4 `i 39  ]
-[; ;main.c: 96: calcBuffer[ Position.x ] |= Union.bitMask ;
-"96
-[e =| *U + &U _calcBuffer * -> . . _Position 1 0 `ux -> -> # *U &U _calcBuffer `ui `ux . _Union 1 ]
-[e :U 39 ]
-[; ;main.c: 98: Union.bitMask <<= 1 ;
-"98
-[e =<< . _Union 1 -> 1 `i ]
-"100
-}
-"81
-[e =+ . _Position 0 -> -> 16 `i `uc ]
+[e =| *U + &U _calcBuffer_ * -> . . _position_ 1 0 `ux -> -> # *U &U _calcBuffer_ `ui `ux _bitMask_ ]
 [e :U 38 ]
-[e $ ! != & -> . _Position 0 `i -> 128 `i -> 0 `i 35  ]
-[e :U 36 ]
+[; ;main.c: 97: bitMask_ <<= 1 ;
+"97
+[e =<< _bitMask_ -> 1 `i ]
+"99
+}
+"80
+[e =+ . _position_ 0 -> -> 16 `i `uc ]
+[e :U 37 ]
+[e $ ! != & -> . _position_ 0 `i -> 128 `i -> 0 `i 34  ]
+[e :U 35 ]
+"99
+}
 "100
 }
-"101
+"77
+[e ++ . _position_ 0 -> -> 1 `i `uc ]
+[e :U 33 ]
+[e $ ! != & -> . _position_ 0 `i -> 8 `i -> 0 `i 30  ]
+[e :U 31 ]
+"100
 }
-"78
-[e ++ . _Position 0 -> -> 1 `i `uc ]
-[e :U 34 ]
-[e $ ! != & -> . _Position 0 `i -> 8 `i -> 0 `i 31  ]
-[e :U 32 ]
-"101
+"102
 }
-"103
-}
-[e :U 26 ]
-[; ;main.c: 100: }
-[; ;main.c: 101: }
-[; ;main.c: 103: }
-[e $U 24  ]
 [e :U 25 ]
+[; ;main.c: 99: }
+[; ;main.c: 100: }
+[; ;main.c: 102: }
+[e $U 23  ]
+[e :U 24 ]
 }
-[; ;main.c: 105: }
-"105
-[e :UE 23 ]
+[; ;main.c: 104: }
+"104
+[e :UE 22 ]
 }

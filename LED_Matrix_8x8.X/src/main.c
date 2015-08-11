@@ -8,25 +8,21 @@
 //#pragma config IDLOC2 = 0x0000
 //#pragma config IDLOC3 = 0x0000
 
-#include "xc.h"
-#include <pic16f54.h>
+#include <xc.h>
 
 typedef unsigned char byte ;
-union {
-  byte prescaler ;
-  byte bitMask ;
-} Union ;
-//byte count ;
+byte prescaler_ ;
+byte bitMask_ ;
 union {
   byte all ;
   struct {
     unsigned x : 4 ;
     unsigned y : 4 ;
   } ;
-} Position ;
+} position_ ;
 
-byte displayBuffer[8] ;
-byte calcBuffer[8]
+byte displayBuffer_[8] ;
+byte calcBuffer_[8]
         = {
   0b00011100 ,
   0b00010000 ,
@@ -47,13 +43,16 @@ byte calcBuffer[8]
 //  0b00000001 ,
 //  0b11000000 ,
 //} ;
-byte count = 0 ;
+byte count_ = 0 ;
+
+// [Function] Count Neighbors ----------------
 void countNeighbors( byte add ) {
-  Position.all += add ;
-  Position.all &= 0x77 ;
-  if( ( displayBuffer[ Position.x ] >> ( Position.y ) ) & 0x01 )
-    count++ ;
+  position_.all += add ;
+  position_.all &= 0x77 ;
+  if( ( displayBuffer_[ position_.x ] >> ( position_.y ) ) & 0x01 )
+    count_++ ;
 }
+
 // [Function] Main ----------------
 int main( void ) {
 
@@ -64,23 +63,23 @@ int main( void ) {
 
   for( ; ; ) {
 
-    PORTA = Union.prescaler & 0x07 ;
-    PORTB = displayBuffer[ PORTA ] = calcBuffer[ PORTA ] ;
+    PORTA = prescaler_ & 0x07 ;
+    PORTB = displayBuffer_[ PORTA ] = calcBuffer_[ PORTA ] ;
     PORTA |= 0x08 ;
 
     TMR0 = 0xC0 ;
     while( TMR0 ) NOP( ) ;
 
-    if( ++Union.prescaler ) continue ;
+    if( ++prescaler_ ) continue ;
 
     PORTA = 0x00 ;
 
-    for( Position.all = 0x00 ; !( Position.all & 0x08 ) ; Position.all++ ) {
-      calcBuffer[ Position.all & 0x0F ] = 0x00 ;
-      Union.bitMask = 0x01 ;
-      for( Position.all &= 0x0F ; !( Position.all & 0x80 ) ; Position.all += 0x10 ) {
+    for( position_.all = 0x00 ; !( position_.all & 0x08 ) ; position_.all++ ) {
+      calcBuffer_[ position_.all & 0x0F ] = 0x00 ;
+      bitMask_ = 0x01 ;
+      for( position_.all &= 0x0F ; !( position_.all & 0x80 ) ; position_.all += 0x10 ) {
 
-        count = 0 ;
+        count_ = 0 ;
 
         countNeighbors( 0x01 ) ;
         countNeighbors( 0x16 ) ;
@@ -92,10 +91,10 @@ int main( void ) {
         countNeighbors( 0x16 ) ;
         countNeighbors( 0x01 ) ;
 
-        if( ( count == 3 ) || ( displayBuffer[ Position.x ] & Union.bitMask ) && ( count == 4 ) )
-          calcBuffer[ Position.x ] |= Union.bitMask ;
+        if( ( count_ == 3 ) || ( displayBuffer_[ position_.x ] & bitMask_ ) && ( count_ == 4 ) )
+          calcBuffer_[ position_.x ] |= bitMask_ ;
 
-        Union.bitMask <<= 1 ;
+        bitMask_ <<= 1 ;
 
       }
     }

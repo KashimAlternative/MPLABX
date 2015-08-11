@@ -5,7 +5,7 @@ Linker command line:
 --edf=/Applications/microchip/xc8/v1.34/dat/en_msgs.txt -cs \
   -h+dist/default/production/Metronome_2.X.production.sym \
   --cmf=dist/default/production/Metronome_2.X.production.cmf -z -Q16F1827 \
-  -o/tmp/cgtZPdffC -Mdist/default/production/Metronome_2.X.production.map \
+  -o/tmp/cgtrfEATe -Mdist/default/production/Metronome_2.X.production.map \
   -E1 -ver=XC8 -ASTACK=0208Eh-0216fh -pstack=STACK -ACODE=00h-07FFhx2 \
   -ASTRCODE=00h-0FFFh -ASTRING=00h-0FFhx16 -ACONST=00h-0FFhx16 \
   -AENTRY=00h-0FFhx16 -ACOMMON=070h-07Fh -ABANK0=020h-06Fh \
@@ -27,7 +27,7 @@ Linker command line:
   -ppowerup=CODE -pcinit=CODE -pfunctab=CODE -ACONFIG=08007h-08008h \
   -pconfig=CONFIG -DCONFIG=2 -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 \
   -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
-  -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k /tmp/cgtiDECN1.obj \
+  -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k /tmp/cgt794RTY.obj \
   dist/default/production/Metronome_2.X.production.obj 
 
 Object code version is 3.11
@@ -37,7 +37,7 @@ Machine type is 16F1827
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-/tmp/cgtiDECN1.obj
+/tmp/cgt794RTY.obj
                 end_init                             AE       AE        2        8       0
                 reset_vec                             0        0        2        0       0
                 idloc                              8000     8000        4    10000       0

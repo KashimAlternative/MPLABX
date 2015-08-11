@@ -1,0 +1,15 @@
+  //    if (isDebugMode) {
+    //        TMR0IE = 0;
+    //        EEADRL = 0x00;
+    //        EEADRH = 0x00;
+    //        EEDATL = 120;
+    //        WREN = 1;
+    //        EECON2 = 0x55;
+    //        EECON2 = 0xaa;
+    //
+    //        WR = 1;
+    //        while (EEIF == 0);
+    //        EEIF = 0;
+    //        WREN = 0;
+    //        TMR0IE = 1;
+    //    }
