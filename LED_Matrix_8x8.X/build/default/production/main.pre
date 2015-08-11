@@ -1,0 +1,288 @@
+
+# 1 "main.c"
+
+#pragma config OSC = HS
+#pragma config WDT = OFF
+#pragma config CP = OFF
+
+# 26 "/Applications/microchip/xc8/v1.34/include/htc.h"
+extern const char __xc8_OPTIM_SPEED;
+
+
+# 13 "/Applications/microchip/xc8/v1.34/include/xc8debug.h"
+#pragma intrinsic(__builtin_software_breakpoint)
+extern void __builtin_software_breakpoint(void);
+
+# 49 "/Applications/microchip/xc8/v1.34/include/pic16f54.h"
+extern volatile unsigned char INDF @ 0x000;
+
+asm("INDF equ 00h");
+
+
+typedef union {
+struct {
+unsigned INDF :8;
+};
+} INDFbits_t;
+extern volatile INDFbits_t INDFbits @ 0x000;
+
+# 68
+extern volatile unsigned char TMR0 @ 0x001;
+
+asm("TMR0 equ 01h");
+
+
+typedef union {
+struct {
+unsigned TMR0 :8;
+};
+} TMR0bits_t;
+extern volatile TMR0bits_t TMR0bits @ 0x001;
+
+# 87
+extern volatile unsigned char PCL @ 0x002;
+
+asm("PCL equ 02h");
+
+
+typedef union {
+struct {
+unsigned PCL :8;
+};
+} PCLbits_t;
+extern volatile PCLbits_t PCLbits @ 0x002;
+
+# 106
+extern volatile unsigned char STATUS @ 0x003;
+
+asm("STATUS equ 03h");
+
+
+typedef union {
+struct {
+unsigned C :1;
+unsigned DC :1;
+unsigned Z :1;
+unsigned nPD :1;
+unsigned nTO :1;
+unsigned PA :3;
+};
+struct {
+unsigned :5;
+unsigned PA0 :1;
+unsigned PA1 :1;
+unsigned PA2 :1;
+};
+struct {
+unsigned CARRY :1;
+};
+struct {
+unsigned :2;
+unsigned ZERO :1;
+};
+} STATUSbits_t;
+extern volatile STATUSbits_t STATUSbits @ 0x003;
+
+# 193
+extern volatile unsigned char FSR @ 0x004;
+
+asm("FSR equ 04h");
+
+
+typedef union {
+struct {
+unsigned FSR :8;
+};
+} FSRbits_t;
+extern volatile FSRbits_t FSRbits @ 0x004;
+
+# 212
+extern volatile unsigned char PORTA @ 0x005;
+
+asm("PORTA equ 05h");
+
+
+typedef union {
+struct {
+unsigned RA0 :1;
+unsigned RA1 :1;
+unsigned RA2 :1;
+unsigned RA3 :1;
+unsigned T0CKI :1;
+};
+} PORTAbits_t;
+extern volatile PORTAbits_t PORTAbits @ 0x005;
+
+# 255
+extern volatile unsigned char PORTB @ 0x006;
+
+asm("PORTB equ 06h");
+
+
+typedef union {
+struct {
+unsigned RB0 :1;
+unsigned RB1 :1;
+unsigned RB2 :1;
+unsigned RB3 :1;
+unsigned RB4 :1;
+unsigned RB5 :1;
+unsigned RB6 :1;
+unsigned RB7 :1;
+};
+} PORTBbits_t;
+extern volatile PORTBbits_t PORTBbits @ 0x006;
+
+# 316
+extern volatile __control unsigned char OPTION @ 0x000;
+
+
+extern volatile __control unsigned char TRISA @ 0x005;
+
+
+extern volatile __control unsigned char TRISB @ 0x006;
+
+# 342
+extern volatile __bit CARRY @ (((unsigned) &STATUS)*8) + 0;
+
+extern volatile __bit DC @ (((unsigned) &STATUS)*8) + 1;
+
+extern volatile __bit PA0 @ (((unsigned) &STATUS)*8) + 5;
+
+extern volatile __bit PA1 @ (((unsigned) &STATUS)*8) + 6;
+
+extern volatile __bit PA2 @ (((unsigned) &STATUS)*8) + 7;
+
+extern volatile __bit RA0 @ (((unsigned) &PORTA)*8) + 0;
+
+extern volatile __bit RA1 @ (((unsigned) &PORTA)*8) + 1;
+
+extern volatile __bit RA2 @ (((unsigned) &PORTA)*8) + 2;
+
+extern volatile __bit RA3 @ (((unsigned) &PORTA)*8) + 3;
+
+extern volatile __bit RB0 @ (((unsigned) &PORTB)*8) + 0;
+
+extern volatile __bit RB1 @ (((unsigned) &PORTB)*8) + 1;
+
+extern volatile __bit RB2 @ (((unsigned) &PORTB)*8) + 2;
+
+extern volatile __bit RB3 @ (((unsigned) &PORTB)*8) + 3;
+
+extern volatile __bit RB4 @ (((unsigned) &PORTB)*8) + 4;
+
+extern volatile __bit RB5 @ (((unsigned) &PORTB)*8) + 5;
+
+extern volatile __bit RB6 @ (((unsigned) &PORTB)*8) + 6;
+
+extern volatile __bit RB7 @ (((unsigned) &PORTB)*8) + 7;
+
+extern volatile __bit T0CKI @ (((unsigned) &PORTA)*8) + 4;
+
+extern volatile __bit ZERO @ (((unsigned) &STATUS)*8) + 2;
+
+extern volatile __bit nPD @ (((unsigned) &STATUS)*8) + 3;
+
+extern volatile __bit nTO @ (((unsigned) &STATUS)*8) + 4;
+
+
+# 27 "/Applications/microchip/xc8/v1.34/include/pic.h"
+#pragma intrinsic(__nop)
+extern void __nop(void);
+
+
+# 149
+#pragma intrinsic(_delay)
+extern __nonreentrant void _delay(unsigned long);
+
+# 184
+extern unsigned char __resetbits;
+extern __bit __powerdown;
+extern __bit __timeout;
+
+# 14 "main.c"
+typedef unsigned char byte ;
+union {
+byte prescaler ;
+byte bitMask ;
+} Union ;
+
+union {
+byte all ;
+struct {
+unsigned x : 4 ;
+unsigned y : 4 ;
+} ;
+} Position ;
+
+byte displayBuffer[8] ;
+byte calcBuffer[8]
+= {
+0b00011100 ,
+0b00010000 ,
+0b00001000 ,
+0b00000000 ,
+0b00000000 ,
+0b00000000 ,
+0b00000000 ,
+0b00000000 ,
+} ;
+
+# 50
+byte count = 0 ;
+void countNeighbors( byte add ) {
+Position.all += add ;
+Position.all &= 0x77 ;
+if( ( displayBuffer[ Position.x ] >> ( Position.y ) ) & 0x01 )
+count++ ;
+}
+
+int main( void ) {
+
+
+OPTION = 0b00011111 ;
+TRISB = 0x00 ;
+TRISA = 0x00 ;
+
+for( ; ; ) {
+
+PORTA = Union.prescaler & 0x07 ;
+PORTB = displayBuffer[ PORTA ] = calcBuffer[ PORTA ] ;
+PORTA |= 0x08 ;
+
+TMR0 = 0xC0 ;
+while( TMR0 ) __nop() ;
+
+if( ++Union.prescaler ) continue ;
+
+PORTA = 0x00 ;
+
+for( Position.all = 0x00 ; !( Position.all & 0x08 ) ; Position.all++ ) {
+calcBuffer[ Position.all & 0x0F ] = 0x00 ;
+Union.bitMask = 0x01 ;
+for( Position.all &= 0x0F ; !( Position.all & 0x80 ) ; Position.all += 0x10 ) {
+
+count = 0 ;
+
+countNeighbors( 0x01 ) ;
+countNeighbors( 0x16 ) ;
+countNeighbors( 0x01 ) ;
+countNeighbors( 0x01 ) ;
+countNeighbors( 0x66 ) ;
+countNeighbors( 0x01 ) ;
+countNeighbors( 0x01 ) ;
+countNeighbors( 0x16 ) ;
+countNeighbors( 0x01 ) ;
+
+if( ( count == 3 ) || ( displayBuffer[ Position.x ] & Union.bitMask ) && ( count == 4 ) )
+calcBuffer[ Position.x ] |= Union.bitMask ;
+
+Union.bitMask <<= 1 ;
+
+}
+}
+
+}
+
+}
+

@@ -1,0 +1,309 @@
+Microchip MPLAB XC8 Compiler V1.34 ()
+
+Linker command line:
+
+--edf=/Applications/microchip/xc8/v1.34/dat/en_msgs.txt -cs \
+  -h+dist/default/production/LED_Matrix_8x8.X.production.sym \
+  --cmf=dist/default/production/LED_Matrix_8x8.X.production.cmf -z -Q16F54 \
+  -o/tmp/cgtw3UwhD \
+  -Mdist/default/production/LED_Matrix_8x8.X.production.map -E1 -ver=XC8 \
+  -ASTACK=00h-00h -pstack=STACK -ACODE=00h-01FEh -ASTRCODE=00h-01FEh \
+  -ASTRING=00h-0FFh -AENTRY=00h-0FFh-01FEh -ABANK0=07h-01Dh -ARAM=07h-01Dh \
+  -AABS1=07h-01Fh -ACOMMON=01Ch-01Fh -ASFR0=00h-06h \
+  -preset_vec=01ffh,reset_wrap=0h,init,end_init,cinit,clrtext \
+  -ppowerup=CODE -pfunctab=ENTRY -ACONFIG=0FFFh-0FFFh -pconfig=CONFIG \
+  -DCONFIG=2 -AIDLOC=0200h-0203h -pidloc=IDLOC -DIDLOC=2 -pstrings=-STRING \
+  -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k /tmp/cgtaWpUWe.obj \
+  dist/default/production/LED_Matrix_8x8.X.production.obj 
+
+Object code version is 3.11
+
+Machine type is 16F54
+
+
+
+                Name                               Link     Load   Length Selector   Space Scale
+/tmp/cgtaWpUWe.obj
+                end_init                              2        2        1        0       0
+                reset_wrap                            0        0        2        0       0
+                reset_vec                           1FF      1FF        1      3FE       0
+                config                              FFF      FFF        1     1FFE       0
+dist/default/production/LED_Matrix_8x8.X.production.obj
+                clrtext                              19       19        9        0       0
+                cinit                                 3        3       16        0       0
+                jmp_tab                              2A       2A        1        0       0
+                text1                               16B      16B       21      2D6       0
+                maintext                            18C      18C       73      318       0
+                cstackBANK0                          1A       1A        1        7       1
+                dataBANK0                            12       12        8        7       1
+                bssBANK0                              7        7        B        7       1
+                idataBANK0                           22       22        8        0       0
+
+TOTAL           Name                               Link     Load   Length     Space
+        CLASS   STACK          
+
+        CLASS   CODE           
+                reset_vec                           1FF      1FF        1         0
+                text1                               16B      16B       21         0
+                maintext                            18C      18C       73         0
+
+        CLASS   STRCODE        
+
+        CLASS   STRING         
+
+        CLASS   ENTRY          
+                clrtext                              19       19        9         0
+                end_init                              2        2        1         0
+                cinit                                 3        3       16         0
+                reset_wrap                            0        0        2         0
+                jmp_tab                              2A       2A        1         0
+                idataBANK0                           22       22        8         0
+
+        CLASS   BANK0          
+                cstackBANK0                          1A       1A        1         1
+                dataBANK0                            12       12        8         1
+                bssBANK0                              7        7        B         1
+
+        CLASS   RAM            
+
+        CLASS   ABS1           
+                abs_s1                               1C       1C        4         1
+
+        CLASS   COMMON         
+
+        CLASS   SFR0           
+
+        CLASS   CONFIG         
+                config                              FFF      FFF        1         0
+
+        CLASS   IDLOC          
+
+        CLASS   CONST          
+
+
+
+SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
+
+                reset_wrap                     000000  00002B  00002B         0       0  ENTRY       2
+                bssBANK0                       000007  000014  00001B         7       1  BANK0       1
+                text1                          00016B  000021  00018C       2D6       0  CODE        2
+                maintext                       00018C  000073  0001FF       318       0  CODE        2
+                reset_vec                      0001FF  000001  000200       3FE       0  CODE        2
+                config                         000FFF  000001  001000      1FFE       0  CONFIG      2
+
+
+UNUSED ADDRESS RANGES
+
+        Name                Unused          Largest block    Delta
+        BANK0            001B-001B              1           1
+        CODE             002B-016A            140           2
+        ENTRY            002B-00FF+006B         D5           2
+        IDLOC            0200-0203              4           2
+        RAM              001B-001B              1           1
+        SFR0             0000-0006              7           1
+        STACK            0000-0000              1           1
+        STRCODE          002B-016A            140           2
+        STRING           002B-00FF             D5           2
+
+                                  Symbol Table
+
+_OPTION                  (abs)        0000
+_PORTA                   (abs)        0005
+_PORTB                   (abs)        0006
+_Position                bssBANK0     000F
+_TMR0                    (abs)        0001
+_TRISA                   (abs)        0005
+_TRISB                   (abs)        0006
+_Union                   bssBANK0     0010
+__CFG_CP$OFF             (abs)        0000
+__CFG_OSC$HS             (abs)        0000
+__CFG_WDT$OFF            (abs)        0000
+__Habs1                  abs1         0000
+__Hbank0                 bank0        0000
+__HbssBANK0              bssBANK0     0000
+__Hcinit                 cinit        0019
+__Hclrtext               clrtext      0022
+__Hcode                  code         0000
+__Hcommon                common       0000
+__Hconfig                config       1000
+__HcstackBANK0           cstackBANK0  0000
+__HcstackCOMMON          cstackCOMMON 0000
+__HdataBANK0             dataBANK0    0000
+__Hend_init              end_init     0003
+__Hfunctab               functab      0000
+__HidataBANK0            idataBANK0   0000
+__Hidloc                 idloc        0000
+__Hinit                  init         0002
+__Hjmp_tab               jmp_tab      0000
+__Hmaintext              maintext     0000
+__Hpowerup               powerup      0000
+__Hram                   ram          0000
+__Hreset_vec             reset_vec    0200
+__Hreset_wrap            reset_wrap   0002
+__Hsfr0                  sfr0         0000
+__Hspace_0               (abs)        1000
+__Hspace_1               (abs)        001B
+__Hspace_2               (abs)        0000
+__Hstack                 stack        0000
+__Hstrings               strings      0000
+__Htext                  text         0000
+__Labs1                  abs1         0000
+__Lbank0                 bank0        0000
+__LbssBANK0              bssBANK0     0000
+__Lcinit                 cinit        0003
+__Lclrtext               clrtext      0019
+__Lcode                  code         0000
+__Lcommon                common       0000
+__Lconfig                config       0FFF
+__LcstackBANK0           cstackBANK0  0000
+__LcstackCOMMON          cstackCOMMON 0000
+__LdataBANK0             dataBANK0    0000
+__Lend_init              end_init     0002
+__Lfunctab               functab      0000
+__LidataBANK0            idataBANK0   0000
+__Lidloc                 idloc        0000
+__Linit                  init         0002
+__Ljmp_tab               jmp_tab      0000
+__Lmaintext              maintext     0000
+__Lpowerup               powerup      0000
+__Lram                   ram          0000
+__Lreset_vec             reset_vec    01FF
+__Lreset_wrap            reset_wrap   0000
+__Lsfr0                  sfr0         0000
+__Lspace_0               (abs)        0000
+__Lspace_1               (abs)        0000
+__Lspace_2               (abs)        0000
+__Lstack                 stack        0000
+__Lstrings               strings      0000
+__Ltext                  text         0000
+__S0                     (abs)        1000
+__S1                     (abs)        001B
+__S2                     (abs)        0000
+___int_sp                stack        0000
+___latbits               (abs)        0000
+___sp                    stack        0000
+__end_of__initialization cinit        0017
+__end_of_countNeighbors  text1        018C
+__end_of_main            maintext     01FF
+__initialization         cinit        0003
+__pbssBANK0              bssBANK0     0007
+__pcstackBANK0           cstackBANK0  001A
+__pcstackCOMMON          cstackCOMMON 0000
+__pdataBANK0             dataBANK0    0012
+__pidataBANK0            idataBANK0   0022
+__pjmp_tab               jmp_tab      002A
+__pmaintext              maintext     018C
+__ptext1                 text1        016B
+__size_of_countNeighbors (abs)        0000
+__size_of_main           (abs)        0000
+_calcBuffer              dataBANK0    0012
+_count                   bssBANK0     0011
+_countNeighbors          text1        016B
+_displayBuffer           bssBANK0     0007
+_main                    maintext     018C
+btemp                    (abs)        001C
+clear_ram0               clrtext      0019
+countNeighbors@add       cstackBANK0  001A
+end_of_initialization    cinit        0017
+entry__countNeighbors    jmp_tab      002A
+ltemp                    (abs)        001C
+ltemp0                   (abs)        001C
+ltemp1                   (abs)        0020
+ltemp2                   (abs)        0024
+ltemp3                   (abs)        001E
+reset_vec                reset_vec    01FF
+stackhi                  (abs)        0000
+stacklo                  (abs)        0000
+start                    init         0002
+start_initialization     cinit        0003
+ttemp                    (abs)        001C
+ttemp0                   (abs)        001C
+ttemp1                   (abs)        001F
+ttemp2                   (abs)        0022
+ttemp3                   (abs)        0025
+ttemp4                   (abs)        001D
+wtemp                    (abs)        001C
+wtemp0                   (abs)        001C
+wtemp1                   (abs)        001E
+wtemp2                   (abs)        0020
+wtemp3                   (abs)        0022
+wtemp4                   (abs)        0024
+wtemp5                   (abs)        0026
+wtemp6                   (abs)        001D
+
+
+FUNCTION INFORMATION:
+
+ *************** function _main *****************
+ Defined at:
+		line 58 in file "main.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  2   30[None  ] int 
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+0, btemp+2, btemp+3, pclath, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0
+      Params:         0       0
+      Locals:         0       0
+      Temps:          0       0
+      Totals:         0       0
+Total ram usage:        0 bytes
+ Hardware stack levels required when called:    1
+ This function calls:
+		_countNeighbors
+ This function is called by:
+		Startup code after reset
+ This function uses a non-reentrant model
+
+
+ *************** function _countNeighbors *****************
+ Defined at:
+		line 51 in file "main.c"
+ Parameters:    Size  Location     Type
+  add             1    wreg     unsigned char 
+ Auto vars:     Size  Location     Type
+  add             1    0[BANK0 ] unsigned char 
+ Return value:  Size  Location     Type
+		None               void
+ Registers used:
+		wreg, fsr0l, fsr0h, status,2, status,0, btemp+0, btemp+2, btemp+3
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMMON   BANK0
+      Params:         0       0
+      Locals:         0       1
+      Temps:          0       0
+      Totals:         0       1
+Total ram usage:        1 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_main
+ This function uses a non-reentrant model
+
+
+
+MODULE INFORMATION
+
+Module		Function		Class		Link	Load	Size
+shared
+		__initializatio		ENTRY          	0003	0000	21
+
+shared estimated size: 21
+
+main.c
+		_main          		CODE           	018C	0000	116
+		_countNeighbors		CODE           	016B	0000	34
+
+main.c estimated size: 150
+

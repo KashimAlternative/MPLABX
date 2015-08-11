@@ -1,0 +1,4 @@
+_main: CODE, 396 0 115
+__initialization: ENTRY, 3 0 26
+_countNeighbors: CODE, 364 0 32
+Total: 173

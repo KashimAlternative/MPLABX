@@ -1,0 +1,664 @@
+Disassembly Listing for LED_Matrix_8x8
+Generated From:
+/Users/kshimada/Development/MPLAB_X/LED_Matrix_8x8.X/dist/default/production/LED_Matrix_8x8.X.production.elf
+2015/03/16 22:51:39
+
+---  /Users/kshimada/Development/MPLAB_X/LED_Matrix_8x8.X/main.c  ---------------------------------------
+1:             // CONFIG
+2:             #pragma config OSC = HS         // Oscillator selection bits (HS oscillator)
+3:             #pragma config WDT = OFF        // Watchdog timer enable bit (WDT disabled)
+4:             #pragma config CP = OFF         // Code protection bit (Code protection off)
+5:             
+6:             //#pragma config IDLOC0 = 0x0000
+7:             //#pragma config IDLOC1 = 0x0000
+8:             //#pragma config IDLOC2 = 0x0000
+9:             //#pragma config IDLOC3 = 0x0000
+10:            
+11:            #include "xc.h"
+12:            #include <pic16f54.h>
+13:            
+14:            typedef unsigned char byte ;
+15:            union {
+16:              byte prescaler ;
+17:              byte count ;
+18:            } Union ;
+19:            union {
+20:              byte all ;
+21:              struct {
+22:                unsigned x : 4 ;
+23:                unsigned y : 4 ;
+24:              } ;
+25:            } Position ;
+26:            
+27:            byte displayBuffer[8] = {
+0017  0803     RETLW 0x3
+28:              0b00000011 ,
+29:              0b10000000 ,
+30:              0b00001000 ,
+31:              0b00101000 ,
+32:              0b00010100 ,
+33:              0b00010000 ,
+34:              0b00000001 ,
+35:              0b11000000 ,
+36:            } ;
+37:            void countNeighbors( byte add ) {
+001F  0B48     GOTO 0x148
+0148  0027     MOVWF __pcstackBANK0
+38:              Position.all += add ;
+0149  0207     MOVF __pcstackBANK0, W
+014A  003F     MOVWF 0x1F
+014B  021F     MOVF 0x1F, W
+014C  01F9     ADDWF Position, F
+39:              Position.all &= 0x77 ;
+014D  0C77     MOVLW 0x77
+014E  003F     MOVWF 0x1F
+014F  021F     MOVF 0x1F, W
+0150  0179     ANDWF Position, F
+40:              Union.count += ( displayBuffer[ Position.x ] >> Position.y ) & 0x01 ;
+0151  0399     SWAPF Position, W
+0152  0E0F     ANDLW 0xF
+0153  003F     MOVWF 0x1F
+0154  02BF     INCF 0x1F, F
+0155  0219     MOVF Position, W
+0156  0E0F     ANDLW 0xF
+0157  003C     MOVWF 0x1C
+0158  0C11     MOVLW 0x11
+0159  01DC     ADDWF 0x1C, W
+015A  0024     MOVWF FSR
+015B  0200     MOVF INDF, W
+015C  003E     MOVWF 0x1E
+015D  0B60     GOTO 0x160
+015E  0403     BCF STATUS, 0x0
+015F  033E     RRF 0x1E, F
+0160  02FF     DECFSZ 0x1F, F
+0161  0B5E     GOTO 0x15E
+0162  021E     MOVF 0x1E, W
+0163  0E01     ANDLW 0x1
+0164  003F     MOVWF 0x1F
+0165  021F     MOVF 0x1F, W
+0166  01FA     ADDWF Union, F
+41:            }
+0167  0800     RETLW 0x0
+42:            
+43:            // [Function] Main ----------------
+44:            int main( void ) {
+45:            
+46:              // Initialize
+47:              //OPTION = 0b00111111 ; // Use Default
+48:              TRISB = 0x00 ;
+0168  0C00     MOVLW 0x0
+0169  0006     TRIS PORTB
+49:              TRISA = 0x00 ;
+016A  0C00     MOVLW 0x0
+016B  0005     TRIS PORTA
+50:            
+51:              for( ; ; ) {
+52:            
+53:                PORTA = 0x00 ;
+016C  0065     CLRF PORTA
+54:                PORTB = displayBuffer[ Union.prescaler & 0x07 ] ;
+016D  021A     MOVF Union, W
+016E  0E07     ANDLW 0x7
+016F  003C     MOVWF 0x1C
+0170  0C11     MOVLW 0x11
+0171  01DC     ADDWF 0x1C, W
+0172  0024     MOVWF FSR
+0173  0200     MOVF INDF, W
+0174  0026     MOVWF PORTB
+55:                PORTA = ( Union.prescaler & 0x07 ) | 0x08 ;
+0175  021A     MOVF Union, W
+0176  0E07     ANDLW 0x7
+0177  0D08     IORLW 0x8
+0178  0025     MOVWF PORTA
+56:                for( byte i = 0 ; i != 0xC0 ; i++ ) NOP( ) ;
+0179  0070     CLRF i
+017A  0210     MOVF i, W
+017B  0FC0     XORLW 0xC0
+017C  0643     BTFSC STATUS, 0x2
+017D  0B87     GOTO 0x187
+017E  0000     NOP
+017F  0C01     MOVLW 0x1
+0180  003F     MOVWF 0x1F
+0181  021F     MOVF 0x1F, W
+0182  01F0     ADDWF i, F
+0183  0210     MOVF i, W
+0184  0FC0     XORLW 0xC0
+0185  0743     BTFSS STATUS, 0x2
+0186  0B7E     GOTO 0x17E
+57:            
+58:                if( ++Union.prescaler ) continue ;
+0187  0C01     MOVLW 0x1
+0188  003F     MOVWF 0x1F
+0189  021F     MOVF 0x1F, W
+018A  01FA     ADDWF Union, F
+018B  0743     BTFSS STATUS, 0x2
+018C  0B6C     GOTO 0x16C
+59:            
+60:                PORTA = 0x00 ;
+018D  0065     CLRF PORTA
+61:            
+62:                byte tmpBuffer[8] ;
+63:                for( Position.all = 0x00 ; !( Position.all & 0x08 ) ; Position.all++ ) {
+018E  0079     CLRF Position
+018F  0679     BTFSC Position, 0x3
+0190  0BEB     GOTO 0x1EB
+01E6  0C01     MOVLW 0x1
+01E7  003F     MOVWF 0x1F
+01E8  021F     MOVF 0x1F, W
+01E9  01F9     ADDWF Position, F
+01EA  0B8F     GOTO 0x18F
+64:                  tmpBuffer[ Position.all & 0x0F ] = 0x00 ;
+0191  0219     MOVF Position, W
+0192  0E0F     ANDLW 0xF
+0193  003C     MOVWF 0x1C
+0194  0C08     MOVLW 0x8
+0195  01DC     ADDWF 0x1C, W
+0196  0024     MOVWF FSR
+0197  0060     CLRF INDF
+65:                  for( Position.all &= 0x0F ; !( Position.all & 0x80 ) ; Position.all += 0x10 ) {
+0198  0C0F     MOVLW 0xF
+0199  003F     MOVWF 0x1F
+019A  021F     MOVF 0x1F, W
+019B  0179     ANDWF Position, F
+019C  06F9     BTFSC Position, 0x7
+019D  0BE6     GOTO 0x1E6
+01E1  0C10     MOVLW 0x10
+01E2  003F     MOVWF 0x1F
+01E3  021F     MOVF 0x1F, W
+01E4  01F9     ADDWF Position, F
+01E5  0B9C     GOTO 0x19C
+66:                    Union.count = 0 ;
+019E  007A     CLRF Union
+67:            
+68:                    countNeighbors( 0x01 ) ;
+019F  0C01     MOVLW 0x1
+01A0  091F     CALL 0x1F
+69:                    countNeighbors( 0x16 ) ;
+01A1  0C16     MOVLW 0x16
+01A2  091F     CALL 0x1F
+70:                    countNeighbors( 0x01 ) ;
+01A3  0C01     MOVLW 0x1
+01A4  091F     CALL 0x1F
+71:                    countNeighbors( 0x01 ) ;
+01A5  0C01     MOVLW 0x1
+01A6  091F     CALL 0x1F
+72:                    countNeighbors( 0x66 ) ;
+01A7  0C66     MOVLW 0x66
+01A8  091F     CALL 0x1F
+73:                    countNeighbors( 0x01 ) ;
+01A9  0C01     MOVLW 0x1
+01AA  091F     CALL 0x1F
+74:                    countNeighbors( 0x01 ) ;
+01AB  0C01     MOVLW 0x1
+01AC  091F     CALL 0x1F
+75:                    countNeighbors( 0x16 ) ;
+01AD  0C16     MOVLW 0x16
+01AE  091F     CALL 0x1F
+76:                    countNeighbors( 0x01 ) ;
+01AF  0C01     MOVLW 0x1
+01B0  091F     CALL 0x1F
+77:            
+78:                    if( ( Union.count == 3 ) || ( ( displayBuffer[ Position.x ] >> Position.y ) &0x01 ) && ( Union.count == 4 ) )
+01B1  021A     MOVF Union, W
+01B2  0F03     XORLW 0x3
+01B3  0643     BTFSC STATUS, 0x2
+01B4  0BCC     GOTO 0x1CC
+01B5  0399     SWAPF Position, W
+01B6  0E0F     ANDLW 0xF
+01B7  003F     MOVWF 0x1F
+01B8  02BF     INCF 0x1F, F
+01B9  0219     MOVF Position, W
+01BA  0E0F     ANDLW 0xF
+01BB  003C     MOVWF 0x1C
+01BC  0C11     MOVLW 0x11
+01BD  01DC     ADDWF 0x1C, W
+01BE  0024     MOVWF FSR
+01BF  0200     MOVF INDF, W
+01C0  003E     MOVWF 0x1E
+01C1  0BC4     GOTO 0x1C4
+01C2  0403     BCF STATUS, 0x0
+01C3  033E     RRF 0x1E, F
+01C4  02FF     DECFSZ 0x1F, F
+01C5  0BC2     GOTO 0x1C2
+01C6  071E     BTFSS 0x1E, 0x0
+01C7  0BE1     GOTO 0x1E1
+01C8  021A     MOVF Union, W
+01C9  0F04     XORLW 0x4
+01CA  0743     BTFSS STATUS, 0x2
+01CB  0BE1     GOTO 0x1E1
+79:                      tmpBuffer[ Position.x ] |= ( 0x01 << Position.y ) ;
+01CC  0399     SWAPF Position, W
+01CD  0E0F     ANDLW 0xF
+01CE  003F     MOVWF 0x1F
+01CF  02BF     INCF 0x1F, F
+01D0  0C01     MOVLW 0x1
+01D1  003E     MOVWF 0x1E
+01D2  0BD5     GOTO 0x1D5
+01D3  0403     BCF STATUS, 0x0
+01D4  037E     RLF 0x1E, F
+01D5  02FF     DECFSZ 0x1F, F
+01D6  0BD3     GOTO 0x1D3
+01D7  021E     MOVF 0x1E, W
+01D8  003F     MOVWF 0x1F
+01D9  0219     MOVF Position, W
+01DA  0E0F     ANDLW 0xF
+01DB  003C     MOVWF 0x1C
+01DC  0C08     MOVLW 0x8
+01DD  01DC     ADDWF 0x1C, W
+01DE  0024     MOVWF FSR
+01DF  021F     MOVF 0x1F, W
+01E0  0120     IORWF INDF, F
+80:            
+81:                  }
+82:                }
+83:            
+84:                Union.prescaler + 0 ;
+85:            
+86:                for( Position.all = 0 ; Position.all != 8 ; Position.all++ )
+01EB  0079     CLRF Position
+01EC  0219     MOVF Position, W
+01ED  0F08     XORLW 0x8
+01EE  0643     BTFSC STATUS, 0x2
+01EF  0B6C     GOTO 0x16C
+01FA  0C01     MOVLW 0x1
+87:                  displayBuffer[ Position.all ] = tmpBuffer[ Position.all ] ;
+01F0  0C08     MOVLW 0x8
+01F1  01D9     ADDWF Position, W
+01F2  0024     MOVWF FSR
+01F3  0200     MOVF INDF, W
+01F4  003F     MOVWF 0x1F
+01F5  0C11     MOVLW 0x11
+01F6  01D9     ADDWF Position, W
+01F7  0024     MOVWF FSR
+01F8  021F     MOVF 0x1F, W
+01F9  0020     MOVWF INDF
+88:            
+89:              }
+90:            
+91:            }
+92:            
+---  /Applications/microchip/xc8/v1.33/include/pic16f54.h  ----------------------------------------------
+1:             // Version 1.33 (A)
+2:             // Generated 03/09/2014 GMT
+3:             
+4:             /*
+5:              * This software is developed by Microchip Technology Inc. and its subsidiaries ("Microchip").
+6:              * 
+7:              * Redistribution and use in source and binary forms, with or without modification, are
+8:              * permitted provided that the following conditions are met:
+9:              * 
+10:             *     1. Redistributions of source code must retain the above copyright notice, this list of
+11:             *        conditions and the following disclaimer.
+12:             *     2. Redistributions in binary form must reproduce the above copyright notice, this list
+13:             *        of conditions and the following disclaimer in the documentation and/or other
+14:             *        materials provided with the distribution.
+15:             *     3. All advertising materials mentioning features or use of this software must display
+16:             *        the following acknowledgement: "This product includes software developed by
+17:             *        Microchip Technology Inc. and its subsidiaries."
+18:             *     4. Microchip's name may not be used to endorse or promote products derived from this
+19:             *        software without specific prior written permission.
+20:             * 
+21:             * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+22:             * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+23:             * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIRECT,
+24:             * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+25:             * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+26:             * INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+27:             * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+28:             * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+29:             */
+30:            
+31:            #ifndef _PIC16F54_H_
+32:            #define _PIC16F54_H_
+33:            
+34:            /*
+35:             * C Header file for the Microchip PIC Microcontroller
+36:             * PIC16F54
+37:             */
+38:            #ifndef __XC8
+39:            #warning Header file pic16f54.h included directly. Use #include <xc.h> instead.
+40:            #endif
+41:            
+42:            /*
+43:             * Register Definitions
+44:             */
+45:            
+46:            // Register: INDF
+47:            extern volatile unsigned char           INDF                @ 0x000;
+48:            #ifndef _LIB_BUILD
+49:            asm("INDF equ 00h");
+50:            #endif
+51:            // bitfield definitions
+52:            typedef union {
+53:                struct {
+54:                    unsigned INDF                   :8;
+55:                };
+56:            } INDFbits_t;
+57:            extern volatile INDFbits_t INDFbits @ 0x000;
+58:            // bitfield macros
+59:            #define _INDF_INDF_POSN                                     0x0
+60:            #define _INDF_INDF_POSITION                                 0x0
+61:            #define _INDF_INDF_SIZE                                     0x8
+62:            #define _INDF_INDF_LENGTH                                   0x8
+63:            #define _INDF_INDF_MASK                                     0xFF
+64:            
+65:            // Register: TMR0
+66:            extern volatile unsigned char           TMR0                @ 0x001;
+67:            #ifndef _LIB_BUILD
+68:            asm("TMR0 equ 01h");
+69:            #endif
+70:            // bitfield definitions
+71:            typedef union {
+72:                struct {
+73:                    unsigned TMR0                   :8;
+74:                };
+75:            } TMR0bits_t;
+76:            extern volatile TMR0bits_t TMR0bits @ 0x001;
+77:            // bitfield macros
+78:            #define _TMR0_TMR0_POSN                                     0x0
+79:            #define _TMR0_TMR0_POSITION                                 0x0
+80:            #define _TMR0_TMR0_SIZE                                     0x8
+81:            #define _TMR0_TMR0_LENGTH                                   0x8
+82:            #define _TMR0_TMR0_MASK                                     0xFF
+83:            
+84:            // Register: PCL
+85:            extern volatile unsigned char           PCL                 @ 0x002;
+86:            #ifndef _LIB_BUILD
+87:            asm("PCL equ 02h");
+88:            #endif
+89:            // bitfield definitions
+90:            typedef union {
+91:                struct {
+92:                    unsigned PCL                    :8;
+93:                };
+94:            } PCLbits_t;
+95:            extern volatile PCLbits_t PCLbits @ 0x002;
+96:            // bitfield macros
+97:            #define _PCL_PCL_POSN                                       0x0
+98:            #define _PCL_PCL_POSITION                                   0x0
+99:            #define _PCL_PCL_SIZE                                       0x8
+100:           #define _PCL_PCL_LENGTH                                     0x8
+101:           #define _PCL_PCL_MASK                                       0xFF
+102:           
+103:           // Register: STATUS
+104:           extern volatile unsigned char           STATUS              @ 0x003;
+105:           #ifndef _LIB_BUILD
+106:           asm("STATUS equ 03h");
+107:           #endif
+108:           // bitfield definitions
+109:           typedef union {
+110:               struct {
+111:                   unsigned C                      :1;
+112:                   unsigned DC                     :1;
+113:                   unsigned Z                      :1;
+114:                   unsigned nPD                    :1;
+115:                   unsigned nTO                    :1;
+116:                   unsigned PA                     :3;
+117:               };
+118:               struct {
+119:                   unsigned                        :5;
+120:                   unsigned PA0                    :1;
+121:                   unsigned PA1                    :1;
+122:                   unsigned PA2                    :1;
+123:               };
+124:               struct {
+125:                   unsigned CARRY                  :1;
+126:               };
+127:               struct {
+128:                   unsigned                        :2;
+129:                   unsigned ZERO                   :1;
+130:               };
+131:           } STATUSbits_t;
+132:           extern volatile STATUSbits_t STATUSbits @ 0x003;
+133:           // bitfield macros
+134:           #define _STATUS_C_POSN                                      0x0
+135:           #define _STATUS_C_POSITION                                  0x0
+136:           #define _STATUS_C_SIZE                                      0x1
+137:           #define _STATUS_C_LENGTH                                    0x1
+138:           #define _STATUS_C_MASK                                      0x1
+139:           #define _STATUS_DC_POSN                                     0x1
+140:           #define _STATUS_DC_POSITION                                 0x1
+141:           #define _STATUS_DC_SIZE                                     0x1
+142:           #define _STATUS_DC_LENGTH                                   0x1
+143:           #define _STATUS_DC_MASK                                     0x2
+144:           #define _STATUS_Z_POSN                                      0x2
+145:           #define _STATUS_Z_POSITION                                  0x2
+146:           #define _STATUS_Z_SIZE                                      0x1
+147:           #define _STATUS_Z_LENGTH                                    0x1
+148:           #define _STATUS_Z_MASK                                      0x4
+149:           #define _STATUS_nPD_POSN                                    0x3
+150:           #define _STATUS_nPD_POSITION                                0x3
+151:           #define _STATUS_nPD_SIZE                                    0x1
+152:           #define _STATUS_nPD_LENGTH                                  0x1
+153:           #define _STATUS_nPD_MASK                                    0x8
+154:           #define _STATUS_nTO_POSN                                    0x4
+155:           #define _STATUS_nTO_POSITION                                0x4
+156:           #define _STATUS_nTO_SIZE                                    0x1
+157:           #define _STATUS_nTO_LENGTH                                  0x1
+158:           #define _STATUS_nTO_MASK                                    0x10
+159:           #define _STATUS_PA_POSN                                     0x5
+160:           #define _STATUS_PA_POSITION                                 0x5
+161:           #define _STATUS_PA_SIZE                                     0x3
+162:           #define _STATUS_PA_LENGTH                                   0x3
+163:           #define _STATUS_PA_MASK                                     0xE0
+164:           #define _STATUS_PA0_POSN                                    0x5
+165:           #define _STATUS_PA0_POSITION                                0x5
+166:           #define _STATUS_PA0_SIZE                                    0x1
+167:           #define _STATUS_PA0_LENGTH                                  0x1
+168:           #define _STATUS_PA0_MASK                                    0x20
+169:           #define _STATUS_PA1_POSN                                    0x6
+170:           #define _STATUS_PA1_POSITION                                0x6
+171:           #define _STATUS_PA1_SIZE                                    0x1
+172:           #define _STATUS_PA1_LENGTH                                  0x1
+173:           #define _STATUS_PA1_MASK                                    0x40
+174:           #define _STATUS_PA2_POSN                                    0x7
+175:           #define _STATUS_PA2_POSITION                                0x7
+176:           #define _STATUS_PA2_SIZE                                    0x1
+177:           #define _STATUS_PA2_LENGTH                                  0x1
+178:           #define _STATUS_PA2_MASK                                    0x80
+179:           #define _STATUS_CARRY_POSN                                  0x0
+180:           #define _STATUS_CARRY_POSITION                              0x0
+181:           #define _STATUS_CARRY_SIZE                                  0x1
+182:           #define _STATUS_CARRY_LENGTH                                0x1
+183:           #define _STATUS_CARRY_MASK                                  0x1
+184:           #define _STATUS_ZERO_POSN                                   0x2
+185:           #define _STATUS_ZERO_POSITION                               0x2
+186:           #define _STATUS_ZERO_SIZE                                   0x1
+187:           #define _STATUS_ZERO_LENGTH                                 0x1
+188:           #define _STATUS_ZERO_MASK                                   0x4
+189:           
+190:           // Register: FSR
+191:           extern volatile unsigned char           FSR                 @ 0x004;
+192:           #ifndef _LIB_BUILD
+193:           asm("FSR equ 04h");
+194:           #endif
+195:           // bitfield definitions
+196:           typedef union {
+197:               struct {
+198:                   unsigned FSR                    :8;
+199:               };
+200:           } FSRbits_t;
+201:           extern volatile FSRbits_t FSRbits @ 0x004;
+202:           // bitfield macros
+203:           #define _FSR_FSR_POSN                                       0x0
+204:           #define _FSR_FSR_POSITION                                   0x0
+205:           #define _FSR_FSR_SIZE                                       0x8
+206:           #define _FSR_FSR_LENGTH                                     0x8
+207:           #define _FSR_FSR_MASK                                       0xFF
+208:           
+209:           // Register: PORTA
+210:           extern volatile unsigned char           PORTA               @ 0x005;
+211:           #ifndef _LIB_BUILD
+212:           asm("PORTA equ 05h");
+213:           #endif
+214:           // bitfield definitions
+215:           typedef union {
+216:               struct {
+217:                   unsigned RA0                    :1;
+218:                   unsigned RA1                    :1;
+219:                   unsigned RA2                    :1;
+220:                   unsigned RA3                    :1;
+221:                   unsigned T0CKI                  :1;
+222:               };
+223:           } PORTAbits_t;
+224:           extern volatile PORTAbits_t PORTAbits @ 0x005;
+225:           // bitfield macros
+226:           #define _PORTA_RA0_POSN                                     0x0
+227:           #define _PORTA_RA0_POSITION                                 0x0
+228:           #define _PORTA_RA0_SIZE                                     0x1
+229:           #define _PORTA_RA0_LENGTH                                   0x1
+230:           #define _PORTA_RA0_MASK                                     0x1
+231:           #define _PORTA_RA1_POSN                                     0x1
+232:           #define _PORTA_RA1_POSITION                                 0x1
+233:           #define _PORTA_RA1_SIZE                                     0x1
+234:           #define _PORTA_RA1_LENGTH                                   0x1
+235:           #define _PORTA_RA1_MASK                                     0x2
+236:           #define _PORTA_RA2_POSN                                     0x2
+237:           #define _PORTA_RA2_POSITION                                 0x2
+238:           #define _PORTA_RA2_SIZE                                     0x1
+239:           #define _PORTA_RA2_LENGTH                                   0x1
+240:           #define _PORTA_RA2_MASK                                     0x4
+241:           #define _PORTA_RA3_POSN                                     0x3
+242:           #define _PORTA_RA3_POSITION                                 0x3
+243:           #define _PORTA_RA3_SIZE                                     0x1
+244:           #define _PORTA_RA3_LENGTH                                   0x1
+245:           #define _PORTA_RA3_MASK                                     0x8
+246:           #define _PORTA_T0CKI_POSN                                   0x4
+247:           #define _PORTA_T0CKI_POSITION                               0x4
+248:           #define _PORTA_T0CKI_SIZE                                   0x1
+249:           #define _PORTA_T0CKI_LENGTH                                 0x1
+250:           #define _PORTA_T0CKI_MASK                                   0x10
+251:           
+252:           // Register: PORTB
+253:           extern volatile unsigned char           PORTB               @ 0x006;
+254:           #ifndef _LIB_BUILD
+255:           asm("PORTB equ 06h");
+0017  0803     RETLW 0x3
+256:           #endif
+257:           // bitfield definitions
+258:           typedef union {
+259:               struct {
+260:                   unsigned RB0                    :1;
+261:                   unsigned RB1                    :1;
+262:                   unsigned RB2                    :1;
+263:                   unsigned RB3                    :1;
+264:                   unsigned RB4                    :1;
+265:                   unsigned RB5                    :1;
+266:                   unsigned RB6                    :1;
+267:                   unsigned RB7                    :1;
+268:               };
+269:           } PORTBbits_t;
+270:           extern volatile PORTBbits_t PORTBbits @ 0x006;
+271:           // bitfield macros
+272:           #define _PORTB_RB0_POSN                                     0x0
+273:           #define _PORTB_RB0_POSITION                                 0x0
+274:           #define _PORTB_RB0_SIZE                                     0x1
+275:           #define _PORTB_RB0_LENGTH                                   0x1
+276:           #define _PORTB_RB0_MASK                                     0x1
+277:           #define _PORTB_RB1_POSN                                     0x1
+278:           #define _PORTB_RB1_POSITION                                 0x1
+279:           #define _PORTB_RB1_SIZE                                     0x1
+280:           #define _PORTB_RB1_LENGTH                                   0x1
+281:           #define _PORTB_RB1_MASK                                     0x2
+282:           #define _PORTB_RB2_POSN                                     0x2
+283:           #define _PORTB_RB2_POSITION                                 0x2
+284:           #define _PORTB_RB2_SIZE                                     0x1
+285:           #define _PORTB_RB2_LENGTH                                   0x1
+286:           #define _PORTB_RB2_MASK                                     0x4
+287:           #define _PORTB_RB3_POSN                                     0x3
+288:           #define _PORTB_RB3_POSITION                                 0x3
+289:           #define _PORTB_RB3_SIZE                                     0x1
+290:           #define _PORTB_RB3_LENGTH                                   0x1
+291:           #define _PORTB_RB3_MASK                                     0x8
+292:           #define _PORTB_RB4_POSN                                     0x4
+293:           #define _PORTB_RB4_POSITION                                 0x4
+294:           #define _PORTB_RB4_SIZE                                     0x1
+295:           #define _PORTB_RB4_LENGTH                                   0x1
+296:           #define _PORTB_RB4_MASK                                     0x10
+297:           #define _PORTB_RB5_POSN                                     0x5
+298:           #define _PORTB_RB5_POSITION                                 0x5
+299:           #define _PORTB_RB5_SIZE                                     0x1
+300:           #define _PORTB_RB5_LENGTH                                   0x1
+301:           #define _PORTB_RB5_MASK                                     0x20
+302:           #define _PORTB_RB6_POSN                                     0x6
+303:           #define _PORTB_RB6_POSITION                                 0x6
+304:           #define _PORTB_RB6_SIZE                                     0x1
+305:           #define _PORTB_RB6_LENGTH                                   0x1
+306:           #define _PORTB_RB6_MASK                                     0x40
+307:           #define _PORTB_RB7_POSN                                     0x7
+308:           #define _PORTB_RB7_POSITION                                 0x7
+309:           #define _PORTB_RB7_SIZE                                     0x1
+310:           #define _PORTB_RB7_LENGTH                                   0x1
+311:           #define _PORTB_RB7_MASK                                     0x80
+312:           
+313:           // Register: OPTION
+314:           extern volatile __control unsigned char OPTION              @ 0x000;
+315:           
+316:           // Register: TRISA
+317:           extern volatile __control unsigned char TRISA               @ 0x005;
+318:           
+319:           // Register: TRISB
+320:           extern volatile __control unsigned char TRISB               @ 0x006;
+321:           
+322:           /*
+323:            * OPTION bits
+324:            */
+325:           #define                                 PS                  0x7
+326:           #define                                 PSA                 0x8
+327:           #define                                 T0SE                0x10
+328:           #define                                 T0CS                0x20
+329:           #define                                 PS0                 0x1
+330:           #define                                 PS1                 0x2
+331:           #define                                 PS2                 0x4
+332:           
+333:           /*
+334:            * Bit Definitions
+335:            */
+336:           #define _DEPRECATED __attribute__((__deprecated__))
+337:           #ifndef BANKMASK
+338:           #define BANKMASK(addr) ((addr)&01Fh)
+339:           #endif
+340:           extern volatile __bit                   CARRY               @ (((unsigned) &STATUS)*8) + 0;
+341:           #define                                 CARRY_bit           BANKMASK(STATUS), 0
+342:           extern volatile __bit                   DC                  @ (((unsigned) &STATUS)*8) + 1;
+343:           #define                                 DC_bit              BANKMASK(STATUS), 1
+344:           extern volatile __bit                   PA0                 @ (((unsigned) &STATUS)*8) + 5;
+345:           #define                                 PA0_bit             BANKMASK(STATUS), 5
+346:           extern volatile __bit                   PA1                 @ (((unsigned) &STATUS)*8) + 6;
+347:           #define                                 PA1_bit             BANKMASK(STATUS), 6
+348:           extern volatile __bit                   PA2                 @ (((unsigned) &STATUS)*8) + 7;
+349:           #define                                 PA2_bit             BANKMASK(STATUS), 7
+350:           extern volatile __bit                   RA0                 @ (((unsigned) &PORTA)*8) + 0;
+351:           #define                                 RA0_bit             BANKMASK(PORTA), 0
+352:           extern volatile __bit                   RA1                 @ (((unsigned) &PORTA)*8) + 1;
+353:           #define                                 RA1_bit             BANKMASK(PORTA), 1
+354:           extern volatile __bit                   RA2                 @ (((unsigned) &PORTA)*8) + 2;
+355:           #define                                 RA2_bit             BANKMASK(PORTA), 2
+356:           extern volatile __bit                   RA3                 @ (((unsigned) &PORTA)*8) + 3;
+357:           #define                                 RA3_bit             BANKMASK(PORTA), 3
+358:           extern volatile __bit                   RB0                 @ (((unsigned) &PORTB)*8) + 0;
+359:           #define                                 RB0_bit             BANKMASK(PORTB), 0
+360:           extern volatile __bit                   RB1                 @ (((unsigned) &PORTB)*8) + 1;
+361:           #define                                 RB1_bit             BANKMASK(PORTB), 1
+362:           extern volatile __bit                   RB2                 @ (((unsigned) &PORTB)*8) + 2;
+363:           #define                                 RB2_bit             BANKMASK(PORTB), 2
+364:           extern volatile __bit                   RB3                 @ (((unsigned) &PORTB)*8) + 3;
+365:           #define                                 RB3_bit             BANKMASK(PORTB), 3
+366:           extern volatile __bit                   RB4                 @ (((unsigned) &PORTB)*8) + 4;
+367:           #define                                 RB4_bit             BANKMASK(PORTB), 4
+368:           extern volatile __bit                   RB5                 @ (((unsigned) &PORTB)*8) + 5;
+369:           #define                                 RB5_bit             BANKMASK(PORTB), 5
+370:           extern volatile __bit                   RB6                 @ (((unsigned) &PORTB)*8) + 6;
+371:           #define                                 RB6_bit             BANKMASK(PORTB), 6
+372:           extern volatile __bit                   RB7                 @ (((unsigned) &PORTB)*8) + 7;
+373:           #define                                 RB7_bit             BANKMASK(PORTB), 7
+374:           extern volatile __bit                   T0CKI               @ (((unsigned) &PORTA)*8) + 4;
+375:           #define                                 T0CKI_bit           BANKMASK(PORTA), 4
+376:           extern volatile __bit                   ZERO                @ (((unsigned) &STATUS)*8) + 2;
+377:           #define                                 ZERO_bit            BANKMASK(STATUS), 2
+378:           extern volatile __bit                   nPD                 @ (((unsigned) &STATUS)*8) + 3;
+379:           #define                                 nPD_bit             BANKMASK(STATUS), 3
+380:           extern volatile __bit                   nTO                 @ (((unsigned) &STATUS)*8) + 4;
+381:           #define                                 nTO_bit             BANKMASK(STATUS), 4
+382:           
+383:           #endif // _PIC16F54_H_

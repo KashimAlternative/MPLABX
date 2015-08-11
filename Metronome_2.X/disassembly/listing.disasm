@@ -1,0 +1,3803 @@
+Disassembly Listing for Metronome_2
+Generated From:
+/Users/kshimada/Development/MPLAB X/Metronome_2.X/dist/default/production/Metronome_2.X.production.elf
+2015/08/09 12:50:15
+
+---  /Users/kshimada/Development/MPLAB X/_Common/parallel_LCD.h  ----------------------------------------
+1:             // ----------------------------------------------------------------
+2:             // Parallel LCD (with 8-bit mode)
+3:             // Revision 2015/08/09
+4:             // ----------------------------------------------------------------
+5:             // Description
+6:             //
+7:             // Following macros must be defined
+8:             //   #define PARALLEL_LCD_WIDTH
+9:             //   #define PARALLEL_LCD_ROW_COUNT
+10:            //   #define PARALLEL_LCD_EnableWrite( )
+11:            //   #define PARALLEL_LCD_SelectResister( r )
+12:            //   #define PARALLEL_LCD_SetData( data )
+13:            //   #define PARALLEL_LCD_WaitTimer()
+14:            //   #define PARALLEL_LCD_ResetTimer()
+15:            //
+16:            // Following macros needed to user Clear function
+17:            //   #define PARALLEL_LCD_USE_CLEAR
+18:            //   #define _XTAL_FREQ
+19:            
+20:            #ifndef PARALLEL_LCD_H
+21:            #  define PARALLEL_LCD_H
+22:            
+23:            #  include "parallel_LCD_configuration.h"
+24:            #  include "typedef.h"
+25:            
+26:            // ----------------------------------------------------------------
+27:            // [Macro Define]
+28:            
+29:            // Row Select
+30:            #  define PARALLEL_LCD_ROW_SELECT_0 0x80
+31:            #  define PARALLEL_LCD_ROW_SELECT_1 0xC0
+32:            
+33:            const uint08 PARALLEL_LCD_ROW_SELECT[] = {
+34:              PARALLEL_LCD_ROW_SELECT_0 ,
+35:              PARALLEL_LCD_ROW_SELECT_1 ,
+36:            } ;
+37:            
+38:            // ----------------------------------------------------------------
+39:            // [Constants]
+40:            const char HEX_TABLE[] = { '0' , '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9' , 'A' , 'B' , 'C' , 'D' , 'E' , 'F' , } ;
+41:            
+42:            // ----------------------------------------------------------------
+43:            // [Prototypes]
+44:            void _private_parallel_lcd_WriteByte( uint08 data , uint08 r ) ;
+45:            
+46:            // ----------------------------------------------------------------
+47:            // [Function] Initialize
+48:            void _parallel_lcd_Initialize( ) {
+49:              _private_parallel_lcd_WriteByte( CONFIG_FUNCTION_SET | CONFIG_8BIT_MODE | CONFIG_2LINE_MODE | CONFIG_5x8DOT_MODE , 0 ) ;
+0E1B  0020     MOVLB 0x0
+0E1C  01A0     CLRF __pcstackBANK0
+0E1D  3038     MOVLW 0x38
+0E1E  318E     MOVLP 0xE
+0E1F  2633     CALL 0x633
+0E20  318E     MOVLP 0xE
+50:              _private_parallel_lcd_WriteByte( CONFIG_DISPLAY | CONFIG_DISPLAY_ON , 0 ) ;
+0E21  0020     MOVLB 0x0
+0E22  01A0     CLRF __pcstackBANK0
+0E23  300C     MOVLW 0xC
+0E24  318E     MOVLP 0xE
+0E25  2633     CALL 0x633
+0E26  318E     MOVLP 0xE
+51:              _private_parallel_lcd_WriteByte( CONFIG_DISPLAY_OR_CURSOR | CONFIG_CURSOR_MOVEMENT | CONFIG_CURSOR_MOVEMENT_RIGHT , 0 ) ;
+0E27  0020     MOVLB 0x0
+0E28  01A0     CLRF __pcstackBANK0
+0E29  3010     MOVLW 0x10
+0E2A  318E     MOVLP 0xE
+0E2B  2633     CALL 0x633
+0E2C  318E     MOVLP 0xE
+52:              _private_parallel_lcd_WriteByte( CONFIG_ENTRY_MODE | CONFIG_INCREMENTAL | CONFIG_SHIFT_OFF , 0 ) ;
+0E2D  0020     MOVLB 0x0
+0E2E  01A0     CLRF __pcstackBANK0
+0E2F  3006     MOVLW 0x6
+0E30  318E     MOVLP 0xE
+0E31  2633     CALL 0x633
+53:            }
+0E32  0008     RETURN
+54:            
+55:            // ----------------------------------------------------------------
+56:            // [Function] Write Character
+57:            void _parallel_lcd_WriteCharacter( uint08 position , char character ) {
+0DCC  0020     MOVLB 0x0
+0DCD  00A3     MOVWF position
+58:              _private_parallel_lcd_WriteByte( position , 0 ) ;
+0DCE  01A0     CLRF __pcstackBANK0
+0DCF  0823     MOVF position, W
+0DD0  318E     MOVLP 0xE
+0DD1  2633     CALL 0x633
+0DD2  318D     MOVLP 0xD
+59:              _private_parallel_lcd_WriteByte( character , 1 ) ;
+0DD3  0020     MOVLB 0x0
+0DD4  01A0     CLRF __pcstackBANK0
+0DD5  0AA0     INCF __pcstackBANK0, F
+0DD6  0822     MOVF stringPtr, W
+0DD7  318E     MOVLP 0xE
+0DD8  2633     CALL 0x633
+60:            }
+0DD9  0008     RETURN
+61:            
+62:            // ----------------------------------------------------------------
+63:            // [Function] Write String
+64:            void _parallel_lcd_WriteString( uint08 position , const char* stringPtr ) {
+0E81  0020     MOVLB 0x0
+0E82  00A7     MOVWF position
+65:              _private_parallel_lcd_WriteByte( position , 0 ) ;
+0E83  01A0     CLRF __pcstackBANK0
+0E84  0827     MOVF position, W
+0E85  318E     MOVLP 0xE
+0E86  2633     CALL 0x633
+0E87  318E     MOVLP 0xE
+66:              while ( *stringPtr ) {
+0E88  0020     MOVLB 0x0
+0E89  0824     MOVF stringPtr, W
+0E8A  0084     MOVWF FSR0
+0E8B  0825     MOVF position, W
+0E8C  0085     MOVWF FSR0H
+0E8D  0012     MOVIW FSR0++
+0E8E  1903     BTFSC STATUS, 0x2
+0E8F  0008     RETURN
+0EA0  2E88     GOTO 0x688
+67:                _private_parallel_lcd_WriteByte( *stringPtr++ , 1 ) ;
+0E90  0020     MOVLB 0x0
+0E91  01A0     CLRF __pcstackBANK0
+0E92  0AA0     INCF __pcstackBANK0, F
+0E93  0824     MOVF stringPtr, W
+0E94  0084     MOVWF FSR0
+0E95  0825     MOVF position, W
+0E96  0085     MOVWF FSR0H
+0E97  0800     MOVF INDF0, W
+0E98  318E     MOVLP 0xE
+0E99  2633     CALL 0x633
+0E9A  318E     MOVLP 0xE
+0E9B  3001     MOVLW 0x1
+0E9C  0020     MOVLB 0x0
+0E9D  07A4     ADDWF stringPtr, F
+0E9E  3000     MOVLW 0x0
+0E9F  3DA5     ADDWFC position, F
+68:              }
+69:            }
+70:            
+71:            // ----------------------------------------------------------------
+72:            // [Function] Write String Clearing
+73:            void _parallel_lcd_WriteStringClearing( uint08 position , const char* stringPtr ) {
+0ECB  0020     MOVLB 0x0
+0ECC  00A5     MOVWF position
+74:              _private_parallel_lcd_WriteByte( position & 0xF0 , 0 ) ;
+0ECD  01A0     CLRF __pcstackBANK0
+0ECE  0825     MOVF position, W
+0ECF  39F0     ANDLW 0xF0
+0ED0  318E     MOVLP 0xE
+0ED1  2633     CALL 0x633
+0ED2  318E     MOVLP 0xE
+75:              for ( uint08 i = 0 ; i != PARALLEL_LCD_WIDTH ; i++ ) {
+0ED3  0020     MOVLB 0x0
+0ED4  01A6     CLRF i
+0ED5  3010     MOVLW 0x10
+0ED6  0626     XORWF i, W
+0ED7  1903     BTFSC STATUS, 0x2
+0ED8  0008     RETURN
+0EFB  3001     MOVLW 0x1
+0EFC  0020     MOVLB 0x0
+0EFD  00A4     MOVWF stringPtr
+0EFE  0824     MOVF stringPtr, W
+0EFF  07A6     ADDWF i, F
+0F00  2ED5     GOTO 0x6D5
+76:                if ( i >= ( position & 0x0F ) && ( *stringPtr ) )
+0ED9  0825     MOVF position, W
+0EDA  390F     ANDLW 0xF
+0EDB  0226     SUBWF i, W
+0EDC  1C03     BTFSS STATUS, 0x0
+0EDD  2EF5     GOTO 0x6F5
+0EDE  0822     MOVF stringPtr, W
+0EDF  0084     MOVWF FSR0
+0EE0  0823     MOVF position, W
+0EE1  0085     MOVWF FSR0H
+0EE2  0012     MOVIW FSR0++
+0EE3  1903     BTFSC STATUS, 0x2
+0EE4  2EF5     GOTO 0x6F5
+77:                  _private_parallel_lcd_WriteByte( *stringPtr++ , 1 ) ;
+0EE5  01A0     CLRF __pcstackBANK0
+0EE6  0AA0     INCF __pcstackBANK0, F
+0EE7  0822     MOVF stringPtr, W
+0EE8  0084     MOVWF FSR0
+0EE9  0823     MOVF position, W
+0EEA  0085     MOVWF FSR0H
+0EEB  0800     MOVF INDF0, W
+0EEC  318E     MOVLP 0xE
+0EED  2633     CALL 0x633
+0EEE  318E     MOVLP 0xE
+0EEF  3001     MOVLW 0x1
+0EF0  0020     MOVLB 0x0
+0EF1  07A2     ADDWF stringPtr, F
+0EF2  3000     MOVLW 0x0
+0EF3  3DA3     ADDWFC position, F
+0EF4  2EFB     GOTO 0x6FB
+78:                else
+79:                  _private_parallel_lcd_WriteByte( ' ' , 1 ) ;
+0EF5  01A0     CLRF __pcstackBANK0
+0EF6  0AA0     INCF __pcstackBANK0, F
+0EF7  3020     MOVLW 0x20
+0EF8  318E     MOVLP 0xE
+0EF9  2633     CALL 0x633
+0EFA  318E     MOVLP 0xE
+80:            
+81:              }
+82:            }
+83:            
+84:            // ----------------------------------------------------------------
+85:            // [Function] Write Hex Number
+86:            void _parallel_lcd_WriteHexNumber( uint08 position , uint08 number ) {
+87:              _private_parallel_lcd_WriteByte( position , 0 ) ;
+88:              _private_parallel_lcd_WriteByte( HEX_TABLE[ number >> 4 ] , 1 ) ;
+89:              _private_parallel_lcd_WriteByte( HEX_TABLE[ number & 0x0F ] , 1 ) ;
+90:            }
+91:            
+92:            // ----------------------------------------------------------------
+93:            // [Function] Clear Row
+94:            void _parallel_lcd_ClearRow( uint08 rowSelect ) {
+0E4C  0020     MOVLB 0x0
+0E4D  00A3     MOVWF position
+95:              _private_parallel_lcd_WriteByte( rowSelect & 0xF0 , 0 ) ;
+0E4E  01A0     CLRF __pcstackBANK0
+0E4F  0823     MOVF position, W
+0E50  39F0     ANDLW 0xF0
+0E51  318E     MOVLP 0xE
+0E52  2633     CALL 0x633
+0E53  318E     MOVLP 0xE
+96:              for ( uint08 i = 0 ; i != PARALLEL_LCD_WIDTH ; i++ )
+0E54  0020     MOVLB 0x0
+0E55  01A4     CLRF stringPtr
+0E56  3010     MOVLW 0x10
+0E57  0624     XORWF stringPtr, W
+0E58  1903     BTFSC STATUS, 0x2
+0E59  0008     RETURN
+0E60  3001     MOVLW 0x1
+97:                _private_parallel_lcd_WriteByte( ' ' , 1 ) ;
+0E5A  01A0     CLRF __pcstackBANK0
+0E5B  0AA0     INCF __pcstackBANK0, F
+0E5C  3020     MOVLW 0x20
+0E5D  318E     MOVLP 0xE
+0E5E  2633     CALL 0x633
+0E5F  318E     MOVLP 0xE
+98:            }
+99:            
+100:           // ----------------------------------------------------------------
+101:           // [Function] Clear Partial
+102:           void _parallel_lcd_ClearPartial( uint08 position , uint08 length ) {
+103:             _private_parallel_lcd_WriteByte( position , 0 ) ;
+104:             for ( uint08 i = 0 ; i != length ; i++ )
+105:               _private_parallel_lcd_WriteByte( ' ' , 1 ) ;
+106:           }
+107:           
+108:           // ----------------------------------------------------------------
+109:           // [Function] Set CGRAM
+110:           void _parallel_lcd_SetCgram( char charCode , const char* bitmap ) {
+0EA1  0020     MOVLB 0x0
+0EA2  00A5     MOVWF position
+111:             _private_parallel_lcd_WriteByte( ( ( charCode << 3 ) & 0b00111111 ) | 0b01000000 , 0 ) ;
+0EA3  01A0     CLRF __pcstackBANK0
+0EA4  0825     MOVF position, W
+0EA5  00A4     MOVWF stringPtr
+0EA6  3002     MOVLW 0x2
+0EA7  35A4     LSLF stringPtr, F
+0EA8  3EFF     ADDLW 0xFF
+0EA9  1D03     BTFSS STATUS, 0x2
+0EAA  2EA7     GOTO 0x6A7
+0EAB  3524     LSLF stringPtr, W
+0EAC  393F     ANDLW 0x3F
+0EAD  3840     IORLW 0x40
+0EAE  318E     MOVLP 0xE
+0EAF  2633     CALL 0x633
+0EB0  318E     MOVLP 0xE
+112:             for ( uint08 i = 0 ; i != 8 ; i++ , bitmap++ )
+0EB1  0020     MOVLB 0x0
+0EB2  01A6     CLRF i
+0EB3  3008     MOVLW 0x8
+0EB4  0626     XORWF i, W
+0EB5  1903     BTFSC STATUS, 0x2
+0EB6  0008     RETURN
+0EC1  3001     MOVLW 0x1
+0EC2  0020     MOVLB 0x0
+0EC3  00A4     MOVWF stringPtr
+0EC4  0824     MOVF stringPtr, W
+0EC5  07A6     ADDWF i, F
+0EC6  3001     MOVLW 0x1
+0EC7  07A2     ADDWF stringPtr, F
+0EC8  3000     MOVLW 0x0
+0EC9  3DA3     ADDWFC position, F
+0ECA  2EB3     GOTO 0x6B3
+113:               _private_parallel_lcd_WriteByte( *bitmap , 1 ) ;
+0EB7  01A0     CLRF __pcstackBANK0
+0EB8  0AA0     INCF __pcstackBANK0, F
+0EB9  0822     MOVF stringPtr, W
+0EBA  0084     MOVWF FSR0
+0EBB  0823     MOVF position, W
+0EBC  0085     MOVWF FSR0H
+0EBD  0800     MOVF INDF0, W
+0EBE  318E     MOVLP 0xE
+0EBF  2633     CALL 0x633
+0EC0  318E     MOVLP 0xE
+114:           }
+115:           
+116:           #  ifdef PARALLEL_LCD_USE_CLEAR
+117:           // ----------------------------------------------------------------
+118:           // [Function] Clear
+119:           void _parallel_lcd_Clear( ) {
+120:             _private_parallel_lcd_WriteByte( 0x01 , 0 ) ;
+121:             __delay_ms( 2 ) ;
+122:           }
+123:           #  endif
+124:           
+125:           // ----------------------------------------------------------------
+126:           // Private
+127:           // ----------------------------------------------------------------
+128:           
+129:           // ----------------------------------------------------------------
+130:           // [Function] Write Byte
+131:           void _private_parallel_lcd_WriteByte( uint08 data , uint08 r ) {
+0E33  0020     MOVLB 0x0
+0E34  00A1     MOVWF data
+132:             PARALLEL_LCD_WaitTimer( ) ;
+0E35  1C93     BTFSS PIR3, 0x1
+0E36  2E35     GOTO 0x635
+133:             PARALLEL_LCD_SetData( data ) ;
+0E37  0821     MOVF data, W
+0E38  0022     MOVLB 0x2
+0E39  008D     MOVWF LATB
+134:             PARALLEL_LCD_SelectResister( r ) ;
+0E3A  0020     MOVLB 0x0
+0E3B  0820     MOVF __pcstackBANK0, W
+0E3C  1903     BTFSC STATUS, 0x2
+0E3D  2E41     GOTO 0x641
+0E3E  0022     MOVLB 0x2
+0E3F  148C     BSF LATA, 0x1
+0E40  2E43     GOTO 0x643
+0E41  0022     MOVLB 0x2
+0E42  108C     BCF LATA, 0x1
+135:             PARALLEL_LCD_TriggerWrite( ) ;
+0E43  140C     BSF LATA, 0x0
+0E44  0000     NOP
+0E45  0022     MOVLB 0x2
+0E46  100C     BCF LATA, 0x0
+136:             PARALLEL_LCD_ResetTimer( ) ;
+0E47  0028     MOVLB 0x8
+0E48  0195     CLRF TMR4
+0E49  0020     MOVLB 0x0
+0E4A  1093     BCF PIR3, 0x1
+137:           }
+0E4B  0008     RETURN
+138:           
+139:           #endif	/* PARALLEL_LCD_H */
+140:           
+---  /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/pic16f1827_init.h  ---------------------------
+1:             #include <xc.h>
+2:             
+3:             // ----------------------------------------------------------------
+4:             // [Function] Initialize
+5:             void initialize( ) {
+6:             
+7:               // Oscillator config
+8:               OSCCONbits.IRCF = 0b1110 ; // 32MHz ( with PLL )
+0F99  0021     MOVLB 0x1
+0F9A  0819     MOVF OSCCON, W
+0F9B  3987     ANDLW 0x87
+0F9C  3870     IORLW 0x70
+0F9D  0099     MOVWF OSCCON
+9:               OSCCONbits.SCS = 0b00 ; // According to Configuration Word 1
+0F9E  30FC     MOVLW 0xFC
+0F9F  0599     ANDWF OSCCON, F
+10:              OSCCONbits.SPLLEN = 1 ; // PLL Enabled
+0FA0  1799     BSF OSCCON, 0x7
+11:              OSCTUNEbits.TUN = 0b000000 ; // Factory-calibrated
+0FA1  30C0     MOVLW 0xC0
+0FA2  0598     ANDWF OSCTUNE, F
+12:            
+13:              // Watchdog-TImer config
+14:              WDTCONbits.WDTPS = 0b01011 ; // 1:2^16
+0FA3  0817     MOVF WDTCON, W
+0FA4  39C1     ANDLW 0xC1
+0FA5  3816     IORLW 0x16
+0FA6  0097     MOVWF WDTCON
+15:            
+16:              // Timer config
+17:              INTCONbits.GIE = 0 ;
+0FA7  138B     BCF 0x8B, 0x7
+18:              INTCONbits.PEIE = 0 ;
+0FA8  130B     BCF 0x8B, 0x6
+19:            
+20:              // Timer0 config
+21:              OPTION_REGbits.PSA = 1 ;
+0FA9  1595     BSF OPTION_REG, 0x3
+22:              OPTION_REGbits.TMR0CS = 0 ;
+0FAA  1295     BCF OPTION_REG, 0x5
+23:              OPTION_REGbits.TMR0SE = 1 ;
+0FAB  1615     BSF OPTION_REG, 0x4
+24:              TMR0 = 0x00 ;
+0FAC  0020     MOVLB 0x0
+0FAD  0195     CLRF TMR0
+25:              INTCONbits.TMR0IE = 0 ;
+0FAE  128B     BCF INTCON, 0x5
+26:              INTCONbits.TMR0IF = 0 ;
+0FAF  110B     BCF INTCON, 0x2
+27:            
+28:              // Timer1 config
+29:              T1CONbits.TMR1ON = 0 ;
+0FB0  1018     BCF T1CON, 0x0
+30:              T1CONbits.TMR1CS = 0b00 ; // Fosc/4
+0FB1  303F     MOVLW 0x3F
+0FB2  0598     ANDWF T1CON, F
+31:              T1CONbits.T1CKPS = 0b11 ; //Prescaler 1/4
+0FB3  3030     MOVLW 0x30
+0FB4  0498     IORWF T1CON, F
+32:              T1CONbits.nT1SYNC = 0 ; // Synchronize : Disable
+0FB5  1118     BCF T1CON, 0x2
+33:              TMR1 = 0x0000 ;
+0FB6  0196     CLRF TMR1
+0FB7  0197     CLRF TMR1H
+34:              PIR1bits.TMR1IF = 0 ;
+0FB8  1011     BCF PIR1, 0x0
+35:              PIE1bits.TMR1IE = 0 ;
+0FB9  0021     MOVLB 0x1
+0FBA  1011     BCF PIE1, 0x0
+36:            
+37:              // Timer2 config
+38:              T2CONbits.TMR2ON = 0 ;
+0FBB  0020     MOVLB 0x0
+0FBC  111C     BCF T2CON, 0x2
+39:              T2CONbits.T2OUTPS = 0b0000 ; // Postscaler 1:1
+0FBD  3087     MOVLW 0x87
+0FBE  059C     ANDWF T2CON, F
+40:              T2CONbits.T2CKPS = 0b11 ; // Prescaler 1/64
+0FBF  3003     MOVLW 0x3
+0FC0  049C     IORWF T2CON, F
+41:              PR2 = 124 ;
+0FC1  307C     MOVLW 0x7C
+0FC2  009B     MOVWF PR2
+42:              TMR2 = 0x00 ;
+0FC3  019A     CLRF TMR2
+43:              PIR1bits.TMR2IF = 0 ;
+0FC4  1091     BCF PIR1, 0x1
+44:              PIE1bits.TMR2IE = 0 ;
+0FC5  0021     MOVLB 0x1
+0FC6  1091     BCF PIE1, 0x1
+45:            
+46:              // Timer4 config
+47:              T4CONbits.TMR4ON = 0 ;
+0FC7  0028     MOVLB 0x8
+0FC8  1117     BCF T4CON, 0x2
+48:              T4CONbits.T4OUTPS = 0b0000 ;
+0FC9  3087     MOVLW 0x87
+0FCA  0597     ANDWF T4CON, F
+49:              T4CONbits.T4CKPS = 0b01 ;
+0FCB  0817     MOVF T4CON, W
+0FCC  39FC     ANDLW 0xFC
+0FCD  3801     IORLW 0x1
+0FCE  0097     MOVWF T4CON
+50:              PR4 = 79 ;
+0FCF  304F     MOVLW 0x4F
+0FD0  0096     MOVWF PR4
+51:              TMR4 = 0x00 ;
+0FD1  0195     CLRF TMR4
+52:              PIR3bits.TMR4IF = 0 ;
+0FD2  0020     MOVLB 0x0
+0FD3  1093     BCF PIR3, 0x1
+53:              PIE3bits.TMR4IE = 0 ;
+0FD4  0021     MOVLB 0x1
+0FD5  1093     BCF PIE3, 0x1
+54:            
+55:              // Timer6 config
+56:              T6CONbits.TMR6ON = 0 ;
+0FD6  0028     MOVLB 0x8
+0FD7  111E     BCF T6CON, 0x2
+57:              T6CONbits.T6OUTPS = 0b0000 ;
+0FD8  3087     MOVLW 0x87
+0FD9  059E     ANDWF T6CON, F
+58:              T6CONbits.T6CKPS = 0b00 ;
+0FDA  30FC     MOVLW 0xFC
+0FDB  059E     ANDWF T6CON, F
+59:              PR6 = 124 ;
+0FDC  307C     MOVLW 0x7C
+0FDD  009D     MOVWF PR6
+60:              TMR6 = 0x00 ;
+0FDE  019C     CLRF TMR6
+61:              PIR3bits.TMR6IF = 0 ;
+0FDF  0020     MOVLB 0x0
+0FE0  1193     BCF PIR3, 0x3
+62:              PIE3bits.TMR6IE = 0 ;
+0FE1  0021     MOVLB 0x1
+0FE2  1193     BCF PIE3, 0x3
+63:            
+64:              // CCP config
+65:              CCPTMRS = 0b00000000 ; // All Select Timer2
+0FE3  0025     MOVLB 0x5
+0FE4  019E     CLRF CCPTMRS
+66:              CCP1CONbits.CCP1M = 0b0000 ; // Off
+0FE5  30F0     MOVLW 0xF0
+0FE6  0593     ANDWF CCP1CON, F
+67:              CCP2CONbits.CCP2M = 0b0000 ; // Off
+0FE7  30F0     MOVLW 0xF0
+0FE8  059A     ANDWF CCP2CON, F
+68:              CCP3CONbits.CCP3M = 0b0000 ; // Off
+0FE9  30F0     MOVLW 0xF0
+0FEA  0026     MOVLB 0x6
+0FEB  0593     ANDWF CCP3CON, F
+69:            
+70:              // CCP4 config
+71:              CCP4CONbits.CCP4M = 0b1100 ; // Set to PWM mode
+0FEC  081A     MOVF CCP4CON, W
+0FED  39F0     ANDLW 0xF0
+0FEE  380C     IORLW 0xC
+0FEF  009A     MOVWF CCP4CON
+72:              CCP4CONbits.DC4B = 0b00 ; // Clear LSbs of PWM duty cycle
+0FF0  30CF     MOVLW 0xCF
+0FF1  059A     ANDWF CCP4CON, F
+73:              CCPTMRSbits.C4TSEL = 0b00 ; //Select Timer2
+0FF2  303F     MOVLW 0x3F
+0FF3  0025     MOVLB 0x5
+0FF4  059E     ANDWF CCPTMRS, F
+74:              CCPR4L = 0 ;
+0FF5  0026     MOVLB 0x6
+0FF6  0198     CLRF CCPR4
+75:              CCPR4H = 0 ;
+0FF7  0199     CLRF CCPR4H
+76:            
+77:              // I/O config
+78:              ANSELA = 0b00000000 ; // Set AN0-AN4 as Digital I/O
+0FF8  0023     MOVLB 0x3
+0FF9  018C     CLRF ANSELA
+79:              ANSELB = 0b00000000 ; // Set AN1-AN7 as Digital I/O
+0FFA  018D     CLRF ANSELB
+80:            
+81:              TRISA = 0b11100000 ; // Set A7,A6,A5 as Input , Other as Output
+0FFB  30E0     MOVLW 0xE0
+0FFC  0021     MOVLB 0x1
+0FFD  008C     MOVWF TRISA
+82:              TRISB = 0b00000000 ; // Set B0-B7 as Output
+0FFE  018D     CLRF TRISB
+83:            
+84:            }
+---  /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/main.c  --------------------------------------
+1:             // ################################################################
+2:             // Ignore Warning for "possible use of "=" instead of "=="
+3:             #pragma warning disable 758
+4:             // ################################################################
+5:             
+6:             // ----------------------------------------------------------------
+7:             // Configuration Bits
+8:             
+9:             // CONFIG1
+10:            #pragma config FOSC = INTOSC    // Oscillator Selection (INTOSC oscillator: I/O function on CLKIN pin)
+11:            #pragma config WDTE = ON        // Watchdog Timer Enable (WDT enabled)
+12:            #pragma config PWRTE = ON       // Power-up Timer Enable (PWRT enabled)
+13:            #pragma config MCLRE = OFF      // MCLR Pin Function Select (MCLR/VPP pin function is digital input)
+14:            #pragma config CP = OFF         // Flash Program Memory Code Protection (Program memory code protection is disabled)
+15:            #pragma config CPD = OFF        // Data Memory Code Protection (Data memory code protection is disabled)
+16:            #pragma config BOREN = ON       // Brown-out Reset Enable (Brown-out Reset enabled)
+17:            #pragma config CLKOUTEN = OFF   // Clock Out Enable (CLKOUT function is disabled. I/O or oscillator function on the CLKOUT pin)
+18:            #pragma config IESO = OFF       // Internal/External Switchover (Internal/External Switchover mode is disabled)
+19:            #pragma config FCMEN = OFF      // Fail-Safe Clock Monitor Enable (Fail-Safe Clock Monitor is disabled)
+20:            
+21:            // CONFIG2
+22:            #pragma config WRT = OFF        // Flash Memory Self-Write Protection (Write protection off)
+23:            #pragma config PLLEN = OFF      // PLL Enable (4x PLL disabled)
+24:            #pragma config STVREN = ON      // Stack Overflow/Underflow Reset Enable (Stack Overflow or Underflow will cause a Reset)
+25:            #pragma config BORV = HI        // Brown-out Reset Voltage Selection (Brown-out Reset Voltage (Vbor), high trip point selected.)
+26:            #pragma config LVP = OFF        // Low-Voltage Programming Enable (High-voltage on MCLR/VPP must be used for programming)
+27:            
+28:            // ----------------------------------------------------------------
+29:            // User ID ( Software Version )
+30:            #pragma config IDLOC0 = 0x0001 // Major Version
+31:            #pragma config IDLOC1 = 0x0001 // Minor Version
+32:            #pragma config IDLOC2 = 0x0000 // Debug Version
+33:            #pragma config IDLOC3 = 0x0000 // (Reserved)
+34:            
+35:            // ----------------------------------------------------------------
+36:            // Include
+37:            #include "xc.h"
+38:            #include "pic16f1827_init.h"
+39:            #include "../../_Common/util.h"
+40:            
+41:            // ----------------------------------------------------------------
+42:            // Definition for Parallel LCD
+43:            #define PARALLEL_LCD_WIDTH 16
+44:            #define PARALLEL_LCD_ROW_COUNT 2
+45:            #define PARALLEL_LCD_TriggerWrite()      {LATAbits.LATA0=1;NOP();LATAbits.LATA0=0;}
+46:            #define PARALLEL_LCD_SelectResister( r ) {if(r)LATAbits.LATA1=1;else LATAbits.LATA1=0;}
+47:            #define PARALLEL_LCD_SetData( data )     {LATB=data;}
+48:            #define PARALLEL_LCD_WaitTimer()         {while(!PIR3bits.TMR4IF);}
+49:            #define PARALLEL_LCD_ResetTimer()        {TMR4=0x00;PIR3bits.TMR4IF=0;}
+50:            
+51:            // ----------------------------------------------------------------
+52:            // Include Original Header
+53:            #include "../../_Common/parallel_LCD.h"
+54:            #include "../../_Common/typedef.h"
+55:            
+56:            #include "configuration.h"
+57:            #include "menu.h"
+58:            #include "message.h"
+59:            
+60:            // ----------------------------------------------------------------
+61:            // Macros
+62:            #define EnableAllInterrupt()  INTCONbits.GIE=1
+63:            #define DisableAllInterrupt() INTCONbits.GIE=0
+64:            #define SoundOff() T2CONbits.TMR2ON = 0
+65:            #define SoundOn()  T2CONbits.TMR2ON = 1
+66:            #define SetOscillatorTune( tune ) OSCTUNE = tune
+67:            #define SetSoundTimerPeriod( period ) {PR2 = period;CCPR4L=(PR2>>config.pulseWidth);}
+68:            
+69:            // ----------------------------------------------------------------
+70:            // State
+71:            typedef enum {
+72:              STATE_BOOT ,
+73:              STATE_METRONOME ,
+74:              STATE_MENU_MAIN ,
+75:              STATE_MENU_TONE ,
+76:              STATE_ADJUST_BEAT_COUNT ,
+77:              STATE_ADJUST_DURATION ,
+78:              STATE_ADJUST_PULSE_WIDTH ,
+79:              STATE_ADJUST_TONE ,
+80:              STATE_ADJUST_OSCILLATOR_TUNE ,
+81:              STATE_INFORMATION ,
+82:              STATE_CONFIRM_SAVE ,
+83:              STATE_SAVE ,
+84:              STATE_CONFIRM_LOAD ,
+85:              STATE_LOAD ,
+86:              STATE_CONFIRM_RESET ,
+87:              STATE_INITIALIZE ,
+88:              STATE_RESET ,
+89:              STATE_ERROR ,
+90:            } MachineState ;
+91:            MachineState machineState = STATE_BOOT ;
+92:            uint08 stateReturnCounter = 0 ;
+93:            
+94:            // ----------------------------------------------------------------
+95:            // Metronome Counter
+96:            #define _XTAL_FREQ 32000000L
+97:            #define TOTAL_TEMOPO_COUNT ( _XTAL_FREQ * 3 / 25 )
+98:            #if TOTAL_TEMOPO_COUNT > 0xFFFFFF
+99:            #  error [ERROR] Too Large Tempo Count !!
+100:           #endif
+101:           static uint24 tempoCounter = 0 ;
+102:           static uint08 beatCounter = 0 ;
+103:           static uint08 duration = 0 ;
+104:           
+105:           // ----------------------------------------------------------------
+106:           // Keys
+107:           typedef union {
+108:             uint08 all ;
+109:             struct {
+110:               uint08 _ : 5 ;
+111:               uint08 keyMenu : 1 ;
+112:               uint08 keyDown : 1 ;
+113:               uint08 keyUp : 1 ;
+114:             } ;
+115:           } UniPortAState ;
+116:           #define ReadKeyState() (~PORTA)
+117:           
+118:           // ----------------------------------------------------------------
+119:           // Key Count
+120:           #define KEY_COUNT_PRESS 0x04
+121:           #define KEY_COUNT_LOOP_START 0x7A
+122:           #define KEY_COUNT_LOOP_END 0x80
+123:           #define KEY_COUNT_BEEP_MASK 0x06
+124:           union {
+125:             uint32 all ;
+126:             struct {
+127:               uint08 Up ;
+128:               uint08 UpDown ;
+129:               uint08 Down ;
+130:               uint08 Mode ;
+131:             } ;
+132:             struct {
+133:               uint16 exceptDown ;
+134:             } ;
+135:             struct {
+136:               uint08 ;
+137:               uint16 exceptUp ;
+138:             } ;
+139:           } keyCount = 0 ;
+140:           
+141:           // ----------------------------------------------------------------
+142:           // Menu State
+143:           typedef struct {
+144:             uint08 select ;
+145:             uint08 cursorPosition ;
+146:             const uint08 limit ;
+147:             const char** menuMessage ;
+148:           } MenuState ;
+149:           MenuState menuStateMain = { 0 , 0 , MENU_SIZE_MAIN - 1 , &MESSAGE_MENU_ITEM_MAIN } ;
+150:           MenuState menuStateTone = { 0 , 0 , MENU_SIZE_TONE - 1 , &MESSAGE_MENU_ITEM_TONE } ;
+151:           MenuState menuStateConfirm = { 0 , 0 , 1 , 0 } ;
+152:           MenuState menuStateInformation = { 0 , 0 , ( sizeof ( MESSAGE_INFORMATION ) / sizeof ( MESSAGE_INFORMATION[0] ) ) - 2 , 0 } ;
+153:           MenuState* currentMenuStatePtr ;
+154:           
+155:           // ----------------------------------------------------------------
+156:           // Configuration
+157:           ConfigurationData config = CONFIG_DEFAULT ;
+158:           
+159:           // ----------------------------------------------------------------
+160:           // Value
+161:           uint08* currentValuePtr ;
+162:           struct {
+163:             uint08 upper ;
+164:             uint08 lower ;
+165:           } valueLimit ;
+166:           
+167:           // ----------------------------------------------------------------
+168:           // Events
+169:           #define ClearEvent( event ) event = 0
+170:           #define SetEvent( event )   event = 1
+171:           #define EvalEvent( event )  (event&&!(event=0))
+172:           union {
+173:             uint08 all ;
+174:             struct {
+175:               uint08 keyPressUp : 1 ;
+176:               uint08 keyPressDown : 1 ;
+177:               uint08 keyPressMenu : 1 ;
+178:               uint08 keyPressUpDown : 1 ;
+179:             } ;
+180:           } inputEvent ;
+181:           union {
+182:             uint08 all ;
+183:             struct {
+184:               uint08 stateChange : 1 ;
+185:               uint08 messageChange : 1 ;
+186:               uint08 changeValue : 1 ;
+187:               uint08 resetMetronome : 1 ;
+188:               uint08 keySound : 1 ;
+189:               uint08 clickSound : 1 ;
+190:               uint08 soundOn : 1 ;
+191:               uint08 accessEeprom : 1 ;
+192:             } ;
+193:           } outputEvent ;
+194:           
+195:           // ----------------------------------------------------------------
+196:           // Tone
+197:           #define TONE_OFF 0
+198:           #define TONE_SYSTEM 124
+199:           #define TONE_TUNE 141 // A = 880 Hz
+200:           uint08 isMute ;
+201:           
+202:           // --------------------------------------------------------------------------------------------------------------------------------
+203:           // [Function] Main
+204:           void main( void ) {
+205:           
+206:             // Initialize
+207:             initialize( ) ;
+00D1  318F     MOVLP 0xF
+00D2  2799     CALL 0x799
+00D3  3180     MOVLP 0x0
+208:           
+209:             // Read Key State
+210:             ReadKeyState( ) ;
+00D4  0020     MOVLB 0x0
+00D5  080C     MOVF PORTA, W
+211:           
+212:             // Boot Beep
+213:             SetSoundTimerPeriod( TONE_SYSTEM ) ;
+00D6  307C     MOVLW 0x7C
+00D7  009B     MOVWF PR2
+00D8  081B     MOVF PR2, W
+00D9  00A9     MOVWF 0x29
+00DA  0A49     INCF 0x49, W
+00DB  28DD     GOTO 0xDD
+00DC  36A9     LSRF 0x29, F
+00DD  0B89     DECFSZ WREG, F
+00DE  28DC     GOTO 0xDC
+00DF  0829     MOVF 0x29, W
+00E0  0026     MOVLB 0x6
+00E1  0098     MOVWF CCPR4
+214:           
+215:             // Timer for LCD Command Wait
+216:             T4CONbits.TMR4ON = 1 ;
+00E2  0028     MOVLB 0x8
+00E3  1517     BSF T4CON, 0x2
+217:           
+218:             // Timer for Boot Sequence
+219:             T1CONbits.TMR1ON = 1 ;
+00E4  0020     MOVLB 0x0
+00E5  1418     BSF T1CON, 0x0
+220:           
+221:             // Execute Boot Sequence
+222:             for( uint08 phase = 0 ; phase != 0xE ; phase++ ) {
+00E6  01C0     CLRF phase
+00E7  300E     MOVLW 0xE
+00E8  0640     XORWF phase, W
+00E9  1903     BTFSC STATUS, 0x2
+00EA  29A9     GOTO 0x1A9
+01A1  3001     MOVLW 0x1
+01A2  00A9     MOVWF 0x29
+01A3  0829     MOVF 0x29, W
+01A4  07C0     ADDWF phase, F
+01A5  300E     MOVLW 0xE
+01A6  0640     XORWF phase, W
+01A7  1D03     BTFSS STATUS, 0x2
+01A8  28EB     GOTO 0xEB
+223:           
+224:               CLRWDT( ) ;
+00EB  0064     CLRWDT
+225:           
+226:               TMR1 = 0x0000 ;
+00EC  0020     MOVLB 0x0
+00ED  0196     CLRF TMR1
+00EE  0197     CLRF TMR1H
+227:           
+228:               switch( phase ) {
+00EF  2982     GOTO 0x182
+0182  0020     MOVLB 0x0
+0183  0840     MOVF phase, W
+0184  3A00     XORLW 0x0
+0185  1903     BTFSC STATUS, 0x2
+0186  28F0     GOTO 0xF0
+0187  3A01     XORLW 0x1
+0188  1903     BTFSC STATUS, 0x2
+0189  28F2     GOTO 0xF2
+018A  3A03     XORLW 0x3
+018B  1903     BTFSC STATUS, 0x2
+018C  28F0     GOTO 0xF0
+018D  3A01     XORLW 0x1
+018E  1903     BTFSC STATUS, 0x2
+018F  28F4     GOTO 0xF4
+0190  3A07     XORLW 0x7
+0191  1903     BTFSC STATUS, 0x2
+0192  2932     GOTO 0x132
+0193  3A01     XORLW 0x1
+0194  1903     BTFSC STATUS, 0x2
+0195  2957     GOTO 0x157
+0196  3A03     XORLW 0x3
+0197  1903     BTFSC STATUS, 0x2
+0198  295B     GOTO 0x15B
+0199  3A0A     XORLW 0xA
+019A  1903     BTFSC STATUS, 0x2
+019B  28F2     GOTO 0xF2
+019C  299D     GOTO 0x19D
+229:                 case 0x0:
+230:                 case 0x2:
+231:                   // Start Sound
+232:                   SoundOn( ) ;
+00F0  151C     BSF T2CON, 0x2
+233:                   break ;
+00F1  299D     GOTO 0x19D
+234:           
+235:                 case 0x1:
+236:                 case 0xC:
+237:                   // Stop Sound
+238:                   SoundOff( ) ;
+00F2  111C     BCF T2CON, 0x2
+239:                   break ;
+00F3  299D     GOTO 0x19D
+240:           
+241:                 case 0x3:
+242:                   // Read User ID
+243:                 {
+244:                   uint08 userId ;
+245:                   userId = _configuration_ReadByte( 0 , MEMORY_SELECT_CONFIGURATION ) ;
+00F4  01A0     CLRF __pcstackBANK0
+00F5  0AA0     INCF __pcstackBANK0, F
+00F6  3000     MOVLW 0x0
+00F7  318E     MOVLP 0xE
+00F8  2603     CALL 0x603
+00F9  3180     MOVLP 0x0
+00FA  0020     MOVLB 0x0
+00FB  00A9     MOVWF 0x29
+00FC  0829     MOVF 0x29, W
+00FD  00C2     MOVWF userId
+246:                   informationValueBuffer[ INFORMATION_ITEM_VERSION ][1] = ( ( userId >> 4 ) | '0' ) ;
+00FE  0842     MOVF userId, W
+00FF  00A9     MOVWF 0x29
+0100  3004     MOVLW 0x4
+0101  36A9     LSRF 0x29, F
+0102  0B89     DECFSZ WREG, F
+0103  2901     GOTO 0x101
+0104  0829     MOVF 0x29, W
+0105  3830     IORLW 0x30
+0106  00AA     MOVWF 0x2A
+0107  082A     MOVF 0x2A, W
+0108  0021     MOVLB 0x1
+0109  00AF     MOVWF 0xAF
+247:                   informationValueBuffer[ INFORMATION_ITEM_VERSION ][2] = ( ( userId & 0x000F ) | '0' ) ;
+010A  0020     MOVLB 0x0
+010B  0842     MOVF userId, W
+010C  390F     ANDLW 0xF
+010D  3830     IORLW 0x30
+010E  00A9     MOVWF 0x29
+010F  0829     MOVF 0x29, W
+0110  0021     MOVLB 0x1
+0111  00B0     MOVWF 0xB0
+248:                   userId = _configuration_ReadByte( 1 , MEMORY_SELECT_CONFIGURATION ) ;
+0112  0020     MOVLB 0x0
+0113  01A0     CLRF __pcstackBANK0
+0114  0AA0     INCF __pcstackBANK0, F
+0115  3001     MOVLW 0x1
+0116  318E     MOVLP 0xE
+0117  2603     CALL 0x603
+0118  3180     MOVLP 0x0
+0119  0020     MOVLB 0x0
+011A  00A9     MOVWF 0x29
+011B  0829     MOVF 0x29, W
+011C  00C2     MOVWF userId
+249:                   informationValueBuffer[ INFORMATION_ITEM_VERSION ][4] = ( ( userId >> 4 ) | '0' ) ;
+011D  0842     MOVF userId, W
+011E  00A9     MOVWF 0x29
+011F  3004     MOVLW 0x4
+0120  36A9     LSRF 0x29, F
+0121  0B89     DECFSZ WREG, F
+0122  2920     GOTO 0x120
+0123  0829     MOVF 0x29, W
+0124  3830     IORLW 0x30
+0125  00AA     MOVWF 0x2A
+0126  082A     MOVF 0x2A, W
+0127  0021     MOVLB 0x1
+0128  00B2     MOVWF 0xB2
+250:                   informationValueBuffer[ INFORMATION_ITEM_VERSION ][5] = ( ( userId & 0x000F ) | '0' ) ;
+0129  0020     MOVLB 0x0
+012A  0842     MOVF userId, W
+012B  390F     ANDLW 0xF
+012C  3830     IORLW 0x30
+012D  00A9     MOVWF 0x29
+012E  0829     MOVF 0x29, W
+012F  0021     MOVLB 0x1
+0130  00B3     MOVWF 0xB3
+251:                 }
+252:                   break ;
+0131  299D     GOTO 0x19D
+253:           
+254:                 case 0x4:
+255:                   // Initialize Display
+256:                   _parallel_lcd_Initialize( ) ;
+0132  318E     MOVLP 0xE
+0133  261B     CALL 0x61B
+0134  3180     MOVLP 0x0
+257:           
+258:                   // Indicate Title and Version
+259:                   _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.METRONOME.TILE ) ;
+0135  3000     MOVLW 0x0
+0136  0084     MOVWF 0x84
+0137  3088     MOVLW 0x88
+0138  0085     MOVWF 0x85
+0139  3F00     MOVIW [0]FSR0
+013A  0020     MOVLB 0x0
+013B  00A2     MOVWF stringPtr
+013C  3F01     MOVIW [1]FSR0
+013D  00A3     MOVWF position
+013E  3080     MOVLW 0x80
+013F  318E     MOVLP 0xE
+0140  26CB     CALL 0x6CB
+0141  3180     MOVLP 0x0
+260:                   _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFORMATION[ INFORMATION_ITEM_VERSION ] ) ;
+0142  0021     MOVLB 0x1
+0143  0820     MOVF MESSAGE_INFORMATION, W
+0144  0020     MOVLB 0x0
+0145  00A2     MOVWF stringPtr
+0146  0021     MOVLB 0x1
+0147  0821     MOVF 0xA1, W
+0148  0020     MOVLB 0x0
+0149  00A3     MOVWF position
+014A  30C0     MOVLW 0xC0
+014B  318E     MOVLP 0xE
+014C  26CB     CALL 0x6CB
+014D  3180     MOVLP 0x0
+261:                   _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ INFORMATION_ITEM_VERSION ] ) ;
+014E  30AE     MOVLW 0xAE
+014F  0020     MOVLB 0x0
+0150  00A4     MOVWF stringPtr
+0151  3000     MOVLW 0x0
+0152  00A5     MOVWF position
+0153  30CA     MOVLW 0xCA
+0154  318E     MOVLP 0xE
+0155  2681     CALL 0x681
+0156  3180     MOVLP 0x0
+262:           
+263:                 case 0x5:
+264:                   // Read or Write Configuration from EEPROM
+265:                   if( ReadKeyState( ) & 0xD0 == 0xB0 )
+266:                     machineState = STATE_INITIALIZE ;
+267:                   else
+268:                     machineState = STATE_BOOT ;
+0157  0020     MOVLB 0x0
+0158  01EE     CLRF machineState
+269:           
+270:                   SetEvent( outputEvent.accessEeprom ) ;
+0159  17EF     BSF outputEvent, 0x7
+271:                   break ;
+015A  299D     GOTO 0x19D
+272:           
+273:                 case 0x6:
+274:                   // Set CGRAM to LCD
+275:                   _parallel_lcd_SetCgram( CHAR_CODE.CURSOR_UP , & BITMAP.CURSOR_UP ) ;
+015B  3041     MOVLW 0x41
+015C  00A2     MOVWF stringPtr
+015D  3088     MOVLW 0x88
+015E  00A3     MOVWF position
+015F  3035     MOVLW 0x35
+0160  0084     MOVWF FSR0
+0161  3088     MOVLW 0x88
+0162  0085     MOVWF FSR0H
+0163  0800     MOVF INDF0, W
+0164  318E     MOVLP 0xE
+0165  26A1     CALL 0x6A1
+0166  3180     MOVLP 0x0
+276:                   _parallel_lcd_SetCgram( CHAR_CODE.CURSOR_DOWN , & BITMAP.CURSOR_DOWN ) ;
+0167  3049     MOVLW 0x49
+0168  0020     MOVLB 0x0
+0169  00A2     MOVWF stringPtr
+016A  3088     MOVLW 0x88
+016B  00A3     MOVWF position
+016C  3036     MOVLW 0x36
+016D  0084     MOVWF FSR0
+016E  3088     MOVLW 0x88
+016F  0085     MOVWF FSR0H
+0170  0800     MOVF INDF0, W
+0171  318E     MOVLP 0xE
+0172  26A1     CALL 0x6A1
+0173  3180     MOVLP 0x0
+277:                   _parallel_lcd_SetCgram( CHAR_CODE.CURSOR_RIGHT , & BITMAP.CURSOR_RIGHT ) ;
+0174  3039     MOVLW 0x39
+0175  0020     MOVLB 0x0
+0176  00A2     MOVWF stringPtr
+0177  3088     MOVLW 0x88
+0178  00A3     MOVWF position
+0179  3034     MOVLW 0x34
+017A  0084     MOVWF FSR0
+017B  3088     MOVLW 0x88
+017C  0085     MOVWF FSR0H
+017D  0800     MOVF INDF0, W
+017E  318E     MOVLP 0xE
+017F  26A1     CALL 0x6A1
+0180  3180     MOVLP 0x0
+278:                   break ;
+279:           
+280:               }
+0181  299D     GOTO 0x19D
+281:           
+282:               while( !PIR1bits.TMR1IF ) ;
+019D  0020     MOVLB 0x0
+019E  1C11     BTFSS PIR1, 0x0
+019F  299D     GOTO 0x19D
+283:               PIR1bits.TMR1IF = 0 ;
+01A0  1011     BCF PIR1, 0x0
+284:           
+285:             }
+286:           
+287:             // Start Timer Interrupt
+288:             //INTCONbits.GIE = 1 ;
+289:             INTCONbits.PEIE = 1 ;
+01A9  170B     BSF INTCON, 0x6
+290:             T6CONbits.TMR6ON = 1 ;
+01AA  0028     MOVLB 0x8
+01AB  151E     BSF T6CON, 0x2
+291:             PIE3bits.TMR6IE = 1 ;
+01AC  0021     MOVLB 0x1
+01AD  1593     BSF PIE3, 0x3
+292:           
+293:             // Main Loop
+294:             for( ; ; ) {
+295:           
+296:               // Clear Watchdog-Timer ----------------
+297:               CLRWDT( ) ;
+01AE  0064     CLRWDT
+298:           
+299:               // EEPROM ----------------
+300:               if( EvalEvent( outputEvent.accessEeprom ) ) {
+01AF  0020     MOVLB 0x0
+01B0  1FEF     BTFSS outputEvent, 0x7
+01B1  2A48     GOTO 0x248
+01B2  13EF     BCF outputEvent, 0x7
+301:           
+302:                 DisableAllInterrupt( ) ;
+01B3  138B     BCF INTCON, 0x7
+303:           
+304:                 ReturnCode returnCode = RETURN_CODE_NOERROR ;
+01B4  01C1     CLRF returnCode
+305:           
+306:                 switch( machineState ) {
+01B5  29C8     GOTO 0x1C8
+01C8  086E     MOVF machineState, W
+01C9  3A00     XORLW 0x0
+01CA  1903     BTFSC STATUS, 0x2
+01CB  29B6     GOTO 0x1B6
+01CC  3A0B     XORLW 0xB
+01CD  1903     BTFSC STATUS, 0x2
+01CE  29BF     GOTO 0x1BF
+01CF  3A06     XORLW 0x6
+01D0  1903     BTFSC STATUS, 0x2
+01D1  29B9     GOTO 0x1B9
+01D2  3A02     XORLW 0x2
+01D3  1903     BTFSC STATUS, 0x2
+01D4  29BE     GOTO 0x1BE
+01D5  29D6     GOTO 0x1D6
+307:           
+308:                   case STATE_BOOT:
+309:                     machineState = STATE_METRONOME ;
+01B6  01EE     CLRF machineState
+01B7  0AEE     INCF machineState, F
+310:                     SetEvent( outputEvent.stateChange ) ;
+01B8  146F     BSF outputEvent, 0x0
+311:                   case STATE_LOAD:
+312:                     returnCode = _configuration_Load( &config ) ;
+01B9  3044     MOVLW 0x44
+01BA  318F     MOVLP 0xF
+01BB  2747     CALL 0x747
+01BC  3180     MOVLP 0x0
+01BD  29C3     GOTO 0x1C3
+313:                     break ;
+314:           
+315:                   case STATE_INITIALIZE:
+316:                     SetEvent( outputEvent.stateChange ) ;
+01BE  146F     BSF outputEvent, 0x0
+317:                   case STATE_SAVE:
+318:                     returnCode = _configuration_Save( &config ) ;
+01BF  3044     MOVLW 0x44
+01C0  3187     MOVLP 0x7
+01C1  274B     CALL 0x74B
+01C2  3180     MOVLP 0x0
+01C3  0020     MOVLB 0x0
+01C4  00A9     MOVWF 0x29
+01C5  0829     MOVF 0x29, W
+01C6  00C1     MOVWF returnCode
+319:                     break ;
+320:           
+321:                 }
+01C7  29D6     GOTO 0x1D6
+322:           
+323:                 uint08 romOffset = _configuration_GetRomOffset( ) ;
+01D6  318D     MOVLP 0xD
+01D7  25BA     CALL 0x5BA
+01D8  3180     MOVLP 0x0
+01D9  0020     MOVLB 0x0
+01DA  00A9     MOVWF 0x29
+01DB  0829     MOVF 0x29, W
+01DC  00BE     MOVWF romOffset
+324:                 informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][3] = HEX_TABLE[ romOffset >> 4 ] ;
+01DD  083E     MOVF romOffset, W
+01DE  00A9     MOVWF 0x29
+01DF  3004     MOVLW 0x4
+01E0  36A9     LSRF 0x29, F
+01E1  0B89     DECFSZ WREG, F
+01E2  29E0     GOTO 0x1E0
+01E3  0829     MOVF 0x29, W
+01E4  3E24     ADDLW 0x24
+01E5  0084     MOVWF FSR0
+01E6  3088     MOVLW 0x88
+01E7  1803     BTFSC STATUS, 0x0
+01E8  3E01     ADDLW 0x1
+01E9  0085     MOVWF FSR0H
+01EA  0800     MOVF INDF0, W
+01EB  00AA     MOVWF 0x2A
+01EC  082A     MOVF 0x2A, W
+01ED  0021     MOVLB 0x1
+01EE  00B8     MOVWF 0xB8
+325:                 informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][4] = HEX_TABLE[ romOffset & 0x0F ] ;
+01EF  0020     MOVLB 0x0
+01F0  083E     MOVF romOffset, W
+01F1  390F     ANDLW 0xF
+01F2  3E24     ADDLW 0x24
+01F3  0084     MOVWF FSR0
+01F4  3088     MOVLW 0x88
+01F5  1803     BTFSC STATUS, 0x0
+01F6  3E01     ADDLW 0x1
+01F7  0085     MOVWF FSR0H
+01F8  0800     MOVF INDF0, W
+01F9  00A9     MOVWF 0x29
+01FA  0829     MOVF 0x29, W
+01FB  0021     MOVLB 0x1
+01FC  00B9     MOVWF 0xB9
+326:                 informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][3] = HEX_TABLE[ config.writeCount >> 4 ] ;
+01FD  0020     MOVLB 0x0
+01FE  0844     MOVF config, W
+01FF  00A9     MOVWF 0x29
+0200  3004     MOVLW 0x4
+0201  36A9     LSRF 0x29, F
+0202  0B89     DECFSZ WREG, F
+0203  2A01     GOTO 0x201
+0204  0829     MOVF 0x29, W
+0205  3E24     ADDLW 0x24
+0206  0084     MOVWF FSR0
+0207  3088     MOVLW 0x88
+0208  1803     BTFSC STATUS, 0x0
+0209  3E01     ADDLW 0x1
+020A  0085     MOVWF FSR0H
+020B  0800     MOVF INDF0, W
+020C  00AA     MOVWF 0x2A
+020D  082A     MOVF 0x2A, W
+020E  0021     MOVLB 0x1
+020F  00BF     MOVWF 0xBF
+327:                 informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][4] = HEX_TABLE[ config.writeCount & 0x0F ] ;
+0210  0020     MOVLB 0x0
+0211  0844     MOVF config, W
+0212  390F     ANDLW 0xF
+0213  3E24     ADDLW 0x24
+0214  0084     MOVWF FSR0
+0215  3088     MOVLW 0x88
+0216  1803     BTFSC STATUS, 0x0
+0217  3E01     ADDLW 0x1
+0218  0085     MOVWF FSR0H
+0219  0800     MOVF INDF0, W
+021A  00A9     MOVWF 0x29
+021B  0829     MOVF 0x29, W
+021C  0021     MOVLB 0x1
+021D  00C0     MOVWF 0xC0
+328:                 informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][3] = HEX_TABLE[ returnCode >> 4 ] ;
+021E  0020     MOVLB 0x0
+021F  0841     MOVF returnCode, W
+0220  00A9     MOVWF 0x29
+0221  3004     MOVLW 0x4
+0222  36A9     LSRF 0x29, F
+0223  0B89     DECFSZ WREG, F
+0224  2A22     GOTO 0x222
+0225  0829     MOVF 0x29, W
+0226  3E24     ADDLW 0x24
+0227  0084     MOVWF FSR0
+0228  3088     MOVLW 0x88
+0229  1803     BTFSC STATUS, 0x0
+022A  3E01     ADDLW 0x1
+022B  0085     MOVWF FSR0H
+022C  0800     MOVF INDF0, W
+022D  00AA     MOVWF 0x2A
+022E  082A     MOVF 0x2A, W
+022F  0021     MOVLB 0x1
+0230  00C6     MOVWF 0xC6
+329:                 informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][4] = HEX_TABLE[ returnCode & 0x0F ] ;
+0231  0020     MOVLB 0x0
+0232  0841     MOVF returnCode, W
+0233  390F     ANDLW 0xF
+0234  3E24     ADDLW 0x24
+0235  0084     MOVWF FSR0
+0236  3088     MOVLW 0x88
+0237  1803     BTFSC STATUS, 0x0
+0238  3E01     ADDLW 0x1
+0239  0085     MOVWF FSR0H
+023A  0800     MOVF INDF0, W
+023B  00A9     MOVWF 0x29
+023C  0829     MOVF 0x29, W
+023D  0021     MOVLB 0x1
+023E  00C7     MOVWF 0xC7
+330:           
+331:                 if( returnCode )
+023F  0020     MOVLB 0x0
+0240  0841     MOVF returnCode, W
+0241  1903     BTFSC STATUS, 0x2
+0242  2A47     GOTO 0x247
+332:                   machineState = STATE_ERROR ;
+0243  3011     MOVLW 0x11
+0244  00A9     MOVWF 0x29
+0245  0829     MOVF 0x29, W
+0246  00EE     MOVWF machineState
+333:           
+334:                 EnableAllInterrupt( ) ;
+0247  178B     BSF INTCON, 0x7
+335:           
+336:               }
+337:           
+338:               // Both Up & Donw ----------------
+339:               if( EvalEvent( inputEvent.keyPressUpDown ) ) {
+0248  1DEC     BTFSS inputEvent, 0x3
+0249  2A56     GOTO 0x256
+024A  11EC     BCF inputEvent, 0x3
+340:                 if( machineState == STATE_METRONOME ) {
+024B  036E     DECF machineState, W
+024C  1D03     BTFSS STATUS, 0x2
+024D  2A56     GOTO 0x256
+341:                   Toggle( isMute ) ;
+024E  086D     MOVF isMute, W
+024F  1903     BTFSC STATUS, 0x2
+0250  2A53     GOTO 0x253
+0251  01ED     CLRF isMute
+0252  2A55     GOTO 0x255
+0253  01ED     CLRF isMute
+0254  0AED     INCF isMute, F
+342:                   SetEvent( outputEvent.messageChange ) ;
+0255  14EF     BSF outputEvent, 0x1
+343:                 }
+344:               }
+345:           
+346:               // Apply Menu Key Event ----------------
+347:               if( EvalEvent( inputEvent.keyPressMenu ) ) {
+0256  1D6C     BTFSS inputEvent, 0x2
+0257  2ACB     GOTO 0x2CB
+0258  116C     BCF inputEvent, 0x2
+348:                 SetEvent( outputEvent.stateChange ) ;
+0259  146F     BSF outputEvent, 0x0
+349:           
+350:                 switch( machineState ) {
+025A  2ABE     GOTO 0x2BE
+02BE  086E     MOVF machineState, W
+02BF  3EFF     ADDLW 0xFF
+02C0  1C03     BTFSS STATUS, 0x0
+02C1  2ACB     GOTO 0x2CB
+02C2  0084     MOVWF FSR0
+02C3  3011     MOVLW 0x11
+02C4  0204     SUBWF FSR0, W
+02C5  1803     BTFSC STATUS, 0x0
+02C6  2ACB     GOTO 0x2CB
+02C7  3187     MOVLP 0x7
+02C8  3504     LSLF FSR0, W
+02C9  3ED9     ADDLW 0xD9
+02CA  0082     MOVWF PCL
+07D9  3182     MOVLP 0x2
+351:           
+352:                   case STATE_MENU_MAIN:
+353:                     switch( menuStateMain.select ) {
+0275  0857     MOVF menuStateMain, W
+0276  0084     MOVWF FSR0
+0277  300A     MOVLW 0xA
+0278  0204     SUBWF FSR0, W
+0279  1803     BTFSC STATUS, 0x0
+027A  2ACB     GOTO 0x2CB
+027B  3189     MOVLP 0x9
+027C  3504     LSLF FSR0, W
+027D  3EB6     ADDLW 0xB6
+027E  0082     MOVWF PCL
+09B6  3182     MOVLP 0x2
+354:                       case MENU_ITEM_MAIN_RETURN:
+355:                         machineState = STATE_METRONOME ;
+025B  01EE     CLRF machineState
+025C  0AEE     INCF machineState, F
+356:                         break ;
+025D  2ACB     GOTO 0x2CB
+357:           
+358:                       case MENU_ITEM_MAIN_BEAT_COUNT:
+359:                         machineState = STATE_ADJUST_BEAT_COUNT ;
+025E  3004     MOVLW 0x4
+025F  2AB6     GOTO 0x2B6
+360:                         break ;
+361:           
+362:                       case MENU_ITEM_MAIN_TONE_MENU:
+363:                         machineState = STATE_MENU_TONE ;
+0260  3003     MOVLW 0x3
+0261  00A9     MOVWF 0x29
+0262  0829     MOVF 0x29, W
+0263  00EE     MOVWF machineState
+364:                         menuStateTone.select = 0 ;
+0264  01DB     CLRF menuStateTone
+365:                         menuStateTone.cursorPosition = 0 ;
+0265  01DC     CLRF 0x5C
+366:                         break ;
+0266  2ACB     GOTO 0x2CB
+367:           
+368:                       case MENU_ITEM_MAIN_ADJUST_DURATION:
+369:                         machineState = STATE_ADJUST_DURATION ;
+0267  3005     MOVLW 0x5
+0268  2AB6     GOTO 0x2B6
+370:                         break ;
+371:           
+372:                       case MENU_ITEM_MAIN_PULSE_WIDTH:
+373:                         machineState = STATE_ADJUST_PULSE_WIDTH ;
+0269  3006     MOVLW 0x6
+026A  2AB6     GOTO 0x2B6
+374:                         break ;
+375:           
+376:                       case MENU_ITEM_MAIN_ADJUST_OSCILLATOR_TUNE:
+377:                         machineState = STATE_ADJUST_OSCILLATOR_TUNE ;
+026B  3008     MOVLW 0x8
+026C  2AB6     GOTO 0x2B6
+378:                         break ;
+379:           
+380:                       case MENU_ITEM_MAIN_LOAD_CONFIGURATION:
+381:                         machineState = STATE_CONFIRM_LOAD ;
+026D  300C     MOVLW 0xC
+026E  2AB6     GOTO 0x2B6
+382:                         break ;
+383:           
+384:                       case MENU_ITEM_MAIN_SAVE_CONFIGURATION:
+385:                         machineState = STATE_CONFIRM_SAVE ;
+026F  300A     MOVLW 0xA
+0270  2AB6     GOTO 0x2B6
+386:                         break ;
+387:           
+388:                       case MENU_ITEM_MAIN_INFORMATION:
+389:                         machineState = STATE_INFORMATION ;
+0271  3009     MOVLW 0x9
+0272  2AB6     GOTO 0x2B6
+390:                         break ;
+391:           
+392:                       case MENU_ITEM_MAIN_RESET:
+393:                         machineState = STATE_CONFIRM_RESET ;
+0273  300E     MOVLW 0xE
+0274  2AB6     GOTO 0x2B6
+394:                         break ;
+395:           
+396:                     }
+397:                     break ;
+027F  2ACB     GOTO 0x2CB
+398:           
+399:                   case STATE_MENU_TONE:
+400:                     machineState = ( menuStateTone.select == MENU_ITEM_TONE_RETURN ) ? STATE_MENU_MAIN : STATE_ADJUST_TONE ;
+0280  085B     MOVF menuStateTone, W
+0281  1903     BTFSC STATUS, 0x2
+0282  2A85     GOTO 0x285
+0283  3007     MOVLW 0x7
+0284  2A86     GOTO 0x286
+0285  3002     MOVLW 0x2
+0286  00B3     MOVWF 0x33
+0287  3000     MOVLW 0x0
+0288  00B4     MOVWF 0x34
+0289  0833     MOVF 0x33, W
+028A  2AB6     GOTO 0x2B6
+401:                     break ;
+402:           
+403:                   case STATE_CONFIRM_LOAD:
+404:                     machineState = menuStateConfirm.select ? STATE_LOAD : STATE_MENU_MAIN ;
+028B  084F     MOVF menuStateConfirm, W
+028C  1D03     BTFSS STATUS, 0x2
+028D  2A90     GOTO 0x290
+028E  3002     MOVLW 0x2
+028F  2A91     GOTO 0x291
+0290  300D     MOVLW 0xD
+0291  00B5     MOVWF 0x35
+0292  3000     MOVLW 0x0
+0293  00B6     MOVWF 0x36
+0294  0835     MOVF 0x35, W
+0295  2AB6     GOTO 0x2B6
+405:                     break ;
+406:           
+407:                   case STATE_CONFIRM_SAVE:
+408:                     machineState = menuStateConfirm.select ? STATE_SAVE : STATE_MENU_MAIN ;
+0296  084F     MOVF menuStateConfirm, W
+0297  1D03     BTFSS STATUS, 0x2
+0298  2A9B     GOTO 0x29B
+0299  3002     MOVLW 0x2
+029A  2A9C     GOTO 0x29C
+029B  300B     MOVLW 0xB
+029C  00B7     MOVWF 0x37
+029D  3000     MOVLW 0x0
+029E  00B8     MOVWF 0x38
+029F  0837     MOVF 0x37, W
+02A0  2AB6     GOTO 0x2B6
+409:                     break ;
+410:           
+411:                   case STATE_CONFIRM_RESET:
+412:                     machineState = menuStateConfirm.select ? STATE_RESET : STATE_MENU_MAIN ;
+02A1  084F     MOVF menuStateConfirm, W
+02A2  1D03     BTFSS STATUS, 0x2
+02A3  2AA6     GOTO 0x2A6
+02A4  3002     MOVLW 0x2
+02A5  2AA7     GOTO 0x2A7
+02A6  3010     MOVLW 0x10
+02A7  00B9     MOVWF 0x39
+02A8  3000     MOVLW 0x0
+02A9  00BA     MOVWF 0x3A
+02AA  0839     MOVF 0x39, W
+02AB  2AB6     GOTO 0x2B6
+413:                     break ;
+414:           
+415:                   case STATE_METRONOME:
+416:                     machineState = STATE_MENU_MAIN ;
+02AC  3002     MOVLW 0x2
+02AD  00A9     MOVWF 0x29
+02AE  0829     MOVF 0x29, W
+02AF  00EE     MOVWF machineState
+417:                     menuStateMain.select = 0 ;
+02B0  01D7     CLRF menuStateMain
+418:                     menuStateMain.cursorPosition = 0 ;
+02B1  01D8     CLRF 0x58
+419:                     break ;
+02B2  2ACB     GOTO 0x2CB
+420:           
+421:                   case STATE_ADJUST_BEAT_COUNT:
+422:                   case STATE_ADJUST_DURATION:
+423:                   case STATE_ADJUST_PULSE_WIDTH:
+424:                   case STATE_ADJUST_OSCILLATOR_TUNE:
+425:                   case STATE_INFORMATION:
+426:                     machineState = STATE_MENU_MAIN ;
+02B3  3002     MOVLW 0x2
+02B4  2AB6     GOTO 0x2B6
+427:                     break ;
+428:           
+429:                   case STATE_ADJUST_TONE:
+430:                     machineState = STATE_MENU_TONE ;
+02B5  3003     MOVLW 0x3
+02B6  00A9     MOVWF 0x29
+02B7  0829     MOVF 0x29, W
+02B8  00EE     MOVWF machineState
+431:                     break ;
+02B9  2ACB     GOTO 0x2CB
+432:           
+433:                   case STATE_INITIALIZE:
+434:                   case STATE_ERROR:
+435:                     machineState = STATE_METRONOME ;
+02BA  01EE     CLRF machineState
+02BB  0AEE     INCF machineState, F
+436:                     SetEvent( outputEvent.resetMetronome ) ;
+02BC  15EF     BSF outputEvent, 0x3
+437:                     break ;
+438:           
+439:                 }
+02BD  2ACB     GOTO 0x2CB
+440:           
+441:               }
+442:           
+443:               // Change State ----------------
+444:               if( EvalEvent( outputEvent.stateChange ) ) {
+02CB  1C6F     BTFSS outputEvent, 0x0
+02CC  2BB9     GOTO 0x3B9
+02CD  106F     BCF outputEvent, 0x0
+445:           
+446:                 SetEvent( outputEvent.messageChange ) ;
+02CE  14EF     BSF outputEvent, 0x1
+447:           
+448:                 switch( machineState ) {
+02CF  2B28     GOTO 0x328
+0328  0020     MOVLB 0x0
+0329  086E     MOVF machineState, W
+032A  3EFF     ADDLW 0xFF
+032B  1C03     BTFSS STATUS, 0x0
+032C  2BB9     GOTO 0x3B9
+032D  0084     MOVWF FSR0
+032E  3010     MOVLW 0x10
+032F  0204     SUBWF FSR0, W
+0330  1803     BTFSC STATUS, 0x0
+0331  2BB9     GOTO 0x3B9
+0332  3189     MOVLP 0x9
+0333  3504     LSLF FSR0, W
+0334  3E7A     ADDLW 0x7A
+0335  0082     MOVWF PCL
+097A  3183     MOVLP 0x3
+449:                   case STATE_METRONOME:
+450:                     break ;
+451:           
+452:                   case STATE_MENU_MAIN:
+453:                     currentMenuStatePtr = &menuStateMain ;
+02D0  3057     MOVLW 0x57
+02D1  2B13     GOTO 0x313
+454:                     break ;
+455:           
+456:                   case STATE_MENU_TONE:
+457:                     currentMenuStatePtr = &menuStateTone ;
+02D2  305B     MOVLW 0x5B
+02D3  2B13     GOTO 0x313
+458:                     break ;
+459:           
+460:                   case STATE_CONFIRM_LOAD:
+461:                   case STATE_CONFIRM_SAVE:
+462:                   case STATE_CONFIRM_RESET:
+463:                     menuStateConfirm.select = 0 ;
+02D4  01CF     CLRF menuStateConfirm
+464:                     menuStateConfirm.cursorPosition = 0 ;
+02D5  01D0     CLRF 0x50
+465:                     currentMenuStatePtr = &menuStateConfirm ;
+02D6  304F     MOVLW 0x4F
+02D7  2B13     GOTO 0x313
+466:                     break ;
+467:           
+468:                   case STATE_ADJUST_BEAT_COUNT:
+469:                     SetEvent( outputEvent.changeValue ) ;
+02D8  156F     BSF outputEvent, 0x2
+470:                     currentValuePtr = &config.beatCount ;
+02D9  3047     MOVLW 0x47
+02DA  00A9     MOVWF 0x29
+02DB  0829     MOVF 0x29, W
+02DC  00EA     MOVWF currentValuePtr
+471:                     valueLimit.upper = 64 ;
+02DD  3040     MOVLW 0x40
+02DE  2B0B     GOTO 0x30B
+472:                     valueLimit.lower = 0 ;
+473:                     break ;
+474:           
+475:                   case STATE_ADJUST_DURATION:
+476:                     SetEvent( outputEvent.changeValue ) ;
+02DF  156F     BSF outputEvent, 0x2
+477:                     currentValuePtr = &config.duration ;
+02E0  3048     MOVLW 0x48
+02E1  2B07     GOTO 0x307
+478:                     valueLimit.upper = 0xFF ;
+479:                     valueLimit.lower = 0x00 ;
+480:                     break ;
+481:           
+482:                   case STATE_ADJUST_PULSE_WIDTH:
+483:                     SetEvent( outputEvent.changeValue ) ;
+02E2  156F     BSF outputEvent, 0x2
+484:                     currentValuePtr = &config.pulseWidth ;
+02E3  3049     MOVLW 0x49
+02E4  00A9     MOVWF 0x29
+02E5  0829     MOVF 0x29, W
+02E6  00EA     MOVWF currentValuePtr
+485:                     valueLimit.upper = 0x07 ;
+02E7  3007     MOVLW 0x7
+02E8  2B0B     GOTO 0x30B
+486:                     valueLimit.lower = 0x00 ;
+487:                     break ;
+488:           
+489:                   case STATE_ADJUST_OSCILLATOR_TUNE:
+490:                     SetEvent( outputEvent.changeValue ) ;
+02E9  156F     BSF outputEvent, 0x2
+491:                     currentValuePtr = ( uint08* ) & config.oscillatorTune ;
+02EA  304D     MOVLW 0x4D
+02EB  00A9     MOVWF 0x29
+02EC  0829     MOVF 0x29, W
+02ED  00EA     MOVWF currentValuePtr
+492:                     valueLimit.upper = (uint08)30 ;
+02EE  301E     MOVLW 0x1E
+02EF  00A9     MOVWF 0x29
+02F0  0829     MOVF 0x29, W
+02F1  00E6     MOVWF valueLimit
+493:                     valueLimit.lower = ( uint08 ) - 30 ;
+02F2  30E2     MOVLW 0xE2
+02F3  00A9     MOVWF 0x29
+02F4  0829     MOVF 0x29, W
+02F5  00E7     MOVWF 0x67
+494:                     SetSoundTimerPeriod( TONE_TUNE ) ;
+02F6  308D     MOVLW 0x8D
+02F7  009B     MOVWF PR2
+02F8  081B     MOVF PR2, W
+02F9  00A9     MOVWF 0x29
+02FA  0A49     INCF 0x49, W
+02FB  2AFD     GOTO 0x2FD
+02FC  36A9     LSRF 0x29, F
+02FD  0B89     DECFSZ WREG, F
+02FE  2AFC     GOTO 0x2FC
+02FF  0829     MOVF 0x29, W
+0300  0026     MOVLB 0x6
+0301  0098     MOVWF CCPR4
+495:                     break ;
+0302  2BB9     GOTO 0x3B9
+496:           
+497:                   case STATE_ADJUST_TONE:
+498:                     SetEvent( outputEvent.changeValue ) ;
+0303  156F     BSF 0x36F, 0x2
+499:                     currentValuePtr = &config.tone[ menuStateTone.select - MENU_ITEM_TONE_ADJUST_TONE0 ] ;
+0304  085B     MOVF 0x35B, W
+0305  3EFF     ADDLW 0xFF
+0306  3E4A     ADDLW 0x4A
+0307  00A9     MOVWF 0x329
+0308  0829     MOVF 0x329, W
+0309  00EA     MOVWF 0x36A
+500:                     valueLimit.upper = 0xFF ;
+030A  30FF     MOVLW 0xFF
+030B  00A9     MOVWF 0x329
+030C  0829     MOVF 0x329, W
+030D  00E6     MOVWF 0x366
+501:                     valueLimit.lower = 0x00 ;
+030E  01E7     CLRF 0x367
+502:                     break ;
+030F  2BB9     GOTO 0x3B9
+503:           
+504:                   case STATE_INFORMATION:
+505:                     menuStateInformation.select = 0 ;
+0310  01D3     CLRF 0x353
+506:                     menuStateInformation.cursorPosition = 0 ;
+0311  01D4     CLRF 0x354
+507:                     currentMenuStatePtr = &menuStateInformation ;
+0312  3053     MOVLW 0x53
+0313  00A9     MOVWF 0x329
+0314  0829     MOVF 0x329, W
+0315  00E9     MOVWF 0x369
+508:                     break ;
+0316  2BB9     GOTO 0x3B9
+509:           
+510:                   case STATE_LOAD:
+511:                     SetEvent( outputEvent.resetMetronome ) ;
+0317  15EF     BSF 0x36F, 0x3
+512:                     SetEvent( outputEvent.accessEeprom ) ;
+513:                     stateReturnCounter = 0xFF ;
+514:                     break ;
+515:           
+516:                   case STATE_SAVE:
+517:                     SetEvent( outputEvent.accessEeprom ) ;
+0318  17EF     BSF 0x36F, 0x7
+518:                     stateReturnCounter = 0xFF ;
+0319  30FF     MOVLW 0xFF
+031A  00A9     MOVWF 0x329
+031B  0829     MOVF 0x329, W
+031C  00FA     MOVWF 0x37A
+519:                     break ;
+031D  2BB9     GOTO 0x3B9
+520:           
+521:                   case STATE_RESET:
+522:                     _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_0 ) ;
+031E  3080     MOVLW 0x80
+031F  318E     MOVLP 0xE
+0320  264C     CALL 0x64C
+0321  3180     MOVLP 0x0
+523:                     _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+0322  30C0     MOVLW 0xC0
+0323  318E     MOVLP 0xE
+0324  264C     CALL 0x64C
+0325  3180     MOVLP 0x0
+524:                     RESET( ) ;
+0326  0001     RESET
+525:           
+526:                 }
+0327  2BB9     GOTO 0x3B9
+527:           
+528:               }
+529:           
+530:               // Apply Up/Down Key Event ----------------
+531:               switch( machineState ) {
+0336  2BB9     GOTO 0x3B9
+03B9  0020     MOVLB 0x0
+03BA  086E     MOVF machineState, W
+03BB  3EFF     ADDLW 0xFF
+03BC  1C03     BTFSS STATUS, 0x0
+03BD  2BC7     GOTO 0x3C7
+03BE  0084     MOVWF FSR0
+03BF  300E     MOVLW 0xE
+03C0  0204     SUBWF FSR0, W
+03C1  1803     BTFSC STATUS, 0x0
+03C2  2BC7     GOTO 0x3C7
+03C3  3189     MOVLP 0x9
+03C4  3504     LSLF FSR0, W
+03C5  3E9A     ADDLW 0x9A
+03C6  0082     MOVWF PCL
+099A  3183     MOVLP 0x3
+532:           
+533:                 case STATE_MENU_MAIN:
+534:                 case STATE_MENU_TONE:
+535:                 case STATE_CONFIRM_LOAD:
+536:                 case STATE_CONFIRM_SAVE:
+537:                 case STATE_CONFIRM_RESET:
+538:                 case STATE_INFORMATION:
+539:                   if( EvalEvent( inputEvent.keyPressDown ) ) {
+0337  1CEC     BTFSS inputEvent, 0x1
+0338  2B5A     GOTO 0x35A
+0339  10EC     BCF inputEvent, 0x1
+540:                     if( currentMenuStatePtr->select != currentMenuStatePtr->limit ) {
+033A  0869     MOVF currentMenuStatePtr, W
+033B  3E02     ADDLW 0x2
+033C  0086     MOVWF FSR1
+033D  0187     CLRF FSR1H
+033E  0869     MOVF currentMenuStatePtr, W
+033F  0084     MOVWF FSR0
+0340  0185     CLRF FSR0H
+0341  0800     MOVF INDF0, W
+0342  0601     XORWF INDF1, W
+0343  1903     BTFSC STATUS, 0x2
+0344  2B5A     GOTO 0x35A
+541:                       currentMenuStatePtr->select++ ;
+0345  3001     MOVLW 0x1
+0346  00A9     MOVWF 0x29
+0347  0869     MOVF currentMenuStatePtr, W
+0348  0086     MOVWF FSR1
+0349  0187     CLRF FSR1H
+034A  0829     MOVF 0x29, W
+034B  0781     ADDWF INDF1, F
+542:                       if( !currentMenuStatePtr->cursorPosition ) currentMenuStatePtr->cursorPosition++ ;
+034C  0A69     INCF currentMenuStatePtr, W
+034D  0086     MOVWF FSR1
+034E  0187     CLRF FSR1H
+034F  0801     MOVF INDF1, W
+0350  1D03     BTFSS STATUS, 0x2
+0351  2B59     GOTO 0x359
+0352  3001     MOVLW 0x1
+0353  00A9     MOVWF 0x29
+0354  0A69     INCF currentMenuStatePtr, W
+0355  0086     MOVWF FSR1
+0356  0187     CLRF FSR1H
+0357  0829     MOVF 0x29, W
+0358  0781     ADDWF INDF1, F
+543:                       SetEvent( outputEvent.messageChange ) ;
+0359  14EF     BSF outputEvent, 0x1
+544:                     }
+545:                   }
+546:                   if( EvalEvent( inputEvent.keyPressUp ) ) {
+035A  1C6C     BTFSS inputEvent, 0x0
+035B  2BC7     GOTO 0x3C7
+035C  106C     BCF inputEvent, 0x0
+547:                     if( currentMenuStatePtr->select ) {
+035D  0869     MOVF currentMenuStatePtr, W
+035E  0086     MOVWF FSR1
+035F  0187     CLRF FSR1H
+0360  0801     MOVF INDF1, W
+0361  1903     BTFSC STATUS, 0x2
+0362  2BC7     GOTO 0x3C7
+548:                       currentMenuStatePtr->select-- ;
+0363  0869     MOVF currentMenuStatePtr, W
+0364  0086     MOVWF FSR1
+0365  0187     CLRF FSR1H
+0366  3001     MOVLW 0x1
+0367  0281     SUBWF INDF1, F
+549:                       if( currentMenuStatePtr->cursorPosition ) currentMenuStatePtr->cursorPosition-- ;
+0368  0A69     INCF currentMenuStatePtr, W
+0369  0086     MOVWF FSR1
+036A  0187     CLRF FSR1H
+036B  0801     MOVF INDF1, W
+036C  1903     BTFSC STATUS, 0x2
+036D  2B73     GOTO 0x373
+036E  0A69     INCF currentMenuStatePtr, W
+036F  0086     MOVWF FSR1
+0370  0187     CLRF FSR1H
+0371  3001     MOVLW 0x1
+0372  0281     SUBWF INDF1, F
+550:                       SetEvent( outputEvent.messageChange ) ;
+0373  14EF     BSF outputEvent, 0x1
+551:                     }
+552:                   }
+553:                   break ;
+0374  2BC7     GOTO 0x3C7
+554:           
+555:                 case STATE_METRONOME:
+556:                   if( EvalEvent( inputEvent.keyPressUp ) ) {
+0375  1C6C     BTFSS inputEvent, 0x0
+0376  2B85     GOTO 0x385
+0377  106C     BCF inputEvent, 0x0
+557:                     if( config.tempo < 999 ) {
+0378  3003     MOVLW 0x3
+0379  0246     SUBWF 0x46, W
+037A  30E7     MOVLW 0xE7
+037B  1903     BTFSC STATUS, 0x2
+037C  0245     SUBWF 0x45, W
+037D  1803     BTFSC STATUS, 0x0
+037E  2B84     GOTO 0x384
+558:                       config.tempo++ ;
+037F  3001     MOVLW 0x1
+0380  07C5     ADDWF 0x45, F
+0381  3000     MOVLW 0x0
+0382  3DC6     ADDWFC 0x46, F
+559:                       SetEvent( outputEvent.changeValue ) ;
+0383  156F     BSF outputEvent, 0x2
+560:                     }
+561:                     SetEvent( outputEvent.resetMetronome ) ;
+0384  15EF     BSF outputEvent, 0x3
+562:                   }
+563:                   if( EvalEvent( inputEvent.keyPressDown ) ) {
+0385  1CEC     BTFSS inputEvent, 0x1
+0386  2BC7     GOTO 0x3C7
+0387  10EC     BCF inputEvent, 0x1
+564:                     if( config.tempo > 1 ) {
+0388  3000     MOVLW 0x0
+0389  0246     SUBWF 0x46, W
+038A  3002     MOVLW 0x2
+038B  1903     BTFSC STATUS, 0x2
+038C  0245     SUBWF 0x45, W
+038D  1C03     BTFSS STATUS, 0x0
+038E  2B94     GOTO 0x394
+565:                       config.tempo-- ;
+038F  3001     MOVLW 0x1
+0390  02C5     SUBWF 0x45, F
+0391  3000     MOVLW 0x0
+0392  3BC6     SUBWFB 0x46, F
+566:                       SetEvent( outputEvent.changeValue ) ;
+0393  156F     BSF outputEvent, 0x2
+567:                     }
+568:                     SetEvent( outputEvent.resetMetronome ) ;
+0394  15EF     BSF outputEvent, 0x3
+569:                   }
+570:                   break ;
+0395  2BC7     GOTO 0x3C7
+571:           
+572:                 case STATE_ADJUST_BEAT_COUNT:
+573:                 case STATE_ADJUST_PULSE_WIDTH:
+574:                 case STATE_ADJUST_DURATION:
+575:                 case STATE_ADJUST_TONE:
+576:                 case STATE_ADJUST_OSCILLATOR_TUNE:
+577:                   if( EvalEvent( inputEvent.keyPressUp ) ) {
+0396  1C6C     BTFSS inputEvent, 0x0
+0397  2BA8     GOTO 0x3A8
+0398  106C     BCF inputEvent, 0x0
+578:                     if( *currentValuePtr != valueLimit.upper ) {
+0399  086A     MOVF currentValuePtr, W
+039A  0086     MOVWF FSR1
+039B  0187     CLRF FSR1H
+039C  0801     MOVF INDF1, W
+039D  0666     XORWF valueLimit, W
+039E  1903     BTFSC STATUS, 0x2
+039F  2BA8     GOTO 0x3A8
+579:                       ( *currentValuePtr )++ ;
+03A0  3001     MOVLW 0x1
+03A1  00A9     MOVWF 0x29
+03A2  086A     MOVF currentValuePtr, W
+03A3  0086     MOVWF FSR1
+03A4  0187     CLRF FSR1H
+03A5  0829     MOVF 0x29, W
+03A6  0781     ADDWF INDF1, F
+580:                       SetEvent( outputEvent.changeValue ) ;
+03A7  156F     BSF outputEvent, 0x2
+581:                     }
+582:                   }
+583:                   if( EvalEvent( inputEvent.keyPressDown ) ) {
+03A8  1CEC     BTFSS inputEvent, 0x1
+03A9  2BC7     GOTO 0x3C7
+03AA  10EC     BCF inputEvent, 0x1
+584:                     if( *currentValuePtr != valueLimit.lower ) {
+03AB  086A     MOVF currentValuePtr, W
+03AC  0086     MOVWF FSR1
+03AD  0187     CLRF FSR1H
+03AE  0867     MOVF 0x67, W
+03AF  0601     XORWF INDF1, W
+03B0  1903     BTFSC STATUS, 0x2
+03B1  2BC7     GOTO 0x3C7
+585:                       ( *currentValuePtr )-- ;
+03B2  086A     MOVF currentValuePtr, W
+03B3  0086     MOVWF FSR1
+03B4  0187     CLRF FSR1H
+03B5  3001     MOVLW 0x1
+03B6  0281     SUBWF INDF1, F
+586:                       SetEvent( outputEvent.changeValue ) ;
+03B7  156F     BSF outputEvent, 0x2
+587:                     }
+588:                   }
+589:                   break ;
+590:           
+591:               }
+03B8  2BC7     GOTO 0x3C7
+592:           
+593:               // Reset Metronome ----------------
+594:               if( EvalEvent( outputEvent.resetMetronome ) ) {
+03C7  1DEF     BTFSS outputEvent, 0x3
+03C8  2C19     GOTO 0x419
+03C9  11EF     BCF outputEvent, 0x3
+595:                 tempoCounter = 0 ;
+03CA  3000     MOVLW 0x0
+03CB  00E3     MOVWF tempoCounter
+03CC  3000     MOVLW 0x0
+03CD  00E4     MOVWF 0x64
+03CE  3000     MOVLW 0x0
+03CF  00E5     MOVWF 0x65
+596:                 beatCounter = 0 ;
+03D0  01E8     CLRF beatCounter
+597:                 duration = 0 ;
+03D1  01EB     CLRF duration
+598:               }
+599:           
+600:               // Sound ----------------
+601:               switch( machineState ) {
+03D2  2C19     GOTO 0x419
+0419  086E     MOVF machineState, W
+041A  3A00     XORLW 0x0
+041B  1903     BTFSC STATUS, 0x2
+041C  2C30     GOTO 0x430
+041D  3A07     XORLW 0x7
+041E  1903     BTFSC STATUS, 0x2
+041F  2BD3     GOTO 0x3D3
+0420  3A0F     XORLW 0xF
+0421  1903     BTFSC STATUS, 0x2
+0422  2BD3     GOTO 0x3D3
+0423  3A03     XORLW 0x3
+0424  1903     BTFSC STATUS, 0x2
+0425  2C30     GOTO 0x430
+0426  3A06     XORLW 0x6
+0427  1903     BTFSC STATUS, 0x2
+0428  2C30     GOTO 0x430
+0429  3A02     XORLW 0x2
+042A  1903     BTFSC STATUS, 0x2
+042B  2C30     GOTO 0x430
+042C  3A1E     XORLW 0x1E
+042D  1903     BTFSC STATUS, 0x2
+042E  2C30     GOTO 0x430
+042F  2BD4     GOTO 0x3D4
+602:           
+603:                 case STATE_BOOT:
+604:                 case STATE_INITIALIZE:
+605:                 case STATE_LOAD:
+606:                 case STATE_SAVE:
+607:                 case STATE_ERROR:
+608:                   // Do Nothing
+609:                   break ;
+610:           
+611:                 case STATE_ADJUST_TONE:
+612:                 case STATE_ADJUST_OSCILLATOR_TUNE:
+03D3  2BE4     GOTO 0x3E4
+613:                   SoundOn( ) ;
+614:                   break ;
+615:           
+616:                 default:
+617:                   if( inputEvent.all ) {
+03D4  086C     MOVF inputEvent, W
+03D5  1903     BTFSC STATUS, 0x2
+03D6  2BE6     GOTO 0x3E6
+618:                     SetSoundTimerPeriod( TONE_SYSTEM ) ;
+03D7  307C     MOVLW 0x7C
+03D8  009B     MOVWF PR2
+03D9  081B     MOVF PR2, W
+03DA  00A9     MOVWF 0x29
+03DB  0A49     INCF 0x49, W
+03DC  2BDE     GOTO 0x3DE
+03DD  36A9     LSRF 0x29, F
+03DE  0B89     DECFSZ WREG, F
+03DF  2BDD     GOTO 0x3DD
+03E0  0829     MOVF 0x29, W
+03E1  0026     MOVLB 0x6
+03E2  0098     MOVWF CCPR4
+619:                     SoundOn( ) ;
+03E3  0020     MOVLB 0x0
+03E4  151C     BSF T2CON, 0x2
+620:                   }
+03E5  2C30     GOTO 0x430
+621:                   else if( !isMute ) {
+03E6  086D     MOVF isMute, W
+03E7  1D03     BTFSS STATUS, 0x2
+03E8  2C17     GOTO 0x417
+622:                     if( duration < config.duration ) {
+03E9  0848     MOVF 0x48, W
+03EA  026B     SUBWF duration, W
+03EB  1803     BTFSC STATUS, 0x0
+03EC  2C17     GOTO 0x417
+623:                       if( beatCounter == 0 ) {
+03ED  0868     MOVF beatCounter, W
+03EE  1D03     BTFSS STATUS, 0x2
+03EF  2BFA     GOTO 0x3FA
+624:                         SetSoundTimerPeriod( config.tone[ 1 ] ) ;
+03F0  084B     MOVF 0x4B, W
+03F1  009B     MOVWF PR2
+03F2  081B     MOVF PR2, W
+03F3  00A9     MOVWF 0x29
+03F4  0A49     INCF 0x49, W
+03F5  2BF7     GOTO 0x3F7
+03F6  36A9     LSRF 0x29, F
+03F7  0B89     DECFSZ WREG, F
+03F8  2BF6     GOTO 0x3F6
+03F9  2C13     GOTO 0x413
+625:                       }
+626:                       else if( beatCounter == config.beatCount ) {
+03FA  0020     MOVLB 0x0
+03FB  0847     MOVF 0x47, W
+03FC  0668     XORWF beatCounter, W
+03FD  1D03     BTFSS STATUS, 0x2
+03FE  2C09     GOTO 0x409
+627:                         SetSoundTimerPeriod( config.tone[ 2 ] ) ;
+03FF  084C     MOVF 0x4C, W
+0400  009B     MOVWF PR2
+0401  081B     MOVF PR2, W
+0402  00A9     MOVWF 0x29
+0403  0A49     INCF 0x49, W
+0404  2C06     GOTO 0x406
+0405  36A9     LSRF 0x29, F
+0406  0B89     DECFSZ WREG, F
+0407  2C05     GOTO 0x405
+0408  2C13     GOTO 0x413
+628:                       }
+629:                       else {
+630:                         SetSoundTimerPeriod( config.tone[ 0 ] ) ;
+0409  0020     MOVLB 0x0
+040A  084A     MOVF 0x4A, W
+040B  009B     MOVWF PR2
+040C  081B     MOVF PR2, W
+040D  00A9     MOVWF 0x29
+040E  0A49     INCF 0x49, W
+040F  2C11     GOTO 0x411
+0410  36A9     LSRF 0x29, F
+0411  0B89     DECFSZ WREG, F
+0412  2C10     GOTO 0x410
+0413  0829     MOVF 0x29, W
+0414  0026     MOVLB 0x6
+0415  0098     MOVWF CCPR4
+631:                       }
+632:                     }
+0416  2C30     GOTO 0x430
+633:                     else {
+634:                       SoundOff( ) ;
+635:                     }
+636:                   }
+637:                   else {
+638:                     SoundOff( ) ;
+0417  111C     BCF 0x31C, 0x2
+639:                   }
+640:           
+641:                   break ;
+642:               }
+0418  2C30     GOTO 0x430
+643:           
+644:               // Message ----------------
+645:               if( EvalEvent( outputEvent.messageChange ) ) {
+0430  0020     MOVLB 0x0
+0431  1CEF     BTFSS outputEvent, 0x1
+0432  2E80     GOTO 0x680
+0433  10EF     BCF outputEvent, 0x1
+646:           
+647:                 switch( machineState ) {
+0434  2E72     GOTO 0x672
+0672  0020     MOVLB 0x0
+0673  086E     MOVF machineState, W
+0674  3EFF     ADDLW 0xFF
+0675  1C03     BTFSS STATUS, 0x0
+0676  2E80     GOTO 0x680
+0677  0084     MOVWF FSR0
+0678  3011     MOVLW 0x11
+0679  0204     SUBWF FSR0, W
+067A  1803     BTFSC STATUS, 0x0
+067B  2E80     GOTO 0x680
+067C  3189     MOVLP 0x9
+067D  3504     LSLF FSR0, W
+067E  3E58     ADDLW 0x58
+067F  0082     MOVWF PCL
+0958  3185     MOVLP 0x5
+648:           
+649:                   case STATE_MENU_MAIN:
+650:                   case STATE_MENU_TONE:
+651:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x1 , currentMenuStatePtr->menuMessage[ currentMenuStatePtr->select - currentMenuStatePtr->cursorPosition ] ) ;
+0435  0869     MOVF currentMenuStatePtr, W
+0436  3E03     ADDLW 0x3
+0437  0086     MOVWF FSR1
+0438  0187     CLRF FSR1H
+0439  0869     MOVF currentMenuStatePtr, W
+043A  0084     MOVWF FSR0
+043B  0185     CLRF FSR0H
+043C  0800     MOVF INDF0, W
+043D  00A9     MOVWF 0x29
+043E  0A69     INCF currentMenuStatePtr, W
+043F  0084     MOVWF FSR0
+0440  0185     CLRF FSR0H
+0441  0300     DECF INDF0, W
+0442  3AFF     XORLW 0xFF
+0443  0729     ADDWF 0x29, W
+0444  0709     ADDWF WREG, W
+0445  0701     ADDWF INDF1, W
+0446  00AA     MOVWF 0x2A
+0447  082A     MOVF 0x2A, W
+0448  0086     MOVWF FSR1
+0449  0187     CLRF FSR1H
+044A  3F40     MOVIW [0]FSR1
+044B  00A2     MOVWF stringPtr
+044C  3F41     MOVIW [1]FSR1
+044D  00A3     MOVWF position
+044E  3081     MOVLW 0x81
+044F  318E     MOVLP 0xE
+0450  26CB     CALL 0x6CB
+0451  3180     MOVLP 0x0
+652:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x1 , currentMenuStatePtr->menuMessage[ currentMenuStatePtr->select - currentMenuStatePtr->cursorPosition + 1 ] ) ;
+0452  0020     MOVLB 0x0
+0453  0869     MOVF currentMenuStatePtr, W
+0454  3E03     ADDLW 0x3
+0455  0086     MOVWF FSR1
+0456  0187     CLRF FSR1H
+0457  0869     MOVF currentMenuStatePtr, W
+0458  0084     MOVWF FSR0
+0459  0185     CLRF FSR0H
+045A  0800     MOVF INDF0, W
+045B  00A9     MOVWF 0x29
+045C  0A69     INCF currentMenuStatePtr, W
+045D  0084     MOVWF FSR0
+045E  0185     CLRF FSR0H
+045F  0300     DECF INDF0, W
+0460  3AFF     XORLW 0xFF
+0461  0729     ADDWF 0x29, W
+0462  0709     ADDWF WREG, W
+0463  3E02     ADDLW 0x2
+0464  0701     ADDWF INDF1, W
+0465  00AA     MOVWF 0x2A
+0466  082A     MOVF 0x2A, W
+0467  0086     MOVWF FSR1
+0468  0187     CLRF FSR1H
+0469  3F40     MOVIW [0]FSR1
+046A  00A2     MOVWF stringPtr
+046B  3F41     MOVIW [1]FSR1
+046C  00A3     MOVWF position
+046D  30C1     MOVLW 0xC1
+046E  318E     MOVLP 0xE
+046F  26CB     CALL 0x6CB
+0470  3180     MOVLP 0x0
+653:           
+654:                     if( currentMenuStatePtr->select != currentMenuStatePtr->cursorPosition )
+0471  0020     MOVLB 0x0
+0472  0A69     INCF currentMenuStatePtr, W
+0473  0086     MOVWF FSR1
+0474  0187     CLRF FSR1H
+0475  0869     MOVF currentMenuStatePtr, W
+0476  0084     MOVWF FSR0
+0477  0185     CLRF FSR0H
+0478  0800     MOVF INDF0, W
+0479  0601     XORWF INDF1, W
+047A  1903     BTFSC STATUS, 0x2
+047B  2C88     GOTO 0x488
+655:                       _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT_0 | 0xF , CHAR_CODE.CURSOR_UP ) ;
+047C  3035     MOVLW 0x35
+047D  0084     MOVWF FSR0
+047E  3088     MOVLW 0x88
+047F  0085     MOVWF FSR0H
+0480  0800     MOVF INDF0, W
+0481  00A9     MOVWF 0x29
+0482  0829     MOVF 0x29, W
+0483  00A2     MOVWF stringPtr
+0484  308F     MOVLW 0x8F
+0485  318D     MOVLP 0xD
+0486  25CC     CALL 0x5CC
+0487  3180     MOVLP 0x0
+656:                     if( currentMenuStatePtr->select != ( currentMenuStatePtr->limit + currentMenuStatePtr->cursorPosition - 1 ) )
+0488  0020     MOVLB 0x0
+0489  0A69     INCF currentMenuStatePtr, W
+048A  0086     MOVWF FSR1
+048B  0187     CLRF FSR1H
+048C  0869     MOVF currentMenuStatePtr, W
+048D  3E02     ADDLW 0x2
+048E  0084     MOVWF FSR0
+048F  0185     CLRF FSR0H
+0490  0800     MOVF INDF0, W
+0491  0701     ADDWF INDF1, W
+0492  00A9     MOVWF 0x29
+0493  01AA     CLRF 0x2A
+0494  0DAA     RLF 0x2A, F
+0495  0829     MOVF 0x29, W
+0496  3EFF     ADDLW 0xFF
+0497  00AB     MOVWF 0x2B
+0498  30FF     MOVLW 0xFF
+0499  3D2A     ADDWFC 0x2A, W
+049A  00AC     MOVWF 0x2C
+049B  0869     MOVF currentMenuStatePtr, W
+049C  0086     MOVWF FSR1
+049D  0187     CLRF FSR1H
+049E  0801     MOVF INDF1, W
+049F  062B     XORWF 0x2B, W
+04A0  042C     IORWF 0x2C, W
+04A1  1903     BTFSC STATUS, 0x2
+04A2  2CAF     GOTO 0x4AF
+657:                       _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0xF , CHAR_CODE.CURSOR_DOWN ) ;
+04A3  3036     MOVLW 0x36
+04A4  0084     MOVWF FSR0
+04A5  3088     MOVLW 0x88
+04A6  0085     MOVWF FSR0H
+04A7  0800     MOVF INDF0, W
+04A8  00A9     MOVWF 0x29
+04A9  0829     MOVF 0x29, W
+04AA  00A2     MOVWF stringPtr
+04AB  30CF     MOVLW 0xCF
+04AC  318D     MOVLP 0xD
+04AD  25CC     CALL 0x5CC
+04AE  3180     MOVLP 0x0
+658:           
+659:                     _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT[currentMenuStatePtr->cursorPosition] | 0x0 , CHAR_CODE.CURSOR_RIGHT ) ;
+04AF  3034     MOVLW 0x34
+04B0  0084     MOVWF FSR0
+04B1  3088     MOVLW 0x88
+04B2  0085     MOVWF FSR0H
+04B3  0800     MOVF INDF0, W
+04B4  0020     MOVLB 0x0
+04B5  00A9     MOVWF 0x29
+04B6  0829     MOVF 0x29, W
+04B7  00A2     MOVWF stringPtr
+04B8  0A69     INCF currentMenuStatePtr, W
+04B9  0086     MOVWF FSR1
+04BA  0187     CLRF FSR1H
+04BB  0801     MOVF INDF1, W
+04BC  3E37     ADDLW 0x37
+04BD  0084     MOVWF FSR0
+04BE  3088     MOVLW 0x88
+04BF  1803     BTFSC STATUS, 0x0
+04C0  3E01     ADDLW 0x1
+04C1  0085     MOVWF FSR0H
+04C2  0800     MOVF INDF0, W
+04C3  318D     MOVLP 0xD
+04C4  25CC     CALL 0x5CC
+04C5  3180     MOVLP 0x0
+660:           
+661:                     break ;
+04C6  2E80     GOTO 0x680
+662:           
+663:                   case STATE_CONFIRM_LOAD:
+664:                   case STATE_CONFIRM_SAVE:
+665:                   case STATE_CONFIRM_RESET:
+666:           
+667:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0xD , MESSAGE.CONFIRM.NO ) ;
+04C7  3018     MOVLW 0x18
+04C8  0084     MOVWF FSR0
+04C9  3088     MOVLW 0x88
+04CA  0085     MOVWF FSR0H
+04CB  3F00     MOVIW [0]FSR0
+04CC  0020     MOVLB 0x0
+04CD  00A2     MOVWF stringPtr
+04CE  3F01     MOVIW [1]FSR0
+04CF  00A3     MOVWF position
+04D0  308D     MOVLW 0x8D
+04D1  318E     MOVLP 0xE
+04D2  26CB     CALL 0x6CB
+04D3  3180     MOVLP 0x0
+668:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xD , MESSAGE.CONFIRM.YES ) ;
+04D4  301A     MOVLW 0x1A
+04D5  0084     MOVWF FSR0
+04D6  3088     MOVLW 0x88
+04D7  0085     MOVWF FSR0H
+04D8  3F00     MOVIW [0]FSR0
+04D9  0020     MOVLB 0x0
+04DA  00A2     MOVWF stringPtr
+04DB  3F01     MOVIW [1]FSR0
+04DC  00A3     MOVWF position
+04DD  30CD     MOVLW 0xCD
+04DE  318E     MOVLP 0xE
+04DF  26CB     CALL 0x6CB
+04E0  3180     MOVLP 0x0
+669:           
+670:                     switch( machineState ) {
+04E1  2D0C     GOTO 0x50C
+050C  0020     MOVLB 0x0
+050D  086E     MOVF machineState, W
+050E  3A0A     XORLW 0xA
+050F  1903     BTFSC STATUS, 0x2
+0510  2CF0     GOTO 0x4F0
+0511  3A06     XORLW 0x6
+0512  1903     BTFSC STATUS, 0x2
+0513  2CE2     GOTO 0x4E2
+0514  3A02     XORLW 0x2
+0515  1903     BTFSC STATUS, 0x2
+0516  2CFE     GOTO 0x4FE
+0517  2D18     GOTO 0x518
+671:                       case STATE_CONFIRM_LOAD:
+672:                         _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.CONFIRM.LOAD ) ;
+04E2  3012     MOVLW 0x12
+04E3  0084     MOVWF FSR0
+04E4  3088     MOVLW 0x88
+04E5  0085     MOVWF FSR0H
+04E6  3F00     MOVIW [0]FSR0
+04E7  0020     MOVLB 0x0
+04E8  00A4     MOVWF stringPtr
+04E9  3F01     MOVIW [1]FSR0
+04EA  00A5     MOVWF position
+04EB  3080     MOVLW 0x80
+04EC  318E     MOVLP 0xE
+04ED  2681     CALL 0x681
+04EE  3180     MOVLP 0x0
+673:                         break ;
+04EF  2D18     GOTO 0x518
+674:                       case STATE_CONFIRM_SAVE:
+675:                         _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.CONFIRM.SAVE ) ;
+04F0  3014     MOVLW 0x14
+04F1  0084     MOVWF FSR0
+04F2  3088     MOVLW 0x88
+04F3  0085     MOVWF FSR0H
+04F4  3F00     MOVIW [0]FSR0
+04F5  0020     MOVLB 0x0
+04F6  00A4     MOVWF stringPtr
+04F7  3F01     MOVIW [1]FSR0
+04F8  00A5     MOVWF position
+04F9  3080     MOVLW 0x80
+04FA  318E     MOVLP 0xE
+04FB  2681     CALL 0x681
+04FC  3180     MOVLP 0x0
+676:                         break ;
+04FD  2D18     GOTO 0x518
+677:                       case STATE_CONFIRM_RESET:
+678:                         _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.CONFIRM.RESET ) ;
+04FE  3016     MOVLW 0x16
+04FF  0084     MOVWF FSR0
+0500  3088     MOVLW 0x88
+0501  0085     MOVWF FSR0H
+0502  3F00     MOVIW [0]FSR0
+0503  0020     MOVLB 0x0
+0504  00A4     MOVWF stringPtr
+0505  3F01     MOVIW [1]FSR0
+0506  00A5     MOVWF position
+0507  3080     MOVLW 0x80
+0508  318E     MOVLP 0xE
+0509  2681     CALL 0x681
+050A  3180     MOVLP 0x0
+679:                         break ;
+680:           
+681:                     }
+050B  2D18     GOTO 0x518
+682:           
+683:                     _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT[ currentMenuStatePtr->cursorPosition ] | 0xC , CHAR_CODE.CURSOR_RIGHT ) ;
+0518  3034     MOVLW 0x34
+0519  0084     MOVWF FSR0
+051A  3088     MOVLW 0x88
+051B  0085     MOVWF FSR0H
+051C  0800     MOVF INDF0, W
+051D  0020     MOVLB 0x0
+051E  00A9     MOVWF 0x29
+051F  0829     MOVF 0x29, W
+0520  00A2     MOVWF stringPtr
+0521  0A69     INCF currentMenuStatePtr, W
+0522  0086     MOVWF FSR1
+0523  0187     CLRF FSR1H
+0524  0801     MOVF INDF1, W
+0525  3E37     ADDLW 0x37
+0526  0084     MOVWF FSR0
+0527  3088     MOVLW 0x88
+0528  1803     BTFSC STATUS, 0x0
+0529  3E01     ADDLW 0x1
+052A  0085     MOVWF FSR0H
+052B  0800     MOVF INDF0, W
+052C  380C     IORLW 0xC
+052D  318D     MOVLP 0xD
+052E  25CC     CALL 0x5CC
+052F  3180     MOVLP 0x0
+684:           
+685:                     break ;
+0530  2E80     GOTO 0x680
+686:           
+687:                   case STATE_METRONOME:
+688:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.METRONOME.TILE ) ;
+0531  3000     MOVLW 0x0
+0532  0084     MOVWF FSR0
+0533  3088     MOVLW 0x88
+0534  0085     MOVWF FSR0H
+0535  3F00     MOVIW [0]FSR0
+0536  0020     MOVLB 0x0
+0537  00A2     MOVWF stringPtr
+0538  3F01     MOVIW [1]FSR0
+0539  00A3     MOVWF position
+053A  3080     MOVLW 0x80
+053B  318E     MOVLP 0xE
+053C  26CB     CALL 0x6CB
+053D  3180     MOVLP 0x0
+689:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE.METRONOME.TEMPO ) ;
+053E  3004     MOVLW 0x4
+053F  0084     MOVWF FSR0
+0540  3088     MOVLW 0x88
+0541  0085     MOVWF FSR0H
+0542  3F00     MOVIW [0]FSR0
+0543  0020     MOVLB 0x0
+0544  00A2     MOVWF stringPtr
+0545  3F01     MOVIW [1]FSR0
+0546  00A3     MOVWF position
+0547  30C0     MOVLW 0xC0
+0548  318E     MOVLP 0xE
+0549  26CB     CALL 0x6CB
+054A  3180     MOVLP 0x0
+690:                     if( isMute ) _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , MESSAGE.METRONOME.MUTE ) ;
+054B  0020     MOVLB 0x0
+054C  086D     MOVF isMute, W
+054D  1903     BTFSC STATUS, 0x2
+054E  2DE7     GOTO 0x5E7
+054F  3002     MOVLW 0x2
+0550  0084     MOVWF FSR0
+0551  3088     MOVLW 0x88
+0552  0085     MOVWF FSR0H
+0553  3F00     MOVIW [0]FSR0
+0554  00A4     MOVWF stringPtr
+0555  3F01     MOVIW [1]FSR0
+0556  00A5     MOVWF position
+0557  308A     MOVLW 0x8A
+0558  318E     MOVLP 0xE
+0559  2681     CALL 0x681
+055A  3180     MOVLP 0x0
+691:                     SetEvent( outputEvent.changeValue ) ;
+055B  2DE7     GOTO 0x5E7
+692:                     break ;
+693:           
+694:                   case STATE_ADJUST_BEAT_COUNT:
+695:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.CONFIGURATION.TITLE ) ;
+055C  3006     MOVLW 0x6
+055D  0084     MOVWF FSR0
+055E  3088     MOVLW 0x88
+055F  0085     MOVWF FSR0H
+0560  3F00     MOVIW [0]FSR0
+0561  00A2     MOVWF stringPtr
+0562  3F01     MOVIW [1]FSR0
+0563  00A3     MOVWF position
+0564  3080     MOVLW 0x80
+0565  318E     MOVLP 0xE
+0566  26CB     CALL 0x6CB
+0567  3180     MOVLP 0x0
+696:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE.CONFIGURATION.BEAT_COUNT ) ;
+0568  3008     MOVLW 0x8
+0569  0084     MOVWF FSR0
+056A  3088     MOVLW 0x88
+056B  0085     MOVWF FSR0H
+056C  3F00     MOVIW [0]FSR0
+056D  0020     MOVLB 0x0
+056E  00A2     MOVWF stringPtr
+056F  3F01     MOVIW [1]FSR0
+0570  00A3     MOVWF position
+0571  30C0     MOVLW 0xC0
+0572  318E     MOVLP 0xE
+0573  26CB     CALL 0x6CB
+0574  3180     MOVLP 0x0
+697:                     SetEvent( outputEvent.changeValue ) ;
+0575  2DE7     GOTO 0x5E7
+698:                     break ;
+699:           
+700:                   case STATE_ADJUST_DURATION:
+701:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.CONFIGURATION.TITLE ) ;
+0576  3006     MOVLW 0x6
+0577  0084     MOVWF FSR0
+0578  3088     MOVLW 0x88
+0579  0085     MOVWF FSR0H
+057A  3F00     MOVIW [0]FSR0
+057B  00A2     MOVWF stringPtr
+057C  3F01     MOVIW [1]FSR0
+057D  00A3     MOVWF position
+057E  3080     MOVLW 0x80
+057F  318E     MOVLP 0xE
+0580  26CB     CALL 0x6CB
+0581  3180     MOVLP 0x0
+702:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE.CONFIGURATION.DURATION ) ;
+0582  300C     MOVLW 0xC
+0583  0084     MOVWF FSR0
+0584  3088     MOVLW 0x88
+0585  0085     MOVWF FSR0H
+0586  3F00     MOVIW [0]FSR0
+0587  0020     MOVLB 0x0
+0588  00A2     MOVWF stringPtr
+0589  3F01     MOVIW [1]FSR0
+058A  00A3     MOVWF position
+058B  30C0     MOVLW 0xC0
+058C  318E     MOVLP 0xE
+058D  26CB     CALL 0x6CB
+058E  3180     MOVLP 0x0
+703:                     SetEvent( outputEvent.changeValue ) ;
+058F  2DE7     GOTO 0x5E7
+704:                     break ;
+705:           
+706:                   case STATE_ADJUST_PULSE_WIDTH:
+707:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.CONFIGURATION.TITLE ) ;
+0590  3006     MOVLW 0x6
+0591  0084     MOVWF FSR0
+0592  3088     MOVLW 0x88
+0593  0085     MOVWF FSR0H
+0594  3F00     MOVIW [0]FSR0
+0595  00A2     MOVWF stringPtr
+0596  3F01     MOVIW [1]FSR0
+0597  00A3     MOVWF position
+0598  3080     MOVLW 0x80
+0599  318E     MOVLP 0xE
+059A  26CB     CALL 0x6CB
+059B  3180     MOVLP 0x0
+708:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE.CONFIGURATION.PULSE_WIDTH ) ;
+059C  300E     MOVLW 0xE
+059D  0084     MOVWF FSR0
+059E  3088     MOVLW 0x88
+059F  0085     MOVWF FSR0H
+05A0  3F00     MOVIW [0]FSR0
+05A1  0020     MOVLB 0x0
+05A2  00A2     MOVWF stringPtr
+05A3  3F01     MOVIW [1]FSR0
+05A4  00A3     MOVWF position
+05A5  30C0     MOVLW 0xC0
+05A6  318E     MOVLP 0xE
+05A7  26CB     CALL 0x6CB
+05A8  3180     MOVLP 0x0
+709:                     SetEvent( outputEvent.changeValue ) ;
+05A9  2DE7     GOTO 0x5E7
+710:                     break ;
+711:           
+712:                   case STATE_ADJUST_OSCILLATOR_TUNE:
+713:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.CONFIGURATION.TITLE ) ;
+05AA  3006     MOVLW 0x6
+05AB  0084     MOVWF FSR0
+05AC  3088     MOVLW 0x88
+05AD  0085     MOVWF FSR0H
+05AE  3F00     MOVIW [0]FSR0
+05AF  00A2     MOVWF stringPtr
+05B0  3F01     MOVIW [1]FSR0
+05B1  00A3     MOVWF position
+05B2  3080     MOVLW 0x80
+05B3  318E     MOVLP 0xE
+05B4  26CB     CALL 0x6CB
+05B5  3180     MOVLP 0x0
+714:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE.CONFIGURATION.OSCILLATOR_TUNE ) ;
+05B6  3010     MOVLW 0x10
+05B7  0084     MOVWF FSR0
+05B8  3088     MOVLW 0x88
+05B9  0085     MOVWF FSR0H
+05BA  3F00     MOVIW [0]FSR0
+05BB  0020     MOVLB 0x0
+05BC  00A2     MOVWF stringPtr
+05BD  3F01     MOVIW [1]FSR0
+05BE  00A3     MOVWF position
+05BF  30C0     MOVLW 0xC0
+05C0  318E     MOVLP 0xE
+05C1  26CB     CALL 0x6CB
+05C2  3180     MOVLP 0x0
+715:                     SetEvent( outputEvent.changeValue ) ;
+05C3  2DE7     GOTO 0x5E7
+716:                     break ;
+717:           
+718:                   case STATE_ADJUST_TONE:
+719:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.CONFIGURATION.TITLE ) ;
+05C4  3006     MOVLW 0x6
+05C5  0084     MOVWF FSR0
+05C6  3088     MOVLW 0x88
+05C7  0085     MOVWF FSR0H
+05C8  3F00     MOVIW [0]FSR0
+05C9  00A2     MOVWF stringPtr
+05CA  3F01     MOVIW [1]FSR0
+05CB  00A3     MOVWF position
+05CC  3080     MOVLW 0x80
+05CD  318E     MOVLP 0xE
+05CE  26CB     CALL 0x6CB
+05CF  3180     MOVLP 0x0
+720:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE.CONFIGURATION.TONE ) ;
+05D0  300A     MOVLW 0xA
+05D1  0084     MOVWF FSR0
+05D2  3088     MOVLW 0x88
+05D3  0085     MOVWF FSR0H
+05D4  3F00     MOVIW [0]FSR0
+05D5  0020     MOVLB 0x0
+05D6  00A2     MOVWF stringPtr
+05D7  3F01     MOVIW [1]FSR0
+05D8  00A3     MOVWF position
+05D9  30C0     MOVLW 0xC0
+05DA  318E     MOVLP 0xE
+05DB  26CB     CALL 0x6CB
+05DC  3180     MOVLP 0x0
+721:                     _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0x5 , menuStateTone.select - MENU_ITEM_TONE_ADJUST_TONE0 + '0' ) ;
+05DD  0020     MOVLB 0x0
+05DE  085B     MOVF menuStateTone, W
+05DF  3E2F     ADDLW 0x2F
+05E0  00A9     MOVWF 0x29
+05E1  0829     MOVF 0x29, W
+05E2  00A2     MOVWF stringPtr
+05E3  30C5     MOVLW 0xC5
+05E4  318D     MOVLP 0xD
+05E5  25CC     CALL 0x5CC
+05E6  3180     MOVLP 0x0
+722:                     SetEvent( outputEvent.changeValue ) ;
+05E7  0020     MOVLB 0x0
+05E8  156F     BSF outputEvent, 0x2
+723:                     break ;
+05E9  2E80     GOTO 0x680
+724:           
+725:                   case STATE_INFORMATION:
+726:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE_INFORMATION[ menuStateInformation.select ] ) ;
+05EA  3553     LSLF menuStateInformation, W
+05EB  3EA0     ADDLW 0xA0
+05EC  0086     MOVWF FSR1
+05ED  0187     CLRF FSR1H
+05EE  3F40     MOVIW [0]FSR1
+05EF  00A2     MOVWF stringPtr
+05F0  3F41     MOVIW [1]FSR1
+05F1  00A3     MOVWF position
+05F2  3080     MOVLW 0x80
+05F3  318E     MOVLP 0xE
+05F4  26CB     CALL 0x6CB
+05F5  3180     MOVLP 0x0
+727:                     _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , &informationValueBuffer[ menuStateInformation.select ] ) ;
+05F6  3007     MOVLW 0x7
+05F7  0020     MOVLB 0x0
+05F8  00A9     MOVWF 0x29
+05F9  0829     MOVF 0x29, W
+05FA  00A0     MOVWF __pcstackBANK0
+05FB  0853     MOVF menuStateInformation, W
+05FC  318D     MOVLP 0xD
+05FD  25DA     CALL 0x5DA
+05FE  3180     MOVLP 0x0
+05FF  3EAE     ADDLW 0xAE
+0600  0020     MOVLB 0x0
+0601  00A4     MOVWF stringPtr
+0602  3000     MOVLW 0x0
+0603  00A5     MOVWF position
+0604  308A     MOVLW 0x8A
+0605  318E     MOVLP 0xE
+0606  2681     CALL 0x681
+0607  3180     MOVLP 0x0
+728:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFORMATION[ menuStateInformation.select + 1 ] ) ;
+0608  0020     MOVLB 0x0
+0609  3553     LSLF menuStateInformation, W
+060A  3E02     ADDLW 0x2
+060B  3EA0     ADDLW 0xA0
+060C  0086     MOVWF FSR1
+060D  0187     CLRF FSR1H
+060E  3F40     MOVIW [0]FSR1
+060F  00A2     MOVWF stringPtr
+0610  3F41     MOVIW [1]FSR1
+0611  00A3     MOVWF position
+0612  30C0     MOVLW 0xC0
+0613  318E     MOVLP 0xE
+0614  26CB     CALL 0x6CB
+0615  3180     MOVLP 0x0
+729:                     _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ menuStateInformation.select + 1 ] ) ;
+0616  3007     MOVLW 0x7
+0617  0020     MOVLB 0x0
+0618  00A9     MOVWF 0x29
+0619  0829     MOVF 0x29, W
+061A  00A0     MOVWF __pcstackBANK0
+061B  0853     MOVF menuStateInformation, W
+061C  3E01     ADDLW 0x1
+061D  318D     MOVLP 0xD
+061E  25DA     CALL 0x5DA
+061F  3180     MOVLP 0x0
+0620  3EAE     ADDLW 0xAE
+0621  0020     MOVLB 0x0
+0622  00A4     MOVWF stringPtr
+0623  3000     MOVLW 0x0
+0624  00A5     MOVWF position
+0625  30CA     MOVLW 0xCA
+0626  318E     MOVLP 0xE
+0627  2681     CALL 0x681
+0628  3180     MOVLP 0x0
+730:                     break ;
+0629  2E80     GOTO 0x680
+731:           
+732:                   case STATE_LOAD:
+733:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.MEMORY.LOAD ) ;
+062A  301C     MOVLW 0x1C
+062B  0084     MOVWF FSR0
+062C  3088     MOVLW 0x88
+062D  0085     MOVWF FSR0H
+062E  3F00     MOVIW [0]FSR0
+062F  0020     MOVLB 0x0
+0630  00A2     MOVWF stringPtr
+0631  3F01     MOVIW [1]FSR0
+0632  00A3     MOVWF position
+0633  3080     MOVLW 0x80
+0634  318E     MOVLP 0xE
+0635  26CB     CALL 0x6CB
+0636  3180     MOVLP 0x0
+734:                     _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+0637  30C0     MOVLW 0xC0
+0638  318E     MOVLP 0xE
+0639  264C     CALL 0x64C
+063A  3180     MOVLP 0x0
+735:                     break ;
+063B  2E80     GOTO 0x680
+736:           
+737:                   case STATE_SAVE:
+738:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.MEMORY.SAVE ) ;
+063C  301E     MOVLW 0x1E
+063D  0084     MOVWF FSR0
+063E  3088     MOVLW 0x88
+063F  0085     MOVWF FSR0H
+0640  3F00     MOVIW [0]FSR0
+0641  0020     MOVLB 0x0
+0642  00A2     MOVWF stringPtr
+0643  3F01     MOVIW [1]FSR0
+0644  00A3     MOVWF position
+0645  3080     MOVLW 0x80
+0646  318E     MOVLP 0xE
+0647  26CB     CALL 0x6CB
+0648  3180     MOVLP 0x0
+739:                     _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+0649  30C0     MOVLW 0xC0
+064A  318E     MOVLP 0xE
+064B  264C     CALL 0x64C
+064C  3180     MOVLP 0x0
+740:                     break ;
+064D  2E80     GOTO 0x680
+741:           
+742:                   case STATE_INITIALIZE:
+743:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.MEMORY.LOAD_DEFAULT ) ;
+064E  3020     MOVLW 0x20
+064F  0084     MOVWF FSR0
+0650  3088     MOVLW 0x88
+0651  0085     MOVWF FSR0H
+0652  3F00     MOVIW [0]FSR0
+0653  0020     MOVLB 0x0
+0654  00A2     MOVWF stringPtr
+0655  3F01     MOVIW [1]FSR0
+0656  00A3     MOVWF position
+0657  3080     MOVLW 0x80
+0658  318E     MOVLP 0xE
+0659  26CB     CALL 0x6CB
+065A  3180     MOVLP 0x0
+744:                     _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+065B  30C0     MOVLW 0xC0
+065C  318E     MOVLP 0xE
+065D  264C     CALL 0x64C
+065E  3180     MOVLP 0x0
+745:                     break ;
+065F  2E80     GOTO 0x680
+746:           
+747:                   case STATE_ERROR:
+748:                     _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.ERROR.MESSAGE ) ;
+0660  3022     MOVLW 0x22
+0661  0084     MOVWF FSR0
+0662  3088     MOVLW 0x88
+0663  0085     MOVWF FSR0H
+0664  3F00     MOVIW [0]FSR0
+0665  0020     MOVLB 0x0
+0666  00A2     MOVWF stringPtr
+0667  3F01     MOVIW [1]FSR0
+0668  00A3     MOVWF position
+0669  3080     MOVLW 0x80
+066A  318E     MOVLP 0xE
+066B  26CB     CALL 0x6CB
+066C  3180     MOVLP 0x0
+749:                     _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+066D  30C0     MOVLW 0xC0
+066E  318E     MOVLP 0xE
+066F  264C     CALL 0x64C
+0670  3180     MOVLP 0x0
+750:                     break ;
+751:                 }
+0671  2E80     GOTO 0x680
+752:           
+753:               }
+754:           
+755:               // Display Value ----------------
+756:               if( EvalEvent( outputEvent.changeValue ) ) {
+0680  0020     MOVLB 0x0
+0681  1D6F     BTFSS outputEvent, 0x2
+0682  29AE     GOTO 0x1AE
+0683  116F     BCF outputEvent, 0x2
+757:           
+758:                 uint16 tmpValue ;
+759:                 char valueString[6] = "= 000" ;
+0684  30A8     MOVLW 0xA8
+0685  0086     MOVWF FSR1
+0686  3000     MOVLW 0x0
+0687  0087     MOVWF FSR1H
+0688  302D     MOVLW 0x2D
+0689  0084     MOVWF FSR0
+068A  3000     MOVLW 0x0
+068B  0085     MOVWF FSR0H
+068C  3006     MOVLW 0x6
+068D  00A9     MOVWF 0x29
+068E  0016     MOVIW FSR1++
+068F  001A     MOVWI FSR0++
+0690  0BA9     DECFSZ 0x29, F
+0691  2E8E     GOTO 0x68E
+760:           
+761:                 switch( machineState ) {
+0692  2EBE     GOTO 0x6BE
+06BE  086E     MOVF machineState, W
+06BF  3A01     XORLW 0x1
+06C0  1903     BTFSC STATUS, 0x2
+06C1  2E93     GOTO 0x693
+06C2  3A09     XORLW 0x9
+06C3  1903     BTFSC STATUS, 0x2
+06C4  2E98     GOTO 0x698
+06C5  2EB3     GOTO 0x6B3
+762:           
+763:                   case STATE_METRONOME:
+764:                     tmpValue = config.tempo ;
+0693  0846     MOVF 0x46, W
+0694  00BD     MOVWF 0x3D
+0695  0845     MOVF 0x45, W
+0696  00BC     MOVWF tmpValue
+765:                     break ;
+0697  2EC6     GOTO 0x6C6
+766:           
+767:                   case STATE_ADJUST_OSCILLATOR_TUNE:
+768:                     if( (uint08)config.oscillatorTune & 0x80 ) {
+0698  1FCD     BTFSS 0x4D, 0x7
+0699  2EAD     GOTO 0x6AD
+769:                       tmpValue = -config.oscillatorTune ;
+069A  084D     MOVF 0x4D, W
+069B  00A9     MOVWF 0x29
+069C  01AA     CLRF 0x2A
+069D  1BA9     BTFSC 0x29, 0x7
+069E  03AA     DECF 0x2A, F
+069F  09A9     COMF 0x29, F
+06A0  09AA     COMF 0x2A, F
+06A1  0AA9     INCF 0x29, F
+06A2  1903     BTFSC STATUS, 0x2
+06A3  0AAA     INCF 0x2A, F
+06A4  0829     MOVF 0x29, W
+06A5  00BC     MOVWF tmpValue
+06A6  082A     MOVF 0x2A, W
+06A7  00BD     MOVWF 0x3D
+770:                       valueString[1] = '-' ;
+06A8  302D     MOVLW 0x2D
+06A9  00A9     MOVWF 0x29
+06AA  0829     MOVF 0x29, W
+06AB  00AE     MOVWF 0x2E
+771:                     }
+06AC  2EC6     GOTO 0x6C6
+772:                     else {
+773:                       tmpValue = (uint16)config.oscillatorTune ;
+06AD  084D     MOVF 0x4D, W
+06AE  00BC     MOVWF tmpValue
+06AF  01BD     CLRF 0x3D
+06B0  1BBC     BTFSC tmpValue, 0x7
+06B1  03BD     DECF 0x3D, F
+774:                     }
+775:                     break ;
+06B2  2EC6     GOTO 0x6C6
+776:           
+777:                   default:
+778:                     tmpValue = *currentValuePtr ;
+06B3  086A     MOVF currentValuePtr, W
+06B4  0086     MOVWF FSR1
+06B5  0187     CLRF FSR1H
+06B6  0801     MOVF INDF1, W
+06B7  00A9     MOVWF 0x29
+06B8  01AA     CLRF 0x2A
+06B9  0829     MOVF 0x29, W
+06BA  00BC     MOVWF tmpValue
+06BB  082A     MOVF 0x2A, W
+06BC  00BD     MOVWF 0x3D
+779:                     break ;
+780:                 }
+06BD  2EC6     GOTO 0x6C6
+781:           
+782:                 uint08 isNonZero = BOOL_FALSE ;
+06C6  01BB     CLRF isNonZero
+783:                 for( uint08 i = 2 ; i != 5 ; i++ ) {
+06C7  3002     MOVLW 0x2
+06C8  00A9     MOVWF 0x29
+06C9  0829     MOVF 0x29, W
+06CA  00C3     MOVWF i
+06CB  2F1F     GOTO 0x71F
+071B  3001     MOVLW 0x1
+071C  00A9     MOVWF 0x29
+071D  0829     MOVF 0x29, W
+071E  07C3     ADDWF i, F
+071F  3005     MOVLW 0x5
+0720  0643     XORWF i, W
+0721  1D03     BTFSS STATUS, 0x2
+0722  2ED6     GOTO 0x6D6
+784:                   uint08 compareUnit ;
+785:                   switch( i ) {
+06D6  0843     MOVF i, W
+06D7  3A02     XORLW 0x2
+06D8  1903     BTFSC STATUS, 0x2
+06D9  2ECC     GOTO 0x6CC
+06DA  3A01     XORLW 0x1
+06DB  1903     BTFSC STATUS, 0x2
+06DC  2ECE     GOTO 0x6CE
+06DD  3A07     XORLW 0x7
+06DE  1903     BTFSC STATUS, 0x2
+06DF  2ED3     GOTO 0x6D3
+06E0  2EE1     GOTO 0x6E1
+786:                     case 2: compareUnit = 100 ;
+06CC  3064     MOVLW 0x64
+06CD  2ECF     GOTO 0x6CF
+787:                       break ;
+788:                     case 3: compareUnit = 10 ;
+06CE  300A     MOVLW 0xA
+06CF  00A9     MOVWF 0x29
+06D0  0829     MOVF 0x29, W
+06D1  00BF     MOVWF compareUnit
+789:                       break ;
+06D2  2EE1     GOTO 0x6E1
+790:                     case 4: compareUnit = 1 ;
+06D3  01BF     CLRF compareUnit
+06D4  0ABF     INCF compareUnit, F
+791:                       break ;
+792:                   }
+06D5  2EE1     GOTO 0x6E1
+793:                   while( tmpValue >= compareUnit ) {
+06E1  083F     MOVF compareUnit, W
+06E2  00A9     MOVWF 0x29
+06E3  01AA     CLRF 0x2A
+06E4  082A     MOVF 0x2A, W
+06E5  023D     SUBWF 0x3D, W
+06E6  1D03     BTFSS STATUS, 0x2
+06E7  2EEA     GOTO 0x6EA
+06E8  0829     MOVF 0x29, W
+06E9  023C     SUBWF tmpValue, W
+06EA  1C03     BTFSS STATUS, 0x0
+06EB  2EFE     GOTO 0x6FE
+06FD  2EE1     GOTO 0x6E1
+794:                     tmpValue -= compareUnit ;
+06EC  083F     MOVF compareUnit, W
+06ED  00A9     MOVWF 0x29
+06EE  01AA     CLRF 0x2A
+06EF  0829     MOVF 0x29, W
+06F0  02BC     SUBWF tmpValue, F
+06F1  082A     MOVF 0x2A, W
+06F2  3BBD     SUBWFB 0x3D, F
+795:                     valueString[i]++ ;
+06F3  3001     MOVLW 0x1
+06F4  00A9     MOVWF 0x29
+06F5  0843     MOVF i, W
+06F6  3E2D     ADDLW 0x2D
+06F7  0086     MOVWF FSR1
+06F8  0187     CLRF FSR1H
+06F9  0829     MOVF 0x29, W
+06FA  0781     ADDWF INDF1, F
+796:                     isNonZero = BOOL_TRUE ;
+06FB  01BB     CLRF isNonZero
+06FC  0ABB     INCF isNonZero, F
+797:                   }
+798:           
+799:                   if( i == 4 ) break ;
+06FE  3004     MOVLW 0x4
+06FF  0643     XORWF i, W
+0700  1903     BTFSC STATUS, 0x2
+0701  2F23     GOTO 0x723
+800:           
+801:                   if( isNonZero ) continue ;
+0702  083B     MOVF isNonZero, W
+0703  1D03     BTFSS STATUS, 0x2
+0704  2F1B     GOTO 0x71B
+802:           
+803:                   valueString[i] = valueString[ i - 1 ] ;
+0705  0843     MOVF i, W
+0706  3EFF     ADDLW 0xFF
+0707  3E2D     ADDLW 0x2D
+0708  0086     MOVWF FSR1
+0709  0187     CLRF FSR1H
+070A  0801     MOVF INDF1, W
+070B  00A9     MOVWF 0x29
+070C  0843     MOVF i, W
+070D  3E2D     ADDLW 0x2D
+070E  0086     MOVWF FSR1
+070F  0187     CLRF FSR1H
+0710  0829     MOVF 0x29, W
+0711  0081     MOVWF INDF1
+804:                   valueString[ i - 1 ] = ' ' ;
+0712  3020     MOVLW 0x20
+0713  00A9     MOVWF 0x29
+0714  0843     MOVF i, W
+0715  3EFF     ADDLW 0xFF
+0716  3E2D     ADDLW 0x2D
+0717  0086     MOVWF FSR1
+0718  0187     CLRF FSR1H
+0719  0829     MOVF 0x29, W
+071A  0081     MOVWF INDF1
+805:           
+806:                 }
+807:           
+808:                 _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xB , &valueString ) ;
+0723  302D     MOVLW 0x2D
+0724  00A4     MOVWF stringPtr
+0725  3000     MOVLW 0x0
+0726  00A5     MOVWF position
+0727  30CB     MOVLW 0xCB
+0728  318E     MOVLP 0xE
+0729  2681     CALL 0x681
+072A  3180     MOVLP 0x0
+809:           
+810:                 switch( machineState ) {
+072B  2F41     GOTO 0x741
+0741  0020     MOVLB 0x0
+0742  086E     MOVF machineState, W
+0743  3A07     XORLW 0x7
+0744  1903     BTFSC STATUS, 0x2
+0745  2F30     GOTO 0x730
+0746  3A0F     XORLW 0xF
+0747  1903     BTFSC STATUS, 0x2
+0748  2F2C     GOTO 0x72C
+0749  29AE     GOTO 0x1AE
+811:                   case STATE_ADJUST_OSCILLATOR_TUNE:
+812:                     SetOscillatorTune( config.oscillatorTune ) ;
+072C  0020     MOVLB 0x0
+072D  084D     MOVF 0x4D, W
+072E  0021     MOVLB 0x1
+072F  2F3F     GOTO 0x73F
+813:                     break ;
+814:                   case STATE_ADJUST_TONE:
+815:                     SetSoundTimerPeriod( *currentValuePtr ) ;
+0730  0020     MOVLB 0x0
+0731  086A     MOVF currentValuePtr, W
+0732  0086     MOVWF FSR1
+0733  0187     CLRF FSR1H
+0734  0801     MOVF INDF1, W
+0735  009B     MOVWF PR2
+0736  081B     MOVF PR2, W
+0737  00A9     MOVWF 0x29
+0738  0A49     INCF 0x49, W
+0739  2F3B     GOTO 0x73B
+073A  36A9     LSRF 0x29, F
+073B  0B89     DECFSZ WREG, F
+073C  2F3A     GOTO 0x73A
+073D  0829     MOVF 0x29, W
+073E  0026     MOVLB 0x6
+073F  0098     MOVWF CCPR4
+816:                     break ;
+817:                 }
+0740  29AE     GOTO 0x1AE
+818:               }
+819:           
+820:             } //for(;;)
+074A  29AE     GOTO 0x1AE
+821:           
+822:           }//main()
+823:           
+824:           // ----------------------------------------------------------------
+825:           // ISR Interrupt Flag
+826:           #define ISR_FLAG PIR3bits.TMR6IF
+827:           
+828:           // --------------------------------------------------------------------------------------------------------------------------------
+829:           // [Interrupt Service Routine]
+830:           void interrupt isr( void ) {
+0004  3180     MOVLP 0x0
+0005  0020     MOVLB 0x0
+0006  087F     MOVF 0x7F, W
+0007  00F5     MOVWF 0x75
+831:             if( !ISR_FLAG ) return ;
+0008  1D93     BTFSS PIR3, 0x3
+0009  28A6     GOTO 0xA6
+832:             ISR_FLAG = 0 ;
+000A  1193     BCF PIR3, 0x3
+833:           
+834:             static uint08 eventPrescaler = 0 ;
+835:           
+836:             // Metronome Count ----------------
+837:             tempoCounter += config.tempo ;
+000B  0845     MOVF 0x45, W
+000C  00F0     MOVWF __pcstackCOMMON
+000D  0846     MOVF 0x46, W
+000E  00F1     MOVWF 0x71
+000F  01F2     CLRF 0x72
+0010  0870     MOVF __pcstackCOMMON, W
+0011  07E3     ADDWF tempoCounter, F
+0012  0871     MOVF 0x71, W
+0013  3DE4     ADDWFC 0x64, F
+0014  0872     MOVF 0x72, W
+0015  3DE5     ADDWFC 0x65, F
+838:             if( tempoCounter >= TOTAL_TEMOPO_COUNT ) {
+0016  303A     MOVLW 0x3A
+0017  0265     SUBWF 0x65, W
+0018  1D03     BTFSS STATUS, 0x2
+0019  2820     GOTO 0x20
+001A  3098     MOVLW 0x98
+001B  0264     SUBWF 0x64, W
+001C  1D03     BTFSS STATUS, 0x2
+001D  2820     GOTO 0x20
+001E  3000     MOVLW 0x0
+001F  0263     SUBWF tempoCounter, W
+0020  1C03     BTFSS STATUS, 0x0
+0021  2844     GOTO 0x44
+839:               SoundOn( ) ;
+0022  151C     BSF T2CON, 0x2
+840:               tempoCounter -= TOTAL_TEMOPO_COUNT ;
+0023  3000     MOVLW 0x0
+0024  00F0     MOVWF __pcstackCOMMON
+0025  3098     MOVLW 0x98
+0026  00F1     MOVWF 0x71
+0027  303A     MOVLW 0x3A
+0028  00F2     MOVWF 0x72
+0029  0870     MOVF __pcstackCOMMON, W
+002A  02E3     SUBWF tempoCounter, F
+002B  0871     MOVF 0x71, W
+002C  3BE4     SUBWFB 0x64, F
+002D  0872     MOVF 0x72, W
+002E  3BE5     SUBWFB 0x65, F
+841:               duration = 0 ;
+002F  01EB     CLRF duration
+842:               if( ++beatCounter == ( config.beatCount << 1 ) )
+0030  0847     MOVF 0x47, W
+0031  00F0     MOVWF __pcstackCOMMON
+0032  01F1     CLRF 0x71
+0033  35F0     LSLF __pcstackCOMMON, F
+0034  0DF1     RLF 0x71, F
+0035  3001     MOVLW 0x1
+0036  00F2     MOVWF 0x72
+0037  0872     MOVF 0x72, W
+0038  07E8     ADDWF beatCounter, F
+0039  0868     MOVF beatCounter, W
+003A  00F3     MOVWF 0x73
+003B  01F4     CLRF 0x74
+003C  0871     MOVF 0x71, W
+003D  0674     XORWF 0x74, W
+003E  1D03     BTFSS STATUS, 0x2
+003F  2842     GOTO 0x42
+0040  0870     MOVF __pcstackCOMMON, W
+0041  0673     XORWF 0x73, W
+0042  1903     BTFSC STATUS, 0x2
+843:                 beatCounter = 0 ;
+0043  01E8     CLRF beatCounter
+844:             }
+845:           
+846:             // Event Prescale ----------------
+847:             if( ++eventPrescaler )
+0044  3001     MOVLW 0x1
+0045  00F0     MOVWF __pcstackCOMMON
+0046  0870     MOVF __pcstackCOMMON, W
+0047  07FB     ADDWF eventPrescaler, F
+0048  1D03     BTFSS STATUS, 0x2
+0049  28A6     GOTO 0xA6
+848:               //    eventPrescaler = 0 ;
+849:               //  else
+850:               return ;
+851:           
+852:             duration++ ;
+004A  3001     MOVLW 0x1
+004B  00F0     MOVWF __pcstackCOMMON
+004C  0870     MOVF __pcstackCOMMON, W
+004D  07EB     ADDWF duration, F
+853:           
+854:             // Count for State Return ----------------
+855:             if( stateReturnCounter ) {
+004E  087A     MOVF stateReturnCounter, W
+004F  1903     BTFSC STATUS, 0x2
+0050  2859     GOTO 0x59
+856:               if( --stateReturnCounter ) return ;
+0051  3001     MOVLW 0x1
+0052  02FA     SUBWF stateReturnCounter, F
+0053  1D03     BTFSS STATUS, 0x2
+0054  28A6     GOTO 0xA6
+857:           
+858:               SetEvent( outputEvent.stateChange ) ;
+0055  146F     BSF outputEvent, 0x0
+859:               SetEvent( outputEvent.resetMetronome ) ;
+0056  15EF     BSF outputEvent, 0x3
+860:               machineState = STATE_METRONOME ;
+0057  01EE     CLRF machineState
+0058  0AEE     INCF machineState, F
+861:             }
+862:           
+863:             // Read Key State ----------------
+864:             static UniPortAState prevPortAState = 0x00 ;
+865:             UniPortAState portAState ;
+866:             UniPortAState keyDef ;
+867:             UniPortAState keyPressed ;
+868:             UniPortAState keyReleased ;
+869:           
+870:             portAState.all = ReadKeyState( ) ;
+0059  090C     COMF PORTA, W
+005A  00F0     MOVWF __pcstackCOMMON
+005B  0870     MOVF __pcstackCOMMON, W
+005C  00F9     MOVWF portAState
+871:             keyDef.all = portAState.all ^ prevPortAState.all ;
+005D  0879     MOVF portAState, W
+005E  067C     XORWF prevPortAState, W
+005F  00F0     MOVWF __pcstackCOMMON
+0060  0870     MOVF __pcstackCOMMON, W
+0061  00F7     MOVWF keyDef
+872:             keyPressed.all = keyDef.all & portAState.all ;
+0062  0877     MOVF keyDef, W
+0063  0579     ANDWF portAState, W
+0064  00F0     MOVWF __pcstackCOMMON
+0065  0870     MOVF __pcstackCOMMON, W
+0066  00F8     MOVWF keyPressed
+873:             keyReleased.all = keyDef.all & ~portAState.all ;
+0067  0979     COMF portAState, W
+0068  0577     ANDWF keyDef, W
+0069  00F0     MOVWF __pcstackCOMMON
+006A  0870     MOVF __pcstackCOMMON, W
+006B  00F6     MOVWF keyReleased
+874:             prevPortAState.all = portAState.all ;
+006C  0879     MOVF portAState, W
+006D  00F0     MOVWF __pcstackCOMMON
+006E  0870     MOVF __pcstackCOMMON, W
+006F  00FC     MOVWF prevPortAState
+875:           
+876:             // Set Input Event ----------------
+877:             if( keyPressed.keyMenu ) {
+0070  1AF8     BTFSC keyPressed, 0x5
+878:               SetEvent( inputEvent.keyPressMenu ) ;
+0071  156C     BSF inputEvent, 0x2
+879:             }
+880:           
+881:             if( keyPressed.keyUp ) {
+0072  1FF8     BTFSS keyPressed, 0x7
+0073  2879     GOTO 0x79
+882:               if( portAState.keyDown )
+0074  1F79     BTFSS portAState, 0x6
+0075  2878     GOTO 0x78
+883:                 SetEvent( inputEvent.keyPressUpDown ) ;
+0076  15EC     BSF inputEvent, 0x3
+0077  2879     GOTO 0x79
+884:               else
+885:                 SetEvent( inputEvent.keyPressUp ) ;
+0078  146C     BSF inputEvent, 0x0
+886:             }
+887:           
+888:             if( keyPressed.keyDown ) {
+0079  1F78     BTFSS keyPressed, 0x6
+007A  2880     GOTO 0x80
+889:               if( portAState.keyUp )
+007B  1FF9     BTFSS portAState, 0x7
+007C  287F     GOTO 0x7F
+890:                 SetEvent( inputEvent.keyPressUpDown ) ;
+007D  15EC     BSF inputEvent, 0x3
+007E  2880     GOTO 0x80
+891:               else
+892:                 SetEvent( inputEvent.keyPressDown ) ;
+007F  14EC     BSF inputEvent, 0x1
+893:             }
+894:           
+895:             if( portAState.keyUp && !portAState.keyDown ) {
+0080  1BF9     BTFSC portAState, 0x7
+0081  1B79     BTFSC portAState, 0x6
+0082  2891     GOTO 0x91
+896:               if( ++keyCount.Up == KEY_COUNT_LOOP_END ) {
+0083  3001     MOVLW 0x1
+0084  00F0     MOVWF __pcstackCOMMON
+0085  0870     MOVF __pcstackCOMMON, W
+0086  07DF     ADDWF keyCount, F
+0087  3080     MOVLW 0x80
+0088  065F     XORWF keyCount, W
+0089  1D03     BTFSS STATUS, 0x2
+008A  2892     GOTO 0x92
+897:                 keyCount.Up = KEY_COUNT_LOOP_START ;
+008B  307A     MOVLW 0x7A
+008C  00F0     MOVWF __pcstackCOMMON
+008D  0870     MOVF __pcstackCOMMON, W
+008E  00DF     MOVWF keyCount
+898:                 SetEvent( inputEvent.keyPressUp ) ;
+008F  146C     BSF inputEvent, 0x0
+899:               }
+900:             }
+0090  2892     GOTO 0x92
+901:             else
+902:               keyCount.Up = 0 ;
+0091  01DF     CLRF keyCount
+903:           
+904:             if( portAState.keyDown && !portAState.keyUp ) {
+0092  1B79     BTFSC portAState, 0x6
+0093  1BF9     BTFSC portAState, 0x7
+0094  28A3     GOTO 0xA3
+905:               if( ++keyCount.Down == KEY_COUNT_LOOP_END ) {
+0095  3001     MOVLW 0x1
+0096  00F0     MOVWF __pcstackCOMMON
+0097  0870     MOVF __pcstackCOMMON, W
+0098  07E1     ADDWF 0x61, F
+0099  3080     MOVLW 0x80
+009A  0661     XORWF 0x61, W
+009B  1D03     BTFSS STATUS, 0x2
+009C  28A4     GOTO 0xA4
+906:                 keyCount.Down = KEY_COUNT_LOOP_START ;
+009D  307A     MOVLW 0x7A
+009E  00F0     MOVWF __pcstackCOMMON
+009F  0870     MOVF __pcstackCOMMON, W
+00A0  00E1     MOVWF 0x61
+907:                 SetEvent( inputEvent.keyPressDown ) ;
+00A1  14EC     BSF inputEvent, 0x1
+908:               }
+909:             }
+00A2  28A4     GOTO 0xA4
+910:             else
+911:               keyCount.Down = 0 ;
+00A3  01E1     CLRF 0x61
+912:           
+913:             if( ISR_FLAG ) RESET( ) ;
+00A4  1993     BTFSC PIR3, 0x3
+00A5  0001     RESET
+914:           
+915:           }//isr
+00A6  0875     MOVF 0x75, W
+916:           
+---  /Users/kshimada/Development/MPLAB X/Metronome_2.X/src/configuration.h  -----------------------------
+1:             #ifndef CONFIGURATION_H
+2:             #  define CONFIGURATION_H
+3:             
+4:             #  include "../../_Common/typedef.h"
+5:             
+6:             #  define _private_EnableInterrupt() INTCONbits.GIE=1;
+7:             #  define _private_DisableInterrupt() INTCONbits.GIE=0;
+8:             
+9:             #  define _private_IsError() EECON1bits.WRERR
+10:            
+11:            #  define _private_SetData( data ) EEDATH=0x00;EEDATL=(data);
+12:            #  define _private_SetAddress( address ) EEADRH=0x00;EEADRL=(address);
+13:            
+14:            #  define _private_EnableWriting() EECON1bits.WREN=1;
+15:            #  define _private_DisableWriting() EECON1bits.WREN=0;
+16:            #  define _private_UnlockFlashProgram() EECON2=0x55;EECON2=0xAA;
+17:            #  define _private_StartWrite() EECON1bits.WR=1;
+18:            #  define _private_WaitWriting() while(!PIR2bits.EEIF);PIR2bits.EEIF=0;
+19:            
+20:            #  define _private_ConfugureReading( memorySelect ) EECON1bits.EEPGD=0;if(memorySelect)EECON1bits.CFGS=1;else EECON1bits.CFGS=0;
+21:            #  define _private_StartRead() EECON1bits.RD=1;
+22:            #  define _private_Data() EEDATL
+23:            
+24:            // ----------------------------------------------------------------
+25:            // [Struct] Configuration
+26:            #  define SIZE_OF_EEPROM 0x100
+27:            #  define ADDRESS_OF_OFFSET 0x00
+28:            typedef struct {
+29:              uint08 writeCount ;
+30:              uint16 tempo ;
+31:              uint08 beatCount ;
+32:              uint08 duration ;
+33:              uint08 pulseWidth ;
+34:              uint08 tone[3] ;
+35:              sint08 oscillatorTune ;
+36:              uint08 checkSum ;
+37:            } ConfigurationData ;
+38:            #  define CONFIG_DEFAULT { 0 , 120 , 4 , 8 , 1 , { 249 , 62 , 82 , }, 0 , 0 }
+39:            #  define CONFIG_DATA_SIZE sizeof(ConfigurationData)
+40:            
+41:            // ----------------------------------------------------------------
+42:            // [Enum] Return Code
+43:            typedef enum {
+44:              RETURN_CODE_NOERROR = 0x00 ,
+45:              RETURN_CODE_WRITE_ERROR = 0x10 ,
+46:              RETURN_CODE_CHECKSUM_ERROR = 0x20 ,
+47:              RETURN_CODE_INVALID_OFFSET = 0x30 ,
+48:            } ReturnCode ;
+49:            typedef enum {
+50:              MEMORY_SELECT_EEPROM = 0 ,
+51:              MEMORY_SELECT_CONFIGURATION ,
+52:            } MemorySelect ;
+53:            
+54:            // ----------------------------------------------------------------
+55:            // [Prototypes]
+56:            void _configuration_WriteByte( uint08 address , uint08 data ) ;
+57:            uint08 _configuration_ReadByte( uint08 address , MemorySelect memorySelect ) ;
+58:            
+59:            // ----------------------------------------------------------------
+60:            // [Function] Save
+61:            ReturnCode _configuration_Save( ConfigurationData* config ) {
+074B  0020     MOVLB 0x0
+074C  00A8     MOVWF config
+62:            
+63:              uint08* ptrConfig = (uint08*) config ;
+074D  0828     MOVF config, W
+074E  00A2     MOVWF stringPtr
+074F  0822     MOVF stringPtr, W
+0750  00A5     MOVWF position
+64:              uint08 romOffset ;
+65:              ReturnCode returnCode = RETURN_CODE_NOERROR ;
+0751  01A4     CLRF stringPtr
+66:            
+67:              // Disable All Interrupt
+68:              _private_DisableInterrupt( ) ;
+0752  138B     BCF INTCON, 0x7
+69:            
+70:              // Read ROM Position
+71:              romOffset = _configuration_ReadByte( ADDRESS_OF_OFFSET , MEMORY_SELECT_EEPROM ) ;
+0753  01A0     CLRF __pcstackBANK0
+0754  3000     MOVLW 0x0
+0755  318E     MOVLP 0xE
+0756  2603     CALL 0x603
+0757  3187     MOVLP 0x7
+0758  0020     MOVLB 0x0
+0759  00A2     MOVWF stringPtr
+075A  0822     MOVF stringPtr, W
+075B  00A6     MOVWF i
+72:            
+73:              // Read Write Count
+74:              config->writeCount = _configuration_ReadByte( romOffset , MEMORY_SELECT_EEPROM ) ;
+075C  01A0     CLRF __pcstackBANK0
+075D  0826     MOVF i, W
+075E  318E     MOVLP 0xE
+075F  2603     CALL 0x603
+0760  3187     MOVLP 0x7
+0761  0020     MOVLB 0x0
+0762  00A2     MOVWF stringPtr
+0763  0828     MOVF config, W
+0764  0086     MOVWF FSR1
+0765  0187     CLRF FSR1H
+0766  0822     MOVF stringPtr, W
+0767  0081     MOVWF INDF1
+75:            
+76:              // Shift ROM Position ( for Wear Leveling )
+77:              if ( ++config->writeCount == 1 ) {
+0768  3001     MOVLW 0x1
+0769  00A2     MOVWF stringPtr
+076A  0828     MOVF config, W
+076B  0086     MOVWF FSR1
+076C  0187     CLRF FSR1H
+076D  0822     MOVF stringPtr, W
+076E  0781     ADDWF INDF1, F
+076F  0301     DECF INDF1, W
+0770  1D03     BTFSS STATUS, 0x2
+0771  2F7B     GOTO 0x77B
+78:                romOffset += CONFIG_DATA_SIZE ;
+0772  300B     MOVLW 0xB
+0773  00A2     MOVWF stringPtr
+0774  0822     MOVF stringPtr, W
+0775  07A6     ADDWF i, F
+79:                config->writeCount = 1 ;
+0776  0828     MOVF config, W
+0777  0086     MOVWF FSR1
+0778  0187     CLRF FSR1H
+0779  0181     CLRF INDF1
+077A  0A81     INCF INDF1, F
+80:              }
+81:            
+82:              if ( romOffset >= ( SIZE_OF_EEPROM - CONFIG_DATA_SIZE ) )
+077B  30F5     MOVLW 0xF5
+077C  0226     SUBWF i, W
+077D  1C03     BTFSS STATUS, 0x0
+077E  2F81     GOTO 0x781
+83:                romOffset = 1 ;
+077F  01A6     CLRF i
+0780  0AA6     INCF i, F
+84:            
+85:              // Enable Writing
+86:              _private_EnableWriting( ) ;
+0781  0023     MOVLB 0x3
+0782  1515     BSF EECON1, 0x2
+87:            
+88:              config->checkSum = 0x00 ;
+0783  0020     MOVLB 0x0
+0784  0828     MOVF config, W
+0785  3E0A     ADDLW 0xA
+0786  0086     MOVWF FSR1
+0787  0187     CLRF FSR1H
+0788  0181     CLRF INDF1
+89:            
+90:              // Write Each Byte of Config
+91:              for ( uint08 i = 0 ; i != CONFIG_DATA_SIZE ; i++ ) {
+0789  01A7     CLRF position
+078A  2F90     GOTO 0x790
+078B  3001     MOVLW 0x1
+078C  0020     MOVLB 0x0
+078D  00A2     MOVWF stringPtr
+078E  0822     MOVF stringPtr, W
+078F  07A7     ADDWF position, F
+0790  300B     MOVLW 0xB
+0791  0627     XORWF position, W
+0792  1903     BTFSC STATUS, 0x2
+0793  2FBA     GOTO 0x7BA
+92:                _configuration_WriteByte( romOffset + i , ptrConfig[i] ) ;
+0794  0827     MOVF position, W
+0795  0725     ADDWF position, W
+0796  00A2     MOVWF stringPtr
+0797  0822     MOVF stringPtr, W
+0798  0086     MOVWF FSR1
+0799  0187     CLRF FSR1H
+079A  0801     MOVF INDF1, W
+079B  00A3     MOVWF position
+079C  0823     MOVF position, W
+079D  00A0     MOVWF __pcstackBANK0
+079E  0826     MOVF i, W
+079F  0727     ADDWF position, W
+07A0  318D     MOVLP 0xD
+07A1  25EC     CALL 0x5EC
+07A2  3187     MOVLP 0x7
+93:                config->checkSum ^= ptrConfig[i] ;
+07A3  0020     MOVLB 0x0
+07A4  0827     MOVF position, W
+07A5  0725     ADDWF position, W
+07A6  00A2     MOVWF stringPtr
+07A7  0822     MOVF stringPtr, W
+07A8  0086     MOVWF FSR1
+07A9  0187     CLRF FSR1H
+07AA  0801     MOVF INDF1, W
+07AB  00A3     MOVWF position
+07AC  0828     MOVF config, W
+07AD  3E0A     ADDLW 0xA
+07AE  0086     MOVWF FSR1
+07AF  0187     CLRF FSR1H
+07B0  0823     MOVF position, W
+07B1  0681     XORWF INDF1, F
+94:                if ( _private_IsError( ) ) {
+07B2  0023     MOVLB 0x3
+07B3  1D95     BTFSS EECON1, 0x3
+07B4  2F8B     GOTO 0x78B
+95:                  returnCode = RETURN_CODE_WRITE_ERROR ;
+07B5  3010     MOVLW 0x10
+07B6  0020     MOVLB 0x0
+07B7  00A2     MOVWF stringPtr
+07B8  0822     MOVF stringPtr, W
+07B9  00A4     MOVWF stringPtr
+96:                  break ;
+97:                }
+98:              }
+99:            
+100:             // Write Position
+101:             if ( ( config->writeCount == 1 ) && ( !_private_IsError( ) ) ) {
+07BA  0828     MOVF config, W
+07BB  0086     MOVWF FSR1
+07BC  0187     CLRF FSR1H
+07BD  0301     DECF INDF1, W
+07BE  1D03     BTFSS STATUS, 0x2
+07BF  2FD4     GOTO 0x7D4
+07C0  0023     MOVLB 0x3
+07C1  1995     BTFSC EECON1, 0x3
+07C2  2FD4     GOTO 0x7D4
+102:               _configuration_WriteByte( ADDRESS_OF_OFFSET , romOffset ) ;
+07C3  0020     MOVLB 0x0
+07C4  0826     MOVF i, W
+07C5  00A2     MOVWF stringPtr
+07C6  0822     MOVF stringPtr, W
+07C7  00A0     MOVWF __pcstackBANK0
+07C8  3000     MOVLW 0x0
+07C9  318D     MOVLP 0xD
+07CA  25EC     CALL 0x5EC
+07CB  3187     MOVLP 0x7
+103:               if ( _private_IsError( ) ) returnCode = RETURN_CODE_WRITE_ERROR ;
+07CC  0023     MOVLB 0x3
+07CD  1D95     BTFSS EECON1, 0x3
+07CE  2FD4     GOTO 0x7D4
+07CF  3010     MOVLW 0x10
+07D0  0020     MOVLB 0x0
+07D1  00A2     MOVWF stringPtr
+07D2  0822     MOVF stringPtr, W
+07D3  00A4     MOVWF stringPtr
+104:             }
+105:           
+106:             //Disable Writing
+107:             _private_DisableWriting( ) ;
+07D4  0023     MOVLB 0x3
+07D5  1115     BCF EECON1, 0x2
+108:           
+109:             // Enable All Interrupt
+110:             _private_EnableInterrupt( ) ;
+07D6  178B     BSF 0x18B, 0x7
+111:           
+112:             return RETURN_CODE_NOERROR ;
+07D7  3000     MOVLW 0x0
+113:           
+114:           }
+115:           
+116:           // ----------------------------------------------------------------
+117:           // [Function] Load
+118:           ReturnCode _configuration_Load( ConfigurationData* config ) {
+0F47  0020     MOVLB 0x0
+0F48  00A6     MOVWF i
+119:           
+120:             uint08* ptrConfig = (uint08*) config ;
+0F49  0826     MOVF i, W
+0F4A  00A2     MOVWF stringPtr
+0F4B  0822     MOVF stringPtr, W
+0F4C  00A4     MOVWF stringPtr
+121:             uint08 romOffset ;
+122:           
+123:             // Disable All Interrupt
+124:             _private_DisableInterrupt( ) ;
+0F4D  138B     BCF INTCON, 0x7
+125:           
+126:             // Read ROM Position
+127:             romOffset = _configuration_ReadByte( ADDRESS_OF_OFFSET , MEMORY_SELECT_EEPROM ) ;
+0F4E  01A0     CLRF __pcstackBANK0
+0F4F  3000     MOVLW 0x0
+0F50  318E     MOVLP 0xE
+0F51  2603     CALL 0x603
+0F52  318F     MOVLP 0xF
+0F53  0020     MOVLB 0x0
+0F54  00A2     MOVWF stringPtr
+0F55  0822     MOVF stringPtr, W
+0F56  00A5     MOVWF position
+128:           
+129:             // Invalid Offser
+130:             if ( romOffset >= ( SIZE_OF_EEPROM - CONFIG_DATA_SIZE ) ) return RETURN_CODE_INVALID_OFFSET ;
+0F57  30F5     MOVLW 0xF5
+0F58  0225     SUBWF position, W
+0F59  1C03     BTFSS STATUS, 0x0
+0F5A  2F5D     GOTO 0x75D
+0F5B  3030     MOVLW 0x30
+0F5C  0008     RETURN
+131:           
+132:             config->checkSum = 0x00 ;
+0F5D  0826     MOVF i, W
+0F5E  3E0A     ADDLW 0xA
+0F5F  0086     MOVWF FSR1
+0F60  0187     CLRF FSR1H
+0F61  0181     CLRF INDF1
+133:           
+134:             // Read Each Byte of Config
+135:             for ( uint08 i = 0 ; i != CONFIG_DATA_SIZE ; i++ ) {
+0F62  01A7     CLRF position
+0F63  300B     MOVLW 0xB
+0F64  0627     XORWF position, W
+0F65  1903     BTFSC STATUS, 0x2
+0F66  2F8D     GOTO 0x78D
+0F85  3001     MOVLW 0x1
+0F86  00A2     MOVWF stringPtr
+0F87  0822     MOVF stringPtr, W
+0F88  07A7     ADDWF position, F
+0F89  300B     MOVLW 0xB
+0F8A  0627     XORWF position, W
+0F8B  1D03     BTFSS STATUS, 0x2
+0F8C  2F67     GOTO 0x767
+136:               ptrConfig[i] = _configuration_ReadByte( romOffset + i , MEMORY_SELECT_EEPROM ) ;
+0F67  01A0     CLRF __pcstackBANK0
+0F68  0825     MOVF position, W
+0F69  0727     ADDWF position, W
+0F6A  318E     MOVLP 0xE
+0F6B  2603     CALL 0x603
+0F6C  318F     MOVLP 0xF
+0F6D  0020     MOVLB 0x0
+0F6E  00A2     MOVWF stringPtr
+0F6F  0827     MOVF position, W
+0F70  0724     ADDWF stringPtr, W
+0F71  00A3     MOVWF position
+0F72  0823     MOVF position, W
+0F73  0086     MOVWF FSR1
+0F74  0187     CLRF FSR1H
+0F75  0822     MOVF stringPtr, W
+0F76  0081     MOVWF INDF1
+137:               config->checkSum ^= ptrConfig[i] ;
+0F77  0827     MOVF position, W
+0F78  0724     ADDWF stringPtr, W
+0F79  00A2     MOVWF stringPtr
+0F7A  0822     MOVF stringPtr, W
+0F7B  0086     MOVWF FSR1
+0F7C  0187     CLRF FSR1H
+0F7D  0801     MOVF INDF1, W
+0F7E  00A3     MOVWF position
+0F7F  0826     MOVF i, W
+0F80  3E0A     ADDLW 0xA
+0F81  0086     MOVWF FSR1
+0F82  0187     CLRF FSR1H
+0F83  0823     MOVF position, W
+0F84  0681     XORWF INDF1, F
+138:             }
+139:           
+140:             // Enable All Interrupt
+141:             _private_EnableInterrupt( ) ;
+0F8D  178B     BSF INTCON, 0x7
+142:           
+143:             // Checksum
+144:             if ( config->checkSum ) return RETURN_CODE_CHECKSUM_ERROR ;
+0F8E  0826     MOVF i, W
+0F8F  3E0A     ADDLW 0xA
+0F90  0086     MOVWF FSR1
+0F91  0187     CLRF FSR1H
+0F92  0801     MOVF INDF1, W
+0F93  1903     BTFSC STATUS, 0x2
+0F94  2F97     GOTO 0x797
+0F95  3020     MOVLW 0x20
+0F96  0008     RETURN
+145:           
+146:             return RETURN_CODE_NOERROR ;
+0F97  3000     MOVLW 0x0
+147:           }
+148:           
+149:           // ----------------------------------------------------------------
+150:           // [Function] Get Rom Offset
+151:           uint08 _configuration_GetRomOffset( ) {
+152:             return _configuration_ReadByte( ADDRESS_OF_OFFSET , MEMORY_SELECT_EEPROM ) ;
+0DBA  0020     MOVLB 0x0
+153:           }
+154:           
+155:           // ----------------------------------------------------------------
+156:           // [Function] Write Byte
+157:           void _configuration_WriteByte( uint08 address , uint08 data ) {
+0DEC  0020     MOVLB 0x0
+0DED  00A1     MOVWF data
+158:             _private_SetAddress( address ) ;
+0DEE  0023     MOVLB 0x3
+0DEF  0192     CLRF EEADRH
+0DF0  0020     MOVLB 0x0
+0DF1  0821     MOVF data, W
+0DF2  0023     MOVLB 0x3
+0DF3  0091     MOVWF EEADR
+159:             _private_SetData( data ) ;
+0DF4  0194     CLRF EEDATH
+0DF5  0020     MOVLB 0x0
+0DF6  0820     MOVF __pcstackBANK0, W
+0DF7  0023     MOVLB 0x3
+0DF8  0093     MOVWF EEDAT
+160:             _private_UnlockFlashProgram( ) ;
+0DF9  3055     MOVLW 0x55
+0DFA  0096     MOVWF EECON2
+0DFB  30AA     MOVLW 0xAA
+0DFC  0096     MOVWF EECON2
+161:             _private_StartWrite( ) ;
+0DFD  1495     BSF EECON1, 0x1
+162:             _private_WaitWriting( ) ;
+0DFE  0020     MOVLB 0x0
+0DFF  1E12     BTFSS PIR2, 0x4
+0E00  2DFE     GOTO 0x5FE
+0E01  1212     BCF PIR2, 0x4
+163:           }
+0E02  0008     RETURN
+164:           
+165:           // ----------------------------------------------------------------
+166:           // [Function] Read Byte
+167:           uint08 _configuration_ReadByte( uint08 address , MemorySelect memorySelect ) {
+0E03  0020     MOVLB 0x0
+0E04  00A1     MOVWF data
+168:             _private_SetAddress( address ) ;
+0E05  0023     MOVLB 0x3
+0E06  0192     CLRF EEADRH
+0E07  0020     MOVLB 0x0
+0E08  0821     MOVF data, W
+0E09  0023     MOVLB 0x3
+0E0A  0091     MOVWF EEADR
+169:             _private_ConfugureReading( memorySelect ) ;
+0E0B  1395     BCF EECON1, 0x7
+0E0C  0020     MOVLB 0x0
+0E0D  0820     MOVF __pcstackBANK0, W
+0E0E  1903     BTFSC STATUS, 0x2
+0E0F  2E13     GOTO 0x613
+0E10  0023     MOVLB 0x3
+0E11  1715     BSF EECON1, 0x6
+0E12  2E15     GOTO 0x615
+0E13  0023     MOVLB 0x3
+0E14  1315     BCF EECON1, 0x6
+170:             _private_StartRead( ) ;
+0E15  1415     BSF EECON1, 0x0
+171:             NOP( ) ;
+0E16  0000     NOP
+172:             NOP( ) ;
+0E17  0000     NOP
+173:             return _private_Data( ) ;
+0E18  0023     MOVLB 0x3
+174:           }
+175:           
+176:           #endif	/* CONFIGURATION_H */
+---  /Applications/microchip/xc8/v1.34/sources/common/Umul8.c  ------------------------------------------
+1:             // 8 x 8 bit multiplication with 8 bit result
+2:             
+3:             unsigned char
+4:             __bmul(unsigned char multiplier, unsigned char multiplicand)
+0DDA  0020     MOVLB 0x0
+0DDB  00A3     MOVWF position
+5:             {
+6:             	unsigned char product = 0;
+0DDC  01A2     CLRF stringPtr
+7:             
+8:             #if defined(__OPTIMIZE_SPEED__)
+9:             
+10:            	if(multiplier & 0x01)
+11:            		product = (product + multiplicand) & 0xff;
+12:            	multiplicand <<= 1;
+13:            
+14:            	if(multiplier & 0x02)
+15:            		product = (product + multiplicand) & 0xff;
+16:            	multiplicand <<= 1;
+17:            
+18:            	if(multiplier & 0x04)
+19:            		product = (product + multiplicand) & 0xff;
+20:            	multiplicand <<= 1;
+21:            
+22:            	if(multiplier & 0x08)
+23:            		product = (product + multiplicand) & 0xff;
+24:            	multiplicand <<= 1;
+25:            
+26:            	if(multiplier & 0x10)
+27:            		product = (product + multiplicand) & 0xff;
+28:            	multiplicand <<= 1;
+29:            
+30:            	if(multiplier & 0x20)
+31:            		product = (product + multiplicand) & 0xff;
+32:            	multiplicand <<= 1;
+33:            
+34:            	if(multiplier & 0x40)
+35:            		product = (product + multiplicand) & 0xff;
+36:            	multiplicand <<= 1;
+37:            
+38:            	if(multiplier & 0x80)
+39:            		product = (product + multiplicand) & 0xff;
+40:            
+41:            #else
+42:            	do {
+43:            		if(multiplier & 1)
+0DDD  1C23     BTFSS position, 0x0
+0DDE  2DE3     GOTO 0x5E3
+44:            			product += multiplicand;
+0DDF  0820     MOVF __pcstackBANK0, W
+0DE0  00A1     MOVWF data
+0DE1  0821     MOVF data, W
+0DE2  07A2     ADDWF stringPtr, F
+45:            		multiplicand <<= 1;
+0DE3  1003     BCF STATUS, 0x0
+0DE4  0DA0     RLF __pcstackBANK0, F
+46:            		multiplier >>= 1;
+0DE5  1003     BCF STATUS, 0x0
+0DE6  0CA3     RRF position, F
+47:            	} while(multiplier != 0);
+0DE7  0823     MOVF position, W
+0DE8  1D03     BTFSS STATUS, 0x2
+0DE9  2DDD     GOTO 0x5DD
+48:            
+49:            #endif
+50:            	return product;
+0DEA  0822     MOVF stringPtr, W
+51:            }
+0004  3180     MOVLP 0x0
