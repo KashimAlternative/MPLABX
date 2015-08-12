@@ -29,13 +29,16 @@ typedef struct {
   uint08_t writeCount ;
   uint16_t tempo ;
   uint08_t beatCount ;
-  uint08_t duration ;
+  struct {
+    uint08_t click ;
+    uint08_t key ;
+  } duration ;
   uint08_t pulseWidth ;
   uint08_t tone[3] ;
   sint08_t oscillatorTune ;
   uint08_t checkSum ;
 } ConfigurationData ;
-#  define CONFIG_DEFAULT { 0 , 120 , 4 , 32 , 1 , { 249 , 62 , 82 , }, 0 , 0 }
+#  define CONFIG_DEFAULT { 0 , 120 , 4 , { 32 , 32 , } , 1 , { 249 , 62 , 82 , }, 0 , 0 }
 #  define CONFIG_DATA_SIZE sizeof(ConfigurationData)
 
 // ----------------------------------------------------------------

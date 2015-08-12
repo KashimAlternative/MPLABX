@@ -11,9 +11,12 @@ const struct {
   } METRONOME ;
   struct {
     const char* TITLE ;
+    const char* TITLE_TONE ;
+    const char* TITLE_DURATION ;
     const char* BEAT_COUNT ;
     const char* TONE ;
-    const char* DURATION ;
+    const char* DURATION_CLICK ;
+    const char* DURATION_KEY ;
     const char* PULSE_WIDTH ;
     const char* OSCILLATOR_TUNE ;
   } CONFIGURATION ;
@@ -27,7 +30,7 @@ const struct {
   struct {
     const char* LOAD ;
     const char* SAVE ;
-    const char* LOAD_DEFAULT ;
+    const char* INITIALIZE ;
   } MEMORY ;
   struct {
     const char* MESSAGE ;
@@ -41,9 +44,12 @@ MESSAGE = {
   } ,
   {
     "Config" ,
-    "Beat Count" ,
     "Tone" ,
     "Duration" ,
+    "Beat Count" ,
+    "Tone" ,
+    "Click" ,
+    "Key" ,
     "Pulse Width" ,
     "Osc. Tune" ,
   } ,

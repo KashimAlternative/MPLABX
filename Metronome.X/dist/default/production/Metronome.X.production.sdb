@@ -3,12 +3,15 @@
 [d edition pro ]
 [d chip 16F1827 ]
 [d frameptr 6 ]
-"89 /Users/kshimada/Development/MPLABX/Metronome.X/src/main.c
-[e E2845 . `uc
+"74 /Users/kshimada/Development/MPLABX/Metronome.X/src/main.c
+[e E2830 . `uc
 STATE_METRONOME 0
-STATE_CONFIG_DURATION 1
-STATE_TUNE 2
-STATE_VOID 3
+STATE_TUNE 1
+]
+"235
+[e E2769 . `uc
+BOOL_FALSE 0
+BOOL_TRUE 1
 ]
 "62 /Applications/microchip/xc8/v1.34/sources/common/float.c
 [v ___ftpack __ftpack `(f  1 e 3 0 ]
@@ -18,24 +21,23 @@ STATE_VOID 3
 [v _eecpymem eecpymem `(v  1 e 0 0 ]
 "24
 [v _memcpyee memcpyee `(v  1 e 0 0 ]
-"24 /Users/kshimada/Development/MPLABX/Metronome.X/src/configuration.h
+"23 /Users/kshimada/Development/MPLABX/Metronome.X/src/configuration.h
 [v __configuration_Save _configuration_Save `(v  1 e 0 0 ]
-"72
+"71
 [v __configuration_Load _configuration_Load `(v  1 e 0 0 ]
-"94
+"93
 [v __private_WriteByte _private_WriteByte `(v  1 e 0 0 ]
-"109
+"108
 [v __private_ReadByte _private_ReadByte `(uc  1 e 1 0 ]
-[v i1__private_ReadByte _private_ReadByte `(uc  1 e 1 0 ]
-"126 /Users/kshimada/Development/MPLABX/Metronome.X/src/main.c
+"124 /Users/kshimada/Development/MPLABX/Metronome.X/src/main.c
 [v _main main `(i  1 e 2 0 ]
-"148
+"301
 [v __ _ `II(v  1 e 0 0 ]
 "23 /Users/kshimada/Development/MPLABX/Metronome.X/src/pic16f1827_init.h
 [v _initialize initialize `(v  1 e 0 0 ]
 "337 /Applications/microchip/xc8/v1.34/include/pic16f1827.h
 [v _INTCON INTCON `VEuc  1 e 1 @11 ]
-[s S92 . 1 `uc 1 IOCIF 1 0 :1:0 
+[s S50 . 1 `uc 1 IOCIF 1 0 :1:0 
 `uc 1 INTF 1 0 :1:1 
 `uc 1 TMR0IF 1 0 :1:2 
 `uc 1 IOCIE 1 0 :1:3 
@@ -45,16 +47,16 @@ STATE_VOID 3
 `uc 1 GIE 1 0 :1:7 
 ]
 "360
-[s S101 . 1 `uc 1 . 1 0 :2:0 
+[s S59 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 T0IF 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 T0IE 1 0 :1:5 
 ]
-[u S106 . 1 `S92 1 . 1 0 `S101 1 . 1 0 ]
-[v _INTCONbits INTCONbits `VES106  1 e 1 @11 ]
+[u S64 . 1 `S50 1 . 1 0 `S59 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES64  1 e 1 @11 ]
 "414
 [v _PORTA PORTA `VEuc  1 e 1 @12 ]
-[s S161 . 1 `uc 1 CCP2IF 1 0 :1:0 
+[s S212 . 1 `uc 1 CCP2IF 1 0 :1:0 
 `uc 1 . 1 0 :2:1 
 `uc 1 BCL1IF 1 0 :1:3 
 `uc 1 EEIF 1 0 :1:4 
@@ -63,20 +65,53 @@ STATE_VOID 3
 `uc 1 OSFIF 1 0 :1:7 
 ]
 "613
-[u S169 . 1 `S161 1 . 1 0 ]
-[v _PIR2bits PIR2bits `VES169  1 e 1 @18 ]
+[u S220 . 1 `S212 1 . 1 0 ]
+[v _PIR2bits PIR2bits `VES220  1 e 1 @18 ]
+[s S295 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 TMR4IF 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 TMR6IF 1 0 :1:3 
+`uc 1 CCP3IF 1 0 :1:4 
+`uc 1 CCP4IF 1 0 :1:5 
+]
+"662
+[u S302 . 1 `S295 1 . 1 0 ]
+[v _PIR3bits PIR3bits `VES302  1 e 1 @19 ]
 "711
 [v _TMR0 TMR0 `VEuc  1 e 1 @21 ]
 "914
 [v _TMR2 TMR2 `VEuc  1 e 1 @26 ]
 "933
 [v _PR2 PR2 `VEuc  1 e 1 @27 ]
-"952
-[v _T2CON T2CON `VEuc  1 e 1 @28 ]
+[s S89 . 1 `uc 1 T2CKPS0 1 0 :1:0 
+`uc 1 T2CKPS1 1 0 :1:1 
+`uc 1 TMR2ON 1 0 :1:2 
+`uc 1 T2OUTPS0 1 0 :1:3 
+`uc 1 T2OUTPS1 1 0 :1:4 
+`uc 1 T2OUTPS2 1 0 :1:5 
+`uc 1 T2OUTPS3 1 0 :1:6 
+]
+"973
+[s S97 . 1 `uc 1 T2CKPS 1 0 :2:0 
+`uc 1 . 1 0 :1:2 
+`uc 1 T2OUTPS 1 0 :4:3 
+]
+[u S101 . 1 `S89 1 . 1 0 `S97 1 . 1 0 ]
+[v _T2CONbits T2CONbits `VES101  1 e 1 @28 ]
 "1120
 [v _TRISA TRISA `VEuc  1 e 1 @140 ]
 "1181
 [v _TRISB TRISB `VEuc  1 e 1 @141 ]
+[s S278 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 TMR4IE 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 TMR6IE 1 0 :1:3 
+`uc 1 CCP3IE 1 0 :1:4 
+`uc 1 CCP4IE 1 0 :1:5 
+]
+"1368
+[u S285 . 1 `S278 1 . 1 0 ]
+[v _PIE3bits PIE3bits `VES285  1 e 1 @147 ]
 "1607
 [v _OSCTUNE OSCTUNE `VEuc  1 e 1 @152 ]
 [s S19 . 1 `uc 1 SCS0 1 0 :1:0 
@@ -111,7 +146,7 @@ STATE_VOID 3
 [v _EEDATL EEDATL `VEuc  1 e 1 @403 ]
 "2999
 [v _EEDATH EEDATH `VEuc  1 e 1 @404 ]
-[s S129 . 1 `uc 1 RD 1 0 :1:0 
+[s S180 . 1 `uc 1 RD 1 0 :1:0 
 `uc 1 WR 1 0 :1:1 
 `uc 1 WREN 1 0 :1:2 
 `uc 1 WRERR 1 0 :1:3 
@@ -121,8 +156,8 @@ STATE_VOID 3
 `uc 1 EEPGD 1 0 :1:7 
 ]
 "3035
-[u S138 . 1 `S129 1 . 1 0 ]
-[v _EECON1bits EECON1bits `VES138  1 e 1 @405 ]
+[u S189 . 1 `S180 1 . 1 0 ]
+[v _EECON1bits EECON1bits `VES189  1 e 1 @405 ]
 "3079
 [v _EECON2 EECON2 `VEuc  1 e 1 @406 ]
 "4892
@@ -145,14 +180,23 @@ STATE_VOID 3
 [v _TMR6 TMR6 `VEuc  1 e 1 @1052 ]
 "6310
 [v _PR6 PR6 `VEuc  1 e 1 @1053 ]
-"6329
-[v _T6CON T6CON `VEuc  1 e 1 @1054 ]
+[s S128 . 1 `uc 1 T6CKPS0 1 0 :1:0 
+`uc 1 T6CKPS1 1 0 :1:1 
+`uc 1 TMR6ON 1 0 :1:2 
+`uc 1 T6OUTPS0 1 0 :1:3 
+`uc 1 T6OUTPS1 1 0 :1:4 
+`uc 1 T6OUTPS2 1 0 :1:5 
+`uc 1 T6OUTPS3 1 0 :1:6 
+]
+"6350
+[s S136 . 1 `uc 1 T6CKPS 1 0 :2:0 
+`uc 1 . 1 0 :1:2 
+`uc 1 T6OUTPS 1 0 :4:3 
+]
+[u S140 . 1 `S128 1 . 1 0 `S136 1 . 1 0 ]
+[v _T6CONbits T6CONbits `VES140  1 e 1 @1054 ]
 "6826
 [v _CCP2SEL CCP2SEL `VEb  1 e 0 @2283 ]
-"6962
-[v _GIE GIE `VEb  1 e 0 @95 ]
-"7184
-[v _PEIE PEIE `VEb  1 e 0 @94 ]
 "7194
 [v _PSA PSA `VEb  1 e 0 @1195 ]
 "7414
@@ -181,149 +225,157 @@ STATE_VOID 3
 [v _TMR6IF TMR6IF `VEb  1 e 0 @155 ]
 "7454
 [v _TMR6ON TMR6ON `VEb  1 e 0 @8434 ]
-[s S184 . 1 `uc 1 _ 1 0 :4:0 
+[s S235 . 1 `uc 1 _ 1 0 :4:0 
 `uc 1 keyDown 1 0 :1:4 
-`uc 1 keyMode 1 0 :1:5 
+`uc 1 keyCenter 1 0 :1:5 
 `uc 1 keyUp 1 0 :1:6 
 ]
-"23 /Users/kshimada/Development/MPLABX/Metronome.X/src/main.c
-[s S189 . 1 `uc 1 _ 1 0 :4:0 
-`uc 1 keys 1 0 :3:4 
-]
-[u S192 . 1 `uc 1 byte 1 0 `S184 1 . 1 0 `S189 1 . 1 0 ]
-[v _porta porta `S192  1 e 1 0 ]
-"38
+"25 /Users/kshimada/Development/MPLABX/Metronome.X/src/main.c
+[u S240 . 1 `uc 1 byte 1 0 `S235 1 . 1 0 ]
+[v _portAState_ portAState_ `S240  1 e 1 0 ]
+[s S243 . 3 `uc 1 up 1 0 `uc 1 down 1 1 `uc 1 center 1 2 ]
+"34
+[v _keyCount keyCount `S243  1 e 3 0 ]
+"45
 [v _SEGMENT_BIT SEGMENT_BIT `DCC[11]uc  1 e 11 0 ]
-"51
+"58
 [v _SEGMET_BIT2 SEGMET_BIT2 `DCC[4]uc  1 e 4 0 ]
-"59
+"66
 [v _displayBuffer displayBuffer `[4]uc  1 e 4 0 ]
-"60
+"67
 [v _displayDigit displayDigit `uc  1 e 1 0 ]
-"63
-[v _prescaleEvent prescaleEvent `uc  1 e 1 0 ]
-[s S196 . 4 `uc 1 up 1 0 `uc 1 upDown 1 1 `uc 1 down 1 2 `uc 1 mode 1 3 ]
-"80
-[s S201 . 2 `ui 1 exceptDown 2 0 ]
-[s S203 . 3 `uc 1 _ 1 0 `ui 1 exceptUp 2 1 ]
-[u S206 . 4 `S196 1 . 4 0 `S201 1 . 2 0 `S203 1 . 3 0 ]
-[v _keyCount keyCount `S206  1 e 4 0 ]
-"89
-[v _machineState machineState `E2845  1 e 1 0 ]
-[s S86 . 5 `ui 1 tempo 2 0 `uc 1 duration 1 2 `uc 1 oscillatorTune 1 3 `uc 1 writeCount 1 4 ]
-"92
-[v _config config `S86  1 e 5 0 ]
-"97
+"74
+[v _machineState machineState `E2830  1 e 1 0 ]
+[s S170 . 4 `ui 1 tempo 2 0 `uc 1 oscillatorTune 1 2 `uc 1 writeCount 1 3 ]
+"77
+[v _config config `S170  1 e 4 0 ]
+"82
 [v _tempoCounter tempoCounter `um  1 e 3 0 ]
-[s S215 . 1 `uc 1 duration 1 0 :4:0 
-`uc 1 beat 1 0 :2:4 
-`uc 1 measure 1 0 :2:6 
+[s S250 . 1 `uc 1 beat 1 0 :2:0 
+`uc 1 measure 1 0 :2:2 
 ]
-"105
-[u S219 . 1 `uc 1 all 1 0 `S215 1 . 1 0 ]
-[v _beatCounter beatCounter `S219  1 e 1 0 ]
-[s S222 . 1 `uc 1 valuePlus 1 0 :1:0 
-`uc 1 valueMinus 1 0 :1:1 
-`uc 1 changeState 1 0 :1:2 
-`uc 1 displayValue 1 0 :1:3 
-`uc 1 saveConfig 1 0 :1:4 
+"89
+[u S253 . 1 `uc 1 all 1 0 `S250 1 . 1 0 ]
+[v _beatCounter beatCounter `S253  1 e 1 0 ]
+[s S256 . 2 `uc 1 click 1 0 `uc 1 key 1 1 ]
+"93
+[v _durationCounter_ durationCounter_ `S256  1 e 2 0 ]
+"95
+[v _autoHideCounter_ autoHideCounter_ `ui  1 e 2 0 ]
+[s S259 . 1 `uc 1 changeValue 1 0 :1:0 
+`uc 1 resetMetronome 1 0 :1:1 
+`uc 1 soundOn 1 0 :1:2 
+`uc 1 soundOnKey 1 0 :1:3 
+`uc 1 soundOff 1 0 :1:4 
 ]
-"123
-[s S228 . 1 `uc 1 valueChange 1 0 :2:0 
+"110
+[u S265 . 1 `uc 1 all 1 0 `S259 1 . 1 0 ]
+[v _events_ events_ `S265  1 e 1 0 ]
+[s S268 . 1 `uc 1 keyPressUp 1 0 :1:0 
+`uc 1 keyPressHeldUp 1 0 :1:1 
+`uc 1 keyPressDown 1 0 :1:2 
+`uc 1 keyPressHeldDown 1 0 :1:3 
+`uc 1 keyPressCenter 1 0 :1:4 
+`uc 1 keyPressHeldCenter 1 0 :1:5 
 ]
-[u S230 . 1 `uc 1 all 1 0 `S222 1 . 1 0 `S228 1 . 1 0 ]
-[v _events_ events_ `S230  1 e 1 0 ]
-"126
+"121
+[u S275 . 1 `uc 1 all 1 0 `S268 1 . 1 0 ]
+[v _inputEvents_ inputEvents_ `S275  1 e 1 0 ]
+"124
 [v _main main `(i  1 e 2 0 ]
 {
-"145
+"238
+[v main@compareUnit compareUnit `ui  1 a 2 13 ]
+"259
+[v main@i_490 i `uc  1 a 1 16 ]
+"236
+[v main@i i `uc  1 a 1 17 ]
+"218
+[v main@tmpValue tmpValue `ui  1 a 2 10 ]
+"233
+[v main@displayNumber displayNumber `uc  1 a 1 12 ]
+"235
+[v main@isNonZero isNonZero `E2769  1 a 1 9 ]
+[s S235 . 1 `uc 1 _ 1 0 :4:0 
+`uc 1 keyDown 1 0 :1:4 
+`uc 1 keyCenter 1 0 :1:5 
+`uc 1 keyUp 1 0 :1:6 
+]
+"148
+[u S240 . 1 `uc 1 byte 1 0 `S235 1 . 1 0 ]
+[v main@keyPressed keyPressed `S240  1 a 1 15 ]
+"147
+[v main@prevPortAState prevPortAState `S240  1 s 1 prevPortAState ]
+"231
+[v main@COMPARE_UNITS COMPARE_UNITS `DCC[4]ui  1 s 8 COMPARE_UNITS ]
+"298
 } 0
 "23 /Users/kshimada/Development/MPLABX/Metronome.X/src/pic16f1827_init.h
 [v _initialize initialize `(v  1 e 0 0 ]
 {
-"83
+"84
 } 0
-"72 /Users/kshimada/Development/MPLABX/Metronome.X/src/configuration.h
-[v __configuration_Load _configuration_Load `(v  1 e 0 0 ]
-{
-[s S86 . 5 `ui 1 tempo 2 0 `uc 1 duration 1 2 `uc 1 oscillatorTune 1 3 `uc 1 writeCount 1 4 ]
-[v __configuration_Load@config config `*.4S86  1 a 1 wreg ]
-"82
-[v __configuration_Load@i i `uc  1 a 1 13 ]
-"75
-[v __configuration_Load@romPosition romPosition `uc  1 a 1 12 ]
-"74
-[v __configuration_Load@ptrConfig ptrConfig `*.4uc  1 a 1 11 ]
-"72
-[v __configuration_Load@config config `*.4S86  1 a 1 wreg ]
-"74
-"72
-[v __configuration_Load@config config `*.4S86  1 a 1 10 ]
-"86
-} 0
-"109
-[v __private_ReadByte _private_ReadByte `(uc  1 e 1 0 ]
-{
-[v __private_ReadByte@address address `uc  1 a 1 wreg ]
-[v __private_ReadByte@address address `uc  1 a 1 wreg ]
-[v __private_ReadByte@address address `uc  1 a 1 8 ]
-"118
-} 0
-"148 /Users/kshimada/Development/MPLABX/Metronome.X/src/main.c
-[v __ _ `II(v  1 e 0 0 ]
-{
-"277
-[v __@compareUnit compareUnit `ui  1 a 2 3 ]
-"301
-[v __@i_379 i `uc  1 a 1 5 ]
-"290
-[v __@i_378 i `uc  1 a 1 6 ]
-"276
-[v __@i i `uc  1 a 1 7 ]
-"257
-[v __@tmpValue tmpValue `ui  1 a 2 1 ]
-"275
-[v __@isNonZero isNonZero `uc  1 a 1 0 ]
-"273
-[v __@COMPARE_UNITS COMPARE_UNITS `DCC[3]uc  1 s 3 COMPARE_UNITS ]
-"339
-} 0
-"24 /Users/kshimada/Development/MPLABX/Metronome.X/src/configuration.h
+"23 /Users/kshimada/Development/MPLABX/Metronome.X/src/configuration.h
 [v __configuration_Save _configuration_Save `(v  1 e 0 0 ]
 {
-[s S86 . 5 `ui 1 tempo 2 0 `uc 1 duration 1 2 `uc 1 oscillatorTune 1 3 `uc 1 writeCount 1 4 ]
-[v __configuration_Save@config config `*.4S86  1 a 1 wreg ]
-"52
-[v __configuration_Save@i i `uc  1 a 1 7 ]
+[s S170 . 4 `ui 1 tempo 2 0 `uc 1 oscillatorTune 1 2 `uc 1 writeCount 1 3 ]
+[v __configuration_Save@config config `*.4S170  1 a 1 wreg ]
+"51
+[v __configuration_Save@i i `uc  1 a 1 4 ]
+"26
+[v __configuration_Save@romPosition romPosition `uc  1 a 1 5 ]
 "27
-[v __configuration_Save@romPosition romPosition `uc  1 a 1 8 ]
+[v __configuration_Save@isPositionChanged isPositionChanged `uc  1 a 1 2 ]
+"25
+[v __configuration_Save@ptrConfig ptrConfig `*.4uc  1 a 1 1 ]
 "28
-[v __configuration_Save@isPositionChanged isPositionChanged `uc  1 a 1 5 ]
-"26
-[v __configuration_Save@ptrConfig ptrConfig `*.4uc  1 a 1 4 ]
-"29
-[v __configuration_Save@saveIntcon saveIntcon `uc  1 a 1 3 ]
-"24
-[v __configuration_Save@config config `*.4S86  1 a 1 wreg ]
-"26
-"24
-[v __configuration_Save@config config `*.4S86  1 a 1 6 ]
-"68
+[v __configuration_Save@saveIntcon saveIntcon `uc  1 a 1 0 ]
+"23
+[v __configuration_Save@config config `*.4S170  1 a 1 wreg ]
+"25
+"23
+[v __configuration_Save@config config `*.4S170  1 a 1 3 ]
+"67
 } 0
-"109
-[v i1__private_ReadByte _private_ReadByte `(uc  1 e 1 0 ]
-{
-[v i1__private_ReadByte@address address `uc  1 a 1 wreg ]
-[v i1__private_ReadByte@address address `uc  1 a 1 wreg ]
-[v i1__private_ReadByte@address address `uc  1 a 1 0 ]
-"118
-} 0
-"94
+"93
 [v __private_WriteByte _private_WriteByte `(v  1 e 0 0 ]
 {
 [v __private_WriteByte@address address `uc  1 a 1 wreg ]
 [v __private_WriteByte@address address `uc  1 a 1 wreg ]
-[v __private_WriteByte@data data `uc  1 p 1 0 ]
-[v __private_WriteByte@address address `uc  1 a 1 1 ]
-"105
+[v __private_WriteByte@data data `uc  1 p 1 4 ]
+[v __private_WriteByte@address address `uc  1 a 1 5 ]
+"104
+} 0
+"71
+[v __configuration_Load _configuration_Load `(v  1 e 0 0 ]
+{
+[s S170 . 4 `ui 1 tempo 2 0 `uc 1 oscillatorTune 1 2 `uc 1 writeCount 1 3 ]
+[v __configuration_Load@config config `*.4S170  1 a 1 wreg ]
+"81
+[v __configuration_Load@i i `uc  1 a 1 3 ]
+"74
+[v __configuration_Load@romPosition romPosition `uc  1 a 1 2 ]
+"73
+[v __configuration_Load@ptrConfig ptrConfig `*.4uc  1 a 1 1 ]
+"71
+[v __configuration_Load@config config `*.4S170  1 a 1 wreg ]
+"73
+"71
+[v __configuration_Load@config config `*.4S170  1 a 1 0 ]
+"85
+} 0
+"108
+[v __private_ReadByte _private_ReadByte `(uc  1 e 1 0 ]
+{
+[v __private_ReadByte@address address `uc  1 a 1 wreg ]
+[v __private_ReadByte@address address `uc  1 a 1 wreg ]
+[v __private_ReadByte@address address `uc  1 a 1 4 ]
+"117
+} 0
+"301 /Users/kshimada/Development/MPLABX/Metronome.X/src/main.c
+[v __ _ `II(v  1 e 0 0 ]
+{
+"315
+[v __@interruptCount interruptCount `ui  1 s 2 interruptCount ]
+"374
 } 0

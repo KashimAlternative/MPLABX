@@ -3745,15 +3745,14 @@ extern __bit __timeout;
 void initialize( ) {
 
 
-
 OSCCONbits.SPLLEN = 1 ;
 OSCCONbits.IRCF = 0b1110 ;
 OSCCONbits.SCS = 0b00 ;
 OSCTUNE = 0b00000000 ;
 
 
-GIE = 1 ;
-PEIE = 1 ;
+INTCONbits.GIE = 0 ;
+INTCONbits.PEIE = 0 ;
 
 
 PSA = 1 ;
@@ -3764,28 +3763,30 @@ TMR0IF = 0 ;
 TMR0IE = 0 ;
 
 
-T2CON = 0b00000011 ;
+TMR2ON = 1 ;
+T2CONbits.T2CKPS = 0b11;
+T2CONbits.T2OUTPS = 0b0000;
 PR2 = 124 ;
 TMR2 = 0 ;
 TMR2IF = 0 ;
-TMR2IE = 1 ;
-TMR2ON = 1 ;
+TMR2IE = 0 ;
 
 
+TMR4ON = 0 ;
 T4CON = 0b00000010 ;
 PR4 = 124 ;
 TMR4 = 0 ;
 TMR4IF = 0 ;
-TMR4IE = 1 ;
-TMR4ON = 0 ;
+TMR4IE = 0 ;
 
 
-T6CON = 0b00000000 ;
-PR6 = 249 ;
+TMR6ON = 0 ;
+T6CONbits.T6CKPS = 0b00;
+T6CONbits.T6OUTPS = 0b0000 ;
+PR6 = 124 ;
 TMR6 = 0 ;
 TMR6IF = 0 ;
-TMR6IE = 1 ;
-TMR6ON = 1 ;
+TMR6IE = 0 ;
 
 
 CCP2CON = 0B00001100 ;
@@ -3828,12 +3829,11 @@ typedef signed long sint32_t ;
 # 8 "src/configuration.h"
 typedef struct {
 uint16_t tempo ;
-uint08_t duration ;
 uint08_t oscillatorTune ;
 uint08_t writeCount ;
 } ConfigurationData ;
 
-# 19
+# 18
 void _private_WriteByte( uint08_t address , uint08_t data ) ;
 uint08_t _private_ReadByte( uint08_t address ) ;
 
@@ -3903,7 +3903,7 @@ for ( uint08_t i = 0 ; i < sizeof ( ConfigurationData ) ; i++ , ptrConfig++ ) {
 
 }
 
-# 94
+# 93
 void _private_WriteByte( uint08_t address , uint08_t data ) {
 EEADRH = 0x00 ;
 EEDATH = 0x00 ;
@@ -3930,22 +3930,28 @@ __nop() ;
 return EEDATL ;
 }
 
-# 11 "src/main.c"
-union {
+# 16 "src/main.c"
+typedef union {
 uint08_t byte ;
 struct {
 uint08_t _ : 4 ;
 uint08_t keyDown : 1 ;
-uint08_t keyMode : 1 ;
+uint08_t keyCenter : 1 ;
 uint08_t keyUp : 1 ;
 } ;
-struct {
-uint08_t _ : 4 ;
-uint08_t keys : 3 ;
-} ;
-} porta ;
+} UniPortA ;
+UniPortA portAState_ ;
 
-# 38
+
+
+
+struct {
+uint08_t up ;
+uint08_t down ;
+uint08_t center ;
+} keyCount ;
+
+# 45
 const uint08_t SEGMENT_BIT[] = {
 0b11111100 ,
 0b01100000 ,
@@ -3960,10 +3966,10 @@ const uint08_t SEGMENT_BIT[] = {
 0b00000000 ,
 } ;
 const uint08_t SEGMET_BIT2[] = {
-0b00000111 ,
-0b00001011 ,
-0b00001101 ,
 0b00001110 ,
+0b00001101 ,
+0b00001011 ,
+0b00000111 ,
 } ;
 
 
@@ -3971,36 +3977,14 @@ uint08_t displayBuffer[4] = { 10 , 10 , 10 , 10 } ;
 uint08_t displayDigit ;
 
 
-uint08_t prescaleEvent = 0 ;
-
-
-union {
-struct {
-uint08_t up ;
-uint08_t upDown ;
-uint08_t down ;
-uint08_t mode ;
-} ;
-struct {
-uint16_t exceptDown ;
-} ;
-struct {
-uint08_t _ ;
-uint16_t exceptUp ;
-} ;
-} keyCount ;
-
-
 typedef enum {
 STATE_METRONOME = 0 ,
-STATE_CONFIG_DURATION ,
 STATE_TUNE ,
-STATE_VOID ,
 } MachineState ;
 MachineState machineState = STATE_METRONOME ;
 
 
-ConfigurationData config = { 120 , 2 , 0x20 , 0 } ;
+ConfigurationData config = { 120 , 0x20 , 0 } ;
 
 
 
@@ -4009,158 +3993,134 @@ uint24_t tempoCounter = 0 ;
 union {
 uint08_t all ;
 struct {
-uint08_t duration : 4 ;
 uint08_t beat : 2 ;
 uint08_t measure : 2 ;
 } ;
 } beatCounter = 0 ;
+struct {
+uint08_t click ;
+uint08_t key ;
+} durationCounter_ = { 0 , 0 } ;
 
-# 111
+uint16_t autoHideCounter_ = 0 ;
+
+# 101
 union {
 uint08_t all ;
 struct {
-uint08_t valuePlus : 1 ;
-uint08_t valueMinus : 1 ;
-uint08_t changeState : 1 ;
-uint08_t displayValue : 1 ;
-uint08_t saveConfig : 1 ;
-} ;
-struct {
-uint08_t valueChange : 2 ;
+unsigned changeValue : 1 ;
+unsigned resetMetronome : 1 ;
+unsigned soundOn : 1 ;
+unsigned soundOnKey : 1 ;
+unsigned soundOff : 1 ;
 } ;
 } events_ ;
+union {
+uint08_t all ;
+struct {
+unsigned keyPressUp : 1 ;
+unsigned keyPressHeldUp : 1 ;
+unsigned keyPressDown : 1 ;
+unsigned keyPressHeldDown : 1 ;
+unsigned keyPressCenter : 1 ;
+unsigned keyPressHeldCenter : 1 ;
+} ;
+} inputEvents_ ;
 
 
 int main( void ) {
 
 initialize( ) ;
 
-porta.byte=~PORTA; ;
-
 _configuration_Load( &config ) ;
 
 machineState = STATE_METRONOME ;
-tempoCounter = 0 ;
-beatCounter.all = 0 ;
 
-events_.displayValue = 1; ;
+events_.resetMetronome = 1; ;
 
 
-TMR6IE = 1 ;
+PIE3bits.TMR6IE = 1 ;
+PIR3bits.TMR6IF = 0 ;
+T6CONbits.TMR6ON = 1 ;
+INTCONbits.PEIE = 1 ;
+INTCONbits.GIE = 1 ;
 
-for( ; ; ) ;
-
-}
-
-
-void interrupt _( void ) {
-if( !TMR6IF ) return ;
-TMR6IF = 0 ;
-
-
-tempoCounter += config.tempo ;
-if( ++tempoCounter >= ( 32000000L * 3 / 800 ) ) {
-tempoCounter -= ( 32000000L * 3 / 800 ) ;
-beatCounter.all++ ;
-}
-
-
-if( ++prescaleEvent & 0x3F ) return ;
+for( ; ; ) {
 
 
 asm("clrwdt") ;
 
 
-porta.byte=~PORTA; ;
+static UniPortA prevPortAState = { 0x00 } ;
+UniPortA keyPressed ;
 
+keyPressed.byte = ( portAState_.byte ^ prevPortAState.byte ) & portAState_.byte ;
+prevPortAState.byte = portAState_.byte ;
 
-if( porta.keyMode ) {
-if( ++keyCount.mode == 0xFF ) keyCount.mode = 0xF0 ;
-if( keyCount.mode == 0x10 ) events_.changeState = 1; ;
+if( keyPressed.keyCenter ) {
+inputEvents_.keyPressCenter = 1; ;
 }
-else
-keyCount.mode = 0 ;
 
-
-if( porta.keyUp && !keyCount.exceptUp ) {
-if( ++keyCount.up == 0xFF ) keyCount.up = 0xF0 ;
-if( keyCount.up == 0x10 || keyCount.up == 0xF0 ) events_.valuePlus = 1; ;
-
-
+if( keyPressed.keyUp || (inputEvents_.keyPressHeldUp&&!(inputEvents_.keyPressHeldUp=0)) ) {
+inputEvents_.keyPressUp = 1; ;
 }
-else
-keyCount.up = 0 ;
 
-
-if( porta.keyDown && !keyCount.exceptDown ) {
-if( ++keyCount.down == 0xFF ) keyCount.down = 0xF0 ;
-if( keyCount.down == 0x10 || keyCount.down == 0xF0 ) events_.valueMinus = 1; ;
-
-
+if( keyPressed.keyDown || (inputEvents_.keyPressHeldDown&&!(inputEvents_.keyPressHeldDown=0)) ) {
+inputEvents_.keyPressDown = 1; ;
 }
-else
-keyCount.down = 0 ;
 
-
-if( porta.keyDown && porta.keyUp ) {
-if( keyCount.upDown != 0xFF ) keyCount.upDown++ ;
-if( keyCount.upDown == 0xF0 ) events_.saveConfig = 1; ;
+if( inputEvents_.all ) {
+events_.soundOnKey = 1; ;
 }
-else if( !( porta.keyDown && porta.keyUp ) )
-keyCount.upDown = 0 ;
 
 
-if( (events_.changeState&&!(events_.changeState=0)) ) {
-events_.displayValue = 1; ;
-
-if( ++machineState == STATE_VOID ) {
-machineState = STATE_METRONOME ;
-tempoCounter = 0 ;
-beatCounter.all = 0 ;
-}
+if( (inputEvents_.keyPressCenter&&!(inputEvents_.keyPressCenter=0)) ) {
 
 }
 
 
-if( (events_.saveConfig&&!(events_.saveConfig=0)) ) {
+if( (inputEvents_.keyPressHeldCenter&&!(inputEvents_.keyPressHeldCenter=0)) ) {
+INTCONbits.GIE=0 ;
 _configuration_Save( &config ) ;
 asm("reset") ;
 }
 
 
-if( (events_.valueChange&&!(events_.valueChange=0)) ) {
-
-events_.displayValue = 1; ;
-
 switch( machineState ) {
 
 case STATE_METRONOME:
-if( (events_.valuePlus&&!(events_.valuePlus=0)) && config.tempo != 999 ) config.tempo++ ;
-if( (events_.valueMinus&&!(events_.valueMinus=0)) && config.tempo != 0 ) config.tempo-- ;
-tempoCounter = 0 ;
-beatCounter.all = 0 ;
+if( (inputEvents_.keyPressUp&&!(inputEvents_.keyPressUp=0)) && config.tempo != 9999 ) {
+config.tempo++ ;
+events_.changeValue = 1; ;
+events_.resetMetronome = 1; ;
+}
+if( (inputEvents_.keyPressDown&&!(inputEvents_.keyPressDown=0)) && config.tempo != 0 ) {
+config.tempo-- ;
+events_.changeValue = 1; ;
+events_.resetMetronome = 1; ;
+}
 break ;
 
-case STATE_CONFIG_DURATION:
-if( (events_.valuePlus&&!(events_.valuePlus=0)) && config.duration != 0x10 ) config.duration++ ;
-if( (events_.valueMinus&&!(events_.valueMinus=0)) && config.duration != 0x00 ) config.duration-- ;
-break ;
 
 case STATE_TUNE:
-if( (events_.valuePlus&&!(events_.valuePlus=0)) && config.oscillatorTune != 63 ) config.oscillatorTune++ ;
-if( (events_.valueMinus&&!(events_.valueMinus=0)) && config.oscillatorTune != 0 ) config.oscillatorTune-- ;
+if( (inputEvents_.keyPressUp&&!(inputEvents_.keyPressUp=0)) && config.oscillatorTune != 63 ) config.oscillatorTune++ ;
+if( (inputEvents_.keyPressDown&&!(inputEvents_.keyPressDown=0)) && config.oscillatorTune != 0 ) config.oscillatorTune-- ;
 break ;
 }
 
+
+if( (events_.resetMetronome&&!(events_.resetMetronome=0)) ) {
+tempoCounter = 0 ;
+beatCounter.all = 0 ;
+events_.soundOn = 1; ;
+events_.changeValue = 1; ;
 }
 
 
-if( (events_.displayValue&&!(events_.displayValue=0)) ) {
+if( (events_.changeValue&&!(events_.changeValue=0)) ) {
 
-displayBuffer[0] = 0 ;
-displayBuffer[1] = 0 ;
-displayBuffer[2] = 0 ;
-displayBuffer[3] = 10 ;
+autoHideCounter_ = 0x1000 ;
+
 
 uint16_t tmpValue ;
 switch( machineState ) {
@@ -4168,9 +4128,6 @@ case STATE_METRONOME:
 tmpValue = config.tempo ;
 break ;
 
-case STATE_CONFIG_DURATION:
-tmpValue = config.duration ;
-break ;
 
 case STATE_TUNE:
 tmpValue = config.oscillatorTune ;
@@ -4178,25 +4135,25 @@ break ;
 
 }
 
-static const uint08_t COMPARE_UNITS[] = { 1 , 10 , 100 } ;
+static const uint16_t COMPARE_UNITS[] = { 1000 , 100 , 10 , 1 } ;
 
-uint08_t isNonZero = 0 ;
-for( uint08_t i = 2 ; i != 0xFF ; i-- ) {
+uint08_t displayNumber = 0 ;
+
+Bool_t isNonZero = BOOL_FALSE ;
+for( uint08_t i = 0 ; i < 4 ; i++ ) {
+displayNumber = 0 ;
 uint16_t compareUnit = COMPARE_UNITS[i] ;
 while( tmpValue >= compareUnit ) {
 tmpValue -= compareUnit ;
-displayBuffer[i]++ ;
-isNonZero = 1 ;
+displayNumber++ ;
+isNonZero = BOOL_TRUE ;
 }
 
-if( i == 0 ) break ;
-if( isNonZero ) continue ;
-
-displayBuffer[i] = 10 ;
+if( isNonZero )
+displayBuffer[i] = SEGMENT_BIT[ displayNumber ] ;
+else
+displayBuffer[i] = 0x00 ;
 }
-
-for( uint08_t i = 0 ; i != 4 ; i++ )
-displayBuffer[i] = SEGMENT_BIT[ displayBuffer[ i ] ] ;
 
 }
 
@@ -4211,9 +4168,17 @@ displayBuffer[i] &= 0xFE ;
 break ;
 
 default:
-displayBuffer[3] = SEGMENT_BIT[ ( beatCounter.beat ) + 1 ] ;
+if( (events_.soundOnKey&&!(events_.soundOnKey=0)) ) {
+durationCounter_.key = 0x40 ;
+PR2 = 125 ;
+CCPR2L = ( PR2 >> 1 ) ;
+T2CONbits.TMR2ON=1 ;
+}
+if( (events_.soundOn&&!(events_.soundOn=0)) && !durationCounter_.key ) {
+durationCounter_.click = 0x80 ;
+if( !autoHideCounter_ )
+displayBuffer[3] = SEGMENT_BIT[ ( beatCounter.beat ) + 1 ] | 0x01 ;
 
-if( beatCounter.duration < config.duration ) {
 if( !beatCounter.beat ) {
 if( beatCounter.measure & 0x01 )
 PR2 = 167 ;
@@ -4223,25 +4188,94 @@ PR2 = 125 ;
 else {
 PR2 = 251 ;
 }
-displayBuffer[3] |= 0x01 ;
-}
-else {
-PR2 = 0 ;
-}
 
+CCPR2L = ( PR2 >> 1 ) ;
+T2CONbits.TMR2ON=1 ;
+}
 break ;
 }
-CCPR2L = ( PR2 >> 1 ) ;
+
+if( (events_.soundOff&&!(events_.soundOff=0)) ) {
+T2CONbits.TMR2ON=0 ;
+displayBuffer[3] &= 0xFE ;
+}
+
+}
+
+}
 
 
-if( prescaleEvent & 0x7F ) return ;
+void interrupt _( void ) {
+if( !PIR3bits.TMR6IF ) return ;
+PIR3bits.TMR6IF = 0 ;
 
 
+tempoCounter += config.tempo ;
+if( tempoCounter >= ( 32000000L * 3 / 25 ) ) {
+tempoCounter -= ( 32000000L * 3 / 25 ) ;
+beatCounter.all++ ;
+
+events_.soundOn = 1; ;
+}
+
+
+static uint16_t interruptCount = 0 ;
+if( ++interruptCount == 640 ) interruptCount = 0 ;
+
+if( !( interruptCount & 0x0F ) ) {
+if( autoHideCounter_ )
+autoHideCounter_-- ;
+
+if( durationCounter_.click && ! --durationCounter_.click && !durationCounter_.key )
+events_.soundOff = 1; ;
+if( durationCounter_.key && ! --durationCounter_.key )
+events_.soundOff = 1; ;
+}
+
+
+if( !interruptCount ) {
+portAState_.byte = (~PORTA&0x70); ;
+
+if( portAState_.keyUp ) {
+if( ++keyCount.up == 0x40 ) {
+keyCount.up = 0x3C ;
+inputEvents_.keyPressHeldUp = 1; ;
+}
+}
+else
+keyCount.up = 0 ;
+
+if( portAState_.keyDown ) {
+if( ++keyCount.down == 0x40 ) {
+keyCount.down = 0x3C ;
+inputEvents_.keyPressHeldDown = 1; ;
+}
+}
+else
+keyCount.down = 0 ;
+
+if( portAState_.keyCenter ) {
+if( ++keyCount.center == 0x40 ) {
+keyCount.center = 0x3C ;
+inputEvents_.keyPressHeldCenter = 1; ;
+}
+}
+else
+keyCount.center = 0 ;
+}
+
+
+if( !( interruptCount & 0x001F ) ) {
 displayDigit = ( displayDigit + 1 ) & 0x03 ;
-
-
-
-LATB = displayBuffer[ 3 ] ;
-LATA = SEGMET_BIT2[ 3 ] ;
+if( autoHideCounter_ ) {
+LATA = 0x0F ;
+LATB = displayBuffer[ displayDigit ] ;
+LATA = SEGMET_BIT2[ displayDigit ] ;
+}
+else {
+LATB = SEGMENT_BIT[beatCounter.beat + 1] ;
+LATA = SEGMET_BIT2[ beatCounter.beat ] ;
+}
+}
 
 }

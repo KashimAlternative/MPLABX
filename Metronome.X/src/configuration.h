@@ -7,11 +7,10 @@
 // [Struct] Configuration
 typedef struct {
   uint16_t tempo ;
-  uint08_t duration ;
   uint08_t oscillatorTune ;
   uint08_t writeCount ;
 } ConfigurationData ;
-#  define CONFIGURATION_INITIAL { 120 , 2 , 0x20 , 0 }
+#  define CONFIGURATION_INITIAL { 120 , 0x20 , 0 }
 #  define DATA_SIZE sizeof ( ConfigurationData )
 
 // ----------------------------------------------------------------

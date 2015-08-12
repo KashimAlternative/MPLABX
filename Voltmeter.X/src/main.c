@@ -385,12 +385,12 @@ int main( void ) {
 
 }
 
-#define INTERRUPT_FLUG INTCONbits.TMR0IF
+#define INTERRUPT_FLAG INTCONbits.TMR0IF
 // ----------------------------------------------------------------
 // [Interrupt]
 void interrupt _( void ) {
-  if( !INTERRUPT_FLUG ) return ;
-  INTERRUPT_FLUG = 0 ;
+  if( !INTERRUPT_FLAG ) return ;
+  INTERRUPT_FLAG = 0 ;
 
   // Read Key State
   static uint08_t interruptCount = 0 ;
@@ -420,7 +420,7 @@ void interrupt _( void ) {
 
   }
 
-  if( INTERRUPT_FLUG ) SetEvent( events_.error ) ;
+  if( INTERRUPT_FLAG ) SetEvent( events_.error ) ;
 
 }
 

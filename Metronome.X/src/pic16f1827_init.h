@@ -23,15 +23,14 @@
 void initialize( ) {
 
   // Oscillator config
-  //OSCCON = 0b01110010 ; // Internal Oscillator : 16MHz
   OSCCONbits.SPLLEN = 1 ; // PLL Enable
   OSCCONbits.IRCF = 0b1110 ; // 32MHz ( with PLL )
   OSCCONbits.SCS = 0b00 ; // Determined by FOSC
   OSCTUNE = 0b00000000 ; // Factory-calibrated
 
   // Timer config
-  GIE = 1 ;
-  PEIE = 1 ;
+  INTCONbits.GIE = 0 ;
+  INTCONbits.PEIE = 0 ;
 
   // Timer0 config
   PSA = 1 ;
@@ -42,28 +41,30 @@ void initialize( ) {
   TMR0IE = 0 ;
 
   // Timer2 config
-  T2CON = 0b00000011 ; //Postscaler 1:1, Prescaler 1/16
+  TMR2ON = 1 ;
+  T2CONbits.T2CKPS = 0b11; //Prescaler 1:64
+  T2CONbits.T2OUTPS =  0b0000; //Postscaler 1:1
   PR2 = 124 ;
   TMR2 = 0 ;
   TMR2IF = 0 ;
-  TMR2IE = 1 ;
-  TMR2ON = 1 ;
+  TMR2IE = 0 ;
 
   // Timer4
+  TMR4ON = 0 ;
   T4CON = 0b00000010 ; //Postscaler 1:1, Prescaler 1/16
   PR4 = 124 ;
   TMR4 = 0 ;
   TMR4IF = 0 ;
-  TMR4IE = 1 ;
-  TMR4ON = 0 ;
+  TMR4IE = 0 ;
 
   // Timer6
-  T6CON = 0b00000000 ; //Postscaler 1:1, Prescaler 1/16
-  PR6 = 249 ;
+  TMR6ON = 0 ;
+  T6CONbits.T6CKPS = 0b00; //Prescaler 1:16
+  T6CONbits.T6OUTPS = 0b0000 ; //Postscaler 1:1
+  PR6 = 124 ;
   TMR6 = 0 ;
   TMR6IF = 0 ;
-  TMR6IE = 1 ;
-  TMR6ON = 1 ;
+  TMR6IE = 0 ;
 
   // PWM config
   CCP2CON = 0B00001100 ; //Single PWM Mode

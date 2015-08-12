@@ -50,7 +50,23 @@ enum {
 } ;
 
 //--------------------------------
+// Duration Menu
+#  define MENU_SIZE_DURATION ( sizeof( MESSAGE_MENU_ITEM_DURATION ) / sizeof( MESSAGE_MENU_ITEM_DURATION[0] ) )
+const char* MESSAGE_MENU_ITEM_DURATION[] = {
+  //23456789ABCDEF
+  "< Return" ,
+  "Click Sound" ,
+  "Key Sound" ,
+} ;
+enum {
+  MENU_ITEM_DURATION_RETURN = 0 ,
+  MENU_ITEM_DURATION_ADJUST_CLICK ,
+  MENU_ITEM_DURATION_ADJUST_KEY ,
+} ;
+
+//--------------------------------
 // Information
+#define MENU_SIZE_INFORMATION ( sizeof ( MESSAGE_INFORMATION ) / sizeof ( MESSAGE_INFORMATION[0] ) )
 const char* MESSAGE_INFORMATION[] = {
   //23456789ABCDEF
   "Version" ,
@@ -73,6 +89,7 @@ enum {
 
 //--------------------------------
 // Confirm Menu
+#define MENU_SIZE_CONFIRM 2
 enum {
   MENU_ITEM_CONFIRM_NO = 0 ,
   MENU_ITEM_CONFIRM_YES ,

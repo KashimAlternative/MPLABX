@@ -12,10 +12,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _OSCCONbits `VS89 ~T0 @X0 0 e@153 ]
 "1607
 [v _OSCTUNE `Vuc ~T0 @X0 0 e@152 ]
-"6962
-[v _GIE `Vb ~T0 @X0 0 e@95 ]
-"7184
-[v _PEIE `Vb ~T0 @X0 0 e@94 ]
+"343
+[s S27 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S27 . IOCIF INTF TMR0IF IOCIE INTE TMR0IE PEIE GIE ]
+"353
+[s S28 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
+[n S28 . . T0IF . T0IE ]
+"342
+[u S26 `S27 1 `S28 1 ]
+[n S26 . . . ]
+"360
+[v _INTCONbits `VS26 ~T0 @X0 0 e@11 ]
 "7194
 [v _PSA `Vb ~T0 @X0 0 e@1195 ]
 "7414
@@ -28,8 +35,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TMR0IF `Vb ~T0 @X0 0 e@90 ]
 "7416
 [v _TMR0IE `Vb ~T0 @X0 0 e@93 ]
-"952
-[v _T2CON `Vuc ~T0 @X0 0 e@28 ]
+"7442
+[v _TMR2ON `Vb ~T0 @X0 0 e@226 ]
+"958
+[s S58 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S58 . T2CKPS0 T2CKPS1 TMR2ON T2OUTPS0 T2OUTPS1 T2OUTPS2 T2OUTPS3 ]
+"967
+[s S59 :2 `uc 1 :1 `uc 1 :4 `uc 1 ]
+[n S59 . T2CKPS . T2OUTPS ]
+"957
+[u S57 `S58 1 `S59 1 ]
+[n S57 . . . ]
+"973
+[v _T2CONbits `VS57 ~T0 @X0 0 e@28 ]
 "933
 [v _PR2 `Vuc ~T0 @X0 0 e@27 ]
 "914
@@ -38,8 +56,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TMR2IF `Vb ~T0 @X0 0 e@137 ]
 "7438
 [v _TMR2IE `Vb ~T0 @X0 0 e@1161 ]
-"7442
-[v _TMR2ON `Vb ~T0 @X0 0 e@226 ]
+"7448
+[v _TMR4ON `Vb ~T0 @X0 0 e@8378 ]
 "6221
 [v _T4CON `Vuc ~T0 @X0 0 e@1047 ]
 "6202
@@ -50,10 +68,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TMR4IF `Vb ~T0 @X0 0 e@153 ]
 "7444
 [v _TMR4IE `Vb ~T0 @X0 0 e@1177 ]
-"7448
-[v _TMR4ON `Vb ~T0 @X0 0 e@8378 ]
-"6329
-[v _T6CON `Vuc ~T0 @X0 0 e@1054 ]
+"7454
+[v _TMR6ON `Vb ~T0 @X0 0 e@8434 ]
+"6335
+[s S326 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S326 . T6CKPS0 T6CKPS1 TMR6ON T6OUTPS0 T6OUTPS1 T6OUTPS2 T6OUTPS3 ]
+"6344
+[s S327 :2 `uc 1 :1 `uc 1 :4 `uc 1 ]
+[n S327 . T6CKPS . T6OUTPS ]
+"6334
+[u S325 `S326 1 `S327 1 ]
+[n S325 . . . ]
+"6350
+[v _T6CONbits `VS325 ~T0 @X0 0 e@1054 ]
 "6310
 [v _PR6 `Vuc ~T0 @X0 0 e@1053 ]
 "6291
@@ -62,8 +89,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TMR6IF `Vb ~T0 @X0 0 e@155 ]
 "7450
 [v _TMR6IE `Vb ~T0 @X0 0 e@1179 ]
-"7454
-[v _TMR6ON `Vb ~T0 @X0 0 e@8434 ]
 "4930
 [v _CCP2CON `Vuc ~T0 @X0 0 e@666 ]
 "6826
@@ -85,22 +110,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 "1181
 [v _TRISB `Vuc ~T0 @X0 0 e@141 ]
 "8 src/configuration.h
-[s S351 `ui 1 `uc 1 `uc 1 `uc 1 ]
-[n S351 . tempo duration oscillatorTune writeCount ]
+[s S351 `ui 1 `uc 1 `uc 1 ]
+[n S351 . tempo oscillatorTune writeCount ]
 "337 /Applications/microchip/xc8/v1.34/include/pic16f1827.h
 [v _INTCON `Vuc ~T0 @X0 0 e@11 ]
-"343
-[s S27 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S27 . IOCIF INTF TMR0IF IOCIE INTE TMR0IE PEIE GIE ]
-"353
-[s S28 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S28 . . T0IF . T0IE ]
-"342
-[u S26 `S27 1 `S28 1 ]
-[n S26 . . . ]
-"360
-[v _INTCONbits `VS26 ~T0 @X0 0 e@11 ]
-"20 src/configuration.h
+"19 src/configuration.h
 [v __private_ReadByte `(uc ~T0 @X0 0 ef1`uc ]
 "3024 /Applications/microchip/xc8/v1.34/include/pic16f1827.h
 [s S158 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -110,7 +124,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S157 . . ]
 "3035
 [v _EECON1bits `VS157 ~T0 @X0 0 e@405 ]
-"19 src/configuration.h
+"18 src/configuration.h
 [v __private_WriteByte `(v ~T0 @X0 0 ef2`uc`uc ]
 "2937 /Applications/microchip/xc8/v1.34/include/pic16f1827.h
 [v _EEADRH `Vuc ~T0 @X0 0 e@402 ]
@@ -133,52 +147,65 @@ Version 3.2 HI-TECH Software Intermediate Code
 "28 /Applications/microchip/xc8/v1.34/include/pic.h
 [v ___nop `(v ~T0 @X0 0 ef ]
 [p i ___nop ]
-"13 src/main.c
+"18 src/main.c
 [s S372 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S372 . _ keyDown keyMode keyUp ]
-"19
-[s S373 :4 `uc 1 :3 `uc 1 ]
-[n S373 . _ keys ]
-"11
-[u S371 `uc 1 `S372 1 `S373 1 ]
-[n S371 . byte . . ]
-"67
-[s S375 `uc 1 `uc 1 `uc 1 `uc 1 ]
-[n S375 . up upDown down mode ]
-"73
-[s S376 `ui 1 ]
-[n S376 . exceptDown ]
-"76
-[s S377 `uc 1 `ui 1 ]
-[n S377 . _ exceptUp ]
-"66
-[u S374 `S375 1 `S376 1 `S377 1 ]
-[n S374 . . . . ]
-"89
-[c E2845 0 1 2 3 .. ]
-[n E2845 . STATE_METRONOME STATE_CONFIG_DURATION STATE_TUNE STATE_VOID  ]
-"100
-[s S379 :4 `uc 1 :2 `uc 1 :2 `uc 1 ]
-[n S379 . duration beat measure ]
-"98
-[u S378 `uc 1 `S379 1 ]
-[n S378 . all . ]
+[n S372 . _ keyDown keyCenter keyUp ]
+"16
+[u S371 `uc 1 `S372 1 ]
+[n S371 . byte . ]
+"30
+[s S373 `uc 1 `uc 1 `uc 1 ]
+[n S373 . up down center ]
+"74
+[c E2830 0 1 .. ]
+[n E2830 . STATE_METRONOME STATE_TUNE  ]
+"85
+[s S375 :2 `uc 1 :2 `uc 1 ]
+[n S375 . beat measure ]
+"83
+[u S374 `uc 1 `S375 1 ]
+[n S374 . all . ]
+"90
+[s S376 `uc 1 `uc 1 ]
+[n S376 . click key ]
+"103
+[s S378 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S378 . changeValue resetMetronome soundOn soundOnKey soundOff ]
+"101
+[u S377 `uc 1 `S378 1 ]
+[n S377 . all . ]
 "113
-[s S381 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S381 . valuePlus valueMinus changeState displayValue saveConfig ]
-"120
-[s S382 :2 `uc 1 ]
-[n S382 . valueChange ]
+[s S380 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S380 . keyPressUp keyPressHeldUp keyPressDown keyPressHeldDown keyPressCenter keyPressHeldCenter ]
 "111
-[u S380 `uc 1 `S381 1 `S382 1 ]
-[n S380 . all . . ]
+[u S379 `uc 1 `S380 1 ]
+[n S379 . all . ]
 [p mainexit ]
+"1359 /Applications/microchip/xc8/v1.34/include/pic16f1827.h
+[s S75 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S75 . . TMR4IE . TMR6IE CCP3IE CCP4IE ]
+"1358
+[u S74 `S75 1 ]
+[n S74 . . ]
+"1368
+[v _PIE3bits `VS74 ~T0 @X0 0 e@147 ]
+"653
+[s S38 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S38 . . TMR4IF . TMR6IF CCP3IF CCP4IF ]
+"652
+[u S37 `S38 1 ]
+[n S37 . . ]
+"662
+[v _PIR3bits `VS37 ~T0 @X0 0 e@19 ]
+"235 src/main.c
+[c E2769 0 1 .. ]
+[n E2769 . BOOL_FALSE BOOL_TRUE  ]
 "414 /Applications/microchip/xc8/v1.34/include/pic16f1827.h
 [v _PORTA `Vuc ~T0 @X0 0 e@12 ]
-"2046
-[v _LATB `Vuc ~T0 @X0 0 e@269 ]
 "1990
 [v _LATA `Vuc ~T0 @X0 0 e@268 ]
+"2046
+[v _LATB `Vuc ~T0 @X0 0 e@269 ]
 "3 src/main.c
 [p n 758 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
@@ -2970,128 +2997,134 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic16f1827_init.h: 23: void initialize( ) {
 [e :U _initialize ]
 [f ]
-[; ;pic16f1827_init.h: 27: OSCCONbits.SPLLEN = 1 ;
-"27
+[; ;pic16f1827_init.h: 26: OSCCONbits.SPLLEN = 1 ;
+"26
 [e = . . _OSCCONbits 0 7 -> -> 1 `i `uc ]
-[; ;pic16f1827_init.h: 28: OSCCONbits.IRCF = 0b1110 ;
-"28
+[; ;pic16f1827_init.h: 27: OSCCONbits.IRCF = 0b1110 ;
+"27
 [e = . . _OSCCONbits 1 2 -> -> 14 `i `uc ]
-[; ;pic16f1827_init.h: 29: OSCCONbits.SCS = 0b00 ;
-"29
+[; ;pic16f1827_init.h: 28: OSCCONbits.SCS = 0b00 ;
+"28
 [e = . . _OSCCONbits 1 0 -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 30: OSCTUNE = 0b00000000 ;
-"30
+[; ;pic16f1827_init.h: 29: OSCTUNE = 0b00000000 ;
+"29
 [e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 33: GIE = 1 ;
+[; ;pic16f1827_init.h: 32: INTCONbits.GIE = 0 ;
+"32
+[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 33: INTCONbits.PEIE = 0 ;
 "33
-[e = _GIE -> -> 1 `i `b ]
-[; ;pic16f1827_init.h: 34: PEIE = 1 ;
-"34
-[e = _PEIE -> -> 1 `i `b ]
-[; ;pic16f1827_init.h: 37: PSA = 1 ;
-"37
+[e = . . _INTCONbits 0 6 -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 36: PSA = 1 ;
+"36
 [e = _PSA -> -> 1 `i `b ]
-[; ;pic16f1827_init.h: 38: TMR0CS = 0 ;
-"38
+[; ;pic16f1827_init.h: 37: TMR0CS = 0 ;
+"37
 [e = _TMR0CS -> -> 0 `i `b ]
-[; ;pic16f1827_init.h: 39: TMR0SE = 1 ;
-"39
+[; ;pic16f1827_init.h: 38: TMR0SE = 1 ;
+"38
 [e = _TMR0SE -> -> 1 `i `b ]
-[; ;pic16f1827_init.h: 40: TMR0 = 0 ;
-"40
+[; ;pic16f1827_init.h: 39: TMR0 = 0 ;
+"39
 [e = _TMR0 -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 41: TMR0IF = 0 ;
-"41
+[; ;pic16f1827_init.h: 40: TMR0IF = 0 ;
+"40
 [e = _TMR0IF -> -> 0 `i `b ]
-[; ;pic16f1827_init.h: 42: TMR0IE = 0 ;
-"42
+[; ;pic16f1827_init.h: 41: TMR0IE = 0 ;
+"41
 [e = _TMR0IE -> -> 0 `i `b ]
-[; ;pic16f1827_init.h: 45: T2CON = 0b00000011 ;
-"45
-[e = _T2CON -> -> 3 `i `uc ]
-[; ;pic16f1827_init.h: 46: PR2 = 124 ;
-"46
-[e = _PR2 -> -> 124 `i `uc ]
-[; ;pic16f1827_init.h: 47: TMR2 = 0 ;
-"47
-[e = _TMR2 -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 48: TMR2IF = 0 ;
-"48
-[e = _TMR2IF -> -> 0 `i `b ]
-[; ;pic16f1827_init.h: 49: TMR2IE = 1 ;
-"49
-[e = _TMR2IE -> -> 1 `i `b ]
-[; ;pic16f1827_init.h: 50: TMR2ON = 1 ;
-"50
+[; ;pic16f1827_init.h: 44: TMR2ON = 1 ;
+"44
 [e = _TMR2ON -> -> 1 `i `b ]
-[; ;pic16f1827_init.h: 53: T4CON = 0b00000010 ;
+[; ;pic16f1827_init.h: 45: T2CONbits.T2CKPS = 0b11;
+"45
+[e = . . _T2CONbits 1 0 -> -> 3 `i `uc ]
+[; ;pic16f1827_init.h: 46: T2CONbits.T2OUTPS = 0b0000;
+"46
+[e = . . _T2CONbits 1 2 -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 47: PR2 = 124 ;
+"47
+[e = _PR2 -> -> 124 `i `uc ]
+[; ;pic16f1827_init.h: 48: TMR2 = 0 ;
+"48
+[e = _TMR2 -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 49: TMR2IF = 0 ;
+"49
+[e = _TMR2IF -> -> 0 `i `b ]
+[; ;pic16f1827_init.h: 50: TMR2IE = 0 ;
+"50
+[e = _TMR2IE -> -> 0 `i `b ]
+[; ;pic16f1827_init.h: 53: TMR4ON = 0 ;
 "53
-[e = _T4CON -> -> 2 `i `uc ]
-[; ;pic16f1827_init.h: 54: PR4 = 124 ;
-"54
-[e = _PR4 -> -> 124 `i `uc ]
-[; ;pic16f1827_init.h: 55: TMR4 = 0 ;
-"55
-[e = _TMR4 -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 56: TMR4IF = 0 ;
-"56
-[e = _TMR4IF -> -> 0 `i `b ]
-[; ;pic16f1827_init.h: 57: TMR4IE = 1 ;
-"57
-[e = _TMR4IE -> -> 1 `i `b ]
-[; ;pic16f1827_init.h: 58: TMR4ON = 0 ;
-"58
 [e = _TMR4ON -> -> 0 `i `b ]
-[; ;pic16f1827_init.h: 61: T6CON = 0b00000000 ;
+[; ;pic16f1827_init.h: 54: T4CON = 0b00000010 ;
+"54
+[e = _T4CON -> -> 2 `i `uc ]
+[; ;pic16f1827_init.h: 55: PR4 = 124 ;
+"55
+[e = _PR4 -> -> 124 `i `uc ]
+[; ;pic16f1827_init.h: 56: TMR4 = 0 ;
+"56
+[e = _TMR4 -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 57: TMR4IF = 0 ;
+"57
+[e = _TMR4IF -> -> 0 `i `b ]
+[; ;pic16f1827_init.h: 58: TMR4IE = 0 ;
+"58
+[e = _TMR4IE -> -> 0 `i `b ]
+[; ;pic16f1827_init.h: 61: TMR6ON = 0 ;
 "61
-[e = _T6CON -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 62: PR6 = 249 ;
+[e = _TMR6ON -> -> 0 `i `b ]
+[; ;pic16f1827_init.h: 62: T6CONbits.T6CKPS = 0b00;
 "62
-[e = _PR6 -> -> 249 `i `uc ]
-[; ;pic16f1827_init.h: 63: TMR6 = 0 ;
+[e = . . _T6CONbits 1 0 -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 63: T6CONbits.T6OUTPS = 0b0000 ;
 "63
-[e = _TMR6 -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 64: TMR6IF = 0 ;
+[e = . . _T6CONbits 1 2 -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 64: PR6 = 124 ;
 "64
-[e = _TMR6IF -> -> 0 `i `b ]
-[; ;pic16f1827_init.h: 65: TMR6IE = 1 ;
+[e = _PR6 -> -> 124 `i `uc ]
+[; ;pic16f1827_init.h: 65: TMR6 = 0 ;
 "65
-[e = _TMR6IE -> -> 1 `i `b ]
-[; ;pic16f1827_init.h: 66: TMR6ON = 1 ;
+[e = _TMR6 -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 66: TMR6IF = 0 ;
 "66
-[e = _TMR6ON -> -> 1 `i `b ]
-[; ;pic16f1827_init.h: 69: CCP2CON = 0B00001100 ;
-"69
-[e = _CCP2CON -> -> 12 `i `uc ]
-[; ;pic16f1827_init.h: 70: CCP2SEL = 1 ;
+[e = _TMR6IF -> -> 0 `i `b ]
+[; ;pic16f1827_init.h: 67: TMR6IE = 0 ;
+"67
+[e = _TMR6IE -> -> 0 `i `b ]
+[; ;pic16f1827_init.h: 70: CCP2CON = 0B00001100 ;
 "70
-[e = _CCP2SEL -> -> 1 `i `b ]
-[; ;pic16f1827_init.h: 71: PSTR2CON = 0b00000001 ;
+[e = _CCP2CON -> -> 12 `i `uc ]
+[; ;pic16f1827_init.h: 71: CCP2SEL = 1 ;
 "71
-[e = _PSTR2CON -> -> 1 `i `uc ]
-[; ;pic16f1827_init.h: 72: CCPTMRS = 0b00000000 ;
+[e = _CCP2SEL -> -> 1 `i `b ]
+[; ;pic16f1827_init.h: 72: PSTR2CON = 0b00000001 ;
 "72
-[e = _CCPTMRS -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 73: CCPR2L = 0 ;
+[e = _PSTR2CON -> -> 1 `i `uc ]
+[; ;pic16f1827_init.h: 73: CCPTMRS = 0b00000000 ;
 "73
-[e = _CCPR2L -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 74: CCPR2H = 0 ;
+[e = _CCPTMRS -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 74: CCPR2L = 0 ;
 "74
+[e = _CCPR2L -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 75: CCPR2H = 0 ;
+"75
 [e = _CCPR2H -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 77: ANSELA = 0b00000000 ;
-"77
-[e = _ANSELA -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 78: ANSELB = 0b00000000 ;
+[; ;pic16f1827_init.h: 78: ANSELA = 0b00000000 ;
 "78
+[e = _ANSELA -> -> 0 `i `uc ]
+[; ;pic16f1827_init.h: 79: ANSELB = 0b00000000 ;
+"79
 [e = _ANSELB -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 80: TRISA = 0b01110000 ;
-"80
-[e = _TRISA -> -> 112 `i `uc ]
-[; ;pic16f1827_init.h: 81: TRISB = 0b00000000 ;
+[; ;pic16f1827_init.h: 81: TRISA = 0b01110000 ;
 "81
+[e = _TRISA -> -> 112 `i `uc ]
+[; ;pic16f1827_init.h: 82: TRISB = 0b00000000 ;
+"82
 [e = _TRISB -> -> 0 `i `uc ]
-[; ;pic16f1827_init.h: 83: }
-"83
+[; ;pic16f1827_init.h: 84: }
+"84
 [e :UE 350 ]
 }
 [; ;typedef.h: 17: typedef enum {
@@ -3109,77 +3142,76 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;typedef.h: 35: typedef signed long sint32_t ;
 [; ;configuration.h: 8: typedef struct {
 [; ;configuration.h: 9: uint16_t tempo ;
-[; ;configuration.h: 10: uint08_t duration ;
-[; ;configuration.h: 11: uint08_t oscillatorTune ;
-[; ;configuration.h: 12: uint08_t writeCount ;
-[; ;configuration.h: 13: } ConfigurationData ;
-[; ;configuration.h: 19: void _private_WriteByte( uint08_t address , uint08_t data ) ;
-[; ;configuration.h: 20: uint08_t _private_ReadByte( uint08_t address ) ;
-"24 src/configuration.h
+[; ;configuration.h: 10: uint08_t oscillatorTune ;
+[; ;configuration.h: 11: uint08_t writeCount ;
+[; ;configuration.h: 12: } ConfigurationData ;
+[; ;configuration.h: 18: void _private_WriteByte( uint08_t address , uint08_t data ) ;
+[; ;configuration.h: 19: uint08_t _private_ReadByte( uint08_t address ) ;
+"23 src/configuration.h
 [v __configuration_Save `(v ~T0 @X0 1 ef1`*S351 ]
 {
-[; ;configuration.h: 24: void _configuration_Save( ConfigurationData* config ) {
+[; ;configuration.h: 23: void _configuration_Save( ConfigurationData* config ) {
 [e :U __configuration_Save ]
 [v _config `*S351 ~T0 @X0 1 r1 ]
 [f ]
-"26
+"25
 [v _ptrConfig `*uc ~T0 @X0 1 a ]
-[; ;configuration.h: 26: uint08_t* ptrConfig = (uint08_t*) config ;
+[; ;configuration.h: 25: uint08_t* ptrConfig = (uint08_t*) config ;
 [e = _ptrConfig -> _config `*uc ]
-"27
+"26
 [v _romPosition `uc ~T0 @X0 1 a ]
-[; ;configuration.h: 27: uint08_t romPosition = 0xFF ;
+[; ;configuration.h: 26: uint08_t romPosition = 0xFF ;
 [e = _romPosition -> -> 255 `i `uc ]
-"28
+"27
 [v _isPositionChanged `uc ~T0 @X0 1 a ]
-[; ;configuration.h: 28: uint08_t isPositionChanged = 0 ;
+[; ;configuration.h: 27: uint08_t isPositionChanged = 0 ;
 [e = _isPositionChanged -> -> 0 `i `uc ]
-"29
+"28
 [v _saveIntcon `uc ~T0 @X0 1 a ]
-[; ;configuration.h: 29: uint08_t saveIntcon ;
-[; ;configuration.h: 32: saveIntcon = INTCON ;
-"32
+[; ;configuration.h: 28: uint08_t saveIntcon ;
+[; ;configuration.h: 31: saveIntcon = INTCON ;
+"31
 [e = _saveIntcon _INTCON ]
-[; ;configuration.h: 33: INTCONbits.GIE = 0 ;
-"33
+[; ;configuration.h: 32: INTCONbits.GIE = 0 ;
+"32
 [e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
-[; ;configuration.h: 36: romPosition = _private_ReadByte( 0xFF ) & 0xF0 ;
-"36
+[; ;configuration.h: 35: romPosition = _private_ReadByte( 0xFF ) & 0xF0 ;
+"35
 [e = _romPosition -> & -> ( __private_ReadByte (1 -> -> 255 `i `uc `i -> 240 `i `uc ]
-[; ;configuration.h: 37: if ( romPosition == 0xF0 ) romPosition = 0x00 ;
-"37
+[; ;configuration.h: 36: if ( romPosition == 0xF0 ) romPosition = 0x00 ;
+"36
 [e $ ! == -> _romPosition `i -> 240 `i 353  ]
 [e = _romPosition -> -> 0 `i `uc ]
 [e :U 353 ]
-[; ;configuration.h: 40: EECON1bits.WREN = 1 ;
-"40
+[; ;configuration.h: 39: EECON1bits.WREN = 1 ;
+"39
 [e = . . _EECON1bits 0 2 -> -> 1 `i `uc ]
-[; ;configuration.h: 43: if ( ++( config->writeCount ) == 0x00 ) {
-"43
-[e $ ! == -> =+ . *U _config 3 -> -> 1 `i `uc `i -> 0 `i 354  ]
+[; ;configuration.h: 42: if ( ++( config->writeCount ) == 0x00 ) {
+"42
+[e $ ! == -> =+ . *U _config 2 -> -> 1 `i `uc `i -> 0 `i 354  ]
 {
-[; ;configuration.h: 44: isPositionChanged = 1 ;
-"44
+[; ;configuration.h: 43: isPositionChanged = 1 ;
+"43
 [e = _isPositionChanged -> -> 1 `i `uc ]
-[; ;configuration.h: 45: config->writeCount = 0 ;
+[; ;configuration.h: 44: config->writeCount = 0 ;
+"44
+[e = . *U _config 2 -> -> 0 `i `uc ]
+[; ;configuration.h: 45: romPosition += 0x10 ;
 "45
-[e = . *U _config 3 -> -> 0 `i `uc ]
-[; ;configuration.h: 46: romPosition += 0x10 ;
-"46
 [e =+ _romPosition -> -> 16 `i `uc ]
-[; ;configuration.h: 47: if ( romPosition >= 0xF0 ) ;
-"47
+[; ;configuration.h: 46: if ( romPosition >= 0xF0 ) ;
+"46
 [e $ ! >= -> _romPosition `i -> 240 `i 355  ]
 [e :U 355 ]
-[; ;configuration.h: 48: romPosition = 0x00 ;
-"48
+[; ;configuration.h: 47: romPosition = 0x00 ;
+"47
 [e = _romPosition -> -> 0 `i `uc ]
-"49
+"48
 }
 [e :U 354 ]
-[; ;configuration.h: 49: } ;
-[; ;configuration.h: 52: for ( uint08_t i = 0 ; i < sizeof ( ConfigurationData ) ; i++ , ptrConfig++ ) {
-"52
+[; ;configuration.h: 48: } ;
+[; ;configuration.h: 51: for ( uint08_t i = 0 ; i < sizeof ( ConfigurationData ) ; i++ , ptrConfig++ ) {
+"51
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
@@ -3187,69 +3219,69 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 357  ]
 [e :U 356 ]
 {
-[; ;configuration.h: 53: _private_WriteByte( romPosition + i , *ptrConfig ) ;
-"53
+[; ;configuration.h: 52: _private_WriteByte( romPosition + i , *ptrConfig ) ;
+"52
 [e ( __private_WriteByte (2 , -> + -> _romPosition `i -> _i `i `uc *U _ptrConfig ]
-[; ;configuration.h: 54: if ( EECON1bits.WRERR ) break ;
-"54
+[; ;configuration.h: 53: if ( EECON1bits.WRERR ) break ;
+"53
 [e $ ! != -> . . _EECON1bits 0 3 `i -> -> -> 0 `i `Vuc `i 359  ]
 [e $U 357  ]
 [e :U 359 ]
-"55
+"54
 }
-"52
+"51
 [e ; ++ _i -> -> 1 `i `uc ++ _ptrConfig * -> -> 1 `i `x -> -> # *U _ptrConfig `i `x ]
 [e $ < -> _i `ui -> # `S351 `ui 356  ]
 [e :U 357 ]
-"55
+"54
 }
-[; ;configuration.h: 55: }
-[; ;configuration.h: 58: if ( isPositionChanged && ( !EECON1bits.WRERR ) ) {
-"58
+[; ;configuration.h: 54: }
+[; ;configuration.h: 57: if ( isPositionChanged && ( !EECON1bits.WRERR ) ) {
+"57
 [e $ ! && != -> _isPositionChanged `i -> -> -> 0 `i `uc `i ! != -> . . _EECON1bits 0 3 `i -> -> -> 0 `i `Vuc `i 360  ]
 {
-[; ;configuration.h: 59: _private_WriteByte( 0xFF , romPosition ) ;
-"59
+[; ;configuration.h: 58: _private_WriteByte( 0xFF , romPosition ) ;
+"58
 [e ( __private_WriteByte (2 , -> -> 255 `i `uc _romPosition ]
-"60
+"59
 }
 [e :U 360 ]
-[; ;configuration.h: 60: }
-[; ;configuration.h: 63: EECON1bits.WREN = 0 ;
-"63
+[; ;configuration.h: 59: }
+[; ;configuration.h: 62: EECON1bits.WREN = 0 ;
+"62
 [e = . . _EECON1bits 0 2 -> -> 0 `i `uc ]
-[; ;configuration.h: 66: INTCON = saveIntcon ;
-"66
+[; ;configuration.h: 65: INTCON = saveIntcon ;
+"65
 [e = _INTCON _saveIntcon ]
-[; ;configuration.h: 68: }
-"68
+[; ;configuration.h: 67: }
+"67
 [e :UE 352 ]
 }
-"72
+"71
 [v __configuration_Load `(v ~T0 @X0 1 ef1`*S351 ]
 {
-[; ;configuration.h: 72: void _configuration_Load( ConfigurationData* config ) {
+[; ;configuration.h: 71: void _configuration_Load( ConfigurationData* config ) {
 [e :U __configuration_Load ]
 [v _config `*S351 ~T0 @X0 1 r1 ]
 [f ]
-"74
+"73
 [v _ptrConfig `*uc ~T0 @X0 1 a ]
-[; ;configuration.h: 74: uint08_t* ptrConfig = (uint08_t*) config ;
+[; ;configuration.h: 73: uint08_t* ptrConfig = (uint08_t*) config ;
 [e = _ptrConfig -> _config `*uc ]
-"75
+"74
 [v _romPosition `uc ~T0 @X0 1 a ]
-[; ;configuration.h: 75: uint08_t romPosition = 0xFF ;
+[; ;configuration.h: 74: uint08_t romPosition = 0xFF ;
 [e = _romPosition -> -> 255 `i `uc ]
-[; ;configuration.h: 78: romPosition = _private_ReadByte( 0xFF ) & 0xF0 ;
-"78
+[; ;configuration.h: 77: romPosition = _private_ReadByte( 0xFF ) & 0xF0 ;
+"77
 [e = _romPosition -> & -> ( __private_ReadByte (1 -> -> 255 `i `uc `i -> 240 `i `uc ]
-[; ;configuration.h: 79: if ( romPosition == 0xF0 ) return ;
-"79
+[; ;configuration.h: 78: if ( romPosition == 0xF0 ) return ;
+"78
 [e $ ! == -> _romPosition `i -> 240 `i 362  ]
 [e $UE 361  ]
 [e :U 362 ]
-[; ;configuration.h: 82: for ( uint08_t i = 0 ; i < sizeof ( ConfigurationData ) ; i++ , ptrConfig++ ) {
-"82
+[; ;configuration.h: 81: for ( uint08_t i = 0 ; i < sizeof ( ConfigurationData ) ; i++ , ptrConfig++ ) {
+"81
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
@@ -3257,178 +3289,182 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 364  ]
 [e :U 363 ]
 {
-[; ;configuration.h: 83: *ptrConfig = _private_ReadByte( i + romPosition ) ;
-"83
-[e = *U _ptrConfig ( __private_ReadByte (1 -> + -> _i `i -> _romPosition `i `uc ]
-"84
-}
+[; ;configuration.h: 82: *ptrConfig = _private_ReadByte( i + romPosition ) ;
 "82
+[e = *U _ptrConfig ( __private_ReadByte (1 -> + -> _i `i -> _romPosition `i `uc ]
+"83
+}
+"81
 [e ; ++ _i -> -> 1 `i `uc ++ _ptrConfig * -> -> 1 `i `x -> -> # *U _ptrConfig `i `x ]
 [e $ < -> _i `ui -> # `S351 `ui 363  ]
 [e :U 364 ]
-"84
+"83
 }
-[; ;configuration.h: 84: }
-[; ;configuration.h: 86: }
-"86
+[; ;configuration.h: 83: }
+[; ;configuration.h: 85: }
+"85
 [e :UE 361 ]
 }
-"94
+"93
 [v __private_WriteByte `(v ~T0 @X0 1 ef2`uc`uc ]
 {
-[; ;configuration.h: 94: void _private_WriteByte( uint08_t address , uint08_t data ) {
+[; ;configuration.h: 93: void _private_WriteByte( uint08_t address , uint08_t data ) {
 [e :U __private_WriteByte ]
 [v _address `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;configuration.h: 95: EEADRH = 0x00 ;
-"95
+[; ;configuration.h: 94: EEADRH = 0x00 ;
+"94
 [e = _EEADRH -> -> 0 `i `uc ]
-[; ;configuration.h: 96: EEDATH = 0x00 ;
-"96
+[; ;configuration.h: 95: EEDATH = 0x00 ;
+"95
 [e = _EEDATH -> -> 0 `i `uc ]
-[; ;configuration.h: 97: EEADRL = address ;
-"97
+[; ;configuration.h: 96: EEADRL = address ;
+"96
 [e = _EEADRL _address ]
-[; ;configuration.h: 98: EEDATL = data ;
-"98
+[; ;configuration.h: 97: EEDATL = data ;
+"97
 [e = _EEDATL _data ]
-[; ;configuration.h: 99: EECON2 = 0x55 ;
-"99
+[; ;configuration.h: 98: EECON2 = 0x55 ;
+"98
 [e = _EECON2 -> -> 85 `i `uc ]
-[; ;configuration.h: 100: EECON2 = 0xAA ;
-"100
+[; ;configuration.h: 99: EECON2 = 0xAA ;
+"99
 [e = _EECON2 -> -> 170 `i `uc ]
-[; ;configuration.h: 102: EECON1bits.WR = 1 ;
-"102
+[; ;configuration.h: 101: EECON1bits.WR = 1 ;
+"101
 [e = . . _EECON1bits 0 1 -> -> 1 `i `uc ]
-[; ;configuration.h: 103: while ( !PIR2bits.EEIF ) ;
-"103
+[; ;configuration.h: 102: while ( !PIR2bits.EEIF ) ;
+"102
 [e $U 367  ]
 [e :U 368 ]
 [e :U 367 ]
 [e $ ! != -> . . _PIR2bits 0 3 `i -> -> -> 0 `i `Vuc `i 368  ]
 [e :U 369 ]
-[; ;configuration.h: 104: PIR2bits.EEIF = 0 ;
-"104
+[; ;configuration.h: 103: PIR2bits.EEIF = 0 ;
+"103
 [e = . . _PIR2bits 0 3 -> -> 0 `i `uc ]
-[; ;configuration.h: 105: }
-"105
+[; ;configuration.h: 104: }
+"104
 [e :UE 366 ]
 }
-"109
+"108
 [v __private_ReadByte `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;configuration.h: 109: uint08_t _private_ReadByte( uint08_t address ) {
+[; ;configuration.h: 108: uint08_t _private_ReadByte( uint08_t address ) {
 [e :U __private_ReadByte ]
 [v _address `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;configuration.h: 110: EEADRH = 0x00 ;
-"110
+[; ;configuration.h: 109: EEADRH = 0x00 ;
+"109
 [e = _EEADRH -> -> 0 `i `uc ]
-[; ;configuration.h: 111: EEADRL = address ;
-"111
+[; ;configuration.h: 110: EEADRL = address ;
+"110
 [e = _EEADRL _address ]
-[; ;configuration.h: 112: EECON1bits.EEPGD = 0 ;
-"112
+[; ;configuration.h: 111: EECON1bits.EEPGD = 0 ;
+"111
 [e = . . _EECON1bits 0 7 -> -> 0 `i `uc ]
-[; ;configuration.h: 113: EECON1bits.CFGS = 0 ;
-"113
+[; ;configuration.h: 112: EECON1bits.CFGS = 0 ;
+"112
 [e = . . _EECON1bits 0 6 -> -> 0 `i `uc ]
-[; ;configuration.h: 114: EECON1bits.RD = 1 ;
-"114
+[; ;configuration.h: 113: EECON1bits.RD = 1 ;
+"113
 [e = . . _EECON1bits 0 0 -> -> 1 `i `uc ]
+[; ;configuration.h: 114: __nop() ;
+"114
+[e ( ___nop ..  ]
 [; ;configuration.h: 115: __nop() ;
 "115
 [e ( ___nop ..  ]
-[; ;configuration.h: 116: __nop() ;
+[; ;configuration.h: 116: return EEDATL ;
 "116
-[e ( ___nop ..  ]
-[; ;configuration.h: 117: return EEDATL ;
-"117
 [e ) _EEDATL ]
 [e $UE 370  ]
-[; ;configuration.h: 118: }
-"118
+[; ;configuration.h: 117: }
+"117
 [e :UE 370 ]
 }
-"23 src/main.c
-[v _porta `S371 ~T0 @X0 1 e ]
-[; ;main.c: 11: union {
-[; ;main.c: 12: uint08_t byte ;
-[; ;main.c: 13: struct {
-[; ;main.c: 14: uint08_t _ : 4 ;
-[; ;main.c: 15: uint08_t keyDown : 1 ;
-[; ;main.c: 16: uint08_t keyMode : 1 ;
-[; ;main.c: 17: uint08_t keyUp : 1 ;
-[; ;main.c: 18: } ;
-[; ;main.c: 19: struct {
-[; ;main.c: 20: uint08_t _ : 4 ;
-[; ;main.c: 21: uint08_t keys : 3 ;
-[; ;main.c: 22: } ;
-[; ;main.c: 23: } porta ;
-"38
+[; ;main.c: 16: typedef union {
+[; ;main.c: 17: uint08_t byte ;
+[; ;main.c: 18: struct {
+[; ;main.c: 19: uint08_t _ : 4 ;
+[; ;main.c: 20: uint08_t keyDown : 1 ;
+[; ;main.c: 21: uint08_t keyCenter : 1 ;
+[; ;main.c: 22: uint08_t keyUp : 1 ;
+[; ;main.c: 23: } ;
+[; ;main.c: 24: } UniPortA ;
+"25 src/main.c
+[v _portAState_ `S371 ~T0 @X0 1 e ]
+[; ;main.c: 25: UniPortA portAState_ ;
+"34
+[v _keyCount `S373 ~T0 @X0 1 e ]
+[; ;main.c: 30: struct {
+[; ;main.c: 31: uint08_t up ;
+[; ;main.c: 32: uint08_t down ;
+[; ;main.c: 33: uint08_t center ;
+[; ;main.c: 34: } keyCount ;
+"45
 [v _SEGMENT_BIT `Cuc ~T0 @X0 -> 0 `x e ]
 [i _SEGMENT_BIT
 :U ..
-"39
--> -> 252 `i `uc
-"40
--> -> 96 `i `uc
-"41
--> -> 218 `i `uc
-"42
--> -> 242 `i `uc
-"43
--> -> 102 `i `uc
-"44
--> -> 182 `i `uc
-"45
--> -> 190 `i `uc
 "46
--> -> 228 `i `uc
+-> -> 252 `i `uc
 "47
--> -> 254 `i `uc
+-> -> 96 `i `uc
 "48
--> -> 246 `i `uc
+-> -> 218 `i `uc
 "49
+-> -> 242 `i `uc
+"50
+-> -> 102 `i `uc
+"51
+-> -> 182 `i `uc
+"52
+-> -> 190 `i `uc
+"53
+-> -> 228 `i `uc
+"54
+-> -> 254 `i `uc
+"55
+-> -> 246 `i `uc
+"56
 -> -> 0 `i `uc
 ..
 ]
-[; ;main.c: 38: const uint08_t SEGMENT_BIT[] = {
-[; ;main.c: 39: 0b11111100 ,
-[; ;main.c: 40: 0b01100000 ,
-[; ;main.c: 41: 0b11011010 ,
-[; ;main.c: 42: 0b11110010 ,
-[; ;main.c: 43: 0b01100110 ,
-[; ;main.c: 44: 0b10110110 ,
-[; ;main.c: 45: 0b10111110 ,
-[; ;main.c: 46: 0b11100100 ,
-[; ;main.c: 47: 0b11111110 ,
-[; ;main.c: 48: 0b11110110 ,
-[; ;main.c: 49: 0b00000000 ,
-[; ;main.c: 50: } ;
-"51
+[; ;main.c: 45: const uint08_t SEGMENT_BIT[] = {
+[; ;main.c: 46: 0b11111100 ,
+[; ;main.c: 47: 0b01100000 ,
+[; ;main.c: 48: 0b11011010 ,
+[; ;main.c: 49: 0b11110010 ,
+[; ;main.c: 50: 0b01100110 ,
+[; ;main.c: 51: 0b10110110 ,
+[; ;main.c: 52: 0b10111110 ,
+[; ;main.c: 53: 0b11100100 ,
+[; ;main.c: 54: 0b11111110 ,
+[; ;main.c: 55: 0b11110110 ,
+[; ;main.c: 56: 0b00000000 ,
+[; ;main.c: 57: } ;
+"58
 [v _SEGMET_BIT2 `Cuc ~T0 @X0 -> 0 `x e ]
 [i _SEGMET_BIT2
 :U ..
-"52
--> -> 7 `i `uc
-"53
--> -> 11 `i `uc
-"54
--> -> 13 `i `uc
-"55
+"59
 -> -> 14 `i `uc
+"60
+-> -> 13 `i `uc
+"61
+-> -> 11 `i `uc
+"62
+-> -> 7 `i `uc
 ..
 ]
-[; ;main.c: 51: const uint08_t SEGMET_BIT2[] = {
-[; ;main.c: 52: 0b00000111 ,
-[; ;main.c: 53: 0b00001011 ,
-[; ;main.c: 54: 0b00001101 ,
-[; ;main.c: 55: 0b00001110 ,
-[; ;main.c: 56: } ;
-"59
+[; ;main.c: 58: const uint08_t SEGMET_BIT2[] = {
+[; ;main.c: 59: 0b00001110 ,
+[; ;main.c: 60: 0b00001101 ,
+[; ;main.c: 61: 0b00001011 ,
+[; ;main.c: 62: 0b00000111 ,
+[; ;main.c: 63: } ;
+"66
 [v _displayBuffer `uc ~T0 @X0 -> 4 `i e ]
 [i _displayBuffer
 :U ..
@@ -3438,66 +3474,40 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 10 `i `uc
 ..
 ]
-[; ;main.c: 59: uint08_t displayBuffer[4] = { 10 , 10 , 10 , 10 } ;
-"60
+[; ;main.c: 66: uint08_t displayBuffer[4] = { 10 , 10 , 10 , 10 } ;
+"67
 [v _displayDigit `uc ~T0 @X0 1 e ]
-[; ;main.c: 60: uint08_t displayDigit ;
-"63
-[v _prescaleEvent `uc ~T0 @X0 1 e ]
-[i _prescaleEvent
--> -> 0 `i `uc
-]
-[; ;main.c: 63: uint08_t prescaleEvent = 0 ;
-"80
-[v _keyCount `S374 ~T0 @X0 1 e ]
-[; ;main.c: 66: union {
-[; ;main.c: 67: struct {
-[; ;main.c: 68: uint08_t up ;
-[; ;main.c: 69: uint08_t upDown ;
-[; ;main.c: 70: uint08_t down ;
-[; ;main.c: 71: uint08_t mode ;
-[; ;main.c: 72: } ;
-[; ;main.c: 73: struct {
-[; ;main.c: 74: uint16_t exceptDown ;
-[; ;main.c: 75: } ;
-[; ;main.c: 76: struct {
-[; ;main.c: 77: uint08_t _ ;
-[; ;main.c: 78: uint16_t exceptUp ;
-[; ;main.c: 79: } ;
-[; ;main.c: 80: } keyCount ;
-[; ;main.c: 83: typedef enum {
-[; ;main.c: 84: STATE_METRONOME = 0 ,
-[; ;main.c: 85: STATE_CONFIG_DURATION ,
-[; ;main.c: 86: STATE_TUNE ,
-[; ;main.c: 87: STATE_VOID ,
-[; ;main.c: 88: } MachineState ;
-"89
-[v _machineState `E2845 ~T0 @X0 1 e ]
+[; ;main.c: 67: uint08_t displayDigit ;
+[; ;main.c: 70: typedef enum {
+[; ;main.c: 71: STATE_METRONOME = 0 ,
+[; ;main.c: 72: STATE_TUNE ,
+[; ;main.c: 73: } MachineState ;
+"74
+[v _machineState `E2830 ~T0 @X0 1 e ]
 [i _machineState
-. `E2845 0
+. `E2830 0
 ]
-[; ;main.c: 89: MachineState machineState = STATE_METRONOME ;
-"92
+[; ;main.c: 74: MachineState machineState = STATE_METRONOME ;
+"77
 [v _config `S351 ~T0 @X0 1 e ]
 [i _config
 :U ..
 :U ..
 -> -> 120 `i `ui
--> -> 2 `i `uc
 -> -> 32 `i `uc
 -> -> 0 `i `uc
 ..
 ..
 ]
-[; ;main.c: 92: ConfigurationData config = { 120 , 2 , 0x20 , 0 } ;
-"97
+[; ;main.c: 77: ConfigurationData config = { 120 , 0x20 , 0 } ;
+"82
 [v _tempoCounter `um ~T0 @X0 1 e ]
 [i _tempoCounter
 -> -> -> 0 `i `m `um
 ]
-[; ;main.c: 97: uint24_t tempoCounter = 0 ;
-"105
-[v _beatCounter `S378 ~T0 @X0 1 e ]
+[; ;main.c: 82: uint24_t tempoCounter = 0 ;
+"89
+[v _beatCounter `S374 ~T0 @X0 1 e ]
 [i _beatCounter
 :U ..
 :U ..
@@ -3505,617 +3515,770 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;main.c: 98: union {
-[; ;main.c: 99: uint08_t all ;
-[; ;main.c: 100: struct {
-[; ;main.c: 101: uint08_t duration : 4 ;
-[; ;main.c: 102: uint08_t beat : 2 ;
-[; ;main.c: 103: uint08_t measure : 2 ;
-[; ;main.c: 104: } ;
-[; ;main.c: 105: } beatCounter = 0 ;
-"123
-[v _events_ `S380 ~T0 @X0 1 e ]
+[; ;main.c: 83: union {
+[; ;main.c: 84: uint08_t all ;
+[; ;main.c: 85: struct {
+[; ;main.c: 86: uint08_t beat : 2 ;
+[; ;main.c: 87: uint08_t measure : 2 ;
+[; ;main.c: 88: } ;
+[; ;main.c: 89: } beatCounter = 0 ;
+"93
+[v _durationCounter_ `S376 ~T0 @X0 1 e ]
+[i _durationCounter_
+:U ..
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+..
+]
+[; ;main.c: 90: struct {
+[; ;main.c: 91: uint08_t click ;
+[; ;main.c: 92: uint08_t key ;
+[; ;main.c: 93: } durationCounter_ = { 0 , 0 } ;
+"95
+[v _autoHideCounter_ `ui ~T0 @X0 1 e ]
+[i _autoHideCounter_
+-> -> 0 `i `ui
+]
+[; ;main.c: 95: uint16_t autoHideCounter_ = 0 ;
+"110
+[v _events_ `S377 ~T0 @X0 1 e ]
+[; ;main.c: 101: union {
+[; ;main.c: 102: uint08_t all ;
+[; ;main.c: 103: struct {
+[; ;main.c: 104: unsigned changeValue : 1 ;
+[; ;main.c: 105: unsigned resetMetronome : 1 ;
+[; ;main.c: 106: unsigned soundOn : 1 ;
+[; ;main.c: 107: unsigned soundOnKey : 1 ;
+[; ;main.c: 108: unsigned soundOff : 1 ;
+[; ;main.c: 109: } ;
+[; ;main.c: 110: } events_ ;
+"121
+[v _inputEvents_ `S379 ~T0 @X0 1 e ]
 [; ;main.c: 111: union {
 [; ;main.c: 112: uint08_t all ;
 [; ;main.c: 113: struct {
-[; ;main.c: 114: uint08_t valuePlus : 1 ;
-[; ;main.c: 115: uint08_t valueMinus : 1 ;
-[; ;main.c: 116: uint08_t changeState : 1 ;
-[; ;main.c: 117: uint08_t displayValue : 1 ;
-[; ;main.c: 118: uint08_t saveConfig : 1 ;
-[; ;main.c: 119: } ;
-[; ;main.c: 120: struct {
-[; ;main.c: 121: uint08_t valueChange : 2 ;
-[; ;main.c: 122: } ;
-[; ;main.c: 123: } events_ ;
-"126
+[; ;main.c: 114: unsigned keyPressUp : 1 ;
+[; ;main.c: 115: unsigned keyPressHeldUp : 1 ;
+[; ;main.c: 116: unsigned keyPressDown : 1 ;
+[; ;main.c: 117: unsigned keyPressHeldDown : 1 ;
+[; ;main.c: 118: unsigned keyPressCenter : 1 ;
+[; ;main.c: 119: unsigned keyPressHeldCenter : 1 ;
+[; ;main.c: 120: } ;
+[; ;main.c: 121: } inputEvents_ ;
+"124
 [v _main `(i ~T0 @X0 1 ef ]
 {
-[; ;main.c: 126: int main( void ) {
+[; ;main.c: 124: int main( void ) {
 [e :U _main ]
 [f ]
-[; ;main.c: 128: initialize( ) ;
-"128
+[; ;main.c: 126: initialize( ) ;
+"126
 [e ( _initialize ..  ]
-[; ;main.c: 130: porta.byte=~PORTA; ;
-"130
-[e = . _porta 0 -> ~ -> _PORTA `i `uc ]
-[; ;main.c: 132: _configuration_Load( &config ) ;
-"132
+[; ;main.c: 128: _configuration_Load( &config ) ;
+"128
 [e ( __configuration_Load (1 &U _config ]
-[; ;main.c: 134: machineState = STATE_METRONOME ;
-"134
-[e = _machineState . `E2845 0 ]
-[; ;main.c: 135: tempoCounter = 0 ;
-"135
-[e = _tempoCounter -> -> -> 0 `i `m `um ]
-[; ;main.c: 136: beatCounter.all = 0 ;
-"136
-[e = . _beatCounter 0 -> -> 0 `i `uc ]
-[; ;main.c: 138: events_.displayValue = 1; ;
-"138
-[e = . . _events_ 1 3 -> -> 1 `i `uc ]
-[; ;main.c: 141: TMR6IE = 1 ;
-"141
-[e = _TMR6IE -> -> 1 `i `b ]
-[; ;main.c: 143: for( ; ; ) ;
-"143
-{
-[e :U 384 ]
-[e $U 384  ]
-[e :U 385 ]
-}
-[; ;main.c: 145: }
-"145
-[e :UE 383 ]
-}
-[v F2879 `(v ~T0 @X0 1 tf ]
-"148
-[v __ `IF2879 ~T0 @X0 1 e ]
-{
-[; ;main.c: 148: void interrupt _( void ) {
-[e :U __ ]
-[f ]
-[; ;main.c: 149: if( !TMR6IF ) return ;
-"149
-[e $ ! ! _TMR6IF 388  ]
-[e $UE 387  ]
-[e :U 388 ]
-[; ;main.c: 150: TMR6IF = 0 ;
-"150
-[e = _TMR6IF -> -> 0 `i `b ]
-[; ;main.c: 153: tempoCounter += config.tempo ;
-"153
-[e =+ _tempoCounter -> . _config 0 `um ]
-[; ;main.c: 154: if( ++tempoCounter >= ( 32000000L * 3 / 800 ) ) {
-"154
-[e $ ! >= -> =+ _tempoCounter -> -> -> 1 `i `m `um `l / * -> 32000000 `l -> -> 3 `i `l -> -> 800 `i `l 389  ]
-{
-[; ;main.c: 155: tempoCounter -= ( 32000000L * 3 / 800 ) ;
-"155
-[e =- _tempoCounter -> / * -> 32000000 `l -> -> 3 `i `l -> -> 800 `i `l `um ]
-[; ;main.c: 156: beatCounter.all++ ;
-"156
-[e ++ . _beatCounter 0 -> -> 1 `i `uc ]
-"157
-}
-[e :U 389 ]
-[; ;main.c: 157: }
-[; ;main.c: 160: if( ++prescaleEvent & 0x3F ) return ;
-"160
-[e $ ! != & -> =+ _prescaleEvent -> -> 1 `i `uc `i -> 63 `i -> 0 `i 390  ]
-[e $UE 387  ]
-[e :U 390 ]
-[; ;main.c: 163: asm("clrwdt") ;
-"163
-[; <" clrwdt ;# ">
-[; ;main.c: 166: porta.byte=~PORTA; ;
-"166
-[e = . _porta 0 -> ~ -> _PORTA `i `uc ]
-[; ;main.c: 169: if( porta.keyMode ) {
-"169
-[e $ ! != -> . . _porta 1 2 `i -> -> -> 0 `i `uc `i 391  ]
-{
-[; ;main.c: 170: if( ++keyCount.mode == 0xFF ) keyCount.mode = 0xF0 ;
-"170
-[e $ ! == -> =+ . . _keyCount 0 3 -> -> 1 `i `uc `i -> 255 `i 392  ]
-[e = . . _keyCount 0 3 -> -> 240 `i `uc ]
-[e :U 392 ]
-[; ;main.c: 171: if( keyCount.mode == 0x10 ) events_.changeState = 1; ;
-"171
-[e $ ! == -> . . _keyCount 0 3 `i -> 16 `i 393  ]
-[e = . . _events_ 1 2 -> -> 1 `i `uc ]
-[e :U 393 ]
-"172
-}
-[; ;main.c: 172: }
-[e $U 394  ]
-"173
-[e :U 391 ]
-[; ;main.c: 173: else
-[; ;main.c: 174: keyCount.mode = 0 ;
-"174
-[e = . . _keyCount 0 3 -> -> 0 `i `uc ]
-[e :U 394 ]
-[; ;main.c: 177: if( porta.keyUp && !keyCount.exceptUp ) {
-"177
-[e $ ! && != -> . . _porta 1 3 `i -> -> -> 0 `i `uc `i ! != . . _keyCount 2 1 -> -> 0 `i `ui 395  ]
-{
-[; ;main.c: 178: if( ++keyCount.up == 0xFF ) keyCount.up = 0xF0 ;
-"178
-[e $ ! == -> =+ . . _keyCount 0 0 -> -> 1 `i `uc `i -> 255 `i 396  ]
-[e = . . _keyCount 0 0 -> -> 240 `i `uc ]
-[e :U 396 ]
-[; ;main.c: 179: if( keyCount.up == 0x10 || keyCount.up == 0xF0 ) events_.valuePlus = 1; ;
-"179
-[e $ ! || == -> . . _keyCount 0 0 `i -> 16 `i == -> . . _keyCount 0 0 `i -> 240 `i 397  ]
-[e = . . _events_ 1 0 -> -> 1 `i `uc ]
-[e :U 397 ]
-"182
-}
-[; ;main.c: 182: }
-[e $U 398  ]
-"183
-[e :U 395 ]
-[; ;main.c: 183: else
-[; ;main.c: 184: keyCount.up = 0 ;
-"184
-[e = . . _keyCount 0 0 -> -> 0 `i `uc ]
-[e :U 398 ]
-[; ;main.c: 187: if( porta.keyDown && !keyCount.exceptDown ) {
-"187
-[e $ ! && != -> . . _porta 1 1 `i -> -> -> 0 `i `uc `i ! != . . _keyCount 1 0 -> -> 0 `i `ui 399  ]
-{
-[; ;main.c: 188: if( ++keyCount.down == 0xFF ) keyCount.down = 0xF0 ;
-"188
-[e $ ! == -> =+ . . _keyCount 0 2 -> -> 1 `i `uc `i -> 255 `i 400  ]
-[e = . . _keyCount 0 2 -> -> 240 `i `uc ]
-[e :U 400 ]
-[; ;main.c: 189: if( keyCount.down == 0x10 || keyCount.down == 0xF0 ) events_.valueMinus = 1; ;
-"189
-[e $ ! || == -> . . _keyCount 0 2 `i -> 16 `i == -> . . _keyCount 0 2 `i -> 240 `i 401  ]
+[; ;main.c: 130: machineState = STATE_METRONOME ;
+"130
+[e = _machineState . `E2830 0 ]
+[; ;main.c: 132: events_.resetMetronome = 1; ;
+"132
 [e = . . _events_ 1 1 -> -> 1 `i `uc ]
-[e :U 401 ]
-"192
-}
-[; ;main.c: 192: }
-[e $U 402  ]
-"193
-[e :U 399 ]
-[; ;main.c: 193: else
-[; ;main.c: 194: keyCount.down = 0 ;
-"194
-[e = . . _keyCount 0 2 -> -> 0 `i `uc ]
-[e :U 402 ]
-[; ;main.c: 197: if( porta.keyDown && porta.keyUp ) {
-"197
-[e $ ! && != -> . . _porta 1 1 `i -> -> -> 0 `i `uc `i != -> . . _porta 1 3 `i -> -> -> 0 `i `uc `i 403  ]
+[; ;main.c: 135: PIE3bits.TMR6IE = 1 ;
+"135
+[e = . . _PIE3bits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 136: PIR3bits.TMR6IF = 0 ;
+"136
+[e = . . _PIR3bits 0 3 -> -> 0 `i `uc ]
+[; ;main.c: 137: T6CONbits.TMR6ON = 1 ;
+"137
+[e = . . _T6CONbits 0 2 -> -> 1 `i `uc ]
+[; ;main.c: 138: INTCONbits.PEIE = 1 ;
+"138
+[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
+[; ;main.c: 139: INTCONbits.GIE = 1 ;
+"139
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+[; ;main.c: 141: for( ; ; ) {
+"141
 {
-[; ;main.c: 198: if( keyCount.upDown != 0xFF ) keyCount.upDown++ ;
-"198
-[e $ ! != -> . . _keyCount 0 1 `i -> 255 `i 404  ]
-[e ++ . . _keyCount 0 1 -> -> 1 `i `uc ]
-[e :U 404 ]
-[; ;main.c: 199: if( keyCount.upDown == 0xF0 ) events_.saveConfig = 1; ;
-"199
-[e $ ! == -> . . _keyCount 0 1 `i -> 240 `i 405  ]
-[e = . . _events_ 1 4 -> -> 1 `i `uc ]
-[e :U 405 ]
-"200
-}
-[; ;main.c: 200: }
-[e $U 406  ]
-"201
-[e :U 403 ]
-[; ;main.c: 201: else if( !( porta.keyDown && porta.keyUp ) )
-[e $ ! ! && != -> . . _porta 1 1 `i -> -> -> 0 `i `uc `i != -> . . _porta 1 3 `i -> -> -> 0 `i `uc `i 407  ]
-[; ;main.c: 202: keyCount.upDown = 0 ;
-"202
-[e = . . _keyCount 0 1 -> -> 0 `i `uc ]
-[e :U 407 ]
-"205
-[e :U 406 ]
-[; ;main.c: 205: if( (events_.changeState&&!(events_.changeState=0)) ) {
-[e $ ! && != -> . . _events_ 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 408  ]
+[e :U 382 ]
 {
-[; ;main.c: 206: events_.displayValue = 1; ;
-"206
-[e = . . _events_ 1 3 -> -> 1 `i `uc ]
-[; ;main.c: 208: if( ++machineState == STATE_VOID ) {
-"208
-[e $ ! == -> =+ _machineState -> -> 1 `i `E2845 `i -> . `E2845 3 `i 409  ]
-{
-[; ;main.c: 209: machineState = STATE_METRONOME ;
-"209
-[e = _machineState . `E2845 0 ]
-[; ;main.c: 210: tempoCounter = 0 ;
-"210
-[e = _tempoCounter -> -> -> 0 `i `m `um ]
-[; ;main.c: 211: beatCounter.all = 0 ;
-"211
-[e = . _beatCounter 0 -> -> 0 `i `uc ]
-"212
-}
-[e :U 409 ]
-"214
-}
-[e :U 408 ]
-[; ;main.c: 212: }
-[; ;main.c: 214: }
-[; ;main.c: 217: if( (events_.saveConfig&&!(events_.saveConfig=0)) ) {
-"217
-[e $ ! && != -> . . _events_ 1 4 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 4 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 410  ]
-{
-[; ;main.c: 218: _configuration_Save( &config ) ;
-"218
-[e ( __configuration_Save (1 &U _config ]
-[; ;main.c: 219: asm("reset") ;
-"219
-[; <" reset ;# ">
-"220
-}
-[e :U 410 ]
-[; ;main.c: 220: }
-[; ;main.c: 223: if( (events_.valueChange&&!(events_.valueChange=0)) ) {
-"223
-[e $ ! && != -> . . _events_ 2 0 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 2 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 411  ]
-{
-[; ;main.c: 225: events_.displayValue = 1; ;
-"225
-[e = . . _events_ 1 3 -> -> 1 `i `uc ]
-[; ;main.c: 227: switch( machineState ) {
-"227
-[e $U 413  ]
-{
-[; ;main.c: 229: case STATE_METRONOME:
-"229
-[e :U 414 ]
-[; ;main.c: 230: if( (events_.valuePlus&&!(events_.valuePlus=0)) && config.tempo != 999 ) config.tempo++ ;
-"230
-[e $ ! && && != -> . . _events_ 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != . _config 0 -> -> 999 `i `ui 415  ]
-[e ++ . _config 0 -> -> 1 `i `ui ]
-[e :U 415 ]
-[; ;main.c: 231: if( (events_.valueMinus&&!(events_.valueMinus=0)) && config.tempo != 0 ) config.tempo-- ;
-"231
-[e $ ! && && != -> . . _events_ 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != . _config 0 -> -> 0 `i `ui 416  ]
-[e -- . _config 0 -> -> 1 `i `ui ]
-[e :U 416 ]
-[; ;main.c: 232: tempoCounter = 0 ;
-"232
-[e = _tempoCounter -> -> -> 0 `i `m `um ]
-[; ;main.c: 233: beatCounter.all = 0 ;
-"233
-[e = . _beatCounter 0 -> -> 0 `i `uc ]
-[; ;main.c: 234: break ;
-"234
-[e $U 412  ]
-[; ;main.c: 236: case STATE_CONFIG_DURATION:
-"236
-[e :U 417 ]
-[; ;main.c: 237: if( (events_.valuePlus&&!(events_.valuePlus=0)) && config.duration != 0x10 ) config.duration++ ;
-"237
-[e $ ! && && != -> . . _events_ 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != -> . _config 1 `i -> 16 `i 418  ]
-[e ++ . _config 1 -> -> 1 `i `uc ]
-[e :U 418 ]
-[; ;main.c: 238: if( (events_.valueMinus&&!(events_.valueMinus=0)) && config.duration != 0x00 ) config.duration-- ;
-"238
-[e $ ! && && != -> . . _events_ 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != -> . _config 1 `i -> 0 `i 419  ]
-[e -- . _config 1 -> -> 1 `i `uc ]
-[e :U 419 ]
-[; ;main.c: 239: break ;
-"239
-[e $U 412  ]
-[; ;main.c: 241: case STATE_TUNE:
-"241
-[e :U 420 ]
-[; ;main.c: 242: if( (events_.valuePlus&&!(events_.valuePlus=0)) && config.oscillatorTune != 63 ) config.oscillatorTune++ ;
-"242
-[e $ ! && && != -> . . _events_ 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != -> . _config 2 `i -> 63 `i 421  ]
-[e ++ . _config 2 -> -> 1 `i `uc ]
-[e :U 421 ]
-[; ;main.c: 243: if( (events_.valueMinus&&!(events_.valueMinus=0)) && config.oscillatorTune != 0 ) config.oscillatorTune-- ;
-"243
-[e $ ! && && != -> . . _events_ 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != -> . _config 2 `i -> 0 `i 422  ]
-[e -- . _config 2 -> -> 1 `i `uc ]
-[e :U 422 ]
-[; ;main.c: 244: break ;
-"244
-[e $U 412  ]
-"245
-}
-[; ;main.c: 245: }
-[e $U 412  ]
-"227
-[e :U 413 ]
-[e [\ _machineState , $ . `E2845 0 414
- , $ . `E2845 1 417
- , $ . `E2845 2 420
- 412 ]
-"245
-[e :U 412 ]
-"247
-}
-[e :U 411 ]
-[; ;main.c: 247: }
-[; ;main.c: 250: if( (events_.displayValue&&!(events_.displayValue=0)) ) {
-"250
-[e $ ! && != -> . . _events_ 1 3 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 423  ]
-{
-[; ;main.c: 252: displayBuffer[0] = 0 ;
-"252
-[e = *U + &U _displayBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 0 `i `uc ]
-[; ;main.c: 253: displayBuffer[1] = 0 ;
-"253
-[e = *U + &U _displayBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 0 `i `uc ]
-[; ;main.c: 254: displayBuffer[2] = 0 ;
-"254
-[e = *U + &U _displayBuffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 0 `i `uc ]
-[; ;main.c: 255: displayBuffer[3] = 10 ;
-"255
-[e = *U + &U _displayBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 10 `i `uc ]
-"257
-[v _tmpValue `ui ~T0 @X0 1 a ]
-[; ;main.c: 257: uint16_t tmpValue ;
-[; ;main.c: 258: switch( machineState ) {
-"258
-[e $U 425  ]
-{
-[; ;main.c: 259: case STATE_METRONOME:
-"259
-[e :U 426 ]
-[; ;main.c: 260: tmpValue = config.tempo ;
-"260
-[e = _tmpValue . _config 0 ]
-[; ;main.c: 261: break ;
-"261
-[e $U 424  ]
-[; ;main.c: 263: case STATE_CONFIG_DURATION:
-"263
-[e :U 427 ]
-[; ;main.c: 264: tmpValue = config.duration ;
-"264
-[e = _tmpValue -> . _config 1 `ui ]
-[; ;main.c: 265: break ;
-"265
-[e $U 424  ]
-[; ;main.c: 267: case STATE_TUNE:
-"267
-[e :U 428 ]
-[; ;main.c: 268: tmpValue = config.oscillatorTune ;
-"268
-[e = _tmpValue -> . _config 2 `ui ]
-[; ;main.c: 269: break ;
-"269
-[e $U 424  ]
-"271
-}
-[; ;main.c: 271: }
-[e $U 424  ]
-"258
-[e :U 425 ]
-[e [\ _machineState , $ . `E2845 0 426
- , $ . `E2845 1 427
- , $ . `E2845 2 428
- 424 ]
-"271
-[e :U 424 ]
-"273
-[v F2881 `Cuc ~T0 @X0 -> 0 `x s COMPARE_UNITS ]
-[i F2881
+[; ;main.c: 144: asm("clrwdt") ;
+"144
+[; <" clrwdt ;# ">
+"147
+[v F2872 `S371 ~T0 @X0 1 s prevPortAState ]
+[i F2872
 :U ..
--> -> 1 `i `uc
--> -> 10 `i `uc
--> -> 100 `i `uc
+:U ..
+-> -> 0 `i `uc
+..
 ..
 ]
-"275
-[v _isNonZero `uc ~T0 @X0 1 a ]
-[; ;main.c: 273: static const uint08_t COMPARE_UNITS[] = { 1 , 10 , 100 } ;
-[; ;main.c: 275: uint08_t isNonZero = 0 ;
-[e = _isNonZero -> -> 0 `i `uc ]
-[; ;main.c: 276: for( uint08_t i = 2 ; i != 0xFF ; i-- ) {
-"276
+"148
+[v _keyPressed `S371 ~T0 @X0 1 a ]
+[; ;main.c: 147: static UniPortA prevPortAState = { 0x00 } ;
+[; ;main.c: 148: UniPortA keyPressed ;
+[; ;main.c: 150: keyPressed.byte = ( portAState_.byte ^ prevPortAState.byte ) & portAState_.byte ;
+"150
+[e = . _keyPressed 0 -> & ^ -> . _portAState_ 0 `i -> . F2872 0 `i -> . _portAState_ 0 `i `uc ]
+[; ;main.c: 151: prevPortAState.byte = portAState_.byte ;
+"151
+[e = . F2872 0 . _portAState_ 0 ]
+[; ;main.c: 153: if( keyPressed.keyCenter ) {
+"153
+[e $ ! != -> . . _keyPressed 1 2 `i -> -> -> 0 `i `uc `i 385  ]
+{
+[; ;main.c: 154: inputEvents_.keyPressCenter = 1; ;
+"154
+[e = . . _inputEvents_ 1 4 -> -> 1 `i `uc ]
+"155
+}
+[e :U 385 ]
+[; ;main.c: 155: }
+[; ;main.c: 157: if( keyPressed.keyUp || (inputEvents_.keyPressHeldUp&&!(inputEvents_.keyPressHeldUp=0)) ) {
+"157
+[e $ ! || != -> . . _keyPressed 1 3 `i -> -> -> 0 `i `uc `i && != -> . . _inputEvents_ 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . _inputEvents_ 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 386  ]
+{
+[; ;main.c: 158: inputEvents_.keyPressUp = 1; ;
+"158
+[e = . . _inputEvents_ 1 0 -> -> 1 `i `uc ]
+"159
+}
+[e :U 386 ]
+[; ;main.c: 159: }
+[; ;main.c: 161: if( keyPressed.keyDown || (inputEvents_.keyPressHeldDown&&!(inputEvents_.keyPressHeldDown=0)) ) {
+"161
+[e $ ! || != -> . . _keyPressed 1 1 `i -> -> -> 0 `i `uc `i && != -> . . _inputEvents_ 1 3 `i -> -> -> 0 `i `uc `i ! != -> = . . _inputEvents_ 1 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 387  ]
+{
+[; ;main.c: 162: inputEvents_.keyPressDown = 1; ;
+"162
+[e = . . _inputEvents_ 1 2 -> -> 1 `i `uc ]
+"163
+}
+[e :U 387 ]
+[; ;main.c: 163: }
+[; ;main.c: 165: if( inputEvents_.all ) {
+"165
+[e $ ! != -> . _inputEvents_ 0 `i -> -> -> 0 `i `uc `i 388  ]
+{
+[; ;main.c: 166: events_.soundOnKey = 1; ;
+"166
+[e = . . _events_ 1 3 -> -> 1 `i `uc ]
+"167
+}
+[e :U 388 ]
+[; ;main.c: 167: }
+[; ;main.c: 170: if( (inputEvents_.keyPressCenter&&!(inputEvents_.keyPressCenter=0)) ) {
+"170
+[e $ ! && != -> . . _inputEvents_ 1 4 `i -> -> -> 0 `i `uc `i ! != -> = . . _inputEvents_ 1 4 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 389  ]
+{
+"172
+}
+[e :U 389 ]
+[; ;main.c: 172: }
+[; ;main.c: 175: if( (inputEvents_.keyPressHeldCenter&&!(inputEvents_.keyPressHeldCenter=0)) ) {
+"175
+[e $ ! && != -> . . _inputEvents_ 1 5 `i -> -> -> 0 `i `uc `i ! != -> = . . _inputEvents_ 1 5 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 390  ]
+{
+[; ;main.c: 176: INTCONbits.GIE=0 ;
+"176
+[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
+[; ;main.c: 177: _configuration_Save( &config ) ;
+"177
+[e ( __configuration_Save (1 &U _config ]
+[; ;main.c: 178: asm("reset") ;
+"178
+[; <" reset ;# ">
+"179
+}
+[e :U 390 ]
+[; ;main.c: 179: }
+[; ;main.c: 182: switch( machineState ) {
+"182
+[e $U 392  ]
+{
+[; ;main.c: 184: case STATE_METRONOME:
+"184
+[e :U 393 ]
+[; ;main.c: 185: if( (inputEvents_.keyPressUp&&!(inputEvents_.keyPressUp=0)) && config.tempo != 9999 ) {
+"185
+[e $ ! && && != -> . . _inputEvents_ 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . _inputEvents_ 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != . _config 0 -> -> 9999 `i `ui 394  ]
+{
+[; ;main.c: 186: config.tempo++ ;
+"186
+[e ++ . _config 0 -> -> 1 `i `ui ]
+[; ;main.c: 187: events_.changeValue = 1; ;
+"187
+[e = . . _events_ 1 0 -> -> 1 `i `uc ]
+[; ;main.c: 188: events_.resetMetronome = 1; ;
+"188
+[e = . . _events_ 1 1 -> -> 1 `i `uc ]
+"189
+}
+[e :U 394 ]
+[; ;main.c: 189: }
+[; ;main.c: 190: if( (inputEvents_.keyPressDown&&!(inputEvents_.keyPressDown=0)) && config.tempo != 0 ) {
+"190
+[e $ ! && && != -> . . _inputEvents_ 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . _inputEvents_ 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != . _config 0 -> -> 0 `i `ui 395  ]
+{
+[; ;main.c: 191: config.tempo-- ;
+"191
+[e -- . _config 0 -> -> 1 `i `ui ]
+[; ;main.c: 192: events_.changeValue = 1; ;
+"192
+[e = . . _events_ 1 0 -> -> 1 `i `uc ]
+[; ;main.c: 193: events_.resetMetronome = 1; ;
+"193
+[e = . . _events_ 1 1 -> -> 1 `i `uc ]
+"194
+}
+[e :U 395 ]
+[; ;main.c: 194: }
+[; ;main.c: 195: break ;
+"195
+[e $U 391  ]
+[; ;main.c: 198: case STATE_TUNE:
+"198
+[e :U 396 ]
+[; ;main.c: 199: if( (inputEvents_.keyPressUp&&!(inputEvents_.keyPressUp=0)) && config.oscillatorTune != 63 ) config.oscillatorTune++ ;
+"199
+[e $ ! && && != -> . . _inputEvents_ 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . _inputEvents_ 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != -> . _config 1 `i -> 63 `i 397  ]
+[e ++ . _config 1 -> -> 1 `i `uc ]
+[e :U 397 ]
+[; ;main.c: 200: if( (inputEvents_.keyPressDown&&!(inputEvents_.keyPressDown=0)) && config.oscillatorTune != 0 ) config.oscillatorTune-- ;
+"200
+[e $ ! && && != -> . . _inputEvents_ 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . _inputEvents_ 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i != -> . _config 1 `i -> 0 `i 398  ]
+[e -- . _config 1 -> -> 1 `i `uc ]
+[e :U 398 ]
+[; ;main.c: 201: break ;
+"201
+[e $U 391  ]
+"202
+}
+[; ;main.c: 202: }
+[e $U 391  ]
+"182
+[e :U 392 ]
+[e [\ _machineState , $ . `E2830 0 393
+ , $ . `E2830 1 396
+ 391 ]
+"202
+[e :U 391 ]
+[; ;main.c: 205: if( (events_.resetMetronome&&!(events_.resetMetronome=0)) ) {
+"205
+[e $ ! && != -> . . _events_ 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 399  ]
+{
+[; ;main.c: 206: tempoCounter = 0 ;
+"206
+[e = _tempoCounter -> -> -> 0 `i `m `um ]
+[; ;main.c: 207: beatCounter.all = 0 ;
+"207
+[e = . _beatCounter 0 -> -> 0 `i `uc ]
+[; ;main.c: 208: events_.soundOn = 1; ;
+"208
+[e = . . _events_ 1 2 -> -> 1 `i `uc ]
+[; ;main.c: 209: events_.changeValue = 1; ;
+"209
+[e = . . _events_ 1 0 -> -> 1 `i `uc ]
+"210
+}
+[e :U 399 ]
+[; ;main.c: 210: }
+[; ;main.c: 213: if( (events_.changeValue&&!(events_.changeValue=0)) ) {
+"213
+[e $ ! && != -> . . _events_ 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 400  ]
+{
+[; ;main.c: 215: autoHideCounter_ = 0x1000 ;
+"215
+[e = _autoHideCounter_ -> -> 4096 `i `ui ]
+"218
+[v _tmpValue `ui ~T0 @X0 1 a ]
+[; ;main.c: 218: uint16_t tmpValue ;
+[; ;main.c: 219: switch( machineState ) {
+"219
+[e $U 402  ]
+{
+[; ;main.c: 220: case STATE_METRONOME:
+"220
+[e :U 403 ]
+[; ;main.c: 221: tmpValue = config.tempo ;
+"221
+[e = _tmpValue . _config 0 ]
+[; ;main.c: 222: break ;
+"222
+[e $U 401  ]
+[; ;main.c: 225: case STATE_TUNE:
+"225
+[e :U 404 ]
+[; ;main.c: 226: tmpValue = config.oscillatorTune ;
+"226
+[e = _tmpValue -> . _config 1 `ui ]
+[; ;main.c: 227: break ;
+"227
+[e $U 401  ]
+"229
+}
+[; ;main.c: 229: }
+[e $U 401  ]
+"219
+[e :U 402 ]
+[e [\ _machineState , $ . `E2830 0 403
+ , $ . `E2830 1 404
+ 401 ]
+"229
+[e :U 401 ]
+"231
+[v F2875 `Cui ~T0 @X0 -> 0 `x s COMPARE_UNITS ]
+[i F2875
+:U ..
+-> -> 1000 `i `ui
+-> -> 100 `i `ui
+-> -> 10 `i `ui
+-> -> 1 `i `ui
+..
+]
+"233
+[v _displayNumber `uc ~T0 @X0 1 a ]
+[; ;main.c: 231: static const uint16_t COMPARE_UNITS[] = { 1000 , 100 , 10 , 1 } ;
+[; ;main.c: 233: uint08_t displayNumber = 0 ;
+[e = _displayNumber -> -> 0 `i `uc ]
+"235
+[v _isNonZero `E2769 ~T0 @X0 1 a ]
+[; ;main.c: 235: Bool_t isNonZero = BOOL_FALSE ;
+[e = _isNonZero . `E2769 0 ]
+[; ;main.c: 236: for( uint08_t i = 0 ; i < 4 ; i++ ) {
+"236
 {
 [v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 2 `i `uc ]
-[e $ != -> _i `i -> 255 `i 429  ]
-[e $U 430  ]
-[e :U 429 ]
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 4 `i 405  ]
+[e $U 406  ]
+[e :U 405 ]
 {
-"277
+[; ;main.c: 237: displayNumber = 0 ;
+"237
+[e = _displayNumber -> -> 0 `i `uc ]
+"238
 [v _compareUnit `ui ~T0 @X0 1 a ]
-[; ;main.c: 277: uint16_t compareUnit = COMPARE_UNITS[i] ;
-[e = _compareUnit -> *U + &U F2881 * -> _i `ux -> -> # *U &U F2881 `ui `ux `ui ]
-[; ;main.c: 278: while( tmpValue >= compareUnit ) {
-"278
-[e $U 432  ]
-[e :U 433 ]
+[; ;main.c: 238: uint16_t compareUnit = COMPARE_UNITS[i] ;
+[e = _compareUnit *U + &U F2875 * -> _i `ux -> -> # *U &U F2875 `ui `ux ]
+[; ;main.c: 239: while( tmpValue >= compareUnit ) {
+"239
+[e $U 408  ]
+[e :U 409 ]
 {
-[; ;main.c: 279: tmpValue -= compareUnit ;
-"279
+[; ;main.c: 240: tmpValue -= compareUnit ;
+"240
 [e =- _tmpValue _compareUnit ]
-[; ;main.c: 280: displayBuffer[i]++ ;
+[; ;main.c: 241: displayNumber++ ;
+"241
+[e ++ _displayNumber -> -> 1 `i `uc ]
+[; ;main.c: 242: isNonZero = BOOL_TRUE ;
+"242
+[e = _isNonZero . `E2769 1 ]
+"243
+}
+[e :U 408 ]
+"239
+[e $ >= _tmpValue _compareUnit 409  ]
+[e :U 410 ]
+[; ;main.c: 243: }
+[; ;main.c: 245: if( isNonZero )
+"245
+[e $ ! != -> _isNonZero `i -> -> -> 0 `i `E2769 `i 411  ]
+[; ;main.c: 246: displayBuffer[i] = SEGMENT_BIT[ displayNumber ] ;
+"246
+[e = *U + &U _displayBuffer * -> _i `ux -> -> # *U &U _displayBuffer `ui `ux *U + &U _SEGMENT_BIT * -> _displayNumber `ux -> -> # *U &U _SEGMENT_BIT `ui `ux ]
+[e $U 412  ]
+"247
+[e :U 411 ]
+[; ;main.c: 247: else
+[; ;main.c: 248: displayBuffer[i] = 0x00 ;
+"248
+[e = *U + &U _displayBuffer * -> _i `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 0 `i `uc ]
+[e :U 412 ]
+"249
+}
+"236
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 4 `i 405  ]
+[e :U 406 ]
+"249
+}
+"251
+}
+[e :U 400 ]
+[; ;main.c: 249: }
+[; ;main.c: 251: }
+[; ;main.c: 254: switch( machineState ) {
+"254
+[e $U 414  ]
+{
+[; ;main.c: 256: case STATE_TUNE:
+"256
+[e :U 415 ]
+[; ;main.c: 257: OSCTUNE = config.oscillatorTune - 32 ;
+"257
+[e = _OSCTUNE -> - -> . _config 1 `i -> 32 `i `uc ]
+[; ;main.c: 258: PR2 = 141 ;
+"258
+[e = _PR2 -> -> 141 `i `uc ]
+[; ;main.c: 259: for( uint08_t i = 0 ; i != 4 ; i++ )
+"259
+{
+[v _i `uc ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `uc ]
+[e $ != -> _i `i -> 4 `i 416  ]
+[e $U 417  ]
+"260
+[e :U 416 ]
+[; ;main.c: 260: displayBuffer[i] &= 0xFE ;
+[e =& *U + &U _displayBuffer * -> _i `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 254 `i `uc ]
+"259
+[e ++ _i -> -> 1 `i `uc ]
+[e $ != -> _i `i -> 4 `i 416  ]
+[e :U 417 ]
+"260
+}
+[; ;main.c: 261: break ;
+"261
+[e $U 413  ]
+[; ;main.c: 263: default:
+"263
+[e :U 419 ]
+[; ;main.c: 264: if( (events_.soundOnKey&&!(events_.soundOnKey=0)) ) {
+"264
+[e $ ! && != -> . . _events_ 1 3 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 420  ]
+{
+[; ;main.c: 265: durationCounter_.key = 0x40 ;
+"265
+[e = . _durationCounter_ 1 -> -> 64 `i `uc ]
+[; ;main.c: 266: PR2 = 125 ;
+"266
+[e = _PR2 -> -> 125 `i `uc ]
+[; ;main.c: 267: CCPR2L = ( PR2 >> 1 ) ;
+"267
+[e = _CCPR2L -> >> -> _PR2 `i -> 1 `i `uc ]
+[; ;main.c: 268: T2CONbits.TMR2ON=1 ;
+"268
+[e = . . _T2CONbits 0 2 -> -> 1 `i `uc ]
+"269
+}
+[e :U 420 ]
+[; ;main.c: 269: }
+[; ;main.c: 270: if( (events_.soundOn&&!(events_.soundOn=0)) && !durationCounter_.key ) {
+"270
+[e $ ! && && != -> . . _events_ 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i ! != -> . _durationCounter_ 1 `i -> -> -> 0 `i `uc `i 421  ]
+{
+[; ;main.c: 271: durationCounter_.click = 0x80 ;
+"271
+[e = . _durationCounter_ 0 -> -> 128 `i `uc ]
+[; ;main.c: 272: if( !autoHideCounter_ )
+"272
+[e $ ! ! != _autoHideCounter_ -> -> 0 `i `ui 422  ]
+[; ;main.c: 273: displayBuffer[3] = SEGMENT_BIT[ ( beatCounter.beat ) + 1 ] | 0x01 ;
+"273
+[e = *U + &U _displayBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _displayBuffer `ui `ux -> | -> *U + &U _SEGMENT_BIT * -> -> + -> . . _beatCounter 1 0 `i -> 1 `i `ui `ux -> -> # *U &U _SEGMENT_BIT `ui `ux `i -> 1 `i `uc ]
+[e :U 422 ]
+[; ;main.c: 275: if( !beatCounter.beat ) {
+"275
+[e $ ! ! != -> . . _beatCounter 1 0 `i -> -> -> 0 `i `uc `i 423  ]
+{
+[; ;main.c: 276: if( beatCounter.measure & 0x01 )
+"276
+[e $ ! != & -> . . _beatCounter 1 1 `i -> 1 `i -> 0 `i 424  ]
+[; ;main.c: 277: PR2 = 167 ;
+"277
+[e = _PR2 -> -> 167 `i `uc ]
+[e $U 425  ]
+"278
+[e :U 424 ]
+[; ;main.c: 278: else
+[; ;main.c: 279: PR2 = 125 ;
+"279
+[e = _PR2 -> -> 125 `i `uc ]
+[e :U 425 ]
 "280
-[e ++ *U + &U _displayBuffer * -> _i `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 1 `i `uc ]
-[; ;main.c: 281: isNonZero = 1 ;
+}
+[; ;main.c: 280: }
+[e $U 426  ]
 "281
-[e = _isNonZero -> -> 1 `i `uc ]
+[e :U 423 ]
+[; ;main.c: 281: else {
+{
+[; ;main.c: 282: PR2 = 251 ;
 "282
+[e = _PR2 -> -> 251 `i `uc ]
+"283
+}
+[e :U 426 ]
+[; ;main.c: 283: }
+[; ;main.c: 285: CCPR2L = ( PR2 >> 1 ) ;
+"285
+[e = _CCPR2L -> >> -> _PR2 `i -> 1 `i `uc ]
+[; ;main.c: 286: T2CONbits.TMR2ON=1 ;
+"286
+[e = . . _T2CONbits 0 2 -> -> 1 `i `uc ]
+"287
+}
+[e :U 421 ]
+[; ;main.c: 287: }
+[; ;main.c: 288: break ;
+"288
+[e $U 413  ]
+"289
+}
+[; ;main.c: 289: }
+[e $U 413  ]
+"254
+[e :U 414 ]
+[e [\ _machineState , $ . `E2830 1 415
+ 419 ]
+"289
+[e :U 413 ]
+[; ;main.c: 291: if( (events_.soundOff&&!(events_.soundOff=0)) ) {
+"291
+[e $ ! && != -> . . _events_ 1 4 `i -> -> -> 0 `i `uc `i ! != -> = . . _events_ 1 4 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 427  ]
+{
+[; ;main.c: 292: T2CONbits.TMR2ON=0 ;
+"292
+[e = . . _T2CONbits 0 2 -> -> 0 `i `uc ]
+[; ;main.c: 293: displayBuffer[3] &= 0xFE ;
+"293
+[e =& *U + &U _displayBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 254 `i `uc ]
+"294
+}
+[e :U 427 ]
+"296
+}
+[; ;main.c: 294: }
+[; ;main.c: 296: }
+[e $U 382  ]
+[e :U 383 ]
+}
+[; ;main.c: 298: }
+"298
+[e :UE 381 ]
+}
+[v F2883 `(v ~T0 @X0 1 tf ]
+"301
+[v __ `IF2883 ~T0 @X0 1 e ]
+{
+[; ;main.c: 301: void interrupt _( void ) {
+[e :U __ ]
+[f ]
+[; ;main.c: 302: if( !PIR3bits.TMR6IF ) return ;
+"302
+[e $ ! ! != -> . . _PIR3bits 0 3 `i -> -> -> 0 `i `Vuc `i 429  ]
+[e $UE 428  ]
+[e :U 429 ]
+[; ;main.c: 303: PIR3bits.TMR6IF = 0 ;
+"303
+[e = . . _PIR3bits 0 3 -> -> 0 `i `uc ]
+[; ;main.c: 306: tempoCounter += config.tempo ;
+"306
+[e =+ _tempoCounter -> . _config 0 `um ]
+[; ;main.c: 307: if( tempoCounter >= ( 32000000L * 3 / 25 ) ) {
+"307
+[e $ ! >= -> _tempoCounter `l / * -> 32000000 `l -> -> 3 `i `l -> -> 25 `i `l 430  ]
+{
+[; ;main.c: 308: tempoCounter -= ( 32000000L * 3 / 25 ) ;
+"308
+[e =- _tempoCounter -> / * -> 32000000 `l -> -> 3 `i `l -> -> 25 `i `l `um ]
+[; ;main.c: 309: beatCounter.all++ ;
+"309
+[e ++ . _beatCounter 0 -> -> 1 `i `uc ]
+[; ;main.c: 311: events_.soundOn = 1; ;
+"311
+[e = . . _events_ 1 2 -> -> 1 `i `uc ]
+"312
+}
+[e :U 430 ]
+"315
+[v F2884 `ui ~T0 @X0 1 s interruptCount ]
+[i F2884
+-> -> 0 `i `ui
+]
+[; ;main.c: 312: }
+[; ;main.c: 315: static uint16_t interruptCount = 0 ;
+[; ;main.c: 316: if( ++interruptCount == 640 ) interruptCount = 0 ;
+"316
+[e $ ! == =+ F2884 -> -> 1 `i `ui -> -> 640 `i `ui 431  ]
+[e = F2884 -> -> 0 `i `ui ]
+[e :U 431 ]
+[; ;main.c: 318: if( !( interruptCount & 0x0F ) ) {
+"318
+[e $ ! ! != & F2884 -> -> 15 `i `ui -> -> 0 `i `ui 432  ]
+{
+[; ;main.c: 319: if( autoHideCounter_ )
+"319
+[e $ ! != _autoHideCounter_ -> -> 0 `i `ui 433  ]
+[; ;main.c: 320: autoHideCounter_-- ;
+"320
+[e -- _autoHideCounter_ -> -> 1 `i `ui ]
+[e :U 433 ]
+[; ;main.c: 322: if( durationCounter_.click && ! --durationCounter_.click && !durationCounter_.key )
+"322
+[e $ ! && && != -> . _durationCounter_ 0 `i -> -> -> 0 `i `uc `i ! != -> =- . _durationCounter_ 0 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i ! != -> . _durationCounter_ 1 `i -> -> -> 0 `i `uc `i 434  ]
+[; ;main.c: 323: events_.soundOff = 1; ;
+"323
+[e = . . _events_ 1 4 -> -> 1 `i `uc ]
+[e :U 434 ]
+[; ;main.c: 324: if( durationCounter_.key && ! --durationCounter_.key )
+"324
+[e $ ! && != -> . _durationCounter_ 1 `i -> -> -> 0 `i `uc `i ! != -> =- . _durationCounter_ 1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 435  ]
+[; ;main.c: 325: events_.soundOff = 1; ;
+"325
+[e = . . _events_ 1 4 -> -> 1 `i `uc ]
+[e :U 435 ]
+"326
 }
 [e :U 432 ]
-"278
-[e $ >= _tmpValue _compareUnit 433  ]
-[e :U 434 ]
-[; ;main.c: 282: }
-[; ;main.c: 284: if( i == 0 ) break ;
-"284
-[e $ ! == -> _i `i -> 0 `i 435  ]
-[e $U 430  ]
-[e :U 435 ]
-[; ;main.c: 285: if( isNonZero ) continue ;
-"285
-[e $ ! != -> _isNonZero `i -> -> -> 0 `i `uc `i 436  ]
-[e $U 431  ]
-[e :U 436 ]
-[; ;main.c: 287: displayBuffer[i] = 10 ;
-"287
-[e = *U + &U _displayBuffer * -> _i `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 10 `i `uc ]
-"288
-}
-"276
-[e :U 431 ]
-[e -- _i -> -> 1 `i `uc ]
-[e $ != -> _i `i -> 255 `i 429  ]
-[e :U 430 ]
-"288
-}
-[; ;main.c: 288: }
-[; ;main.c: 290: for( uint08_t i = 0 ; i != 4 ; i++ )
-"290
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $ != -> _i `i -> 4 `i 437  ]
-[e $U 438  ]
-"291
-[e :U 437 ]
-[; ;main.c: 291: displayBuffer[i] = SEGMENT_BIT[ displayBuffer[ i ] ] ;
-[e = *U + &U _displayBuffer * -> _i `ux -> -> # *U &U _displayBuffer `ui `ux *U + &U _SEGMENT_BIT * -> *U + &U _displayBuffer * -> _i `ux -> -> # *U &U _displayBuffer `ui `ux `ux -> -> # *U &U _SEGMENT_BIT `ui `ux ]
-"290
-[e ++ _i -> -> 1 `i `uc ]
-[e $ != -> _i `i -> 4 `i 437  ]
-[e :U 438 ]
-"291
-}
-"293
-}
-[e :U 423 ]
-[; ;main.c: 293: }
-[; ;main.c: 296: switch( machineState ) {
-"296
-[e $U 441  ]
-{
-[; ;main.c: 298: case STATE_TUNE:
-"298
-[e :U 442 ]
-[; ;main.c: 299: OSCTUNE = config.oscillatorTune - 32 ;
-"299
-[e = _OSCTUNE -> - -> . _config 2 `i -> 32 `i `uc ]
-[; ;main.c: 300: PR2 = 141 ;
-"300
-[e = _PR2 -> -> 141 `i `uc ]
-[; ;main.c: 301: for( uint08_t i = 0 ; i != 4 ; i++ )
-"301
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $ != -> _i `i -> 4 `i 443  ]
-[e $U 444  ]
-"302
-[e :U 443 ]
-[; ;main.c: 302: displayBuffer[i] &= 0xFE ;
-[e =& *U + &U _displayBuffer * -> _i `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 254 `i `uc ]
-"301
-[e ++ _i -> -> 1 `i `uc ]
-[e $ != -> _i `i -> 4 `i 443  ]
-[e :U 444 ]
-"302
-}
-[; ;main.c: 303: break ;
-"303
-[e $U 440  ]
-[; ;main.c: 305: default:
-"305
-[e :U 446 ]
-[; ;main.c: 306: displayBuffer[3] = SEGMENT_BIT[ ( beatCounter.beat ) + 1 ] ;
-"306
-[e = *U + &U _displayBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _displayBuffer `ui `ux *U + &U _SEGMENT_BIT * -> -> + -> . . _beatCounter 1 1 `i -> 1 `i `ui `ux -> -> # *U &U _SEGMENT_BIT `ui `ux ]
-[; ;main.c: 308: if( beatCounter.duration < config.duration ) {
-"308
-[e $ ! < -> . . _beatCounter 1 0 `i -> . _config 1 `i 447  ]
-{
-[; ;main.c: 309: if( !beatCounter.beat ) {
-"309
-[e $ ! ! != -> . . _beatCounter 1 1 `i -> -> -> 0 `i `uc `i 448  ]
-{
-[; ;main.c: 310: if( beatCounter.measure & 0x01 )
-"310
-[e $ ! != & -> . . _beatCounter 1 2 `i -> 1 `i -> 0 `i 449  ]
-[; ;main.c: 311: PR2 = 167 ;
-"311
-[e = _PR2 -> -> 167 `i `uc ]
-[e $U 450  ]
-"312
-[e :U 449 ]
-[; ;main.c: 312: else
-[; ;main.c: 313: PR2 = 125 ;
-"313
-[e = _PR2 -> -> 125 `i `uc ]
-[e :U 450 ]
-"314
-}
-[; ;main.c: 314: }
-[e $U 451  ]
-"315
-[e :U 448 ]
-[; ;main.c: 315: else {
-{
-[; ;main.c: 316: PR2 = 251 ;
-"316
-[e = _PR2 -> -> 251 `i `uc ]
-"317
-}
-[e :U 451 ]
-[; ;main.c: 317: }
-[; ;main.c: 318: displayBuffer[3] |= 0x01 ;
-"318
-[e =| *U + &U _displayBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _displayBuffer `ui `ux -> -> 1 `i `uc ]
-"319
-}
-[; ;main.c: 319: }
-[e $U 452  ]
-"320
-[e :U 447 ]
-[; ;main.c: 320: else {
-{
-[; ;main.c: 321: PR2 = 0 ;
-"321
-[e = _PR2 -> -> 0 `i `uc ]
-"322
-}
-[e :U 452 ]
-[; ;main.c: 322: }
-[; ;main.c: 324: break ;
-"324
-[e $U 440  ]
-"325
-}
-[; ;main.c: 325: }
-[e $U 440  ]
-"296
-[e :U 441 ]
-[e [\ _machineState , $ . `E2845 2 442
- 446 ]
-"325
-[e :U 440 ]
-[; ;main.c: 326: CCPR2L = ( PR2 >> 1 ) ;
-"326
-[e = _CCPR2L -> >> -> _PR2 `i -> 1 `i `uc ]
-[; ;main.c: 329: if( prescaleEvent & 0x7F ) return ;
+[; ;main.c: 326: }
+[; ;main.c: 329: if( !interruptCount ) {
 "329
-[e $ ! != & -> _prescaleEvent `i -> 127 `i -> 0 `i 453  ]
-[e $UE 387  ]
-[e :U 453 ]
-[; ;main.c: 332: displayDigit = ( displayDigit + 1 ) & 0x03 ;
+[e $ ! ! != F2884 -> -> 0 `i `ui 436  ]
+{
+[; ;main.c: 330: portAState_.byte = (~PORTA&0x70); ;
+"330
+[e = . _portAState_ 0 -> & ~ -> _PORTA `i -> 112 `i `uc ]
+[; ;main.c: 332: if( portAState_.keyUp ) {
 "332
-[e = _displayDigit -> & + -> _displayDigit `i -> 1 `i -> 3 `i `uc ]
-[; ;main.c: 336: LATB = displayBuffer[ 3 ] ;
+[e $ ! != -> . . _portAState_ 1 3 `i -> -> -> 0 `i `uc `i 437  ]
+{
+[; ;main.c: 333: if( ++keyCount.up == 0x40 ) {
+"333
+[e $ ! == -> =+ . _keyCount 0 -> -> 1 `i `uc `i -> 64 `i 438  ]
+{
+[; ;main.c: 334: keyCount.up = 0x3C ;
+"334
+[e = . _keyCount 0 -> -> 60 `i `uc ]
+[; ;main.c: 335: inputEvents_.keyPressHeldUp = 1; ;
+"335
+[e = . . _inputEvents_ 1 1 -> -> 1 `i `uc ]
 "336
-[e = _LATB *U + &U _displayBuffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _displayBuffer `ui `ux ]
-[; ;main.c: 337: LATA = SEGMET_BIT2[ 3 ] ;
+}
+[e :U 438 ]
 "337
-[e = _LATA *U + &U _SEGMET_BIT2 * -> -> -> 3 `i `ui `ux -> -> # *U &U _SEGMET_BIT2 `ui `ux ]
-[; ;main.c: 339: }
+}
+[; ;main.c: 336: }
+[; ;main.c: 337: }
+[e $U 439  ]
+"338
+[e :U 437 ]
+[; ;main.c: 338: else
+[; ;main.c: 339: keyCount.up = 0 ;
 "339
-[e :UE 387 ]
+[e = . _keyCount 0 -> -> 0 `i `uc ]
+[e :U 439 ]
+[; ;main.c: 341: if( portAState_.keyDown ) {
+"341
+[e $ ! != -> . . _portAState_ 1 1 `i -> -> -> 0 `i `uc `i 440  ]
+{
+[; ;main.c: 342: if( ++keyCount.down == 0x40 ) {
+"342
+[e $ ! == -> =+ . _keyCount 1 -> -> 1 `i `uc `i -> 64 `i 441  ]
+{
+[; ;main.c: 343: keyCount.down = 0x3C ;
+"343
+[e = . _keyCount 1 -> -> 60 `i `uc ]
+[; ;main.c: 344: inputEvents_.keyPressHeldDown = 1; ;
+"344
+[e = . . _inputEvents_ 1 3 -> -> 1 `i `uc ]
+"345
+}
+[e :U 441 ]
+"346
+}
+[; ;main.c: 345: }
+[; ;main.c: 346: }
+[e $U 442  ]
+"347
+[e :U 440 ]
+[; ;main.c: 347: else
+[; ;main.c: 348: keyCount.down = 0 ;
+"348
+[e = . _keyCount 1 -> -> 0 `i `uc ]
+[e :U 442 ]
+[; ;main.c: 350: if( portAState_.keyCenter ) {
+"350
+[e $ ! != -> . . _portAState_ 1 2 `i -> -> -> 0 `i `uc `i 443  ]
+{
+[; ;main.c: 351: if( ++keyCount.center == 0x40 ) {
+"351
+[e $ ! == -> =+ . _keyCount 2 -> -> 1 `i `uc `i -> 64 `i 444  ]
+{
+[; ;main.c: 352: keyCount.center = 0x3C ;
+"352
+[e = . _keyCount 2 -> -> 60 `i `uc ]
+[; ;main.c: 353: inputEvents_.keyPressHeldCenter = 1; ;
+"353
+[e = . . _inputEvents_ 1 5 -> -> 1 `i `uc ]
+"354
+}
+[e :U 444 ]
+"355
+}
+[; ;main.c: 354: }
+[; ;main.c: 355: }
+[e $U 445  ]
+"356
+[e :U 443 ]
+[; ;main.c: 356: else
+[; ;main.c: 357: keyCount.center = 0 ;
+"357
+[e = . _keyCount 2 -> -> 0 `i `uc ]
+[e :U 445 ]
+"358
+}
+[e :U 436 ]
+[; ;main.c: 358: }
+[; ;main.c: 361: if( !( interruptCount & 0x001F ) ) {
+"361
+[e $ ! ! != & F2884 -> -> 31 `i `ui -> -> 0 `i `ui 446  ]
+{
+[; ;main.c: 362: displayDigit = ( displayDigit + 1 ) & 0x03 ;
+"362
+[e = _displayDigit -> & + -> _displayDigit `i -> 1 `i -> 3 `i `uc ]
+[; ;main.c: 363: if( autoHideCounter_ ) {
+"363
+[e $ ! != _autoHideCounter_ -> -> 0 `i `ui 447  ]
+{
+[; ;main.c: 364: LATA = 0x0F ;
+"364
+[e = _LATA -> -> 15 `i `uc ]
+[; ;main.c: 365: LATB = displayBuffer[ displayDigit ] ;
+"365
+[e = _LATB *U + &U _displayBuffer * -> _displayDigit `ux -> -> # *U &U _displayBuffer `ui `ux ]
+[; ;main.c: 366: LATA = SEGMET_BIT2[ displayDigit ] ;
+"366
+[e = _LATA *U + &U _SEGMET_BIT2 * -> _displayDigit `ux -> -> # *U &U _SEGMET_BIT2 `ui `ux ]
+"367
+}
+[; ;main.c: 367: }
+[e $U 448  ]
+"368
+[e :U 447 ]
+[; ;main.c: 368: else {
+{
+[; ;main.c: 369: LATB = SEGMENT_BIT[beatCounter.beat + 1] ;
+"369
+[e = _LATB *U + &U _SEGMENT_BIT * -> -> + -> . . _beatCounter 1 0 `i -> 1 `i `ui `ux -> -> # *U &U _SEGMENT_BIT `ui `ux ]
+[; ;main.c: 370: LATA = SEGMET_BIT2[ beatCounter.beat ] ;
+"370
+[e = _LATA *U + &U _SEGMET_BIT2 * -> . . _beatCounter 1 0 `ux -> -> # *U &U _SEGMET_BIT2 `ui `ux ]
+"371
+}
+[e :U 448 ]
+"372
+}
+[e :U 446 ]
+[; ;main.c: 371: }
+[; ;main.c: 372: }
+[; ;main.c: 374: }
+"374
+[e :UE 428 ]
 }
