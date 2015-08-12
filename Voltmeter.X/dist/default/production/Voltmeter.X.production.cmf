@@ -11,6 +11,10 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
+$/tmp/cgtHNt0kr.obj
+reset_vec CODE 0 0 0 1 2
+end_init CODE 0 4D 4D 1 2
+config CONFIG 0 8007 8007 2 2
 $dist/default/production/Voltmeter.X.production.obj
 cinit CODE 0 4E 4E 1A 2
 text1 CODE 0 353 353 48 2
@@ -33,10 +37,6 @@ idataBANK0 CODE 0 4A4 4A4 12 2
 dataBANK0 BANK0 1 3E 3E 12 1
 clrtext CODE 0 4C6 4C6 6 2
 bssCOMMON COMMON 1 77 77 2 1
-$/tmp/cgtbaTRSE.obj
-reset_vec CODE 0 0 0 1 2
-end_init CODE 0 4D 4D 1 2
-config CONFIG 0 8007 8007 2 2
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
 # is described on a single line as follows:
@@ -129,35 +129,35 @@ F intentry CODE >398:/Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
 44 intentry CODE >419:/Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
 45 intentry CODE >423:/Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
 49 intentry CODE >425:/Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
-4E cinit CODE >560:/tmp/cgtepaJxW
-4E cinit CODE >563:/tmp/cgtepaJxW
-4E cinit CODE >637:/tmp/cgtepaJxW
-4F cinit CODE >638:/tmp/cgtepaJxW
-50 cinit CODE >642:/tmp/cgtepaJxW
-51 cinit CODE >643:/tmp/cgtepaJxW
-52 cinit CODE >644:/tmp/cgtepaJxW
-53 cinit CODE >645:/tmp/cgtepaJxW
-54 cinit CODE >646:/tmp/cgtepaJxW
-55 cinit CODE >647:/tmp/cgtepaJxW
-56 cinit CODE >651:/tmp/cgtepaJxW
-57 cinit CODE >652:/tmp/cgtepaJxW
-58 cinit CODE >653:/tmp/cgtepaJxW
-59 cinit CODE >654:/tmp/cgtepaJxW
-5A cinit CODE >655:/tmp/cgtepaJxW
-5B cinit CODE >656:/tmp/cgtepaJxW
-5C cinit CODE >671:/tmp/cgtepaJxW
-5D cinit CODE >672:/tmp/cgtepaJxW
-5E cinit CODE >673:/tmp/cgtepaJxW
-5F cinit CODE >674:/tmp/cgtepaJxW
-60 cinit CODE >675:/tmp/cgtepaJxW
-61 cinit CODE >676:/tmp/cgtepaJxW
-62 cinit CODE >677:/tmp/cgtepaJxW
-63 cinit CODE >678:/tmp/cgtepaJxW
-64 cinit CODE >679:/tmp/cgtepaJxW
-65 cinit CODE >680:/tmp/cgtepaJxW
-66 cinit CODE >686:/tmp/cgtepaJxW
-66 cinit CODE >687:/tmp/cgtepaJxW
-67 cinit CODE >688:/tmp/cgtepaJxW
+4E cinit CODE >560:/tmp/cgtBiKNKl
+4E cinit CODE >563:/tmp/cgtBiKNKl
+4E cinit CODE >637:/tmp/cgtBiKNKl
+4F cinit CODE >638:/tmp/cgtBiKNKl
+50 cinit CODE >642:/tmp/cgtBiKNKl
+51 cinit CODE >643:/tmp/cgtBiKNKl
+52 cinit CODE >644:/tmp/cgtBiKNKl
+53 cinit CODE >645:/tmp/cgtBiKNKl
+54 cinit CODE >646:/tmp/cgtBiKNKl
+55 cinit CODE >647:/tmp/cgtBiKNKl
+56 cinit CODE >651:/tmp/cgtBiKNKl
+57 cinit CODE >652:/tmp/cgtBiKNKl
+58 cinit CODE >653:/tmp/cgtBiKNKl
+59 cinit CODE >654:/tmp/cgtBiKNKl
+5A cinit CODE >655:/tmp/cgtBiKNKl
+5B cinit CODE >656:/tmp/cgtBiKNKl
+5C cinit CODE >671:/tmp/cgtBiKNKl
+5D cinit CODE >672:/tmp/cgtBiKNKl
+5E cinit CODE >673:/tmp/cgtBiKNKl
+5F cinit CODE >674:/tmp/cgtBiKNKl
+60 cinit CODE >675:/tmp/cgtBiKNKl
+61 cinit CODE >676:/tmp/cgtBiKNKl
+62 cinit CODE >677:/tmp/cgtBiKNKl
+63 cinit CODE >678:/tmp/cgtBiKNKl
+64 cinit CODE >679:/tmp/cgtBiKNKl
+65 cinit CODE >680:/tmp/cgtBiKNKl
+66 cinit CODE >686:/tmp/cgtBiKNKl
+66 cinit CODE >687:/tmp/cgtBiKNKl
+67 cinit CODE >688:/tmp/cgtBiKNKl
 68 maintext CODE >137:/Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
 68 maintext CODE >139:/Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
 69 maintext CODE >141:/Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
@@ -397,22 +397,22 @@ FF maintext CODE >224:/Users/kshimada/Development/MPLABX/Voltmeter.X/src/main.c
 4B6 text4 CODE >113:/Users/kshimada/Development/MPLABX/_Common/aqm0802.h
 4B8 text4 CODE >125:/Users/kshimada/Development/MPLABX/_Common/aqm0802.h
 4BE text4 CODE >126:/Users/kshimada/Development/MPLABX/_Common/aqm0802.h
-4C6 clrtext CODE >626:/tmp/cgtepaJxW
-4C6 clrtext CODE >627:/tmp/cgtepaJxW
-4C7 clrtext CODE >628:/tmp/cgtepaJxW
-4C7 clrtext CODE >629:/tmp/cgtepaJxW
-4C8 clrtext CODE >630:/tmp/cgtepaJxW
-4C9 clrtext CODE >631:/tmp/cgtepaJxW
-4CA clrtext CODE >632:/tmp/cgtepaJxW
-4CB clrtext CODE >633:/tmp/cgtepaJxW
-4CC inittext CODE >660:/tmp/cgtepaJxW
-4CC inittext CODE >661:/tmp/cgtepaJxW
-4CD inittext CODE >662:/tmp/cgtepaJxW
-4CD inittext CODE >663:/tmp/cgtepaJxW
-4CE inittext CODE >664:/tmp/cgtepaJxW
-4CF inittext CODE >665:/tmp/cgtepaJxW
-4D0 inittext CODE >666:/tmp/cgtepaJxW
-4D1 inittext CODE >667:/tmp/cgtepaJxW
+4C6 clrtext CODE >626:/tmp/cgtBiKNKl
+4C6 clrtext CODE >627:/tmp/cgtBiKNKl
+4C7 clrtext CODE >628:/tmp/cgtBiKNKl
+4C7 clrtext CODE >629:/tmp/cgtBiKNKl
+4C8 clrtext CODE >630:/tmp/cgtBiKNKl
+4C9 clrtext CODE >631:/tmp/cgtBiKNKl
+4CA clrtext CODE >632:/tmp/cgtBiKNKl
+4CB clrtext CODE >633:/tmp/cgtBiKNKl
+4CC inittext CODE >660:/tmp/cgtBiKNKl
+4CC inittext CODE >661:/tmp/cgtBiKNKl
+4CD inittext CODE >662:/tmp/cgtBiKNKl
+4CD inittext CODE >663:/tmp/cgtBiKNKl
+4CE inittext CODE >664:/tmp/cgtBiKNKl
+4CF inittext CODE >665:/tmp/cgtBiKNKl
+4D0 inittext CODE >666:/tmp/cgtBiKNKl
+4D1 inittext CODE >667:/tmp/cgtBiKNKl
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -449,11 +449,11 @@ main@j 3C 0 BANK0 1 cstackBANK0 dist/default/production/Voltmeter.X.production.o
 __Hstrings 0 0 ABS 0 strings -
 _TMR0 15 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 _TMR2 1A 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
-___sp 0 0 STACK 2 stack /tmp/cgtbaTRSE.obj
+___sp 0 0 STACK 2 stack /tmp/cgtHNt0kr.obj
 _main D0 0 CODE 0 maintext dist/default/production/Voltmeter.X.production.obj
 btemp 7E 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 ltemp 7E 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
-start 9A 0 CODE 0 init /tmp/cgtbaTRSE.obj
+start 9A 0 CODE 0 init /tmp/cgtHNt0kr.obj
 ttemp 7E 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 wtemp 7E 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 __size_of_main 0 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
@@ -472,12 +472,12 @@ ttemp3 87 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 ttemp4 7F 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 __aqm0802_ClearRow@count 22 0 BANK0 1 cstackBANK0 dist/default/production/Voltmeter.X.production.obj
 __aqm0802_SendCharacter@character 27 0 BANK0 1 cstackBANK0 dist/default/production/Voltmeter.X.production.obj
-intlevel0 0 0 CODE 0 functab /tmp/cgtbaTRSE.obj
-intlevel1 0 0 CODE 0 functab /tmp/cgtbaTRSE.obj
-intlevel2 0 0 CODE 0 functab /tmp/cgtbaTRSE.obj
-intlevel3 0 0 CODE 0 functab /tmp/cgtbaTRSE.obj
-intlevel4 0 0 CODE 0 functab /tmp/cgtbaTRSE.obj
-intlevel5 0 0 CODE 0 functab /tmp/cgtbaTRSE.obj
+intlevel0 0 0 CODE 0 functab /tmp/cgtHNt0kr.obj
+intlevel1 0 0 CODE 0 functab /tmp/cgtHNt0kr.obj
+intlevel2 0 0 CODE 0 functab /tmp/cgtHNt0kr.obj
+intlevel3 0 0 CODE 0 functab /tmp/cgtHNt0kr.obj
+intlevel4 0 0 CODE 0 functab /tmp/cgtHNt0kr.obj
+intlevel5 0 0 CODE 0 functab /tmp/cgtHNt0kr.obj
 __LbssCOMMON 0 0 ABS 0 bssCOMMON -
 _OSCCONbits 99 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 wtemp0 7E 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
@@ -514,7 +514,7 @@ __pcstackBANK0 20 0 BANK0 1 cstackBANK0 dist/default/production/Voltmeter.X.prod
 _TMR0IE 5D 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 __aqm0802_SendStringClearing@position 24 0 BANK0 1 cstackBANK0 dist/default/production/Voltmeter.X.production.obj
 _measureMode_ 57 0 BANK0 1 bssBANK0 dist/default/production/Voltmeter.X.production.obj
-___int_sp 0 0 STACK 2 stack /tmp/cgtbaTRSE.obj
+___int_sp 0 0 STACK 2 stack /tmp/cgtHNt0kr.obj
 __private_aqm0802_SendData@controlByte 76 0 COMMON 1 cstackCOMMON dist/default/production/Voltmeter.X.production.obj
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
@@ -657,7 +657,7 @@ __S3 0 0 ABS 0 - -
 __CFG_PLLEN$ON 0 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 main@prevPortAState 59 0 BANK0 1 bssBANK0 dist/default/production/Voltmeter.X.production.obj
 __Lintentry 8 0 CODE 0 intentry -
-reset_vec 0 0 CODE 0 reset_vec /tmp/cgtbaTRSE.obj
+reset_vec 0 0 CODE 0 reset_vec /tmp/cgtHNt0kr.obj
 _sumOfBuffer_ 52 0 BANK0 1 bssBANK0 dist/default/production/Voltmeter.X.production.obj
 __pdataBANK0 3E 0 BANK0 1 dataBANK0 dist/default/production/Voltmeter.X.production.obj
 _menuState_ 50 0 BANK0 1 bssBANK0 dist/default/production/Voltmeter.X.production.obj
@@ -707,8 +707,8 @@ main@digit 39 0 BANK0 1 cstackBANK0 dist/default/production/Voltmeter.X.producti
 ___lwdiv@divisor 20 0 BANK0 1 cstackBANK0 dist/default/production/Voltmeter.X.production.obj
 main@i_661 3D 0 BANK0 1 cstackBANK0 dist/default/production/Voltmeter.X.production.obj
 __@bufferPostiion 77 0 COMMON 1 bssCOMMON dist/default/production/Voltmeter.X.production.obj
-stackhi 204F 0 ABS 0 - /tmp/cgtbaTRSE.obj
-stacklo 203A 0 ABS 0 - /tmp/cgtbaTRSE.obj
+stackhi 204F 0 ABS 0 - /tmp/cgtHNt0kr.obj
+stacklo 203A 0 ABS 0 - /tmp/cgtHNt0kr.obj
 _ADCON0bits 9D 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 _ADCON1bits 9E 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj
 __CFG_LVP$OFF 0 0 ABS 0 - dist/default/production/Voltmeter.X.production.obj

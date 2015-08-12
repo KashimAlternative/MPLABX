@@ -3,14 +3,14 @@
 
 // Date Select
 typedef enum {
-  CLOCK_SELECT_YEAR = 0 ,
-  CLOCK_SELECT_MONTH ,
-  CLOCK_SELECT_DATE ,
-  CLOCK_SELECT_DAY_OF_WEEK ,
-  CLOCK_SELECT_HOUR ,
-  CLOCK_SELECT_MINUTE ,
-  CLOCK_SELECT_SECOND ,
-} DateSelect ;
+  DATE_ITEM_YEAR = 0 ,
+  DATE_ITEM_MONTH ,
+  DATE_ITEM_DATE ,
+  DATE_ITEM_DAY_OF_WEEK ,
+  DATE_ITEM_HOUR ,
+  DATE_ITEM_MINUTE ,
+  DATE_ITEM_SECOND ,
+} EnDateItem ;
 
 #  define CHAR_SEPARATE_DATE '-'
 #  define CHAR_SEPARATE_TIME ':'
@@ -29,23 +29,23 @@ const char* STR_DAY_OF_WEEK[] = {
 // Date Time
 typedef union {
   struct {
-    uint08 second ;
-    uint08 minute ;
-    uint08 hour ;
-    uint08 dayOfWeek ;
-    uint08 day ;
-    uint08 month ;
-    uint08 year ;
+    uint08_t second ;
+    uint08_t minute ;
+    uint08_t hour ;
+    uint08_t dayOfWeek ;
+    uint08_t day ;
+    uint08_t month ;
+    uint08_t year ;
   } ;
   struct {
-    uint08 _ : 7 ;
-    uint08 clockHalt : 1 ;
+    unsigned : 7 ;
+    unsigned clockHalt : 1 ;
   } ;
-  uint08 array[7] ;
-} DateTime ;
+  uint08_t array[7] ;
+} StDateTime ;
 
 // [Function] Convert Byte to Date Time ----------------
-void _date_time_ConvertByteToDateTime( DateTime* dateTime , char* string ) {
+void _date_time_ConvertByteToDateTime( StDateTime* dateTime , char* string ) {
 
   string[16] = 0 ;
 
@@ -77,7 +77,7 @@ void _date_time_ConvertByteToDateTime( DateTime* dateTime , char* string ) {
 }
 
 // [Function] Convert Byte to Date ----------------
-void _date_time_ConvertByteToDate( DateTime* dateTime , char* stinrg ) {
+void _date_time_ConvertByteToDate( StDateTime* dateTime , char* stinrg ) {
 
   stinrg[16] = 0 ;
   stinrg[15] = ']' ;
@@ -105,7 +105,7 @@ void _date_time_ConvertByteToDate( DateTime* dateTime , char* stinrg ) {
 }
 
 // [Function] Convert Byte to Date Time ----------------
-void _date_time_ConvertByteToTime( DateTime* dateTime , char* string ) {
+void _date_time_ConvertByteToTime( StDateTime* dateTime , char* string ) {
 
   string[8] = 0 ;
 
@@ -125,38 +125,38 @@ void _date_time_ConvertByteToTime( DateTime* dateTime , char* string ) {
 }
 
 // [Function] Convert Byte to Discrete ----------------
-void _date_time_ConvertByteToDiscrete( DateTime* dateTime , char* string , DateSelect select ) {
+void _date_time_ConvertByteToDiscrete( StDateTime* dateTime , char* string , EnDateItem select ) {
 
   string[2] = 0 ;
 
   switch ( select ) {
-    case CLOCK_SELECT_YEAR:
+    case DATE_ITEM_YEAR:
       string[1] = ( dateTime->year & 0x0F ) | '0' ;
       string[0] = ( dateTime->year >> 4 ) | '0' ;
       break ;
-    case CLOCK_SELECT_MONTH:
+    case DATE_ITEM_MONTH:
       string[1] = ( dateTime->month & 0x0F ) | '0' ;
       string[0] = ( dateTime->month >> 4 ) | '0' ;
       break ;
-    case CLOCK_SELECT_DATE:
+    case DATE_ITEM_DATE:
       string[1] = ( dateTime->day & 0x0F ) | '0' ;
       string[0] = ( dateTime->day >> 4 ) | '0' ;
       break ;
-    case CLOCK_SELECT_DAY_OF_WEEK:
+    case DATE_ITEM_DAY_OF_WEEK:
       string[0] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][0] ;
       string[1] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][1] ;
       string[2] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][2] ;
       string[3] = 0 ;
       break ;
-    case CLOCK_SELECT_HOUR:
+    case DATE_ITEM_HOUR:
       string[1] = ( dateTime->hour & 0x0F ) | '0' ;
       string[0] = ( dateTime->hour >> 4 ) | '0' ;
       break ;
-    case CLOCK_SELECT_MINUTE:
+    case DATE_ITEM_MINUTE:
       string[1] = ( dateTime->minute & 0x0F ) | '0' ;
       string[0] = ( dateTime->minute >> 4 ) | '0' ;
       break ;
-    case CLOCK_SELECT_SECOND:
+    case DATE_ITEM_SECOND:
       string[1] = ( dateTime->second & 0x0F ) | '0' ;
       string[0] = ( dateTime->second >> 4 ) | '0' ;
       break ;

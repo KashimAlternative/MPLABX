@@ -1,7 +1,5 @@
 // ----------------------------------------------------------------
 // DS1307
-// Revision 2015/03/08
-//
 // ----------------------------------------------------------------
 // Description
 //
@@ -37,10 +35,10 @@
 #  define WAIT_MICROSECOND 28
 
 // [Prototypes] ----------------
-void _date_time_ConvertByteToDiscrete( DateTime* date , char* dateString , DateSelect select ) ;
+void _date_time_ConvertByteToDiscrete( StDateTime* date , char* dateString , EnDateItem select ) ;
 
 // [Function] Counfigurate ----------------
-uint08 _ds1307_Counfigurate( ) {
+uint08_t _ds1307_Counfigurate( ) {
 
   // SEN
   BIT_SEN = 1 ;
@@ -73,7 +71,7 @@ uint08 _ds1307_Counfigurate( ) {
 }
 
 // [Function] Get Data ----------------
-uint08 _ds1307_GetData( DateTime* date , uint08 ramAddress , uint08 length ) {
+uint08_t _ds1307_GetData( StDateTime* date , uint08_t ramAddress , uint08_t length ) {
 
   // SEN
   BIT_SEN = 1 ;
@@ -102,7 +100,7 @@ uint08 _ds1307_GetData( DateTime* date , uint08 ramAddress , uint08 length ) {
   if ( BIT_ACKSTAT ) return 3 ;
 
   // Receive Data
-  uint08 dataCount = 0 ;
+  uint08_t dataCount = 0 ;
   while ( dataCount < length ) {
     __delay_ms( 2 ) ;
     BIT_RCEN = 1 ;
@@ -122,7 +120,7 @@ uint08 _ds1307_GetData( DateTime* date , uint08 ramAddress , uint08 length ) {
 }
 
 // [Function] Write Data ----------------
-uint08 _ds1307_SetClock( DateTime* date ) {
+uint08_t _ds1307_SetClock( StDateTime* date ) {
 
   // SEN
   BIT_SEN = 1 ;
@@ -141,7 +139,7 @@ uint08 _ds1307_SetClock( DateTime* date ) {
   SSP1IF = 0 ;
   if ( BIT_ACKSTAT ) return 2 ;
 
-  for ( uint08 i = 0 ; i < sizeof ( DateTime ) ; i++ ) {
+  for ( uint08_t i = 0 ; i < sizeof ( StDateTime ) ; i++ ) {
     // Send Data
     SSP1BUF = date->array[i] ;
     while ( !SSP1IF ) ;
