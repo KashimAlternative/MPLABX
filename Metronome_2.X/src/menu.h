@@ -6,7 +6,7 @@
 //--------------------------------
 // Main Menu
 #  define MENU_SIZE_MAIN ( sizeof( MESSAGE_MENU_ITEM_MAIN ) / sizeof( MESSAGE_MENU_ITEM_MAIN[0] ) )
-const char* MESSAGE_MENU_ITEM_MAIN[] = {
+const Char_t* MESSAGE_MENU_ITEM_MAIN[] = {
   //23456789ABCDEF
   "< Return" ,
   "Beat Count" ,
@@ -35,7 +35,7 @@ enum {
 //--------------------------------
 // Tone Menu
 #  define MENU_SIZE_TONE ( sizeof( MESSAGE_MENU_ITEM_TONE ) / sizeof( MESSAGE_MENU_ITEM_TONE[0] ) )
-const char* MESSAGE_MENU_ITEM_TONE[] = {
+const Char_t* MESSAGE_MENU_ITEM_TONE[] = {
   //23456789ABCDEF
   "< Return" ,
   "Tone0" ,
@@ -52,7 +52,7 @@ enum {
 //--------------------------------
 // Duration Menu
 #  define MENU_SIZE_DURATION ( sizeof( MESSAGE_MENU_ITEM_DURATION ) / sizeof( MESSAGE_MENU_ITEM_DURATION[0] ) )
-const char* MESSAGE_MENU_ITEM_DURATION[] = {
+const Char_t* MESSAGE_MENU_ITEM_DURATION[] = {
   //23456789ABCDEF
   "< Return" ,
   "Click Sound" ,
@@ -67,18 +67,18 @@ enum {
 //--------------------------------
 // Information
 #define MENU_SIZE_INFORMATION ( sizeof ( MESSAGE_INFORMATION ) / sizeof ( MESSAGE_INFORMATION[0] ) )
-const char* MESSAGE_INFORMATION[] = {
+const Char_t* MESSAGE_INFORMATION[] = {
   //23456789ABCDEF
   "Version" ,
   "ROM Offset" ,
   "Save Count" ,
   "Error Code" ,
 } ;
-char informationValueBuffer[][7] = {
+Char_t informationValueBuffer[][7] = {
   " --.--" ,
-  "   --h" ,
-  "   --h" ,
-  "   00h" ,
+  "  0x--" ,
+  "  0x--" ,
+  "  0x00" ,
 } ;
 enum {
   INFORMATION_ITEM_VERSION = 0 ,

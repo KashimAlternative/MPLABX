@@ -1,8 +1,24 @@
-// ----------------------------------------------------------------
-// Configuration Word 1
-#pragma config MCLRE=0,WDTE=OFF,FOSC=INTOSC
-// Configuration Word 2
-#pragma config LVP=0,PLLEN=1
+// #pragma config statements should precede project file includes.
+// Use project enums instead of #define for ON and OFF.
+
+// CONFIG1
+#pragma config FOSC = INTOSC    // Oscillator Selection (INTOSC oscillator: I/O function on CLKIN pin)
+#pragma config WDTE = SWDTEN    // Watchdog Timer Enable (WDT controlled by the SWDTEN bit in the WDTCON register)
+#pragma config PWRTE = ON       // Power-up Timer Enable (PWRT enabled)
+#pragma config MCLRE = OFF      // MCLR Pin Function Select (MCLR/VPP pin function is digital input)
+#pragma config CP = OFF         // Flash Program Memory Code Protection (Program memory code protection is disabled)
+#pragma config CPD = OFF        // Data Memory Code Protection (Data memory code protection is disabled)
+#pragma config BOREN = ON       // Brown-out Reset Enable (Brown-out Reset enabled)
+#pragma config CLKOUTEN = OFF   // Clock Out Enable (CLKOUT function is disabled. I/O or oscillator function on the CLKOUT pin)
+#pragma config IESO = ON        // Internal/External Switchover (Internal/External Switchover mode is enabled)
+#pragma config FCMEN = ON       // Fail-Safe Clock Monitor Enable (Fail-Safe Clock Monitor is enabled)
+
+// CONFIG2
+#pragma config WRT = OFF        // Flash Memory Self-Write Protection (Write protection off)
+#pragma config PLLEN = OFF      // PLL Enable (4x PLL disabled)
+#pragma config STVREN = ON      // Stack Overflow/Underflow Reset Enable (Stack Overflow or Underflow will cause a Reset)
+#pragma config BORV = LO        // Brown-out Reset Voltage Selection (Brown-out Reset Voltage (Vbor), low trip point selected.)
+#pragma config LVP = OFF        // Low-Voltage Programming Enable (High-voltage on MCLR/VPP must be used for programming)
 
 // ----------------------------------------------------------------
 // [Function] Initialize
@@ -13,9 +29,17 @@ void initialize( ) {
   OSCCONbits.IRCF = 0b1011 ; // 1MHz
   OSCCONbits.SCS = 0b10 ; // Internal Oscillator Block
 
+  // Watchdog-Timer
+  WDTCONbits.SWDTEN = 0 ;
+  WDTCONbits.WDTPS = 0b01011 ; // Prescaler 1:65536
+
   // Interrupt
   INTCONbits.GIE = 1 ;
   INTCONbits.PEIE = 0 ;
+
+  // Interrupt-on-Change
+  INTCONbits.IOCIE = 0 ;
+  IOCANbits.IOCAN3 = 1 ; // Negative Edge of RA3
 
   // Timer0 config
   OPTION_REGbits.TMR0SE = 1 ;

@@ -16,8 +16,8 @@
 #ifndef DS1307_H
 #  define	DS1307_H
 
-#  include "date_time.h"
-#  include "typedef.h"
+#  include "DateTime.h"
+#  include "Typedef.h"
 
 #  define XTAL_FREQ 16000000
 
@@ -38,7 +38,7 @@
 void _date_time_ConvertByteToDiscrete( StDateTime* date , char* dateString , EnDateItem select ) ;
 
 // [Function] Counfigurate ----------------
-uint08_t _ds1307_Counfigurate( ) {
+Uint08_t _ds1307_Counfigurate( ) {
 
   // SEN
   BIT_SEN = 1 ;
@@ -71,7 +71,7 @@ uint08_t _ds1307_Counfigurate( ) {
 }
 
 // [Function] Get Data ----------------
-uint08_t _ds1307_GetData( StDateTime* date , uint08_t ramAddress , uint08_t length ) {
+Uint08_t _ds1307_GetData( StDateTime* date , Uint08_t ramAddress , Uint08_t length ) {
 
   // SEN
   BIT_SEN = 1 ;
@@ -100,7 +100,7 @@ uint08_t _ds1307_GetData( StDateTime* date , uint08_t ramAddress , uint08_t leng
   if ( BIT_ACKSTAT ) return 3 ;
 
   // Receive Data
-  uint08_t dataCount = 0 ;
+  Uint08_t dataCount = 0 ;
   while ( dataCount < length ) {
     __delay_ms( 2 ) ;
     BIT_RCEN = 1 ;
@@ -120,7 +120,7 @@ uint08_t _ds1307_GetData( StDateTime* date , uint08_t ramAddress , uint08_t leng
 }
 
 // [Function] Write Data ----------------
-uint08_t _ds1307_SetClock( StDateTime* date ) {
+Uint08_t _ds1307_SetClock( StDateTime* date ) {
 
   // SEN
   BIT_SEN = 1 ;
@@ -139,7 +139,7 @@ uint08_t _ds1307_SetClock( StDateTime* date ) {
   SSP1IF = 0 ;
   if ( BIT_ACKSTAT ) return 2 ;
 
-  for ( uint08_t i = 0 ; i < sizeof ( StDateTime ) ; i++ ) {
+  for ( Uint08_t i = 0 ; i < sizeof ( StDateTime ) ; i++ ) {
     // Send Data
     SSP1BUF = date->array[i] ;
     while ( !SSP1IF ) ;

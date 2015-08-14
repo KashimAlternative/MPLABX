@@ -29,19 +29,19 @@ const char* STR_DAY_OF_WEEK[] = {
 // Date Time
 typedef union {
   struct {
-    uint08_t second ;
-    uint08_t minute ;
-    uint08_t hour ;
-    uint08_t dayOfWeek ;
-    uint08_t day ;
-    uint08_t month ;
-    uint08_t year ;
+    Uint08_t second ;
+    Uint08_t minute ;
+    Uint08_t hour ;
+    Uint08_t dayOfWeek ;
+    Uint08_t day ;
+    Uint08_t month ;
+    Uint08_t year ;
   } ;
   struct {
     unsigned : 7 ;
     unsigned clockHalt : 1 ;
   } ;
-  uint08_t array[7] ;
+  Uint08_t array[7] ;
 } StDateTime ;
 
 // [Function] Convert Byte to Date Time ----------------

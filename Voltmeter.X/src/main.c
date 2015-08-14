@@ -17,15 +17,16 @@
 #define WaitTimer() while(!PIR1bits.TMR2IF);
 #define ResetTimer() TMR2=0x00;PIR1bits.TMR2IF=0;
 
-#include "../../_Common/typedef.h"
-#include "../../_Common/aqm0802.h"
+#include "../../_Common/Typedef.h"
+#include "../../_Common/Util.h"
+#include "../../_Common/AQM0802.h"
 
 #define SOFTWARE_VERSION " 00.112 "
 
 // --------------------------------
 // Keys
 typedef union {
-  uint08_t byte ;
+  Uint08_t byte ;
   struct {
     unsigned down : 1 ;
     unsigned : 2 ;
@@ -35,15 +36,9 @@ typedef union {
   } ;
 } UniPortA ;
 UniPortA portAState_ ;
-#define ReadKeyState() (~PORTA& 0b00101001);
-
-#define PRESS_COUNT 0x08
-#define PRESS_COUNT_LIMIT 0x80
-
-#define MEASURE_MASK 0xC0
+#define ReadKeyState() (~PORTA&0b00101001);
 
 #define CHAR_CURSOR 0x07
-#define CHAR_HOLD 'H'
 
 // --------------------------------
 // State
@@ -52,10 +47,12 @@ typedef enum {
   STATE_MEASURE ,
   STATE_MENU ,
   STATE_VERSION ,
+  STATE_SLEEP ,
   STATE_ERROR ,
 } MachineState ;
 MachineState machineState_ = STATE_BOOT ;
 Bool_t isHold_ = BOOL_FALSE ;
+Uint16_t sleepTimer_ = 0 ;
 
 // --------------------------------
 // Measure Mode
@@ -79,11 +76,12 @@ const struct {
 MESSAGE = {
   "Boot..." ,
   "Voltage" ,
-  "Bar" ,
+  " 2 4 6 8" ,
   "A/D Val" ,
   "Version" ,
   "Error" ,
 } ;
+const char* currentMessage_ = NULL ;
 
 // --------------------------------
 // Menu
@@ -103,23 +101,20 @@ const char* MESSAGE_MENU[] = {
   "Version" ,
 } ;
 struct {
-  uint08_t select ;
-  uint08_t cursor ;
+  Uint08_t select ;
+  Uint08_t cursor ;
 } menuState_ ;
 
 // --------------------------------
 // A/D Converter
 #define SIZE_OF_AD_BUFFER 16
-typedef uint16_t ADValue_t ;
-uint16_t sumOfBuffer_ ;
+typedef Uint16_t ADValue_t ;
+static ADValue_t sumOfBuffer_ = 0 ;
 
 // --------------------------------
 // Event
-#define SetEvent(event) event=1
-#define ClearEvent(event) event=0
-#define EvalEvent(event) (event&&!(event=0))
 union {
-  uint08_t all ;
+  Uint08_t all ;
   struct {
     unsigned keyPressMenu : 1 ;
     unsigned keyPressUp : 1 ;
@@ -127,10 +122,10 @@ union {
     unsigned keyPressUpDown : 1 ;
     unsigned changeValue : 1 ;
     unsigned changeMessage : 1 ;
+    unsigned sleep : 1 ;
     unsigned error : 1 ;
   } ;
-} events_ = 0 ;
-
+} events_ = { 0x00 } ;
 
 // ----------------------------------------------------------------
 // [Function] Main
@@ -147,35 +142,34 @@ int main( void ) {
 
   ResetTimer( ) ;
 
-  _aqm0802_Initialize( ) ;
-  _aqm0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.BOOT ) ;
-
-  uint08_t barImage = 0b11111 ;
+  AQM0802_Initialize( ) ;
+  AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.BOOT ) ;
 
   // Set CGRAM for Bar Indicator
-  _private_aqm0802_SendData( 0x00 , 0x00 ) ;
+  AQM0802_SendData( 0x00 , 0x00 ) ;
+  AQM0802_SendData( 0x00 , 0x40 ) ;
 
-  for( uint08_t i = 5 ; i != 0xFF ; i-- ) {
-    _private_aqm0802_SendData( 0x00 , ( i << 3 ) | 0x40 ) ;
-
-    for( uint08_t j = 0 ; j != 8 ; j++ ) {
-      if( j == 0 || j == 7 )
-        _private_aqm0802_SendData( 0x40 , 0b11111 ) ;
-      else
-        _private_aqm0802_SendData( 0x40 , barImage ) ;
-    }
-
-    barImage >>= 1 ;
+  Uint08_t barImage = 0x40 ;
+  for( Uint08_t i = 0 ; i < 48 ; i++ ) {
+    if( !( i & 0x07 ) )
+      barImage |= ( barImage >> 1 ) ;
+    AQM0802_SendData( 0x40 , barImage ) ;
   }
 
   machineState_ = STATE_MEASURE ;
+  currentMessage_ = MESSAGE.VOLTAGE ;
   SetEvent( events_.changeMessage ) ;
 
   // Start Timer Interrupt
+  TMR0IF = 0 ;
   TMR0IE = 1 ;
+  WDTCONbits.SWDTEN = 1 ;
 
   // Start Main Loop
   for( ; ; ) {
+
+    // Clear Watchdog-Timer
+    CLRWDT( ) ;
 
     static UniPortA prevPortAState = { 0x00 } ;
     UniPortA keyPressed ;
@@ -235,14 +229,17 @@ int main( void ) {
           switch( menuState_.select ) {
             case MENU_VOLTAGE:
               measureMode_ = MEASURE_MODE_VOLTAGE ;
+              currentMessage_ = MESSAGE.VOLTAGE ;
               break ;
 
             case MENU_BAR:
               measureMode_ = MEASURE_MODE_BAR ;
+              currentMessage_ = MESSAGE.BAR ;
               break ;
 
             case MENU_AD_VALUE:
               measureMode_ = MEASURE_MODE_AD_VALUE ;
+              currentMessage_ = MESSAGE.AD_VALUE ;
               break ;
 
             case MENU_VERSION:
@@ -284,43 +281,29 @@ int main( void ) {
       switch( machineState_ ) {
 
         case STATE_MEASURE:
-          switch( measureMode_ ) {
-
-            case MEASURE_MODE_VOLTAGE:
-              _aqm0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.VOLTAGE ) ;
-              break ;
-
-            case MEASURE_MODE_BAR:
-              _aqm0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.BAR ) ;
-              break ;
-
-            case MEASURE_MODE_AD_VALUE:
-              _aqm0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.AD_VALUE ) ;
-              break ;
-
-          }
-          _aqm0802_ClearRow( ROW_SELECT_1 | 0x0 ) ;
-          if( isHold_ )
-            _aqm0802_SendCharacter( ROW_SELECT_1 | 0x0 , 'H' ) ;
+          AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , currentMessage_ ) ;
+          AQM0802_ClearRow( ROW_SELECT_1 ) ;
+          //          if( isHold_ )
+          //            AQM0802_SendCharacter( ROW_SELECT_0 | 0x7 , CHAR_HOLD ) ;
 
           SetEvent( events_.changeValue ) ;
           break ;
 
         case STATE_MENU:
-          _aqm0802_SendStringClearing( ROW_SELECT_0 | 0x1 , MESSAGE_MENU[ menuState_.select - menuState_.cursor ] ) ;
-          _aqm0802_SendStringClearing( ROW_SELECT_1 | 0x1 , MESSAGE_MENU[ menuState_.select - menuState_.cursor + 1 ] ) ;
-          _aqm0802_SendCharacter( ROW_SELECT[ menuState_.cursor ] | 0x0 , CHAR_CURSOR ) ;
+          AQM0802_SendStringClearing( ROW_SELECT_0 | 0x1 , MESSAGE_MENU[ menuState_.select - menuState_.cursor ] ) ;
+          AQM0802_SendStringClearing( ROW_SELECT_1 | 0x1 , MESSAGE_MENU[ menuState_.select - menuState_.cursor + 1 ] ) ;
+          AQM0802_SendCharacter( ROW_SELECT[ menuState_.cursor ] | 0x0 , CHAR_CURSOR ) ;
           break ;
 
         case STATE_VERSION:
-          _aqm0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.VERSION ) ;
-          _aqm0802_SendStringClearing( ROW_SELECT_1 | 0x0 , SOFTWARE_VERSION ) ;
+          AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.VERSION ) ;
+          AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , SOFTWARE_VERSION ) ;
           break ;
 
 
         case STATE_ERROR:
-          _aqm0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.ERROR ) ;
-          _aqm0802_ClearRow( ROW_SELECT_1 ) ;
+          AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.ERROR ) ;
+          AQM0802_ClearRow( ROW_SELECT_1 ) ;
           break ;
       }
     }
@@ -329,12 +312,12 @@ int main( void ) {
     if( machineState_ == STATE_MEASURE && EvalEvent( events_.changeValue ) ) {
 
       // Display Averaged Value
-      ADValue_t adValue ;
-      uint08_t digit ;
+      ADValue_t currentAdValue ;
+      Uint08_t digit ;
       char string[8] = "  00000" ;
-      const uint16_t compareUnits[] = { 10000 , 1000 , 100 , 10 , 1 } ;
+      const Uint16_t COMPARE_UNITS[] = { 10000 , 1000 , 100 , 10 , 1 } ;
 
-      adValue = sumOfBuffer_ ;
+      currentAdValue = sumOfBuffer_ ;
 
       switch( measureMode_ ) {
         case MEASURE_MODE_VOLTAGE:
@@ -343,11 +326,11 @@ int main( void ) {
           digit = 0 ;
           while( digit < 5 ) {
 
-            uint16_t compareUnit = compareUnits[ digit ] ;
+            Uint16_t compareUnit = COMPARE_UNITS[ digit ] ;
 
-            while( adValue >= compareUnit ) {
+            while( currentAdValue >= compareUnit ) {
               string[digit + 2]++ ;
-              adValue -= compareUnit ;
+              currentAdValue -= compareUnit ;
             }
 
             digit++ ;
@@ -361,24 +344,44 @@ int main( void ) {
             string[6] = 'V' ;
           }
 
-          _aqm0802_SendString( ROW_SELECT_1 | 0x1 , &string ) ;
+          AQM0802_SendString( ROW_SELECT_1 | 0x1 , &string ) ;
 
           break ;
 
         case MEASURE_MODE_BAR:
-          for( uint08_t i = 7 ; i != 1 ; i-- ) {
-            if( adValue >= 1000 ) {
-              _aqm0802_SendCharacter( ROW_SELECT_1 | i , 0x05 ) ;
-              adValue -= 1000 ;
+        {
+          Char_t string[9] ;
+          for( Uint08_t i = 0 ; i < 8 ; i++ ) {
+            if( currentAdValue >= 1000 ) {
+              string[i] = '\x05' ;
+              currentAdValue -= 1000 ;
             }
             else {
-              _aqm0802_SendCharacter( ROW_SELECT_1 | i , adValue / 200 ) ;
-              adValue = 0 ;
+              string[i] = currentAdValue / 200 ;
+              string[ i + 1 ] = '\0' ;
+              break ;
             }
+
           }
+          AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , string ) ;
+        }
           break ;
+
       }
 
+    }
+
+    // Sleep
+    if( EvalEvent( events_.sleep ) ) {
+      AQM0802_ClearRow( ROW_SELECT_0 ) ;
+      AQM0802_ClearRow( ROW_SELECT_1 ) ;
+      WDTCONbits.SWDTEN = 0 ;
+      INTCONbits.TMR0IE = 0 ;
+      INTCONbits.IOCIF = 0 ;
+      INTCONbits.IOCIE = 1 ;
+      sleepTimer_ = 0 ;
+      machineState_ = STATE_SLEEP ;
+      SLEEP( ) ;
     }
 
   }//for(;;)
@@ -386,31 +389,63 @@ int main( void ) {
 }
 
 #define INTERRUPT_FLAG INTCONbits.TMR0IF
+#define INTERRUPT_FLAG_MODE_KEY IOCAFbits.IOCAF3
 // ----------------------------------------------------------------
 // [Interrupt]
 void interrupt _( void ) {
+
+  if( INTERRUPT_FLAG_MODE_KEY ) {
+    INTERRUPT_FLAG_MODE_KEY = 0 ;
+    WDTCONbits.SWDTEN = 1 ;
+    INTCONbits.TMR0IF = 0 ;
+    INTCONbits.TMR0IE = 1 ;
+    INTCONbits.IOCIE = 0 ;
+  }
+
   if( !INTERRUPT_FLAG ) return ;
   INTERRUPT_FLAG = 0 ;
 
   // Read Key State
-  static uint08_t interruptCount = 0 ;
+  static Uint08_t interruptCount = 0 ;
   if( ! --interruptCount ) {
     interruptCount = 10 ;
     portAState_.byte = ReadKeyState( ) ;
+
+    if( machineState_ == STATE_SLEEP ) {
+      if( portAState_.menu ) {
+        if( ++sleepTimer_ == 100 ) {
+          sleepTimer_ = 0 ;
+          machineState_ = STATE_MEASURE ;
+          SetEvent( events_.changeMessage ) ;
+        }
+      }
+      else {
+        SetEvent( events_.sleep ) ;
+      }
+    }
+    else {
+      if( portAState_.byte ) {
+        sleepTimer_ = 0 ;
+      }
+      else if( ++sleepTimer_ == 60 * 100 )
+        SetEvent( events_.sleep ) ;
+
+    }
+
   }
 
   // Get A/D Value
   if( !ADCON0bits.GO ) {
 
-    static uint08_t bufferPostiion = 0 ;
+    static Uint08_t bufferPostiion = 0 ;
     static ADValue_t adBuffer[ SIZE_OF_AD_BUFFER ] ;
-    ADValue_t adValue = ( ( ( (uint16_t)ADRESH ) << 8 ) | ADRESL ) ;
+    ADValue_t adValue = ( ( ( (Uint16_t)ADRESH ) << 8 ) | ADRESL ) ;
     ADCON0bits.GO = 1 ;
 
     if( !isHold_ ) {
       sumOfBuffer_ -= adBuffer[ bufferPostiion ] ;
       sumOfBuffer_ += adValue ;
-      adBuffer[bufferPostiion] = adValue ;
+      adBuffer[ bufferPostiion ] = adValue ;
 
       if( ++bufferPostiion == SIZE_OF_AD_BUFFER ) bufferPostiion = 0 ;
 

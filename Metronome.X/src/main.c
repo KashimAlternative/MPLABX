@@ -14,12 +14,12 @@
 
 // Key
 typedef union {
-  uint08_t byte ;
+  Uint08_t byte ;
   struct {
-    uint08_t _ : 4 ;
-    uint08_t keyDown : 1 ;
-    uint08_t keyCenter : 1 ;
-    uint08_t keyUp : 1 ;
+    Uint08_t _ : 4 ;
+    Uint08_t keyDown : 1 ;
+    Uint08_t keyCenter : 1 ;
+    Uint08_t keyUp : 1 ;
   } ;
 } UniPortA ;
 UniPortA portAState_ ;
@@ -28,9 +28,9 @@ UniPortA portAState_ ;
 #define KEY_PRESS_LOOP_START 0x3C
 #define KEY_PRESS_LOOP_END 0x40
 struct {
-  uint08_t up ;
-  uint08_t down ;
-  uint08_t center ;
+  Uint08_t up ;
+  Uint08_t down ;
+  Uint08_t center ;
 } keyCount ;
 
 #define TONE_OFF 0
@@ -42,7 +42,7 @@ struct {
 #define SoundOff() T2CONbits.TMR2ON=0
 #define SoundOn() T2CONbits.TMR2ON=1
 
-const uint08_t SEGMENT_BIT[] = {
+const Uint08_t SEGMENT_BIT[] = {
   0b11111100 , // 0
   0b01100000 , // 1
   0b11011010 , // 2
@@ -55,7 +55,7 @@ const uint08_t SEGMENT_BIT[] = {
   0b11110110 , // 9
   0b00000000 , // [Space]
 } ;
-const uint08_t SEGMET_BIT2[] = {
+const Uint08_t SEGMET_BIT2[] = {
   0b00001110 ,
   0b00001101 ,
   0b00001011 ,
@@ -63,8 +63,8 @@ const uint08_t SEGMET_BIT2[] = {
 } ;
 
 // Display
-uint08_t displayBuffer[4] = { 10 , 10 , 10 , 10 } ;
-uint08_t displayDigit ;
+Uint08_t displayBuffer[4] = { 10 , 10 , 10 , 10 } ;
+Uint08_t displayDigit ;
 
 // Mode
 typedef enum {
@@ -79,27 +79,27 @@ ConfigurationData config = CONFIGURATION_INITIAL ;
 // Metronome Counter
 #define _XTAL_FREQ 32000000L
 #define TOTAL_TEMOPO_COUNT ( _XTAL_FREQ * 3 / 25 )
-uint24_t tempoCounter = 0 ;
+Uint24_t tempoCounter = 0 ;
 union {
-  uint08_t all ;
+  Uint08_t all ;
   struct {
-    uint08_t beat : 2 ;
-    uint08_t measure : 2 ;
+    Uint08_t beat : 2 ;
+    Uint08_t measure : 2 ;
   } ;
 } beatCounter = 0 ;
 struct {
-  uint08_t click ;
-  uint08_t key ;
+  Uint08_t click ;
+  Uint08_t key ;
 } durationCounter_ = { 0 , 0 } ;
 
-uint16_t autoHideCounter_ = 0 ;
+Uint16_t autoHideCounter_ = 0 ;
 
 // Event
 #define ClearEvent( event ) event = 0;
 #define SetEvent( event )   event = 1;
 #define EvalEvent( event )  (event&&!(event=0))
 union {
-  uint08_t all ;
+  Uint08_t all ;
   struct {
     unsigned changeValue : 1 ;
     unsigned resetMetronome : 1 ;
@@ -109,7 +109,7 @@ union {
   } ;
 } events_ ;
 union {
-  uint08_t all ;
+  Uint08_t all ;
   struct {
     unsigned keyPressUp : 1 ;
     unsigned keyPressHeldUp : 1 ;
@@ -215,7 +215,7 @@ int main( void ) {
       autoHideCounter_ = 0x1000 ;
 
 
-      uint16_t tmpValue ;
+      Uint16_t tmpValue ;
       switch( machineState ) {
         case STATE_METRONOME:
           tmpValue = config.tempo ;
@@ -228,14 +228,14 @@ int main( void ) {
 
       }
 
-      static const uint16_t COMPARE_UNITS[] = { 1000 , 100 , 10 , 1 } ;
+      static const Uint16_t COMPARE_UNITS[] = { 1000 , 100 , 10 , 1 } ;
 
-      uint08_t displayNumber = 0 ;
+      Uint08_t displayNumber = 0 ;
 
       Bool_t isNonZero = BOOL_FALSE ;
-      for( uint08_t i = 0 ; i < 4 ; i++ ) {
+      for( Uint08_t i = 0 ; i < 4 ; i++ ) {
         displayNumber = 0 ;
-        uint16_t compareUnit = COMPARE_UNITS[i] ;
+        Uint16_t compareUnit = COMPARE_UNITS[i] ;
         while( tmpValue >= compareUnit ) {
           tmpValue -= compareUnit ;
           displayNumber++ ;
@@ -256,7 +256,7 @@ int main( void ) {
       case STATE_TUNE: // Tuning Mode
         OSCTUNE = config.oscillatorTune - 32 ;
         PR2 = TONE_TUNE ;
-        for( uint08_t i = 0 ; i != 4 ; i++ )
+        for( Uint08_t i = 0 ; i != 4 ; i++ )
           displayBuffer[i] &= 0xFE ;
         break ;
 
@@ -308,7 +308,7 @@ void interrupt _( void ) {
   }
 
   // Prescaler
-  static uint16_t interruptCount = 0 ;
+  static Uint16_t interruptCount = 0 ;
   if( ++interruptCount == 640 ) interruptCount = 0 ;
 
   if( !( interruptCount & 0x0F ) ) {

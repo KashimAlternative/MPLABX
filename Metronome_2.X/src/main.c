@@ -36,7 +36,6 @@
 // Include
 #include <xc.h>
 #include "pic16f1827_init.h"
-#include "../../_Common/util.h"
 
 // ----------------------------------------------------------------
 // Definition for Parallel LCD
@@ -50,8 +49,9 @@
 
 // ----------------------------------------------------------------
 // Include Original Header
-#include "../../_Common/parallel_LCD.h"
-#include "../../_Common/typedef.h"
+#include "../../_Common/Typedef.h"
+#include "../../_Common/Util.h"
+#include "../../_Common/ParallelLCD.h"
 
 #include "configuration.h"
 #include "menu.h"
@@ -92,7 +92,7 @@ typedef enum {
   STATE_ERROR ,
 } EnMachineState ;
 EnMachineState machineState_ = STATE_BOOT ;
-uint08_t stateReturnCounter_ = 0 ;
+Uint08_t stateReturnCounter_ = 0 ;
 Bool_t isMute_ = BOOL_FALSE ;
 #define RETURN_STATE_INTERVAL 0x40
 
@@ -107,13 +107,13 @@ ConfigurationData configration_ = CONFIG_DEFAULT ;
 #if TOTAL_TEMOPO_COUNT > 0xFFFFFF
 #  error [ERROR] Too Large Tempo Count !!
 #endif
-uint24_t tempoCounter_ = 0 ;
-uint08_t beatCounter_ = 0 ;
+Uint24_t tempoCounter_ = 0 ;
+Uint08_t beatCounter_ = 0 ;
 
 // ----------------------------------------------------------------
 // Keys
 typedef union {
-  uint08_t byte ;
+  Uint08_t byte ;
   struct {
     unsigned : 5 ;
     unsigned keyMenu : 1 ;
@@ -129,43 +129,79 @@ UniPortAState portAState_ = { 0x00 } ;
 #define KEY_COUNT_LOOP_START 0x3C
 #define KEY_COUNT_LOOP_END 0x40
 struct {
-  uint08_t Up ;
-  uint08_t Down ;
+  Uint08_t Up ;
+  Uint08_t Down ;
 } keyHoldCount_ = { 0 , 0 } ;
 
 // ----------------------------------------------------------------
 // Menu State
 typedef struct {
-  uint08_t select ;
-  uint08_t cursorPosition ;
-  const uint08_t limit ;
-  const char** menuMessage ;
+  Uint08_t select ;
+  Uint08_t cursorPosition ;
+  const Uint08_t limit ;
+  const Char_t** menuMessage ;
+  const Char_t* singleMessage ;
 } StMenuInfo ;
-StMenuInfo menuInfoMain_ = { 0 , 0 , MENU_SIZE_MAIN - 1 , &MESSAGE_MENU_ITEM_MAIN } ;
-StMenuInfo menuInfoTone_ = { 0 , 0 , MENU_SIZE_TONE - 1 , &MESSAGE_MENU_ITEM_TONE } ;
-StMenuInfo menuInfoDuration_ = { 0 , 0 , MENU_SIZE_DURATION - 1 , &MESSAGE_MENU_ITEM_DURATION } ;
-StMenuInfo menuInfoConfirm_ = { 0 , 0 , MENU_SIZE_CONFIRM - 1 , NULL } ;
-StMenuInfo menuInfoInformation_ = { 0 , 0 , MENU_SIZE_INFORMATION - 2 , NULL } ;
+StMenuInfo menuInfoMain_ = { 0 , 0 , MENU_SIZE_MAIN - 1 , &MESSAGE_MENU_ITEM_MAIN , NULL , } ;
+StMenuInfo menuInfoTone_ = { 0 , 0 , MENU_SIZE_TONE - 1 , &MESSAGE_MENU_ITEM_TONE , NULL , } ;
+StMenuInfo menuInfoDuration_ = { 0 , 0 , MENU_SIZE_DURATION - 1 , &MESSAGE_MENU_ITEM_DURATION , NULL , } ;
+StMenuInfo menuInfoConfirmLoad_ = { 0 , 0 , MENU_SIZE_CONFIRM - 1 , NULL , "Load ?" , } ;
+StMenuInfo menuInfoConfirmSave_ = { 0 , 0 , MENU_SIZE_CONFIRM - 1 , NULL , "Save ?" , } ;
+StMenuInfo menuInfoConfirmReset_ = { 0 , 0 , MENU_SIZE_CONFIRM - 1 , NULL , "Reset ?" , } ;
+StMenuInfo menuInfoInformation_ = { 0 , 0 , MENU_SIZE_INFORMATION - 2 , NULL , NULL , } ;
 StMenuInfo* currentMenuInfoPtr_ = NULL ;
+
+// ----------------------------------------------------------------
+// Single Message
+const Char_t* currentSingleMessage_ = NULL ;
 
 // ----------------------------------------------------------------
 // Value
 typedef struct {
-  uint08_t* valuePtr ;
-  uint08_t limitUpper ;
-  uint08_t limitLower ;
-  const char* messageTitle ;
-  const char* messageValue ;
+  Uint08_t* valuePtr ;
+  const struct {
+    const Uint08_t upper ;
+    const Uint08_t lower ;
+  } limit ;
+  const struct {
+    const Char_t* title ;
+    const Char_t* value ;
+  } message ;
 } StValueInfo ;
-StValueInfo currentValueInfo_ = { NULL , NULL } ;
+StValueInfo* currentValueInfoPtr_ = NULL ;
+StValueInfo valueInfoTempo_ = { NULL ,
+  { 0 , 0 } ,
+  "Metronome" ,
+  "Tempo" , } ;
+StValueInfo valueInfoBeatCount_ = { NULL ,
+  { 64 , 0 } ,
+  "Configuration" ,
+  "Beat Count" , } ;
+StValueInfo valueInfoTone_ = { NULL ,
+  { 0xFF , 0x00 } ,
+  "Tone" ,
+  "Tone" , } ;
+StValueInfo valueInfoDurationClick_ = { NULL ,
+  { 0xFF , 0x00 } ,
+  "Duration" ,
+  "Click" , } ;
+StValueInfo valueInfoDurationKey_ = { NULL ,
+  { 0xFF , 0x00 } ,
+  "Duration" ,
+  "Key Beep" , } ;
+StValueInfo valueInfoPulseWidth_ = { NULL ,
+  { 7 , 1 } ,
+  "Configuration" ,
+  "Pulse Width" , } ;
+StValueInfo valueInfoOscillatorTune_ = { NULL ,
+  { (Uint08_t)30 , (Uint08_t)( -30 ) } ,
+  "Configuration" ,
+  "Osc. Tune" , } ;
 
 // ----------------------------------------------------------------
 // Events
-#define ClearEvent( event ) event = 0
-#define SetEvent( event )   event = 1
-#define EvalEvent( event )  (event&&!(event=0))
 union {
-  uint08_t all ;
+  Uint08_t all ;
   struct {
     unsigned keyPressUp : 1 ;
     unsigned keyPressDown : 1 ;
@@ -176,7 +212,7 @@ union {
   } ;
 } inputEvent_ = { 0x00 } ;
 union {
-  uint08_t all ;
+  Uint08_t all ;
   struct {
     unsigned changeState : 1 ;
     unsigned changeMessage : 1 ;
@@ -195,8 +231,8 @@ union {
 #define TONE_SYSTEM 124
 #define TONE_TUNE 141 // A = 880 Hz
 struct {
-  uint08_t click ;
-  uint08_t key ;
+  Uint08_t click ;
+  Uint08_t key ;
 } soundDurationCount_ = { 0 , 0 } ;
 
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -224,7 +260,7 @@ void main( void ) {
   T1CONbits.TMR1ON = 1 ;
 
   // Execute Boot Sequence
-  for( uint08_t phase = 0 ; phase < 0xE ; phase++ ) {
+  for( Uint08_t phase = 0 ; phase < 0xE ; phase++ ) {
 
     CLRWDT( ) ;
 
@@ -246,11 +282,11 @@ void main( void ) {
       case 0x3:
         // Read User ID
       {
-        uint08_t userId ;
-        userId = _configuration_ReadByte( 0 , MEMORY_SELECT_CONFIGURATION ) ;
+        Uint08_t userId ;
+        userId = Configuration_ReadByte( 0 , MEMORY_SELECT_CONFIGURATION ) ;
         informationValueBuffer[ INFORMATION_ITEM_VERSION ][1] = ( ( userId >> 4 ) | '0' ) ;
         informationValueBuffer[ INFORMATION_ITEM_VERSION ][2] = ( ( userId & 0x0F ) | '0' ) ;
-        userId = _configuration_ReadByte( 1 , MEMORY_SELECT_CONFIGURATION ) ;
+        userId = Configuration_ReadByte( 1 , MEMORY_SELECT_CONFIGURATION ) ;
         informationValueBuffer[ INFORMATION_ITEM_VERSION ][4] = ( ( userId >> 4 ) | '0' ) ;
         informationValueBuffer[ INFORMATION_ITEM_VERSION ][5] = ( ( userId & 0x0F ) | '0' ) ;
       }
@@ -258,18 +294,31 @@ void main( void ) {
 
       case 0x4:
         // Initialize Display
-        _parallel_lcd_Initialize( ) ;
+        ParallelLCD_Initialize(
+                                PARALLEL_LCD_CONFIG_8BIT_MODE | PARALLEL_LCD_CONFIG_2LINE_MODE ,
+                                PARALLEL_LCD_CONFIG_DISPLAY_ON ,
+                                PARALLEL_LCD_CONFIG_CURSOR_NONE ,
+                                PARALLEL_LCD_CONFIG_INCREMENTAL
+                                ) ;
 
         // Indicate Title and Version
-        _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.METRONOME.TILE ) ;
-        _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFORMATION[ INFORMATION_ITEM_VERSION ] ) ;
-        _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ INFORMATION_ITEM_VERSION ] ) ;
+        ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.METRONOME.MAIN_TILE ) ;
+        ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFORMATION[ INFORMATION_ITEM_VERSION ] ) ;
+        ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ INFORMATION_ITEM_VERSION ] ) ;
+
+      case 0x5:
+        valueInfoBeatCount_.valuePtr = &configration_.beatCount ;
+        valueInfoDurationClick_.valuePtr = &configration_.duration.click ;
+        valueInfoDurationKey_.valuePtr = &configration_.duration.key ;
+        valueInfoPulseWidth_.valuePtr = &configration_.pulseWidth ;
+        valueInfoOscillatorTune_.valuePtr = ( Uint08_t* ) & configration_.oscillatorTune ;
+        break ;
 
       case 0x6:
         // Set CGRAM to LCD
-        _parallel_lcd_SetCgram( CHAR_CODE.CURSOR_UP , & BITMAP.CURSOR_UP ) ;
-        _parallel_lcd_SetCgram( CHAR_CODE.CURSOR_DOWN , & BITMAP.CURSOR_DOWN ) ;
-        _parallel_lcd_SetCgram( CHAR_CODE.CURSOR_RIGHT , & BITMAP.CURSOR_RIGHT ) ;
+        ParallelLCD_SetCgram( CHAR_CODE.CURSOR_UP , & BITMAP.CURSOR_UP ) ;
+        ParallelLCD_SetCgram( CHAR_CODE.CURSOR_DOWN , & BITMAP.CURSOR_DOWN ) ;
+        ParallelLCD_SetCgram( CHAR_CODE.CURSOR_RIGHT , & BITMAP.CURSOR_RIGHT ) ;
         break ;
 
     }
@@ -326,48 +375,6 @@ void main( void ) {
       SetEvent( outputEvent_.soundOnKey ) ;
     }
 
-    // EEPROM ----------------
-    if( EvalEvent( outputEvent_.accessEeprom ) ) {
-
-      DisableAllInterrupt( ) ;
-
-      ReturnCode returnCode = RETURN_CODE_NOERROR ;
-
-      switch( machineState_ ) {
-
-        case STATE_BOOT:
-          machineState_ = STATE_METRONOME ;
-          SetEvent( outputEvent_.changeState ) ;
-          SetEvent( outputEvent_.resetMetronome ) ;
-        case STATE_LOAD:
-          returnCode = _configuration_Load( &configration_ ) ;
-          break ;
-
-        case STATE_INITIALIZE:
-        case STATE_SAVE:
-          returnCode = _configuration_Save( &configration_ ) ;
-          break ;
-
-      }
-
-      uint08_t romOffset = _configuration_GetRomOffset( ) ;
-      informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][3] = HEX_TABLE[ romOffset >> 4 ] ;
-      informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][4] = HEX_TABLE[ romOffset & 0x0F ] ;
-      informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][3] = HEX_TABLE[ configration_.writeCount >> 4 ] ;
-      informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][4] = HEX_TABLE[ configration_.writeCount & 0x0F ] ;
-      informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][3] = HEX_TABLE[ returnCode >> 4 ] ;
-      informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][4] = HEX_TABLE[ returnCode & 0x0F ] ;
-
-      if( returnCode ) {
-        machineState_ = STATE_ERROR ;
-        outputEvent_.all = 0x00 ;
-        SetEvent( outputEvent_.changeState ) ;
-      }
-
-      EnableAllInterrupt( ) ;
-
-    }
-
     // Both Up & Donw ----------------
     if( EvalEvent( inputEvent_.keyPressUpDown ) ) {
       if( machineState_ == STATE_METRONOME ) {
@@ -381,6 +388,12 @@ void main( void ) {
       SetEvent( outputEvent_.changeState ) ;
 
       switch( machineState_ ) {
+
+        case STATE_METRONOME:
+          machineState_ = STATE_MENU_MAIN ;
+          menuInfoMain_.select = 0 ;
+          menuInfoMain_.cursorPosition = 0 ;
+          break ;
 
         case STATE_MENU_MAIN:
           switch( menuInfoMain_.select ) {
@@ -408,23 +421,26 @@ void main( void ) {
               machineState_ = STATE_ADJUST_OSCILLATOR_TUNE ;
               break ;
 
-            case MENU_ITEM_MAIN_LOAD_CONFIGURATION:
-              machineState_ = STATE_CONFIRM_LOAD ;
-              currentValueInfo_.messageTitle = MESSAGE.CONFIRM.LOAD ;
-              break ;
-
-            case MENU_ITEM_MAIN_SAVE_CONFIGURATION:
-              machineState_ = STATE_CONFIRM_SAVE ;
-              currentValueInfo_.messageTitle = MESSAGE.CONFIRM.SAVE ;
-              break ;
-
             case MENU_ITEM_MAIN_INFORMATION:
               machineState_ = STATE_INFORMATION ;
               break ;
 
+            case MENU_ITEM_MAIN_LOAD_CONFIGURATION:
+              machineState_ = STATE_CONFIRM_LOAD ;
+              menuInfoConfirmLoad_.select = 0 ;
+              menuInfoConfirmLoad_.cursorPosition = 0 ;
+              break ;
+
+            case MENU_ITEM_MAIN_SAVE_CONFIGURATION:
+              machineState_ = STATE_CONFIRM_SAVE ;
+              menuInfoConfirmSave_.select = 0 ;
+              menuInfoConfirmSave_.cursorPosition = 0 ;
+              break ;
+
             case MENU_ITEM_MAIN_RESET:
               machineState_ = STATE_CONFIRM_RESET ;
-              currentValueInfo_.messageTitle = MESSAGE.CONFIRM.RESET ;
+              menuInfoConfirmReset_.select = 0 ;
+              menuInfoConfirmReset_.cursorPosition = 0 ;
               break ;
 
             case MENU_ITEM_MAIN_RETURN:
@@ -461,30 +477,24 @@ void main( void ) {
           break ;
 
         case STATE_CONFIRM_LOAD:
-          if( menuInfoConfirm_.select )
+          if( menuInfoConfirmLoad_.select )
             machineState_ = STATE_LOAD ;
           else
             machineState_ = STATE_MENU_MAIN ;
           break ;
 
         case STATE_CONFIRM_SAVE:
-          if( menuInfoConfirm_.select )
+          if( menuInfoConfirmSave_.select )
             machineState_ = STATE_SAVE ;
           else
             machineState_ = STATE_MENU_MAIN ;
           break ;
 
         case STATE_CONFIRM_RESET:
-          if( menuInfoConfirm_.select )
+          if( menuInfoConfirmReset_.select )
             machineState_ = STATE_RESET ;
           else
             machineState_ = STATE_MENU_MAIN ;
-          break ;
-
-        case STATE_METRONOME:
-          machineState_ = STATE_MENU_MAIN ;
-          menuInfoMain_.select = 0 ;
-          menuInfoMain_.cursorPosition = 0 ;
           break ;
 
         case STATE_ADJUST_BEAT_COUNT:
@@ -499,13 +509,13 @@ void main( void ) {
           break ;
 
         case STATE_ADJUST_OSCILLATOR_TUNE:
-          SetEvent( outputEvent_.soundOff ) ;
           machineState_ = STATE_MENU_MAIN ;
+          SetEvent( outputEvent_.soundOff ) ;
           break ;
 
         case STATE_ADJUST_TONE:
-          SetEvent( outputEvent_.soundOff ) ;
           machineState_ = STATE_MENU_TONE ;
+          SetEvent( outputEvent_.soundOff ) ;
           break ;
 
         case STATE_INITIALIZE:
@@ -525,8 +535,7 @@ void main( void ) {
 
       switch( machineState_ ) {
         case STATE_METRONOME:
-          currentValueInfo_.messageTitle = MESSAGE.METRONOME.TILE ;
-          currentValueInfo_.messageValue = MESSAGE.METRONOME.TEMPO ;
+          currentValueInfoPtr_ = &valueInfoTempo_ ;
           break ;
 
         case STATE_MENU_MAIN:
@@ -542,68 +551,45 @@ void main( void ) {
           break ;
 
         case STATE_CONFIRM_LOAD:
+          currentMenuInfoPtr_ = &menuInfoConfirmLoad_ ;
+          break ;
+
         case STATE_CONFIRM_SAVE:
+          currentMenuInfoPtr_ = &menuInfoConfirmSave_ ;
+          break ;
+
         case STATE_CONFIRM_RESET:
-          menuInfoConfirm_.select = 0 ;
-          menuInfoConfirm_.cursorPosition = 0 ;
-          currentMenuInfoPtr_ = &menuInfoConfirm_ ;
+          currentMenuInfoPtr_ = &menuInfoConfirmReset_ ;
           break ;
 
         case STATE_ADJUST_BEAT_COUNT:
-          SetEvent( outputEvent_.changeValue ) ;
-          currentValueInfo_.valuePtr = &configration_.beatCount ;
-          currentValueInfo_.limitUpper = 64 ;
-          currentValueInfo_.limitLower = 0 ;
-          currentValueInfo_.messageTitle = MESSAGE.CONFIGURATION.TITLE ;
-          currentValueInfo_.messageValue = MESSAGE.CONFIGURATION.BEAT_COUNT ;
+          currentValueInfoPtr_ = &valueInfoBeatCount_ ;
           break ;
 
         case STATE_ADJUST_DURATION_CLICK:
-          SetEvent( outputEvent_.changeValue ) ;
-          currentValueInfo_.valuePtr = &configration_.duration.click ;
-          currentValueInfo_.limitUpper = 0xFF ;
-          currentValueInfo_.limitLower = 0x00 ;
-          currentValueInfo_.messageTitle = MESSAGE.CONFIGURATION.TITLE_DURATION ;
-          currentValueInfo_.messageValue = MESSAGE.CONFIGURATION.DURATION_CLICK ;
+          currentValueInfoPtr_ = &valueInfoDurationClick_ ;
           break ;
 
         case STATE_ADJUST_DURATION_KEY:
-          SetEvent( outputEvent_.changeValue ) ;
-          currentValueInfo_.valuePtr = &configration_.duration.key ;
-          currentValueInfo_.limitUpper = 0xFF ;
-          currentValueInfo_.limitLower = 0x00 ;
-          currentValueInfo_.messageTitle = MESSAGE.CONFIGURATION.TITLE_DURATION ;
-          currentValueInfo_.messageValue = MESSAGE.CONFIGURATION.DURATION_KEY ;
+          currentValueInfoPtr_ = &valueInfoDurationKey_ ;
           break ;
 
         case STATE_ADJUST_PULSE_WIDTH:
-          SetEvent( outputEvent_.changeValue ) ;
-          currentValueInfo_.valuePtr = &configration_.pulseWidth ;
-          currentValueInfo_.limitUpper = 0x07 ;
-          currentValueInfo_.limitLower = 0x00 ;
-          currentValueInfo_.messageTitle = MESSAGE.CONFIGURATION.TITLE ;
-          currentValueInfo_.messageValue = MESSAGE.CONFIGURATION.PULSE_WIDTH ;
+          currentValueInfoPtr_ = &valueInfoPulseWidth_ ;
           break ;
 
         case STATE_ADJUST_OSCILLATOR_TUNE:
-          SetEvent( outputEvent_.changeValue ) ;
-          currentValueInfo_.valuePtr = ( uint08_t* ) & configration_.oscillatorTune ;
-          currentValueInfo_.limitUpper = (uint08_t)30 ;
-          currentValueInfo_.limitLower = (uint08_t)30 ;
-          currentValueInfo_.messageTitle = MESSAGE.CONFIGURATION.TITLE ;
-          currentValueInfo_.messageValue = MESSAGE.CONFIGURATION.OSCILLATOR_TUNE ;
+          currentValueInfoPtr_ = &valueInfoOscillatorTune_ ;
           SetSoundTimerPeriod( TONE_TUNE ) ;
           SetSoundPulseWidth( 1 ) ;
           SoundOn( ) ;
           break ;
 
         case STATE_ADJUST_TONE:
-          SetEvent( outputEvent_.changeValue ) ;
-          currentValueInfo_.valuePtr = &configration_.tone[ menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 ] ;
-          currentValueInfo_.limitUpper = 0xFF ;
-          currentValueInfo_.limitLower = 0x00 ;
-          currentValueInfo_.messageTitle = MESSAGE.CONFIGURATION.TITLE_TONE ;
-          currentValueInfo_.messageValue = MESSAGE.CONFIGURATION.TONE ;
+          valueInfoTone_.valuePtr = &configration_.tone[ menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 ] ;
+          currentValueInfoPtr_ = &valueInfoTone_ ;
+          SetSoundTimerPeriod( *currentValueInfoPtr_->valuePtr ) ;
+          SetSoundPulseWidth( configration_.pulseWidth ) ;
           SoundOn( ) ;
           break ;
 
@@ -613,38 +599,74 @@ void main( void ) {
           currentMenuInfoPtr_ = &menuInfoInformation_ ;
           break ;
 
+        case STATE_BOOT:
+        case STATE_INITIALIZE:
         case STATE_LOAD:
-          SetEvent( outputEvent_.resetMetronome ) ;
-          SetEvent( outputEvent_.accessEeprom ) ;
-          currentValueInfo_.messageTitle = MESSAGE.MEMORY.LOAD ;
-          stateReturnCounter_ = RETURN_STATE_INTERVAL ;
-          break ;
-
         case STATE_SAVE:
           SetEvent( outputEvent_.accessEeprom ) ;
-          currentValueInfo_.messageTitle = MESSAGE.MEMORY.SAVE ;
-          stateReturnCounter_ = RETURN_STATE_INTERVAL ;
-          break ;
-
-        case STATE_BOOT:
-          SetEvent( outputEvent_.accessEeprom ) ;
-          break ;
-
-        case STATE_INITIALIZE:
-          SetEvent( outputEvent_.accessEeprom ) ;
-          currentValueInfo_.messageTitle = MESSAGE.MEMORY.INITIALIZE ;
           break ;
 
         case STATE_RESET:
-          _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_0 ) ;
-          _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+          ParallelLCD_ClearDisplay( ) ;
           RESET( ) ;
 
         case STATE_ERROR:
-          currentValueInfo_.messageTitle = MESSAGE.ERROR.MESSAGE ;
+          currentSingleMessage_ = MESSAGE.ERROR.MESSAGE ;
           break ;
 
       }
+
+    }
+
+    // EEPROM ----------------
+    if( EvalEvent( outputEvent_.accessEeprom ) ) {
+
+      DisableAllInterrupt( ) ;
+
+      ReturnCode returnCode = RETURN_CODE_NOERROR ;
+
+      SetEvent( outputEvent_.resetMetronome ) ;
+      SetEvent( outputEvent_.changeMessage ) ;
+      stateReturnCounter_ = RETURN_STATE_INTERVAL ;
+
+      switch( machineState_ ) {
+
+        case STATE_BOOT:
+          returnCode = Configuration_Load( &configration_ ) ;
+          stateReturnCounter_ = 1 ;
+          break ;
+
+        case STATE_LOAD:
+          returnCode = Configuration_Load( &configration_ ) ;
+          currentSingleMessage_ = MESSAGE.MEMORY.LOAD ;
+          break ;
+
+        case STATE_INITIALIZE:
+          returnCode = Configuration_Save( &configration_ ) ;
+          currentSingleMessage_ = MESSAGE.MEMORY.INITIALIZE ;
+          break ;
+
+        case STATE_SAVE:
+          returnCode = Configuration_Save( &configration_ ) ;
+          currentSingleMessage_ = MESSAGE.MEMORY.SAVE ;
+          break ;
+
+      }
+
+      informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][4] = HEX_TABLE[ configration_.romOffset >> 4 ] ;
+      informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][5] = HEX_TABLE[ configration_.romOffset & 0x0F ] ;
+      informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][4] = HEX_TABLE[ configration_.writeCount >> 4 ] ;
+      informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][5] = HEX_TABLE[ configration_.writeCount & 0x0F ] ;
+      informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][4] = HEX_TABLE[ returnCode >> 4 ] ;
+      informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][5] = HEX_TABLE[ returnCode & 0x0F ] ;
+
+      if( returnCode ) {
+        machineState_ = STATE_ERROR ;
+        outputEvent_.all = 0x00 ;
+        SetEvent( outputEvent_.changeState ) ;
+      }
+
+      EnableAllInterrupt( ) ;
 
     }
 
@@ -698,14 +720,14 @@ void main( void ) {
       case STATE_ADJUST_TONE:
       case STATE_ADJUST_OSCILLATOR_TUNE:
         if( EvalEvent( inputEvent_.keyPressUp ) ) {
-          if( *currentValueInfo_.valuePtr != currentValueInfo_.limitUpper ) {
-            ( *currentValueInfo_.valuePtr )++ ;
+          if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.upper ) {
+            ( *currentValueInfoPtr_->valuePtr )++ ;
             SetEvent( outputEvent_.changeValue ) ;
           }
         }
         if( EvalEvent( inputEvent_.keyPressDown ) ) {
-          if( *currentValueInfo_.valuePtr != currentValueInfo_.limitLower ) {
-            ( *currentValueInfo_.valuePtr )++ ;
+          if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.lower ) {
+            ( *currentValueInfoPtr_->valuePtr )-- ;
             SetEvent( outputEvent_.changeValue ) ;
           }
         }
@@ -720,6 +742,15 @@ void main( void ) {
       beatCounter_ = 0 ;
       SetEvent( outputEvent_.soundOnClick ) ;
       EnableAllInterrupt( ) ;
+    }
+    else {
+      if( tempoCounter_ >= TOTAL_TEMOPO_COUNT ) {
+        tempoCounter_ -= TOTAL_TEMOPO_COUNT ;
+        if( ++beatCounter_ >= ( configration_.beatCount << 1 ) )
+          beatCounter_ = 0 ;
+
+        SetEvent( outputEvent_.soundOnClick ) ;
+      }
     }
 
     // Sound On ----------------
@@ -794,25 +825,15 @@ void main( void ) {
         case STATE_MENU_MAIN:
         case STATE_MENU_TONE:
         case STATE_MENU_DURATION:
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x1 , currentMenuInfoPtr_->menuMessage[ currentMenuInfoPtr_->select - currentMenuInfoPtr_->cursorPosition ] ) ;
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x1 , currentMenuInfoPtr_->menuMessage[ currentMenuInfoPtr_->select - currentMenuInfoPtr_->cursorPosition + 1 ] ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x1 , currentMenuInfoPtr_->menuMessage[ currentMenuInfoPtr_->select - currentMenuInfoPtr_->cursorPosition ] ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x1 , currentMenuInfoPtr_->menuMessage[ currentMenuInfoPtr_->select - currentMenuInfoPtr_->cursorPosition + 1 ] ) ;
 
           if( currentMenuInfoPtr_->select != currentMenuInfoPtr_->cursorPosition )
-            _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT_0 | 0xF , CHAR_CODE.CURSOR_UP ) ;
+            ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_0 | 0xF , CHAR_CODE.CURSOR_UP ) ;
           if( currentMenuInfoPtr_->select != ( currentMenuInfoPtr_->limit + currentMenuInfoPtr_->cursorPosition - 1 ) )
-            _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0xF , CHAR_CODE.CURSOR_DOWN ) ;
+            ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0xF , CHAR_CODE.CURSOR_DOWN ) ;
 
-          _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT[currentMenuInfoPtr_->cursorPosition] | 0x0 , CHAR_CODE.CURSOR_RIGHT ) ;
-
-          break ;
-
-        case STATE_CONFIRM_LOAD:
-        case STATE_CONFIRM_SAVE:
-        case STATE_CONFIRM_RESET:
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0xD , MESSAGE.CONFIRM.NO ) ;
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xD , MESSAGE.CONFIRM.YES ) ;
-          _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentValueInfo_.messageTitle ) ;
-          _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT[ currentMenuInfoPtr_->cursorPosition ] | 0xC , CHAR_CODE.CURSOR_RIGHT ) ;
+          ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[currentMenuInfoPtr_->cursorPosition] | 0x0 , CHAR_CODE.CURSOR_RIGHT ) ;
 
           break ;
 
@@ -823,29 +844,41 @@ void main( void ) {
         case STATE_ADJUST_DURATION_KEY:
         case STATE_ADJUST_PULSE_WIDTH:
         case STATE_ADJUST_OSCILLATOR_TUNE:
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentValueInfo_.messageTitle ) ;
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , currentValueInfo_.messageValue ) ;
-          if( machineState_ == STATE_METRONOME && isMute_ )
-            _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , MESSAGE.METRONOME.MUTE ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentValueInfoPtr_->message.title ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , currentValueInfoPtr_->message.value ) ;
+          if( machineState_ == STATE_METRONOME ) {
+            if( isMute_ )
+              ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , MESSAGE.METRONOME.MUTE ) ;
+          }
           else if( machineState_ == STATE_ADJUST_TONE )
-            _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0x5 , menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 + '0' ) ;
+            ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0x5 , menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 + '0' ) ;
 
           SetEvent( outputEvent_.changeValue ) ;
           break ;
 
         case STATE_INFORMATION:
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE_INFORMATION[ menuInfoInformation_.select ] ) ;
-          _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , &informationValueBuffer[ menuInfoInformation_.select ] ) ;
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFORMATION[ menuInfoInformation_.select + 1 ] ) ;
-          _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ menuInfoInformation_.select + 1 ] ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE_INFORMATION[ menuInfoInformation_.select ] ) ;
+          ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , &informationValueBuffer[ menuInfoInformation_.select ] ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFORMATION[ menuInfoInformation_.select + 1 ] ) ;
+          ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ menuInfoInformation_.select + 1 ] ) ;
+          break ;
+
+
+        case STATE_CONFIRM_LOAD:
+        case STATE_CONFIRM_SAVE:
+        case STATE_CONFIRM_RESET:
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0xD , MESSAGE.CONFIRM.NO ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xD , MESSAGE.CONFIRM.YES ) ;
+          ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentMenuInfoPtr_->singleMessage ) ;
+          ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[ currentMenuInfoPtr_->cursorPosition ] | 0xC , CHAR_CODE.CURSOR_RIGHT ) ;
           break ;
 
         case STATE_LOAD:
         case STATE_SAVE:
         case STATE_INITIALIZE:
         case STATE_ERROR:
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentValueInfo_.messageTitle ) ;
-          _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentSingleMessage_ ) ;
+          ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
           break ;
 
       }
@@ -855,8 +888,8 @@ void main( void ) {
     // Display Value ----------------
     if( EvalEvent( outputEvent_.changeValue ) ) {
 
-      uint16_t tmpValue ;
-      char valueString[6] = "= 000" ;
+      Uint16_t tmpValue ;
+      Char_t valueString[6] = "= 000" ;
 
       switch( machineState_ ) {
 
@@ -865,48 +898,48 @@ void main( void ) {
           break ;
 
         case STATE_ADJUST_OSCILLATOR_TUNE:
-          if( (uint08_t)configration_.oscillatorTune & 0x80 ) {
+          if( (Uint08_t)configration_.oscillatorTune & 0x80 ) {
             tmpValue = -configration_.oscillatorTune ;
             valueString[1] = '-' ;
           }
           else {
-            tmpValue = (uint16_t)configration_.oscillatorTune ;
+            tmpValue = (Uint16_t)configration_.oscillatorTune ;
           }
           break ;
 
         default:
-          tmpValue = *currentValueInfo_.valuePtr ;
+          tmpValue = *currentValueInfoPtr_->valuePtr ;
           break ;
       }
 
-      uint08_t isNonZero = BOOL_FALSE ;
-      const uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 , } ;
-      for( uint08_t i = 0 ; i < 3 ; i++ ) {
-
+      Bool_t isNonZero = BOOL_FALSE ;
+      const Uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 , } ;
+      for( Uint08_t i = 0 ; i < 3 ; i++ ) {
+        Char_t chr = '0' ;
         while( tmpValue >= COMPARE_UNITS[i] ) {
           tmpValue -= COMPARE_UNITS[i] ;
-          valueString[ i + 2 ]++ ;
-          isNonZero = BOOL_TRUE ;
+          chr++ ;
         }
 
-        if( i == 2 ) break ;
-
-        if( isNonZero ) continue ;
-
-        valueString[ i + 2 ] = valueString[ i + 1 ] ;
-        valueString[ i + 1 ] = ' ' ;
-
+        if( isNonZero || chr > '0' || i == 2 ) {
+          valueString[ i + 2 ] = chr ;
+          isNonZero = BOOL_TRUE ;
+        }
+        else {
+          valueString[ i + 2 ] = valueString[ i + 1 ] ;
+          valueString[ i + 1 ] = ' ' ;
+        }
       }
 
-      _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xB , &valueString ) ;
+      ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xB , &valueString ) ;
 
       switch( machineState_ ) {
         case STATE_ADJUST_OSCILLATOR_TUNE:
           SetOscillatorTune( configration_.oscillatorTune ) ;
           break ;
         case STATE_ADJUST_TONE:
-          SetSoundTimerPeriod( *currentValueInfo_.valuePtr ) ;
-          SetSoundPulseWidth( 1 ) ;
+          SetSoundTimerPeriod( *currentValueInfoPtr_->valuePtr ) ;
+          SetSoundPulseWidth( configration_.pulseWidth ) ;
           break ;
       }
     }
@@ -922,22 +955,13 @@ void interrupt isr( void ) {
   if( !INTERRUPT_FLAG ) return ;
   INTERRUPT_FLAG = 0 ;
 
-  static uint16_t eventPrescaler = 0 ;
+  static Uint16_t eventPrescaler = 0 ;
 
   // Increment Metronome Count ----------------
   tempoCounter_ += configration_.tempo ;
 
-  // Set Click Sound Event ----------------
-  if( tempoCounter_ >= TOTAL_TEMOPO_COUNT ) {
-    tempoCounter_ -= TOTAL_TEMOPO_COUNT ;
-    if( ++beatCounter_ >= ( configration_.beatCount << 1 ) )
-      beatCounter_ = 0 ;
-
-    SetEvent( outputEvent_.soundOnClick ) ;
-  }
-
   // Check Sound Duration ----------------
-  if( !( eventPrescaler & 0x3F ) ) {
+  if( !( eventPrescaler & 0x7F ) ) {
     if( soundDurationCount_.click && !--soundDurationCount_.click && !soundDurationCount_.key )
       SetEvent( outputEvent_.soundOff ) ;
     if( soundDurationCount_.key && ! --soundDurationCount_.key )

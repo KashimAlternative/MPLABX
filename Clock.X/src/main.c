@@ -41,12 +41,12 @@
 #define PARALLEL_LCD_ResetTimer()        ;
 
 #include "../../_Common/typedef.h"
-#include "../../_Common/parallel_LCD.h"
-#include "../../_Common/ds1307.h"
+#include "../../_Common/ParallelLCD.h"
+#include "../../_Common/DS1307.h"
 
 #define SOFTWARE_VERSION "00.100"
 typedef union {
-  uint08_t byte ;
+  Uint08_t byte ;
   struct {
     unsigned keyDown : 1 ;
     unsigned keyUp : 1 ;
@@ -70,35 +70,35 @@ StDateTime dateTimer ;
 StDateTime* datePtr ;
 
 // Prescaler
-uint08_t blinkPrescaler = 0 ;
+Uint08_t blinkPrescaler = 0 ;
 
 // Key Counter
 union {
   struct {
-    uint08_t keyU ;
-    uint08_t keyUD ;
-    uint08_t keyD ;
-    uint08_t keyL ;
-    uint08_t keyLR ;
-    uint08_t keyR ;
+    Uint08_t keyU ;
+    Uint08_t keyUD ;
+    Uint08_t keyD ;
+    Uint08_t keyL ;
+    Uint08_t keyLR ;
+    Uint08_t keyR ;
   } ;
   struct {
-    uint16_t exceptDown ;
-    uint08_t _ ;
-    uint16_t exceptRight ;
+    Uint16_t exceptDown ;
+    Uint08_t _ ;
+    Uint16_t exceptRight ;
   } ;
   struct {
-    uint08_t _0 ;
-    uint16_t exceptUp ;
-    uint08_t _1 ;
-    uint16_t exceptLeft ;
+    Uint08_t _0 ;
+    Uint16_t exceptUp ;
+    Uint08_t _1 ;
+    Uint16_t exceptLeft ;
   } ;
 } keyCount ;
 typedef struct {
-  uint08_t position ;
-  uint08_t length ;
-  uint08_t max ;
-  uint08_t min ;
+  Uint08_t position ;
+  Uint08_t length ;
+  Uint08_t max ;
+  Uint08_t min ;
 } ValueInfo ;
 const struct {
   ValueInfo year ;
@@ -119,7 +119,7 @@ VALUE_INFORMATIONS = {
   { PARALLEL_LCD_ROW_SELECT_1 | 0x6 , 2 , 0x59 , 0x00 } , //Second
 } ;
 const ValueInfo* currentValueInfo ;
-uint08_t* currentEditValue ;
+Uint08_t* currentEditValue ;
 
 //State
 typedef enum {
@@ -150,9 +150,9 @@ const char* MESSAGE_MENU[] = {
   "Version" ,
 } ;
 MenuItem menuSelect = MENU_ADJUST ;
-uint08_t cursorPosition = 0 ;
+Uint08_t cursorPosition = 0 ;
 
-const uint08_t CURSOR_BITMAP[8] = {
+const Uint08_t CURSOR_BITMAP[8] = {
   0b10000 ,
   0b11000 ,
   0b11100 ,
@@ -163,7 +163,7 @@ const uint08_t CURSOR_BITMAP[8] = {
   0b00000 ,
 } ;
 
-uint08_t alerm = 0 ;
+Uint08_t alerm = 0 ;
 
 EnDateItem editSelect = DATE_ITEM_YEAR ;
 
@@ -187,7 +187,7 @@ struct {
   unsigned releaseRight : 1 ;
 } keyEvents_ = 0 ;
 union {
-  uint08_t all ;
+  Uint08_t all ;
   struct {
     unsigned changeMessage : 1 ;
     unsigned changeValue : 1 ;
@@ -204,12 +204,17 @@ int main( void ) {
 
   // Initialize parallel_lcd
   __delay_ms( 20 ) ;
-  _parallel_lcd_Initialize( ) ;
+  ParallelLCD_Initialize(
+                          PARALLEL_LCD_CONFIG_8BIT_MODE | PARALLEL_LCD_CONFIG_2LINE_MODE ,
+                          PARALLEL_LCD_CONFIG_DISPLAY_ON ,
+                          PARALLEL_LCD_CONFIG_CURSOR_NONE ,
+                          PARALLEL_LCD_CONFIG_INCREMENTAL
+                          ) ;
 
   // Write CGRAM
-  _parallel_lcd_SetCgram( CHAR_CURSOR , CURSOR_BITMAP ) ;
+  ParallelLCD_SetCgram( CHAR_CURSOR , CURSOR_BITMAP ) ;
 
-  _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Boot ..." ) ;
+  ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Boot ..." ) ;
 
   // Read Timer From RAM of RTC
   _ds1307_GetData( &dateTimer , 0x10 , 7 ) ;
@@ -480,20 +485,20 @@ int main( void ) {
         case STATE_ADJUST_CLOCK:
         case STATE_SET_TIMER:
 
-          _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_0 ) ;
+          ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_0 ) ;
 
           switch( machineState_ ) {
             case STATE_CLOCK:
-              _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+              ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
               break ;
             case STATE_ALERM:
-              _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x9 , "ALERM!!" ) ;
+              ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x9 , "ALERM!!" ) ;
               break ;
             case STATE_ADJUST_CLOCK:
-              _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xA , "adjust" ) ;
+              ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xA , "adjust" ) ;
               break ;
             case STATE_SET_TIMER:
-              _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xB , "timer" ) ;
+              ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xB , "timer" ) ;
               break ;
           }
           SetEvent( outputEvent.changeValue ) ;
@@ -501,25 +506,25 @@ int main( void ) {
           break ;
 
         case STATE_MENU:
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x1 , MESSAGE_MENU[ menuSelect - cursorPosition ] ) ;
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x1 , MESSAGE_MENU[ menuSelect - cursorPosition + 1] ) ;
-          _parallel_lcd_WriteCharacter( PARALLEL_LCD_ROW_SELECT[cursorPosition] | 0x0 , CHAR_CURSOR ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x1 , MESSAGE_MENU[ menuSelect - cursorPosition ] ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x1 , MESSAGE_MENU[ menuSelect - cursorPosition + 1] ) ;
+          ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[cursorPosition] | 0x0 , CHAR_CURSOR ) ;
           break ;
 
         case STATE_BUZZER_TEST:
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Buzzer Test" ) ;
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , "Period =" ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Buzzer Test" ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , "Period =" ) ;
           SetEvent( outputEvent.changeValue ) ;
           break ;
 
         case STATE_VERSION:
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Version" ) ;
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x8 , SOFTWARE_VERSION ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Version" ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x8 , SOFTWARE_VERSION ) ;
           break ;
 
         case STATE_ERROR:
-          _parallel_lcd_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Receive Error !!" ) ;
-          _parallel_lcd_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Receive Error !!" ) ;
+          ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
           break ;
       }
 
@@ -535,9 +540,9 @@ int main( void ) {
         {
           char string[17] ;
           _date_time_ConvertByteToDate( datePtr , &string ) ;
-          _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , &string ) ;
+          ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , &string ) ;
           _date_time_ConvertByteToTime( datePtr , &string ) ;
-          _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , &string ) ;
+          ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , &string ) ;
           blinkPrescaler = 0 ;
         }
           break ;
@@ -546,12 +551,12 @@ int main( void ) {
         {
           char valueString[4] = "000" ;
           PWM3DCH = PR2 >> 2 ;
-          uint08_t tmpValue = PR2 ;
-          uint08_t isNonZero = 0 ;
-          static const uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 } ;
+          Uint08_t tmpValue = PR2 ;
+          Uint08_t isNonZero = 0 ;
+          static const Uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 } ;
 
-          for( uint08_t i = 0 ; i != 3 ; i++ ) {
-            uint08_t compareUnit = COMPARE_UNITS[i] ;
+          for( Uint08_t i = 0 ; i != 3 ; i++ ) {
+            Uint08_t compareUnit = COMPARE_UNITS[i] ;
             while( tmpValue >= compareUnit ) {
               tmpValue -= compareUnit ;
               valueString[i]++ ;
@@ -564,7 +569,7 @@ int main( void ) {
             valueString[i] = ' ' ;
           }
 
-          _parallel_lcd_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xD , &valueString ) ;
+          ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xD , &valueString ) ;
         }
           break ;
       }
@@ -575,10 +580,10 @@ int main( void ) {
       char string[4] ;
       if( blinkPrescaler == 0x00 ) {
         _date_time_ConvertByteToDiscrete( datePtr , &string , editSelect ) ;
-        _parallel_lcd_WriteString( currentValueInfo->position , &string ) ;
+        ParallelLCD_WriteString( currentValueInfo->position , &string ) ;
       }
       if( blinkPrescaler == 0xC0 ) {
-        _parallel_lcd_ClearPartial( currentValueInfo->position , currentValueInfo->length ) ;
+        ParallelLCD_ClearPartial( currentValueInfo->position , currentValueInfo->length ) ;
       }
     }
   }// for(;;)
@@ -620,8 +625,8 @@ void interrupt _( void ) {
     else {
 
       // Check Alerm Time
-      uint08_t isTimeToAlerm = 1 ;
-      for( uint08_t i = 0 ; i < 7 ; i++ ) {
+      Uint08_t isTimeToAlerm = 1 ;
+      for( Uint08_t i = 0 ; i < 7 ; i++ ) {
         if( ( !dateTimer.dayOfWeek ) && i == 3 ) continue ;
         if( dateCurrent.array[i] != dateTimer.array[i] ) {
           isTimeToAlerm = 0 ;

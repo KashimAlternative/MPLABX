@@ -2880,10 +2880,24 @@ extern __bit __powerdown;
 extern __bit __timeout;
 
 
-# 3 "src/pic12f1822_init.h"
-#pragma config MCLRE=0,WDTE=OFF,FOSC=INTOSC
+# 5 "src/pic12f1822_init.h"
+#pragma config FOSC = INTOSC
+#pragma config WDTE = SWDTEN
+#pragma config PWRTE = ON
+#pragma config MCLRE = OFF
+#pragma config CP = OFF
+#pragma config CPD = OFF
+#pragma config BOREN = ON
+#pragma config CLKOUTEN = OFF
+#pragma config IESO = ON
+#pragma config FCMEN = ON
 
-#pragma config LVP=0,PLLEN=1
+
+#pragma config WRT = OFF
+#pragma config PLLEN = OFF
+#pragma config STVREN = ON
+#pragma config BORV = LO
+#pragma config LVP = OFF
 
 
 
@@ -2895,8 +2909,16 @@ OSCCONbits.IRCF = 0b1011 ;
 OSCCONbits.SCS = 0b10 ;
 
 
+WDTCONbits.SWDTEN = 0 ;
+WDTCONbits.WDTPS = 0b01011 ;
+
+
 INTCONbits.GIE = 1 ;
 INTCONbits.PEIE = 0 ;
+
+
+INTCONbits.IOCIE = 0 ;
+IOCANbits.IOCAN3 = 1 ;
 
 
 OPTION_REGbits.TMR0SE = 1 ;
@@ -2910,7 +2932,7 @@ INTCONbits.TMR0IE = 0 ;
 
 T1CONbits.TMR1ON = 0 ;
 
-# 38
+# 62
 T2CONbits.TMR2ON = 0 ;
 T2CONbits.T2CKPS = 0b00 ;
 T2CONbits.T2OUTPS = 0b1001 ;
@@ -2946,46 +2968,54 @@ TRISA = 0b00101111 | ANSELA ;
 # 6 "src/main.c"
 #pragma warning disable 758
 
-# 17 "src/../../_Common/typedef.h"
+# 17 "src/../../_Common/Typedef.h"
+typedef unsigned char Uint08_t ;
+typedef unsigned int Uint16_t ;
+typedef unsigned short long Uint24_t ;
+typedef unsigned long Uint32_t ;
+
+
+
+typedef signed char Sint08_t ;
+typedef signed int Sint16_t ;
+typedef signed short long Sint24_t ;
+typedef signed long Sint32_t ;
+
+
+
+typedef char Char_t;
+
+
+
 typedef enum {
 BOOL_FALSE = 0 ,
 BOOL_TRUE = 1 ,
 } EnBool ;
 typedef EnBool Bool_t;
 
-
-
-typedef unsigned char uint08_t ;
-typedef unsigned int uint16_t ;
-typedef unsigned short long uint24_t ;
-typedef unsigned long uint32_t ;
-
-
-
-typedef signed char sint08_t ;
-typedef signed int sint16_t ;
-typedef signed short long sint24_t ;
-typedef signed long sint32_t ;
-
-# 28 "src/../../_Common/aqm0802.h"
-const uint08_t ROW_SELECT[] = {
-0x80 ,
-0xC0 ,
+# 26 "src/../../_Common/AQM0802.h"
+typedef enum{
+ROW_SELECT_0 =0x80,
+ROW_SELECT_1 =0xC0,
+} AQM0802_EnRowSelect;
+const AQM0802_EnRowSelect ROW_SELECT[] = {
+ROW_SELECT_0 ,
+ROW_SELECT_1 ,
 } ;
 
 
 
-static uint08_t _private_aqm0802_SendData( uint08_t controlByte , uint08_t dataByte ) ;
+static Uint08_t AQM0802_SendData( Uint08_t controlByte , Uint08_t dataByte ) ;
 
 
 
-uint08_t _aqm0802_SendString( uint08_t position , const char* stringPtr ) {
+Uint08_t AQM0802_SendString( Uint08_t position , const char* stringPtr ) {
 
-# 55
-_private_aqm0802_SendData( 0x00 , position ) ;
+# 57
+AQM0802_SendData( 0x00 , position ) ;
 
 while ( *stringPtr ) {
-_private_aqm0802_SendData( 0x40 , *stringPtr ) ;
+AQM0802_SendData( 0x40 , *stringPtr ) ;
 stringPtr++ ;
 }
 
@@ -2997,20 +3027,20 @@ return 0x00 ;
 
 
 
-uint08_t _aqm0802_SendStringClearing( uint08_t position ,const char* stringPtr ) {
+Uint08_t AQM0802_SendStringClearing( Uint08_t position ,const char* stringPtr ) {
 
-uint08_t col = 0 ;
+Uint08_t col = 0 ;
 
-# 94
-_private_aqm0802_SendData( 0x00 , position & 0xF0 ) ;
+# 96
+AQM0802_SendData( 0x00 , position & 0xF0 ) ;
 
 while ( col != 16 ) {
 if ( col++ >= ( position & 0x0F ) && ( *stringPtr ) ) {
-_private_aqm0802_SendData( 0x40 , *stringPtr ) ;
+AQM0802_SendData( 0x40 , *stringPtr ) ;
 stringPtr++ ;
 }
 else {
-_private_aqm0802_SendData( 0x40 , ' ' ) ;
+AQM0802_SendData( 0x40 , ' ' ) ;
 }
 }
 
@@ -3021,11 +3051,11 @@ return 0x00 ;
 
 
 
-uint08_t _aqm0802_SendCharacter( uint08_t position , char character ) {
+Uint08_t AQM0802_SendCharacter( Uint08_t position , char character ) {
 
-# 125
-_private_aqm0802_SendData( 0x00 , position ) ;
-_private_aqm0802_SendData( 0x40 , character ) ;
+# 127
+AQM0802_SendData( 0x00 , position ) ;
+AQM0802_SendData( 0x40 , character ) ;
 
 
 
@@ -3035,14 +3065,14 @@ return 0x00 ;
 
 
 
-uint08_t _aqm0802_ClearRow( uint08_t rowSelect ) {
+Uint08_t AQM0802_ClearRow( Uint08_t rowSelect ) {
 
-# 148
-_private_aqm0802_SendData( 0x00 , rowSelect & 0xF0 ) ;
+# 150
+AQM0802_SendData( 0x00 , rowSelect & 0xF0 ) ;
 
-uint08_t count = 0 ;
+Uint08_t count = 0 ;
 while ( count++ != 16 )
-_private_aqm0802_SendData( 0x40 , ' ' ) ;
+AQM0802_SendData( 0x40 , ' ' ) ;
 
 
 
@@ -3051,21 +3081,21 @@ return 0x00 ;
 
 
 
-uint08_t _aqm0802_Initialize( ) {
+Uint08_t AQM0802_Initialize( ) {
 
-# 174
-_private_aqm0802_SendData( 0x00 , 0x39 ) ;
-_private_aqm0802_SendData( 0x00 , 0x14 ) ;
-_private_aqm0802_SendData( 0x00 , 0x70 ) ;
-_private_aqm0802_SendData( 0x00 , 0x56 ) ;
-_private_aqm0802_SendData( 0x00 , 0x6c ) ;
+# 176
+AQM0802_SendData( 0x00 , 0x39 ) ;
+AQM0802_SendData( 0x00 , 0x14 ) ;
+AQM0802_SendData( 0x00 , 0x70 ) ;
+AQM0802_SendData( 0x00 , 0x56 ) ;
+AQM0802_SendData( 0x00 , 0x6c ) ;
 
 
 _delay((unsigned long)((200)*(1000000L/4000.0))) ;
 
-# 187
-_private_aqm0802_SendData( 0x00 , 0x38 ) ;
-_private_aqm0802_SendData( 0x00 , 0x0C ) ;
+# 189
+AQM0802_SendData( 0x00 , 0x38 ) ;
+AQM0802_SendData( 0x00 , 0x0C ) ;
 
 
 return 0x00 ;
@@ -3074,10 +3104,10 @@ return 0x00 ;
 
 
 
-uint08_t _aqm0802_Clear( ) {
+Uint08_t AQM0802_Clear( ) {
 
-# 203
-_private_aqm0802_SendData( 0x00 , 0x01 ) ;
+# 205
+AQM0802_SendData( 0x00 , 0x01 ) ;
 
 
 _delay((unsigned long)((2)*(1000000L/4000.0))) ;
@@ -3087,13 +3117,13 @@ return 0x00 ;
 
 
 
-uint08_t _aqm0802_SetCgram( char charCode , uint08_t data[] ) {
+Uint08_t AQM0802_SetCgram( char charCode , Uint08_t data[] ) {
 
-# 225
-_private_aqm0802_SendData( 0x00 , ( ( charCode << 3 ) & 0b00111111 ) | 0b01000000 ) ;
+# 227
+AQM0802_SendData( 0x00 , ( ( charCode << 3 ) & 0b00111111 ) | 0b01000000 ) ;
 
-for ( uint08_t i = 0 ; i < 8 ; i++ )
-_private_aqm0802_SendData( 0x40 , data[i] ) ;
+for ( Uint08_t i = 0 ; i < 8 ; i++ )
+AQM0802_SendData( 0x40 , data[i] ) ;
 
 
 
@@ -3102,14 +3132,14 @@ return 0x00 ;
 
 
 
-static uint08_t _private_aqm0802_SendData( uint08_t controlByte , uint08_t dataByte ) {
+static Uint08_t AQM0802_SendData( Uint08_t controlByte , Uint08_t dataByte ) {
 
 while(!PIR1bits.TMR2IF); ;
 
 SSP1CON2bits.SEN=1;while(SSP1CON2bits.SEN); ;
 PIR1bits.SSP1IF=0; ;
 
-# 272
+# 274
 SSP1BUF=0x7c; ;
 while(!PIR1bits.SSP1IF);PIR1bits.SSP1IF=0; ;
 
@@ -3134,9 +3164,9 @@ return 0x00 ;
 
 }
 
-# 27 "src/main.c"
+# 28 "src/main.c"
 typedef union {
-uint08_t byte ;
+Uint08_t byte ;
 struct {
 unsigned down : 1 ;
 unsigned : 2 ;
@@ -3147,16 +3177,18 @@ unsigned up : 1 ;
 } UniPortA ;
 UniPortA portAState_ ;
 
-# 50
+# 45
 typedef enum {
 STATE_BOOT ,
 STATE_MEASURE ,
 STATE_MENU ,
 STATE_VERSION ,
+STATE_SLEEP ,
 STATE_ERROR ,
 } MachineState ;
 MachineState machineState_ = STATE_BOOT ;
 Bool_t isHold_ = BOOL_FALSE ;
+Uint16_t sleepTimer_ = 0 ;
 
 
 
@@ -3180,11 +3212,12 @@ const char* ERROR ;
 MESSAGE = {
 "Boot..." ,
 "Voltage" ,
-"Bar" ,
+" 2 4 6 8" ,
 "A/D Val" ,
 "Version" ,
 "Error" ,
 } ;
+const char* currentMessage_ = 0 ;
 
 
 
@@ -3204,19 +3237,20 @@ const char* MESSAGE_MENU[] = {
 "Version" ,
 } ;
 struct {
-uint08_t select ;
-uint08_t cursor ;
+Uint08_t select ;
+Uint08_t cursor ;
 } menuState_ ;
 
 
 
 
-typedef uint16_t ADValue_t ;
-uint16_t sumOfBuffer_ ;
+typedef Uint16_t ADValue_t ;
+static ADValue_t sumOfBuffer_ = 0 ;
 
-# 121
+
+
 union {
-uint08_t all ;
+Uint08_t all ;
 struct {
 unsigned keyPressMenu : 1 ;
 unsigned keyPressUp : 1 ;
@@ -3224,10 +3258,10 @@ unsigned keyPressDown : 1 ;
 unsigned keyPressUpDown : 1 ;
 unsigned changeValue : 1 ;
 unsigned changeMessage : 1 ;
+unsigned sleep : 1 ;
 unsigned error : 1 ;
 } ;
-} events_ = 0 ;
-
+} events_ = { 0x00 } ;
 
 
 
@@ -3244,35 +3278,34 @@ PR2 = 7 ;
 
 TMR2=0x00;PIR1bits.TMR2IF=0; ;
 
-_aqm0802_Initialize( ) ;
-_aqm0802_SendStringClearing( 0x80 | 0x0 , MESSAGE.BOOT ) ;
-
-uint08_t barImage = 0b11111 ;
+AQM0802_Initialize( ) ;
+AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.BOOT ) ;
 
 
-_private_aqm0802_SendData( 0x00 , 0x00 ) ;
+AQM0802_SendData( 0x00 , 0x00 ) ;
+AQM0802_SendData( 0x00 , 0x40 ) ;
 
-for( uint08_t i = 5 ; i != 0xFF ; i-- ) {
-_private_aqm0802_SendData( 0x00 , ( i << 3 ) | 0x40 ) ;
-
-for( uint08_t j = 0 ; j != 8 ; j++ ) {
-if( j == 0 || j == 7 )
-_private_aqm0802_SendData( 0x40 , 0b11111 ) ;
-else
-_private_aqm0802_SendData( 0x40 , barImage ) ;
-}
-
-barImage >>= 1 ;
+Uint08_t barImage = 0x40 ;
+for( Uint08_t i = 0 ; i < 48 ; i++ ) {
+if( !( i & 0x07 ) )
+barImage |= ( barImage >> 1 ) ;
+AQM0802_SendData( 0x40 , barImage ) ;
 }
 
 machineState_ = STATE_MEASURE ;
+currentMessage_ = MESSAGE.VOLTAGE ;
 events_.changeMessage=1 ;
 
 
+TMR0IF = 0 ;
 TMR0IE = 1 ;
+WDTCONbits.SWDTEN = 1 ;
 
 
 for( ; ; ) {
+
+
+asm("clrwdt") ;
 
 static UniPortA prevPortAState = { 0x00 } ;
 UniPortA keyPressed ;
@@ -3332,14 +3365,17 @@ machineState_ = STATE_MEASURE ;
 switch( menuState_.select ) {
 case MENU_VOLTAGE:
 measureMode_ = MEASURE_MODE_VOLTAGE ;
+currentMessage_ = MESSAGE.VOLTAGE ;
 break ;
 
 case MENU_BAR:
 measureMode_ = MEASURE_MODE_BAR ;
+currentMessage_ = MESSAGE.BAR ;
 break ;
 
 case MENU_AD_VALUE:
 measureMode_ = MEASURE_MODE_AD_VALUE ;
+currentMessage_ = MESSAGE.AD_VALUE ;
 break ;
 
 case MENU_VERSION:
@@ -3381,43 +3417,29 @@ if( (events_.changeMessage&&!(events_.changeMessage=0)) ) {
 switch( machineState_ ) {
 
 case STATE_MEASURE:
-switch( measureMode_ ) {
+AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , currentMessage_ ) ;
+AQM0802_ClearRow( ROW_SELECT_1 ) ;
 
-case MEASURE_MODE_VOLTAGE:
-_aqm0802_SendStringClearing( 0x80 | 0x0 , MESSAGE.VOLTAGE ) ;
-break ;
 
-case MEASURE_MODE_BAR:
-_aqm0802_SendStringClearing( 0x80 | 0x0 , MESSAGE.BAR ) ;
-break ;
-
-case MEASURE_MODE_AD_VALUE:
-_aqm0802_SendStringClearing( 0x80 | 0x0 , MESSAGE.AD_VALUE ) ;
-break ;
-
-}
-_aqm0802_ClearRow( 0xC0 | 0x0 ) ;
-if( isHold_ )
-_aqm0802_SendCharacter( 0xC0 | 0x0 , 'H' ) ;
 
 events_.changeValue=1 ;
 break ;
 
 case STATE_MENU:
-_aqm0802_SendStringClearing( 0x80 | 0x1 , MESSAGE_MENU[ menuState_.select - menuState_.cursor ] ) ;
-_aqm0802_SendStringClearing( 0xC0 | 0x1 , MESSAGE_MENU[ menuState_.select - menuState_.cursor + 1 ] ) ;
-_aqm0802_SendCharacter( ROW_SELECT[ menuState_.cursor ] | 0x0 , 0x07 ) ;
+AQM0802_SendStringClearing( ROW_SELECT_0 | 0x1 , MESSAGE_MENU[ menuState_.select - menuState_.cursor ] ) ;
+AQM0802_SendStringClearing( ROW_SELECT_1 | 0x1 , MESSAGE_MENU[ menuState_.select - menuState_.cursor + 1 ] ) ;
+AQM0802_SendCharacter( ROW_SELECT[ menuState_.cursor ] | 0x0 , 0x07 ) ;
 break ;
 
 case STATE_VERSION:
-_aqm0802_SendStringClearing( 0x80 | 0x0 , MESSAGE.VERSION ) ;
-_aqm0802_SendStringClearing( 0xC0 | 0x0 , " 00.112 " ) ;
+AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.VERSION ) ;
+AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , " 00.112 " ) ;
 break ;
 
 
 case STATE_ERROR:
-_aqm0802_SendStringClearing( 0x80 | 0x0 , MESSAGE.ERROR ) ;
-_aqm0802_ClearRow( 0xC0 ) ;
+AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.ERROR ) ;
+AQM0802_ClearRow( ROW_SELECT_1 ) ;
 break ;
 }
 }
@@ -3426,12 +3448,12 @@ break ;
 if( machineState_ == STATE_MEASURE && (events_.changeValue&&!(events_.changeValue=0)) ) {
 
 
-ADValue_t adValue ;
-uint08_t digit ;
+ADValue_t currentAdValue ;
+Uint08_t digit ;
 char string[8] = "  00000" ;
-const uint16_t compareUnits[] = { 10000 , 1000 , 100 , 10 , 1 } ;
+const Uint16_t COMPARE_UNITS[] = { 10000 , 1000 , 100 , 10 , 1 } ;
 
-adValue = sumOfBuffer_ ;
+currentAdValue = sumOfBuffer_ ;
 
 switch( measureMode_ ) {
 case MEASURE_MODE_VOLTAGE:
@@ -3440,11 +3462,11 @@ case MEASURE_MODE_AD_VALUE:
 digit = 0 ;
 while( digit < 5 ) {
 
-uint16_t compareUnit = compareUnits[ digit ] ;
+Uint16_t compareUnit = COMPARE_UNITS[ digit ] ;
 
-while( adValue >= compareUnit ) {
+while( currentAdValue >= compareUnit ) {
 string[digit + 2]++ ;
-adValue -= compareUnit ;
+currentAdValue -= compareUnit ;
 }
 
 digit++ ;
@@ -3458,56 +3480,105 @@ string[3] = '.' ;
 string[6] = 'V' ;
 }
 
-_aqm0802_SendString( 0xC0 | 0x1 , &string ) ;
+AQM0802_SendString( ROW_SELECT_1 | 0x1 , &string ) ;
 
 break ;
 
 case MEASURE_MODE_BAR:
-for( uint08_t i = 7 ; i != 1 ; i-- ) {
-if( adValue >= 1000 ) {
-_aqm0802_SendCharacter( 0xC0 | i , 0x05 ) ;
-adValue -= 1000 ;
+{
+Char_t string[9] ;
+for( Uint08_t i = 0 ; i < 8 ; i++ ) {
+if( currentAdValue >= 1000 ) {
+string[i] = '\x05' ;
+currentAdValue -= 1000 ;
 }
 else {
-_aqm0802_SendCharacter( 0xC0 | i , adValue / 200 ) ;
-adValue = 0 ;
-}
-}
+string[i] = currentAdValue / 200 ;
+string[ i + 1 ] = '\0' ;
 break ;
 }
 
 }
+AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , string ) ;
+}
+break ;
 
 }
 
 }
 
 
+if( (events_.sleep&&!(events_.sleep=0)) ) {
+AQM0802_ClearRow( ROW_SELECT_0 ) ;
+AQM0802_ClearRow( ROW_SELECT_1 ) ;
+WDTCONbits.SWDTEN = 0 ;
+INTCONbits.TMR0IE = 0 ;
+INTCONbits.IOCIF = 0 ;
+INTCONbits.IOCIE = 1 ;
+sleepTimer_ = 0 ;
+machineState_ = STATE_SLEEP ;
+asm("sleep") ;
+}
 
+}
 
+}
+
+# 395
 void interrupt _( void ) {
+
+if( IOCAFbits.IOCAF3 ) {
+IOCAFbits.IOCAF3 = 0 ;
+WDTCONbits.SWDTEN = 1 ;
+INTCONbits.TMR0IF = 0 ;
+INTCONbits.TMR0IE = 1 ;
+INTCONbits.IOCIE = 0 ;
+}
+
 if( !INTCONbits.TMR0IF ) return ;
 INTCONbits.TMR0IF = 0 ;
 
 
-static uint08_t interruptCount = 0 ;
+static Uint08_t interruptCount = 0 ;
 if( ! --interruptCount ) {
 interruptCount = 10 ;
-portAState_.byte = (~PORTA& 0b00101001); ;
+portAState_.byte = (~PORTA&0b00101001); ;
+
+if( machineState_ == STATE_SLEEP ) {
+if( portAState_.menu ) {
+if( ++sleepTimer_ == 100 ) {
+sleepTimer_ = 0 ;
+machineState_ = STATE_MEASURE ;
+events_.changeMessage=1 ;
+}
+}
+else {
+events_.sleep=1 ;
+}
+}
+else {
+if( portAState_.byte ) {
+sleepTimer_ = 0 ;
+}
+else if( ++sleepTimer_ == 60 * 100 )
+events_.sleep=1 ;
+
+}
+
 }
 
 
 if( !ADCON0bits.GO ) {
 
-static uint08_t bufferPostiion = 0 ;
+static Uint08_t bufferPostiion = 0 ;
 static ADValue_t adBuffer[ 16 ] ;
-ADValue_t adValue = ( ( ( (uint16_t)ADRESH ) << 8 ) | ADRESL ) ;
+ADValue_t adValue = ( ( ( (Uint16_t)ADRESH ) << 8 ) | ADRESL ) ;
 ADCON0bits.GO = 1 ;
 
 if( !isHold_ ) {
 sumOfBuffer_ -= adBuffer[ bufferPostiion ] ;
 sumOfBuffer_ += adValue ;
-adBuffer[bufferPostiion] = adValue ;
+adBuffer[ bufferPostiion ] = adValue ;
 
 if( ++bufferPostiion == 16 ) bufferPostiion = 0 ;
 

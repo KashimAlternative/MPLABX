@@ -4,59 +4,29 @@
 //--------------------------------
 // Message
 const struct {
-  struct {
-    const char* TILE ;
-    const char* MUTE ;
-    const char* TEMPO ;
+  const struct {
+    const Char_t* MAIN_TILE ;
+    const Char_t* MUTE ;
   } METRONOME ;
-  struct {
-    const char* TITLE ;
-    const char* TITLE_TONE ;
-    const char* TITLE_DURATION ;
-    const char* BEAT_COUNT ;
-    const char* TONE ;
-    const char* DURATION_CLICK ;
-    const char* DURATION_KEY ;
-    const char* PULSE_WIDTH ;
-    const char* OSCILLATOR_TUNE ;
-  } CONFIGURATION ;
-  struct {
-    const char* LOAD ;
-    const char* SAVE ;
-    const char* RESET ;
-    const char* NO ;
-    const char* YES ;
+  const struct {
+    const Char_t* NO ;
+    const Char_t* YES ;
   } CONFIRM ;
-  struct {
-    const char* LOAD ;
-    const char* SAVE ;
-    const char* INITIALIZE ;
+  const struct {
+    const Char_t* LOAD ;
+    const Char_t* SAVE ;
+    const Char_t* INITIALIZE ;
   } MEMORY ;
-  struct {
-    const char* MESSAGE ;
+  const struct {
+    const Char_t* MESSAGE ;
   } ERROR ;
 }
 MESSAGE = {
   {
     "Metronome" ,
     "#Mute#" ,
-    "Tempo" ,
   } ,
   {
-    "Config" ,
-    "Tone" ,
-    "Duration" ,
-    "Beat Count" ,
-    "Tone" ,
-    "Click" ,
-    "Key" ,
-    "Pulse Width" ,
-    "Osc. Tune" ,
-  } ,
-  {
-    "Load ?" ,
-    "Save ?" ,
-    "Reset ?" ,
     "No " ,
     "Yes" ,
   } ,
@@ -73,9 +43,9 @@ MESSAGE = {
 //--------------------------------
 // Character
 const struct {
-  const char CURSOR_RIGHT ;
-  const char CURSOR_UP ;
-  const char CURSOR_DOWN ;
+  const Char_t CURSOR_RIGHT ;
+  const Char_t CURSOR_UP ;
+  const Char_t CURSOR_DOWN ;
 }
 CHAR_CODE = {
   0x00 ,
@@ -83,9 +53,9 @@ CHAR_CODE = {
   0x02 ,
 } ;
 const struct {
-  const char CURSOR_RIGHT[8] ;
-  const char CURSOR_UP[8] ;
-  const char CURSOR_DOWN[8] ;
+  const Char_t CURSOR_RIGHT[8] ;
+  const Char_t CURSOR_UP[8] ;
+  const Char_t CURSOR_DOWN[8] ;
 }
 BITMAP = {
   {

@@ -6,26 +6,26 @@
 // ----------------------------------------------------------------
 // [Struct] Configuration
 typedef struct {
-  uint16_t tempo ;
-  uint08_t oscillatorTune ;
-  uint08_t writeCount ;
+  Uint16_t tempo ;
+  Uint08_t oscillatorTune ;
+  Uint08_t writeCount ;
 } ConfigurationData ;
 #  define CONFIGURATION_INITIAL { 120 , 0x20 , 0 }
 #  define DATA_SIZE sizeof ( ConfigurationData )
 
 // ----------------------------------------------------------------
 // [Prototypes]
-void _private_WriteByte( uint08_t address , uint08_t data ) ;
-uint08_t _private_ReadByte( uint08_t address ) ;
+void _private_WriteByte( Uint08_t address , Uint08_t data ) ;
+Uint08_t _private_ReadByte( Uint08_t address ) ;
 
 // ----------------------------------------------------------------
 // [Function] Save
 void _configuration_Save( ConfigurationData* config ) {
 
-  uint08_t* ptrConfig = (uint08_t*) config ;
-  uint08_t romPosition = 0xFF ;
-  uint08_t isPositionChanged = 0 ;
-  uint08_t saveIntcon ;
+  Uint08_t* ptrConfig = (Uint08_t*) config ;
+  Uint08_t romPosition = 0xFF ;
+  Uint08_t isPositionChanged = 0 ;
+  Uint08_t saveIntcon ;
 
   // Disable All Interrupt
   saveIntcon = INTCON ;
@@ -48,7 +48,7 @@ void _configuration_Save( ConfigurationData* config ) {
   } ;
 
   // Write Each Byte of Config
-  for ( uint08_t i = 0 ; i < DATA_SIZE ; i++ , ptrConfig++ ) {
+  for ( Uint08_t i = 0 ; i < DATA_SIZE ; i++ , ptrConfig++ ) {
     _private_WriteByte( romPosition + i , *ptrConfig ) ;
     if ( EECON1bits.WRERR ) break ;
   }
@@ -70,15 +70,15 @@ void _configuration_Save( ConfigurationData* config ) {
 // [Function] Load
 void _configuration_Load( ConfigurationData* config ) {
 
-  uint08_t* ptrConfig = (uint08_t*) config ;
-  uint08_t romPosition = 0xFF ;
+  Uint08_t* ptrConfig = (Uint08_t*) config ;
+  Uint08_t romPosition = 0xFF ;
 
   // Read ROM Position
   romPosition = _private_ReadByte( 0xFF ) & 0xF0 ;
   if ( romPosition == 0xF0 ) return ;
 
   // Read Each Byte of Config
-  for ( uint08_t i = 0 ; i < DATA_SIZE ; i++ , ptrConfig++ ) {
+  for ( Uint08_t i = 0 ; i < DATA_SIZE ; i++ , ptrConfig++ ) {
     *ptrConfig = _private_ReadByte( i + romPosition ) ;
   }
 
@@ -90,7 +90,7 @@ void _configuration_Load( ConfigurationData* config ) {
 
 // ----------------------------------------------------------------
 // [Function] Write Byte
-void _private_WriteByte( uint08_t address , uint08_t data ) {
+void _private_WriteByte( Uint08_t address , Uint08_t data ) {
   EEADRH = 0x00 ;
   EEDATH = 0x00 ;
   EEADRL = address ;
@@ -105,7 +105,7 @@ void _private_WriteByte( uint08_t address , uint08_t data ) {
 
 // ----------------------------------------------------------------
 // [Function] Read Byte
-uint08_t _private_ReadByte( uint08_t address ) {
+Uint08_t _private_ReadByte( Uint08_t address ) {
   EEADRH = 0x00 ;
   EEADRL = address ;
   EECON1bits.EEPGD = 0 ;

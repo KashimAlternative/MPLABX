@@ -8,6 +8,9 @@
       <itemPath>src/menu.h</itemPath>
       <itemPath>src/message.h</itemPath>
       <itemPath>src/pic16f1827_init.h</itemPath>
+      <itemPath>../_Common/typedef.h</itemPath>
+      <itemPath>../_Common/ParallelLCD.h</itemPath>
+      <itemPath>../_Common/Util.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
