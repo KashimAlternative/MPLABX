@@ -11,56 +11,59 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
-$/tmp/cgtjxjgkL.obj
+$/tmp/cgt2EJAs7.obj
 reset_vec CODE 0 0 0 2 2
-end_init CODE 0 71 71 2 2
+end_init CODE 0 51 51 2 2
 config CONFIG 0 8007 8007 2 2
 $dist/default/production/Clock.X.production.obj
-cinit CODE 0 73 73 23 2
-text1 CODE 0 7BF 7BF 41 2
-text2 CODE 0 F61 F61 3E 2
-text3 CODE 0 F9F F9F 61 2
-text4 CODE 0 631 631 75 2
-text5 CODE 0 421 421 121 2
-text6 CODE 0 542 542 EF 2
-text7 CODE 0 F2B F2B 36 2
-text8 CODE 0 EC2 EC2 1E 2
-text9 CODE 0 E4E E4E E 2
-text10 CODE 0 F01 F01 2A 2
-text11 CODE 0 EE0 EE0 21 2
-text12 CODE 0 E8B E8B 1A 2
-text13 CODE 0 E72 E72 19 2
-text14 CODE 0 EA5 EA5 1D 2
-text16 CODE 0 6A6 6A6 5A 2
-maintext CODE 0 96 96 38B 2
+cinit CODE 0 53 53 24 2
+text1 CODE 0 7B6 7B6 41 2
+text2 CODE 0 66F 66F 74 2
+text3 CODE 0 461 461 120 2
+text4 CODE 0 581 581 EE 2
+text5 CODE 0 F33 F33 32 2
+text6 CODE 0 EF2 EF2 1A 2
+text7 CODE 0 E8C E8C C 2
+text8 CODE 0 F0C F0C 27 2
+text9 CODE 0 6E3 6E3 1D 2
+text10 CODE 0 EDB EDB 17 2
+text11 CODE 0 E98 E98 16 2
+text12 CODE 0 EC4 EC4 17 2
+text13 CODE 0 F65 F65 3D 2
+text14 CODE 0 FA2 FA2 5E 2
+maintext CODE 0 77 77 3EA 2
 cstackCOMMON COMMON 1 70 70 A 1
-cstackBANK0 BANK0 1 20 20 2B 1
-inittext CODE 0 E42 E42 6 2
-intentry CODE 0 4 4 6D 2
-bssBANK0 BANK0 1 4B 4B 21 1
-stringtext STRCODE 0 700 700 BF 2
-idataBANK0 CODE 0 E3E E3E 4 2
-idataBANK1 CODE 0 E5C E5C 16 2
+cstackBANK0 BANK0 1 20 20 25 1
+inittext CODE 0 E86 E86 6 2
+intentry CODE 0 4 4 4D 2
+bssBANK0 BANK0 1 45 45 23 1
+stringtext STRCODE 0 700 700 B6 2
+idataBANK0 CODE 0 E82 E82 4 2
+idataBANK1 CODE 0 EAE EAE 16 2
 swtext1 CONST 0 800 800 10 2
 swtext2 CONST 0 810 810 E 2
-dataBANK0 BANK0 1 6C 6C 4 1
+dataBANK0 BANK0 1 68 68 4 1
 dataBANK1 BANK1 1 A0 A0 16 1
-clrtext CODE 0 E48 E48 6 2
-bssCOMMON COMMON 1 7A 7A 1 1
+clrtext CODE 0 7F7 7F7 6 2
+bssCOMMON COMMON 1 7A 7A 2 1
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
 # is described on a single line as follows:
 #    <class name> <range> <delta>
 # Addresses given in the range are in hexadecimal and units of delta.
 %UNUSED
+RAM 6C-6F 1
 RAM B6-EF 1
 RAM 120-16F 1
+BANK0 6C-6F 1
 BANK1 B6-EF 1
 BANK2 120-16F 1
 CONST 2-3 2
-CONST 81E-E3D 2
+CONST 7FD-7FF 2
+CONST 81E-E81 2
 ENTRY 2-3 2
-ENTRY 81E-E3D 2
+ENTRY 7FD-7FF 2
+ENTRY 81E-E81 2
 IDLOC 8000-8003 2
 SFR10 500-56F 1
 SFR11 580-5EF 1
@@ -86,7 +89,8 @@ SFR30 F00-F6F 1
 SFR31 F80-FEF 1
 STACK 2066-20EF 1
 CODE 2-3 2
-CODE 81E-E3D 2
+CODE 7FD-7FF 2
+CODE 81E-E81 2
 SFR0 0-1F 1
 SFR1 80-9F 1
 SFR2 100-11F 1
@@ -98,11 +102,13 @@ SFR7 380-3EF 1
 SFR8 400-46F 1
 SFR9 480-4EF 1
 BIGRAM 2000-20EF 1
-COMMON 7B-7D 1
+COMMON 7C-7D 1
 STRCODE 2-3 2
-STRCODE 81E-E3D 2
+STRCODE 7FD-7FF 2
+STRCODE 81E-E81 2
 STRING 2-3 2
-STRING 81E-E3D 2
+STRING 7FD-7FF 2
+STRING 81E-E81 2
 # %LINETAB Section
 # This section enumerates the file/line to address mappings.
 # The beginning of the section is indicated by %LINETAB.
@@ -117,517 +123,519 @@ STRING 81E-E3D 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production/Clock.X.production.obj
-4 intentry CODE >596:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-8 intentry CODE >598:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-A intentry CODE >599:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-B intentry CODE >602:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-10 intentry CODE >604:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-14 intentry CODE >608:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1A intentry CODE >609:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1C intentry CODE >611:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-20 intentry CODE >612:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-22 intentry CODE >613:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-26 intentry CODE >614:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-27 intentry CODE >615:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-28 intentry CODE >616:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-28 intentry CODE >617:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-29 intentry CODE >622:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-35 intentry CODE >623:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3A intentry CODE >625:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3A intentry CODE >628:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3C intentry CODE >629:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-41 intentry CODE >630:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-49 intentry CODE >631:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-55 intentry CODE >632:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-56 intentry CODE >633:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-57 intentry CODE >629:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-5F intentry CODE >637:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-67 intentry CODE >638:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-6E intentry CODE >643:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-73 cinit CODE >907:/tmp/cgtL2E2cE
-73 cinit CODE >910:/tmp/cgtL2E2cE
-73 cinit CODE >1004:/tmp/cgtL2E2cE
-74 cinit CODE >1008:/tmp/cgtL2E2cE
-75 cinit CODE >1009:/tmp/cgtL2E2cE
-76 cinit CODE >1010:/tmp/cgtL2E2cE
-77 cinit CODE >1011:/tmp/cgtL2E2cE
-78 cinit CODE >1012:/tmp/cgtL2E2cE
-79 cinit CODE >1013:/tmp/cgtL2E2cE
-7C cinit CODE >1028:/tmp/cgtL2E2cE
-7D cinit CODE >1029:/tmp/cgtL2E2cE
-7E cinit CODE >1030:/tmp/cgtL2E2cE
-7F cinit CODE >1031:/tmp/cgtL2E2cE
-80 cinit CODE >1032:/tmp/cgtL2E2cE
-81 cinit CODE >1033:/tmp/cgtL2E2cE
-82 cinit CODE >1034:/tmp/cgtL2E2cE
-83 cinit CODE >1035:/tmp/cgtL2E2cE
-84 cinit CODE >1036:/tmp/cgtL2E2cE
-85 cinit CODE >1037:/tmp/cgtL2E2cE
-88 cinit CODE >1041:/tmp/cgtL2E2cE
-89 cinit CODE >1042:/tmp/cgtL2E2cE
-8A cinit CODE >1043:/tmp/cgtL2E2cE
-8B cinit CODE >1044:/tmp/cgtL2E2cE
-8C cinit CODE >1045:/tmp/cgtL2E2cE
-8D cinit CODE >1046:/tmp/cgtL2E2cE
-8E cinit CODE >1047:/tmp/cgtL2E2cE
-8F cinit CODE >1048:/tmp/cgtL2E2cE
-90 cinit CODE >1049:/tmp/cgtL2E2cE
-91 cinit CODE >1050:/tmp/cgtL2E2cE
-93 cinit CODE >1056:/tmp/cgtL2E2cE
-93 cinit CODE >1057:/tmp/cgtL2E2cE
-94 cinit CODE >1058:/tmp/cgtL2E2cE
-96 maintext CODE >198:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-96 maintext CODE >199:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-99 maintext CODE >201:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-A3 maintext CODE >202:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-AF maintext CODE >203:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-B0 maintext CODE >206:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-B9 maintext CODE >212:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-C7 maintext CODE >215:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-D0 maintext CODE >217:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-D9 maintext CODE >220:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-E6 maintext CODE >222:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-E7 maintext CODE >223:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-E8 maintext CODE >225:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-E8 maintext CODE >228:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-E9 maintext CODE >234:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-EF maintext CODE >235:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-F4 maintext CODE >236:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-F9 maintext CODE >237:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-FD maintext CODE >239:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-FF maintext CODE >240:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-101 maintext CODE >241:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-103 maintext CODE >242:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-103 maintext CODE >243:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-104 maintext CODE >244:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-104 maintext CODE >246:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-106 maintext CODE >247:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-108 maintext CODE >248:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-10A maintext CODE >249:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-10A maintext CODE >250:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-10B maintext CODE >251:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-10B maintext CODE >253:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-10C maintext CODE >254:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-10D maintext CODE >257:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-10E maintext CODE >258:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-10F maintext CODE >260:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-110 maintext CODE >261:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-111 maintext CODE >265:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-114 maintext CODE >267:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-115 maintext CODE >269:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-116 maintext CODE >272:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-11A maintext CODE >273:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-11B maintext CODE >276:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-11B maintext CODE >277:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-11D maintext CODE >280:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-11E maintext CODE >269:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-126 maintext CODE >281:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-126 maintext CODE >284:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-129 maintext CODE >286:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-12A maintext CODE >288:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-12A maintext CODE >289:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-12D maintext CODE >295:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+4 intentry CODE >121:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+4 intentry CODE >678:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+8 intentry CODE >680:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+A intentry CODE >681:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+B intentry CODE >683:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+12 intentry CODE >684:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+13 intentry CODE >689:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+17 intentry CODE >690:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1B intentry CODE >693:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+20 intentry CODE >695:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+23 intentry CODE >696:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2B intentry CODE >697:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2F intentry CODE >698:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+30 intentry CODE >700:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+31 intentry CODE >702:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+32 intentry CODE >704:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+35 intentry CODE >705:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3D intentry CODE >706:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+41 intentry CODE >707:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+42 intentry CODE >709:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+43 intentry CODE >711:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+44 intentry CODE >717:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+4A intentry CODE >718:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+4C intentry CODE >720:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+4E intentry CODE >725:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+53 cinit CODE >896:/tmp/cgtcopLsc
+53 cinit CODE >899:/tmp/cgtcopLsc
+53 cinit CODE >996:/tmp/cgtcopLsc
+54 cinit CODE >997:/tmp/cgtcopLsc
+55 cinit CODE >1001:/tmp/cgtcopLsc
+56 cinit CODE >1002:/tmp/cgtcopLsc
+57 cinit CODE >1003:/tmp/cgtcopLsc
+58 cinit CODE >1004:/tmp/cgtcopLsc
+59 cinit CODE >1005:/tmp/cgtcopLsc
+5A cinit CODE >1006:/tmp/cgtcopLsc
+5D cinit CODE >1021:/tmp/cgtcopLsc
+5E cinit CODE >1022:/tmp/cgtcopLsc
+5F cinit CODE >1023:/tmp/cgtcopLsc
+60 cinit CODE >1024:/tmp/cgtcopLsc
+61 cinit CODE >1025:/tmp/cgtcopLsc
+62 cinit CODE >1026:/tmp/cgtcopLsc
+63 cinit CODE >1027:/tmp/cgtcopLsc
+64 cinit CODE >1028:/tmp/cgtcopLsc
+65 cinit CODE >1029:/tmp/cgtcopLsc
+66 cinit CODE >1030:/tmp/cgtcopLsc
+69 cinit CODE >1034:/tmp/cgtcopLsc
+6A cinit CODE >1035:/tmp/cgtcopLsc
+6B cinit CODE >1036:/tmp/cgtcopLsc
+6C cinit CODE >1037:/tmp/cgtcopLsc
+6D cinit CODE >1038:/tmp/cgtcopLsc
+6E cinit CODE >1039:/tmp/cgtcopLsc
+6F cinit CODE >1040:/tmp/cgtcopLsc
+70 cinit CODE >1041:/tmp/cgtcopLsc
+71 cinit CODE >1042:/tmp/cgtcopLsc
+72 cinit CODE >1043:/tmp/cgtcopLsc
+74 cinit CODE >1049:/tmp/cgtcopLsc
+74 cinit CODE >1050:/tmp/cgtcopLsc
+75 cinit CODE >1051:/tmp/cgtcopLsc
+77 maintext CODE >216:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+77 maintext CODE >218:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+7A maintext CODE >220:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+84 maintext CODE >221:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+90 maintext CODE >222:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+91 maintext CODE >225:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+9E maintext CODE >233:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+AC maintext CODE >236:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+B4 maintext CODE >238:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+B6 maintext CODE >239:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+B8 maintext CODE >240:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+BC maintext CODE >242:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+BD maintext CODE >243:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+BE maintext CODE >244:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+BF maintext CODE >246:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+BF maintext CODE >249:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+C0 maintext CODE >251:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+C4 maintext CODE >254:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+D0 maintext CODE >255:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+D3 maintext CODE >260:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+D5 maintext CODE >261:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+F1 maintext CODE >262:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+F8 maintext CODE >265:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+FA maintext CODE >266:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+FA maintext CODE >267:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+FB maintext CODE >269:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+102 maintext CODE >270:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+108 maintext CODE >273:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+108 maintext CODE >279:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+10C maintext CODE >280:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+111 maintext CODE >281:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+116 maintext CODE >282:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+11B maintext CODE >283:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+11F maintext CODE >286:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+124 maintext CODE >287:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+126 maintext CODE >288:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+128 maintext CODE >289:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+128 maintext CODE >290:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+129 maintext CODE >291:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+129 maintext CODE >294:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+12E maintext CODE >295:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
 130 maintext CODE >296:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-134 maintext CODE >297:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-138 maintext CODE >298:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-13C maintext CODE >299:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-13D maintext CODE >301:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-13F maintext CODE >302:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-143 maintext CODE >303:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-147 maintext CODE >306:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-148 maintext CODE >307:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-149 maintext CODE >311:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-14D maintext CODE >312:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-14E maintext CODE >315:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-14F maintext CODE >286:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-160 maintext CODE >317:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-160 maintext CODE >320:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-163 maintext CODE >322:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-164 maintext CODE >325:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-168 maintext CODE >326:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-16C maintext CODE >327:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-16D maintext CODE >328:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-16F maintext CODE >335:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-173 maintext CODE >336:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-174 maintext CODE >337:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-178 maintext CODE >338:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-17D maintext CODE >339:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-17E maintext CODE >341:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-182 maintext CODE >342:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-186 maintext CODE >343:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-188 maintext CODE >346:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-189 maintext CODE >347:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-18A maintext CODE >352:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-18E maintext CODE >353:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-190 maintext CODE >359:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-194 maintext CODE >360:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-198 maintext CODE >361:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-19C maintext CODE >362:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1A1 maintext CODE >363:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1A2 maintext CODE >366:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1A4 maintext CODE >370:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1A8 maintext CODE >372:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1A9 maintext CODE >350:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1B7 maintext CODE >372:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1B7 maintext CODE >373:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1B8 maintext CODE >375:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1B9 maintext CODE >377:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1B9 maintext CODE >378:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1BB maintext CODE >380:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1BC maintext CODE >322:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1CE maintext CODE >382:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1CE maintext CODE >384:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1D2 maintext CODE >385:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1D3 maintext CODE >386:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1D3 maintext CODE >387:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1D5 maintext CODE >389:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1D6 maintext CODE >385:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1DC maintext CODE >390:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1DC maintext CODE >393:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1E0 maintext CODE >394:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1E1 maintext CODE >396:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1E1 maintext CODE >397:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1E3 maintext CODE >398:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1E4 maintext CODE >401:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1E5 maintext CODE >394:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1EA maintext CODE >405:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1EB maintext CODE >407:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1EB maintext CODE >408:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1EE maintext CODE >409:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1F3 maintext CODE >410:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1F8 maintext CODE >411:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1F9 maintext CODE >413:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-1FC maintext CODE >414:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-204 maintext CODE >415:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-20B maintext CODE >416:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-20C maintext CODE >418:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-20D maintext CODE >421:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-20D maintext CODE >422:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-210 maintext CODE >423:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-222 maintext CODE >424:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-235 maintext CODE >425:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-23F maintext CODE >426:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-241 maintext CODE >428:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-248 maintext CODE >429:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-249 maintext CODE >431:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-24C maintext CODE >432:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-25E maintext CODE >433:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-271 maintext CODE >434:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-278 maintext CODE >435:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-27D maintext CODE >437:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-282 maintext CODE >438:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-283 maintext CODE >442:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-283 maintext CODE >443:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-286 maintext CODE >444:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-28D maintext CODE >445:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-28E maintext CODE >447:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-291 maintext CODE >448:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-296 maintext CODE >449:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-297 maintext CODE >453:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-298 maintext CODE >405:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2A6 maintext CODE >453:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2A6 maintext CODE >480:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2A9 maintext CODE >482:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2AA maintext CODE >488:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2AE maintext CODE >490:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2AF maintext CODE >492:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2B3 maintext CODE >493:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2B4 maintext CODE >495:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2BB maintext CODE >498:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2C2 maintext CODE >501:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2C9 maintext CODE >490:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2D8 maintext CODE >503:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2D9 maintext CODE >509:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2E8 maintext CODE >510:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-2F9 maintext CODE >511:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-306 maintext CODE >512:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-307 maintext CODE >515:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-310 maintext CODE >516:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-319 maintext CODE >517:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-31B maintext CODE >518:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-31C maintext CODE >521:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-324 maintext CODE >522:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-32D maintext CODE >523:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-32E maintext CODE >526:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-337 maintext CODE >527:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-33B maintext CODE >529:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-33C maintext CODE >482:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-34A maintext CODE >531:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-34A maintext CODE >534:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-34E maintext CODE >535:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-34F maintext CODE >542:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-357 maintext CODE >543:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-360 maintext CODE >544:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-369 maintext CODE >545:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-372 maintext CODE >546:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-374 maintext CODE >548:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-375 maintext CODE >552:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-37D maintext CODE >553:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-386 maintext CODE >554:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-38B maintext CODE >555:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-38C maintext CODE >558:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-391 maintext CODE >559:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-39C maintext CODE >560:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3A0 maintext CODE >561:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3A2 maintext CODE >562:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3AA maintext CODE >563:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3AC maintext CODE >560:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3AD maintext CODE >566:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3B1 maintext CODE >567:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3B4 maintext CODE >569:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3BC maintext CODE >558:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3C4 maintext CODE >572:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3CC maintext CODE >575:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3CD maintext CODE >535:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3DF maintext CODE >579:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3E8 maintext CODE >581:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3EB maintext CODE >582:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-3F7 maintext CODE >583:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-404 maintext CODE >585:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-409 maintext CODE >586:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-420 maintext CODE >589:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-421 text5 CODE >128:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-423 text5 CODE >130:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-428 text5 CODE >132:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-429 text5 CODE >134:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-436 text5 CODE >135:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-448 text5 CODE >136:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-449 text5 CODE >138:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-456 text5 CODE >139:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-468 text5 CODE >140:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-469 text5 CODE >142:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-476 text5 CODE >143:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-488 text5 CODE >144:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-489 text5 CODE >146:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-4A0 text5 CODE >147:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-4BA text5 CODE >148:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-4D5 text5 CODE >149:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-4DA text5 CODE >150:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-4DB text5 CODE >152:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-4E8 text5 CODE >153:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-4FA text5 CODE >154:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-4FB text5 CODE >156:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-507 text5 CODE >157:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-518 text5 CODE >158:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-519 text5 CODE >160:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-525 text5 CODE >161:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-536 text5 CODE >163:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-537 text5 CODE >132:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-541 text5 CODE >165:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-542 text6 CODE >80:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-544 text6 CODE >82:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-549 text6 CODE >83:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-551 text6 CODE >84:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-559 text6 CODE >85:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-561 text6 CODE >86:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-569 text6 CODE >87:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-571 text6 CODE >90:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-58C text6 CODE >91:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-5A7 text6 CODE >92:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-5BF text6 CODE >94:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-5CD text6 CODE >95:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-5E0 text6 CODE >97:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-5EE text6 CODE >98:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-601 text6 CODE >100:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-60F text6 CODE >101:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-622 text6 CODE >102:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-629 text6 CODE >103:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-630 text6 CODE >105:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-631 text4 CODE >108:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-633 text4 CODE >110:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-638 text4 CODE >112:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-640 text4 CODE >113:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-648 text4 CODE >116:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-655 text4 CODE >117:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-667 text4 CODE >119:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-674 text4 CODE >120:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-686 text4 CODE >122:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-693 text4 CODE >123:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-6A5 text4 CODE >125:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-6A6 text16 CODE >74:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6A7 text16 CODE >77:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6A9 text16 CODE >78:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6AB text16 CODE >79:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6AD text16 CODE >82:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6B0 text16 CODE >83:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6B3 text16 CODE >84:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6B4 text16 CODE >85:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6B9 text16 CODE >88:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6BB text16 CODE >89:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6BE text16 CODE >90:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6BF text16 CODE >91:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6C4 text16 CODE >93:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6C5 text16 CODE >94:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6C7 text16 CODE >97:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6C9 text16 CODE >98:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6CC text16 CODE >99:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6CD text16 CODE >100:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6D2 text16 CODE >103:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6D3 text16 CODE >104:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6D7 text16 CODE >105:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6DC text16 CODE >106:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6DE text16 CODE >107:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6E0 text16 CODE >108:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6E2 text16 CODE >109:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6F0 text16 CODE >110:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6F9 text16 CODE >111:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6FA text16 CODE >104:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6FB text16 CODE >115:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6FC text16 CODE >116:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-6FE text16 CODE >118:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-7BF text1 CODE >3:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7BF text1 CODE >6:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7C4 text1 CODE >7:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7C8 text1 CODE >10:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7C9 text1 CODE >11:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7CA text1 CODE >12:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7CB text1 CODE >15:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7CC text1 CODE >16:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7CD text1 CODE >17:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7CF text1 CODE >20:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7D1 text1 CODE >21:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7D5 text1 CODE >22:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7D6 text1 CODE >23:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7D7 text1 CODE >24:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7D9 text1 CODE >25:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7DA text1 CODE >26:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7DB text1 CODE >29:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7DE text1 CODE >30:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7E0 text1 CODE >31:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7E2 text1 CODE >34:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7E5 text1 CODE >35:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7E7 text1 CODE >36:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7E9 text1 CODE >37:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7EB text1 CODE >38:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7ED text1 CODE >39:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7EE text1 CODE >40:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7EF text1 CODE >43:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7F1 text1 CODE >44:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7F2 text1 CODE >45:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7F3 text1 CODE >46:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7F4 text1 CODE >47:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7F5 text1 CODE >49:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7F7 text1 CODE >50:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7F8 text1 CODE >51:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7F9 text1 CODE >53:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7FC text1 CODE >54:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7FE text1 CODE >55:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-7FF text1 CODE >57:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
-800 swtext1 CONST >482:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
-810 swtext2 CONST >132:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
-E42 inittext CODE >1017:/tmp/cgtL2E2cE
-E42 inittext CODE >1018:/tmp/cgtL2E2cE
-E43 inittext CODE >1019:/tmp/cgtL2E2cE
-E43 inittext CODE >1020:/tmp/cgtL2E2cE
-E44 inittext CODE >1021:/tmp/cgtL2E2cE
-E45 inittext CODE >1022:/tmp/cgtL2E2cE
-E46 inittext CODE >1023:/tmp/cgtL2E2cE
-E47 inittext CODE >1024:/tmp/cgtL2E2cE
-E48 clrtext CODE >993:/tmp/cgtL2E2cE
-E48 clrtext CODE >994:/tmp/cgtL2E2cE
-E49 clrtext CODE >995:/tmp/cgtL2E2cE
-E49 clrtext CODE >996:/tmp/cgtL2E2cE
-E4A clrtext CODE >997:/tmp/cgtL2E2cE
-E4B clrtext CODE >998:/tmp/cgtL2E2cE
-E4C clrtext CODE >999:/tmp/cgtL2E2cE
-E4D clrtext CODE >1000:/tmp/cgtL2E2cE
-E4E text9 CODE >93:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E50 text9 CODE >94:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E55 text9 CODE >95:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E5B text9 CODE >96:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E72 text13 CODE >138:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E74 text13 CODE >139:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E79 text13 CODE >140:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E7F text13 CODE >141:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E85 text13 CODE >140:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E8B text12 CODE >130:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E8D text12 CODE >131:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E93 text12 CODE >132:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E99 text12 CODE >133:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-E9F text12 CODE >132:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EA5 text14 CODE >167:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EA7 text14 CODE >168:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EAB text14 CODE >169:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EAF text14 CODE >170:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EBD text14 CODE >171:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EC1 text14 CODE >173:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EC2 text8 CODE >100:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EC4 text8 CODE >101:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EC9 text8 CODE >102:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-ED0 text8 CODE >103:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EDF text8 CODE >102:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EE0 text11 CODE >79:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EE0 text11 CODE >80:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EE2 text11 CODE >85:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EE9 text11 CODE >86:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EF1 text11 CODE >87:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-EF9 text11 CODE >88:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F00 text11 CODE >89:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F01 text10 CODE >146:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F03 text10 CODE >147:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F11 text10 CODE >148:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F17 text10 CODE >149:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F21 text10 CODE >148:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F2B text7 CODE >109:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F2D text7 CODE >110:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F33 text7 CODE >111:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F39 text7 CODE >112:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F45 text7 CODE >113:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F55 text7 CODE >115:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F5B text7 CODE >111:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
-F61 text2 CODE >123:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F63 text2 CODE >126:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F65 text2 CODE >127:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F67 text2 CODE >128:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F69 text2 CODE >131:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F6C text2 CODE >132:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F6F text2 CODE >133:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F70 text2 CODE >134:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F73 text2 CODE >137:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F74 text2 CODE >138:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F77 text2 CODE >139:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F78 text2 CODE >140:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F7B text2 CODE >142:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F81 text2 CODE >144:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F8A text2 CODE >145:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F8D text2 CODE >146:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F8E text2 CODE >147:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F91 text2 CODE >142:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F9A text2 CODE >151:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F9C text2 CODE >152:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F9D text2 CODE >155:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F9E text2 CODE >152:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-F9F text3 CODE >74:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FA1 text3 CODE >77:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FA3 text3 CODE >78:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FA5 text3 CODE >79:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FA7 text3 CODE >82:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FAA text3 CODE >83:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FAD text3 CODE >84:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FAE text3 CODE >85:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FB3 text3 CODE >88:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FB7 text3 CODE >89:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FBA text3 CODE >90:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FBB text3 CODE >91:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FC0 text3 CODE >93:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FC1 text3 CODE >94:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FC3 text3 CODE >97:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FC5 text3 CODE >98:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FC8 text3 CODE >99:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FC9 text3 CODE >100:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FCE text3 CODE >103:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FD0 text3 CODE >104:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FD5 text3 CODE >105:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FDA text3 CODE >106:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FDC text3 CODE >107:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FDE text3 CODE >108:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FE0 text3 CODE >109:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FEF text3 CODE >110:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FF8 text3 CODE >111:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FF9 text3 CODE >104:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FFA text3 CODE >115:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FFC text3 CODE >116:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
-FFE text3 CODE >118:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+132 maintext CODE >297:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+132 maintext CODE >298:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+133 maintext CODE >299:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+133 maintext CODE >302:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+134 maintext CODE >303:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+135 maintext CODE >307:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+136 maintext CODE >308:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+137 maintext CODE >310:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+138 maintext CODE >311:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+139 maintext CODE >315:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+13C maintext CODE >316:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+140 maintext CODE >317:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+141 maintext CODE >321:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+144 maintext CODE >323:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+145 maintext CODE >325:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+146 maintext CODE >328:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+14A maintext CODE >329:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+14B maintext CODE >332:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+14B maintext CODE >333:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+14D maintext CODE >336:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+14E maintext CODE >325:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+156 maintext CODE >337:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+156 maintext CODE >340:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+159 maintext CODE >342:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+15A maintext CODE >344:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+15A maintext CODE >345:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+15D maintext CODE >351:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+160 maintext CODE >352:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+164 maintext CODE >353:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+168 maintext CODE >354:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+16C maintext CODE >355:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+16D maintext CODE >357:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+16F maintext CODE >358:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+173 maintext CODE >359:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+177 maintext CODE >362:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+178 maintext CODE >363:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+179 maintext CODE >367:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+17D maintext CODE >368:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+17E maintext CODE >371:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+17F maintext CODE >342:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+190 maintext CODE >373:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+190 maintext CODE >376:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+193 maintext CODE >378:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+194 maintext CODE >381:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+198 maintext CODE >382:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+19C maintext CODE >383:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+19D maintext CODE >384:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+19F maintext CODE >391:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1A3 maintext CODE >392:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1A4 maintext CODE >393:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1A8 maintext CODE >394:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1AD maintext CODE >395:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1AE maintext CODE >397:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1B2 maintext CODE >398:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1B6 maintext CODE >399:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1B8 maintext CODE >402:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1B9 maintext CODE >403:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1BA maintext CODE >408:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1BE maintext CODE >409:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1C0 maintext CODE >415:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1C4 maintext CODE >416:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1C8 maintext CODE >417:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1CC maintext CODE >418:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1D1 maintext CODE >419:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1D2 maintext CODE >422:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1D4 maintext CODE >426:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1D8 maintext CODE >428:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1D9 maintext CODE >406:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1E7 maintext CODE >428:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1E7 maintext CODE >429:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1E8 maintext CODE >431:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1E9 maintext CODE >434:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1EA maintext CODE >436:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1EB maintext CODE >378:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1FC maintext CODE >438:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1FC maintext CODE >441:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+1FF maintext CODE >442:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+200 maintext CODE >443:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+200 maintext CODE >444:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+201 maintext CODE >446:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+202 maintext CODE >442:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+207 maintext CODE >447:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+207 maintext CODE >450:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+20A maintext CODE >451:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+20B maintext CODE >453:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+20B maintext CODE >454:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+20D maintext CODE >455:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+20E maintext CODE >458:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+20F maintext CODE >451:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+214 maintext CODE >462:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+215 maintext CODE >464:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+215 maintext CODE >465:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+218 maintext CODE >466:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+21B maintext CODE >467:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+21D maintext CODE >468:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+21E maintext CODE >469:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+21E maintext CODE >470:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+221 maintext CODE >471:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+223 maintext CODE >472:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+224 maintext CODE >476:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+227 maintext CODE >477:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+22B maintext CODE >478:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+22F maintext CODE >479:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+230 maintext CODE >480:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+230 maintext CODE >481:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+233 maintext CODE >482:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+238 maintext CODE >489:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+238 maintext CODE >490:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+23B maintext CODE >491:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+24D maintext CODE >492:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+260 maintext CODE >493:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+26A maintext CODE >494:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+26C maintext CODE >496:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+273 maintext CODE >497:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+274 maintext CODE >499:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+277 maintext CODE >500:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+289 maintext CODE >501:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+29C maintext CODE >502:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2A3 maintext CODE >503:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2A8 maintext CODE >505:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2AD maintext CODE >506:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2AE maintext CODE >510:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2AE maintext CODE >511:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2B1 maintext CODE >512:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2B8 maintext CODE >513:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2B9 maintext CODE >515:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2BC maintext CODE >516:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2C1 maintext CODE >517:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2C2 maintext CODE >519:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2C3 maintext CODE >521:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2C3 maintext CODE >522:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2CA maintext CODE >523:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2CE maintext CODE >524:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2CF maintext CODE >528:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2D0 maintext CODE >462:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2E1 maintext CODE >528:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2E1 maintext CODE >530:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2E4 maintext CODE >531:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2E6 maintext CODE >533:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2EA maintext CODE >534:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2EC maintext CODE >562:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2F0 maintext CODE >564:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2F1 maintext CODE >570:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2F5 maintext CODE >572:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2F6 maintext CODE >574:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2FA maintext CODE >575:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+2FB maintext CODE >577:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+301 maintext CODE >580:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+307 maintext CODE >583:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+30D maintext CODE >572:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+31C maintext CODE >585:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+31D maintext CODE >591:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+32C maintext CODE >592:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+33D maintext CODE >593:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+34A maintext CODE >594:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+34B maintext CODE >597:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+353 maintext CODE >598:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+35B maintext CODE >599:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+35D maintext CODE >600:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+35E maintext CODE >603:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+366 maintext CODE >604:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+36E maintext CODE >605:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+36F maintext CODE >608:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+377 maintext CODE >609:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+37B maintext CODE >611:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+37C maintext CODE >564:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+38A maintext CODE >613:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+38A maintext CODE >616:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+38E maintext CODE >617:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+38F maintext CODE >624:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+397 maintext CODE >625:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3A0 maintext CODE >626:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3A9 maintext CODE >627:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3B2 maintext CODE >628:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3B4 maintext CODE >630:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3B5 maintext CODE >634:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3BD maintext CODE >635:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3C6 maintext CODE >636:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3CB maintext CODE >637:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3CC maintext CODE >640:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3D1 maintext CODE >641:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3DC maintext CODE >642:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3E0 maintext CODE >643:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3E2 maintext CODE >644:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3EA maintext CODE >645:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3EC maintext CODE >642:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3ED maintext CODE >648:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3F1 maintext CODE >649:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3F4 maintext CODE >651:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+3FC maintext CODE >640:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+404 maintext CODE >654:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+40C maintext CODE >657:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+40D maintext CODE >617:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+41F maintext CODE >661:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+428 maintext CODE >663:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+42B maintext CODE >664:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+437 maintext CODE >665:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+444 maintext CODE >667:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+449 maintext CODE >668:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+460 maintext CODE >671:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+461 text3 CODE >135:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+462 text3 CODE >137:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+467 text3 CODE >139:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+468 text3 CODE >141:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+475 text3 CODE >142:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+487 text3 CODE >143:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+488 text3 CODE >145:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+495 text3 CODE >146:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+4A7 text3 CODE >147:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+4A8 text3 CODE >149:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+4B5 text3 CODE >150:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+4C7 text3 CODE >151:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+4C8 text3 CODE >153:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+4DF text3 CODE >154:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+4F9 text3 CODE >155:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+514 text3 CODE >156:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+519 text3 CODE >157:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+51A text3 CODE >159:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+527 text3 CODE >160:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+539 text3 CODE >161:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+53A text3 CODE >163:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+546 text3 CODE >164:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+557 text3 CODE >165:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+558 text3 CODE >167:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+564 text3 CODE >168:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+575 text3 CODE >170:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+576 text3 CODE >139:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+580 text3 CODE >172:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+581 text4 CODE >87:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+582 text4 CODE >89:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+587 text4 CODE >90:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+58F text4 CODE >91:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+597 text4 CODE >92:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+59F text4 CODE >93:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+5A7 text4 CODE >94:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+5AF text4 CODE >97:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+5CA text4 CODE >98:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+5E5 text4 CODE >99:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+5FD text4 CODE >101:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+60B text4 CODE >102:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+61E text4 CODE >104:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+62C text4 CODE >105:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+63F text4 CODE >107:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+64D text4 CODE >108:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+660 text4 CODE >109:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+667 text4 CODE >110:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+66E text4 CODE >112:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+66F text2 CODE >115:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+670 text2 CODE >117:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+675 text2 CODE >119:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+67D text2 CODE >120:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+685 text2 CODE >123:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+692 text2 CODE >124:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+6A4 text2 CODE >126:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+6B1 text2 CODE >127:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+6C3 text2 CODE >129:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+6D0 text2 CODE >130:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+6E2 text2 CODE >132:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+6E3 text9 CODE >76:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+6E3 text9 CODE >77:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+6E4 text9 CODE >82:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+6EB text9 CODE >83:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+6F2 text9 CODE >84:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+6F9 text9 CODE >85:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+6FF text9 CODE >86:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+7B6 text1 CODE >3:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7B6 text1 CODE >6:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7BB text1 CODE >7:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7BF text1 CODE >10:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7C0 text1 CODE >11:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7C1 text1 CODE >12:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7C2 text1 CODE >15:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7C3 text1 CODE >16:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7C4 text1 CODE >17:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7C6 text1 CODE >20:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7C8 text1 CODE >21:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7CC text1 CODE >22:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7CD text1 CODE >23:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7CE text1 CODE >24:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7D0 text1 CODE >25:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7D1 text1 CODE >26:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7D2 text1 CODE >29:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7D5 text1 CODE >30:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7D7 text1 CODE >31:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7D9 text1 CODE >34:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7DC text1 CODE >35:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7DE text1 CODE >36:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7E0 text1 CODE >37:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7E2 text1 CODE >38:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7E4 text1 CODE >39:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7E5 text1 CODE >40:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7E6 text1 CODE >43:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7E8 text1 CODE >44:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7E9 text1 CODE >45:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7EA text1 CODE >46:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7EB text1 CODE >47:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7EC text1 CODE >49:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7EE text1 CODE >50:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7EF text1 CODE >51:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7F0 text1 CODE >53:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7F3 text1 CODE >54:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7F5 text1 CODE >55:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7F6 text1 CODE >57:/Users/kshimada/Development/MPLABX/Clock.X/src/pic16f1508_init.h
+7F7 clrtext CODE >985:/tmp/cgtcopLsc
+7F7 clrtext CODE >986:/tmp/cgtcopLsc
+7F8 clrtext CODE >987:/tmp/cgtcopLsc
+7F8 clrtext CODE >988:/tmp/cgtcopLsc
+7F9 clrtext CODE >989:/tmp/cgtcopLsc
+7FA clrtext CODE >990:/tmp/cgtcopLsc
+7FB clrtext CODE >991:/tmp/cgtcopLsc
+7FC clrtext CODE >992:/tmp/cgtcopLsc
+800 swtext1 CONST >564:/Users/kshimada/Development/MPLABX/Clock.X/src/main.c
+810 swtext2 CONST >139:/Users/kshimada/Development/MPLABX/_Common/DateTime.h
+E86 inittext CODE >1010:/tmp/cgtcopLsc
+E86 inittext CODE >1011:/tmp/cgtcopLsc
+E87 inittext CODE >1012:/tmp/cgtcopLsc
+E87 inittext CODE >1013:/tmp/cgtcopLsc
+E88 inittext CODE >1014:/tmp/cgtcopLsc
+E89 inittext CODE >1015:/tmp/cgtcopLsc
+E8A inittext CODE >1016:/tmp/cgtcopLsc
+E8B inittext CODE >1017:/tmp/cgtcopLsc
+E8C text7 CODE >90:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+E8D text7 CODE >91:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+E92 text7 CODE >92:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+E97 text7 CODE >93:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+E98 text11 CODE >135:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+E99 text11 CODE >136:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+E9E text11 CODE >137:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EA3 text11 CODE >138:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EA9 text11 CODE >137:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EC4 text12 CODE >164:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EC5 text12 CODE >165:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EC9 text12 CODE >166:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+ECC text12 CODE >167:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+ED6 text12 CODE >168:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EDA text12 CODE >170:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EDB text10 CODE >127:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EDC text10 CODE >128:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EE2 text10 CODE >129:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EE7 text10 CODE >130:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EED text10 CODE >129:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EF2 text6 CODE >97:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EF3 text6 CODE >98:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EF8 text6 CODE >99:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+EFE text6 CODE >100:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F0B text6 CODE >99:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F0C text8 CODE >143:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F0D text8 CODE >144:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F1B text8 CODE >145:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F20 text8 CODE >146:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F2A text8 CODE >145:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F33 text5 CODE >106:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F34 text5 CODE >107:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F3A text5 CODE >108:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F3F text5 CODE >109:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F4B text5 CODE >110:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F5A text5 CODE >112:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F60 text5 CODE >108:/Users/kshimada/Development/MPLABX/_Common/ParallelLCD.h
+F65 text13 CODE >124:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F66 text13 CODE >127:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F68 text13 CODE >128:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F6A text13 CODE >129:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F6C text13 CODE >132:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F6F text13 CODE >133:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F72 text13 CODE >134:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F73 text13 CODE >135:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F76 text13 CODE >138:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F77 text13 CODE >139:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F7A text13 CODE >140:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F7B text13 CODE >141:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F7E text13 CODE >143:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F82 text13 CODE >144:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F87 text13 CODE >146:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F8F text13 CODE >147:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F92 text13 CODE >148:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F93 text13 CODE >149:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F96 text13 CODE >144:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F9E text13 CODE >153:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+F9F text13 CODE >154:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FA0 text13 CODE >157:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FA1 text13 CODE >154:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FA2 text14 CODE >74:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FA3 text14 CODE >77:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FA5 text14 CODE >78:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FA7 text14 CODE >79:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FA9 text14 CODE >82:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FAC text14 CODE >83:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FAF text14 CODE >84:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FB0 text14 CODE >85:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FB5 text14 CODE >88:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FB7 text14 CODE >89:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FBA text14 CODE >90:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FBB text14 CODE >91:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FC0 text14 CODE >93:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FC1 text14 CODE >94:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FC3 text14 CODE >97:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FC5 text14 CODE >98:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FC8 text14 CODE >99:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FC9 text14 CODE >100:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FCE text14 CODE >103:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FCF text14 CODE >104:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FD3 text14 CODE >105:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FD7 text14 CODE >106:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FDC text14 CODE >107:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FDE text14 CODE >108:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FE0 text14 CODE >109:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FE2 text14 CODE >110:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FF0 text14 CODE >111:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FF9 text14 CODE >112:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FFA text14 CODE >105:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FFB text14 CODE >116:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FFC text14 CODE >117:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
+FFE text14 CODE >119:/Users/kshimada/Development/MPLABX/_Common/DS1307.h
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -651,44 +659,43 @@ __Hspace_3 0 0 ABS 0 - -
 __CFG_IESO$OFF 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __HidataBANK0 0 0 ABS 0 idataBANK0 -
 __HidataBANK1 0 0 ABS 0 idataBANK1 -
-__end_of_initialize 1000 0 CODE 0 text1 dist/default/production/Clock.X.production.obj
-__ds1307_GetData@dataCount 25 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+__end_of_initialize FEE 0 CODE 0 text1 dist/default/production/Clock.X.production.obj
 _PWM3DCH 618 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _PWM3DCL 617 0 ABS 0 - dist/default/production/Clock.X.production.obj
-ParallelLCD_WriteByte@data 22 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-ParallelLCD_Initialize@configFunction 26 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+ParallelLCD_WriteByte@data 74 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+ParallelLCD_Initialize@configFunction 78 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 __Heeprom_data 0 0 EEDATA 3 eeprom_data -
-__end_of_ParallelLCD_WriteStringClearing 1EC2 0 CODE 0 text7 dist/default/production/Clock.X.production.obj
-ParallelLCD_Initialize@configEntryMode 25 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-_machineState_ 58 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+__end_of_ParallelLCD_WriteStringClearing 1ECA 0 CODE 0 text5 dist/default/production/Clock.X.production.obj
+ParallelLCD_Initialize@configEntryMode 77 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+_machineState_ 55 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 ltemp0 7E 0 ABS 0 - dist/default/production/Clock.X.production.obj
 ltemp1 82 0 ABS 0 - dist/default/production/Clock.X.production.obj
 ltemp2 86 0 ABS 0 - dist/default/production/Clock.X.production.obj
 ltemp3 80 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __Lstringtext 0 0 ABS 0 stringtext -
-main@i 4A 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+main@i 44 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
 __Hstrings 0 0 ABS 0 strings -
 _LATC 10E 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _TMR0 15 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _TMR2 1A 0 ABS 0 - dist/default/production/Clock.X.production.obj
-___sp 0 0 STACK 2 stack /tmp/cgtjxjgkL.obj
-_main 12C 0 CODE 0 maintext dist/default/production/Clock.X.production.obj
+___sp 0 0 STACK 2 stack /tmp/cgt2EJAs7.obj
+_main EE 0 CODE 0 maintext dist/default/production/Clock.X.production.obj
 btemp 7E 0 ABS 0 - dist/default/production/Clock.X.production.obj
 ltemp 7E 0 ABS 0 - dist/default/production/Clock.X.production.obj
-start E2 0 CODE 0 init /tmp/cgtjxjgkL.obj
+start A2 0 CODE 0 init /tmp/cgt2EJAs7.obj
 ttemp 7E 0 ABS 0 - dist/default/production/Clock.X.production.obj
 wtemp 7E 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __size_of_main 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-ParallelLCD_SetCgram@bitmap 23 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-_editSelect 56 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+ParallelLCD_SetCgram@bitmap 75 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+_editSelect 53 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 __HbssCOMMON 0 0 ABS 0 bssCOMMON -
-__date_time_ConvertByteToDate@dateTime 24 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-_ParallelLCD_ClearPartial 1CE4 0 CODE 0 text13 dist/default/production/Clock.X.production.obj
-_ParallelLCD_WriteString 1D84 0 CODE 0 text8 dist/default/production/Clock.X.production.obj
+__date_time_ConvertByteToDate@dateTime 76 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+_ParallelLCD_ClearPartial 1D30 0 CODE 0 text11 dist/default/production/Clock.X.production.obj
+_ParallelLCD_WriteString 1DE4 0 CODE 0 text6 dist/default/production/Clock.X.production.obj
 _OPTION_REGbits 95 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__date_time_ConvertByteToTime@string 20 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__end_of_ParallelLCD_WriteCharacter 1CB8 0 CODE 0 text9 dist/default/production/Clock.X.production.obj
-__end_of_ParallelLCD_WriteString 1DC0 0 CODE 0 text8 dist/default/production/Clock.X.production.obj
+__date_time_ConvertByteToTime@string 72 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+__end_of_ParallelLCD_WriteCharacter 1D30 0 CODE 0 text7 dist/default/production/Clock.X.production.obj
+__end_of_ParallelLCD_WriteString 1E18 0 CODE 0 text6 dist/default/production/Clock.X.production.obj
 __LidataBANK0 0 0 ABS 0 idataBANK0 -
 __LidataBANK1 0 0 ABS 0 idataBANK1 -
 __Hpowerup 0 0 CODE 0 powerup -
@@ -698,17 +705,18 @@ ttemp2 84 0 ABS 0 - dist/default/production/Clock.X.production.obj
 ttemp3 87 0 ABS 0 - dist/default/production/Clock.X.production.obj
 ttemp4 7F 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __size_of_ParallelLCD_SetCgram 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-intlevel0 0 0 CODE 0 functab /tmp/cgtjxjgkL.obj
-intlevel1 0 0 CODE 0 functab /tmp/cgtjxjgkL.obj
-intlevel2 0 0 CODE 0 functab /tmp/cgtjxjgkL.obj
-intlevel3 0 0 CODE 0 functab /tmp/cgtjxjgkL.obj
-intlevel4 0 0 CODE 0 functab /tmp/cgtjxjgkL.obj
-intlevel5 0 0 CODE 0 functab /tmp/cgtjxjgkL.obj
+__size_of_DS1307_SetClock 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
+intlevel0 0 0 CODE 0 functab /tmp/cgt2EJAs7.obj
+intlevel1 0 0 CODE 0 functab /tmp/cgt2EJAs7.obj
+intlevel2 0 0 CODE 0 functab /tmp/cgt2EJAs7.obj
+intlevel3 0 0 CODE 0 functab /tmp/cgt2EJAs7.obj
+intlevel4 0 0 CODE 0 functab /tmp/cgt2EJAs7.obj
+intlevel5 0 0 CODE 0 functab /tmp/cgt2EJAs7.obj
 __LbssCOMMON 0 0 ABS 0 bssCOMMON -
-ParallelLCD_WriteStringClearing@stringPtr 23 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-_datePtr 6B 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+ParallelLCD_WriteStringClearing@stringPtr 75 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+_datePtr 67 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 _OSCCONbits 99 0 ABS 0 - dist/default/production/Clock.X.production.obj
-main@isNonZero 42 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+main@isNonZero 3B 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
 wtemp0 7E 0 ABS 0 - dist/default/production/Clock.X.production.obj
 wtemp1 80 0 ABS 0 - dist/default/production/Clock.X.production.obj
 wtemp2 82 0 ABS 0 - dist/default/production/Clock.X.production.obj
@@ -717,57 +725,55 @@ wtemp4 86 0 ABS 0 - dist/default/production/Clock.X.production.obj
 wtemp5 88 0 ABS 0 - dist/default/production/Clock.X.production.obj
 wtemp6 7F 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __Hfunctab 0 0 CODE 0 functab -
-__end_of__ds1307_SetClock 1F3E 0 CODE 0 text2 dist/default/production/Clock.X.production.obj
-__end_of__ E2 0 CODE 0 intentry dist/default/production/Clock.X.production.obj
-ParallelLCD_SetCgram@i 27 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+__end_of__ A2 0 CODE 0 intentry dist/default/production/Clock.X.production.obj
+ParallelLCD_SetCgram@i 79 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 __Hclrtext 0 0 ABS 0 clrtext -
-ParallelLCD_SetCgram@charCode 26 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__end_of_ParallelLCD_SetCgram 1E56 0 CODE 0 text10 dist/default/production/Clock.X.production.obj
+ParallelLCD_SetCgram@charCode 78 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+__end_of_ParallelLCD_SetCgram 1E66 0 CODE 0 text8 dist/default/production/Clock.X.production.obj
 __end_of_CURSOR_BITMAP E72 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
-__size_of__ds1307_SetClock 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__end_of_ParallelLCD_Initialize 1E02 0 CODE 0 text11 dist/default/production/Clock.X.production.obj
-__ds1307_SetClock@date 21 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+_sampledPortAState_ 57 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+__end_of_ParallelLCD_Initialize E00 0 CODE 0 text9 dist/default/production/Clock.X.production.obj
 _ANSELA 18C 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _ANSELB 18D 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _ANSELC 18E 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__date_time_ConvertByteToDate A84 0 CODE 0 text6 dist/default/production/Clock.X.production.obj
-__date_time_ConvertByteToTime C62 0 CODE 0 text4 dist/default/production/Clock.X.production.obj
+__date_time_ConvertByteToDate B02 0 CODE 0 text4 dist/default/production/Clock.X.production.obj
+__date_time_ConvertByteToTime CDE 0 CODE 0 text2 dist/default/production/Clock.X.production.obj
 __size_of_ParallelLCD_WriteByte 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-main@tmpValue 41 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-ParallelLCD_ClearPartial@position 25 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+main@tmpValue 3A 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+_keyCounter_ 45 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+ParallelLCD_ClearPartial@position 77 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 __Lmaintext 0 0 ABS 0 maintext -
-ParallelLCD_WriteStringClearing@i 27 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__end_of__ds1307_GetData 2000 0 CODE 0 text3 dist/default/production/Clock.X.production.obj
-ParallelLCD_WriteString@stringPtr 23 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__date_time_ConvertByteToDiscrete 842 0 CODE 0 text5 dist/default/production/Clock.X.production.obj
+ParallelLCD_WriteStringClearing@i 79 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+ParallelLCD_WriteString@stringPtr 75 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+DS1307_GetData@datePtr 76 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+__date_time_ConvertByteToDiscrete 8C2 0 CODE 0 text3 dist/default/production/Clock.X.production.obj
 _IOCAF3 1C9B 0 ABS 0 - dist/default/production/Clock.X.production.obj
-ParallelLCD_Initialize@configCursor 24 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+DS1307_SetClock@date 74 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+ParallelLCD_Initialize@configCursor 76 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 _STR_DAY_OF_WEEK A0 0 BANK1 1 dataBANK1 dist/default/production/Clock.X.production.obj
-__ds1307_GetData@ramAddress 20 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
 __CFG_MCLRE$OFF 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-start_initialization E6 0 CODE 0 cinit dist/default/production/Clock.X.production.obj
+start_initialization A6 0 CODE 0 cinit dist/default/production/Clock.X.production.obj
+DS1307_SetClock@datePtr 73 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 __size_of_ParallelLCD_ClearPartial 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __end_ofmain@COMPARE_UNITS E26 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
 _PARALLEL_LCD_ROW_SELECT E26 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
 __size_of_initialize 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-i1__ds1307_GetData@ramAddress 70 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 _PWM3OE 30CE 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__size_ofi1__ds1307_GetData 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __size_of_ParallelLCD_ClearRow 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __end_of_PARALLEL_LCD_ROW_SELECT E2A 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
-ParallelLCD_ClearPartial@length 23 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-clear_ram0 1C90 0 CODE 0 clrtext dist/default/production/Clock.X.production.obj
+ParallelLCD_ClearPartial@length 75 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+clear_ram0 FEE 0 CODE 0 clrtext dist/default/production/Clock.X.production.obj
+_DS1307_GetData 1F44 0 CODE 0 text14 dist/default/production/Clock.X.production.obj
 __pcstackBANK0 20 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
 _SSP1IF 8B 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__ds1307_GetData 1F3E 0 CODE 0 text3 dist/default/production/Clock.X.production.obj
 __size_of_ParallelLCD_WriteCharacter 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __end_of_VALUE_INFORMATIONS E62 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
-ParallelLCD_ClearRow@i 25 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-ParallelLCD_ClearRow@rowSelect 24 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-_dateCurrent 5D 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
-ParallelLCD_Initialize@configDisplay 23 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__end_of_ParallelLCD_ClearRow 1D4A 0 CODE 0 text12 dist/default/production/Clock.X.production.obj
-___int_sp 0 0 STACK 2 stack /tmp/cgtjxjgkL.obj
+ParallelLCD_ClearRow@i 77 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+ParallelLCD_ClearRow@rowSelect 76 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+_dateCurrent 59 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+ParallelLCD_Initialize@configDisplay 75 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+__end_of_ParallelLCD_ClearRow 1DE4 0 CODE 0 text10 dist/default/production/Clock.X.production.obj
+___int_sp 0 0 STACK 2 stack /tmp/cgt2EJAs7.obj
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
 __Hbank2 0 0 ABS 0 bank2 -
@@ -778,7 +784,7 @@ __Hbank6 0 0 BANK6 1 bank6 -
 __Hbank7 0 0 BANK7 1 bank7 -
 __Hbank8 0 0 BANK8 1 bank8 -
 __Hbank9 0 0 BANK9 1 bank9 -
-__Hcinit 12C 0 CODE 0 cinit -
+__Hcinit EE 0 CODE 0 cinit -
 __Hidloc 0 0 IDLOC 0 idloc -
 __Hsfr10 0 0 ABS 0 sfr10 -
 __Hsfr11 0 0 ABS 0 sfr11 -
@@ -826,8 +832,9 @@ __Hbank29 0 0 BANK29 1 bank29 -
 __Hbank30 0 0 BANK30 1 bank30 -
 __Hbank31 0 0 BANK31 1 bank31 -
 __Hbigram 0 0 ABS 0 bigram -
-_ParallelLCD_WriteStringClearing 1E56 0 CODE 0 text7 dist/default/production/Clock.X.production.obj
+_ParallelLCD_WriteStringClearing 1E66 0 CODE 0 text5 dist/default/production/Clock.X.production.obj
 __Hmaintext 0 0 ABS 0 maintext -
+main@isTimeToAlerm 39 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
 __CFG_FOSC$INTOSC 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __Hcommon 0 0 ABS 0 common -
 __Hconfig 10012 0 CONFIG 0 config -
@@ -841,7 +848,7 @@ __Lbank6 0 0 BANK6 1 bank6 -
 __Lbank7 0 0 BANK7 1 bank7 -
 __Lbank8 0 0 BANK8 1 bank8 -
 __Lbank9 0 0 BANK9 1 bank9 -
-__Lcinit E6 0 CODE 0 cinit -
+__Lcinit A6 0 CODE 0 cinit -
 __end_of_HEX_TABLE E20 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
 __Lidloc 0 0 IDLOC 0 idloc -
 __Lsfr10 0 0 ABS 0 sfr10 -
@@ -868,13 +875,12 @@ __Lsfr30 0 0 ABS 0 sfr30 -
 __Lsfr31 0 0 ABS 0 sfr31 -
 __Lstack 0 0 STACK 2 stack -
 _VALUE_INFORMATIONS E2A 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
-init_ram 1C84 0 CODE 0 inittext dist/default/production/Clock.X.production.obj
+init_ram 1D0C 0 CODE 0 inittext dist/default/production/Clock.X.production.obj
 __Linittext 0 0 ABS 0 inittext -
-__ds1307_SetClock@i 22 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
 _INTCONbits B 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __Habs1 0 0 ABS 0 abs1 -
 __Hcode 0 0 ABS 0 code -
-__Hinit E2 0 CODE 0 init -
+__Hinit A2 0 CODE 0 init -
 __Hsfr0 0 0 ABS 0 sfr0 -
 __Hsfr1 0 0 ABS 0 sfr1 -
 __Hsfr2 0 0 ABS 0 sfr2 -
@@ -888,7 +894,7 @@ __Hsfr9 0 0 ABS 0 sfr9 -
 __Htext 0 0 ABS 0 text -
 __Labs1 0 0 ABS 0 abs1 -
 __Lcode 0 0 ABS 0 code -
-__Linit E2 0 CODE 0 init -
+__Linit A2 0 CODE 0 init -
 __Lsfr0 0 0 ABS 0 sfr0 -
 __Lsfr1 0 0 ABS 0 sfr1 -
 __Lsfr2 0 0 ABS 0 sfr2 -
@@ -900,55 +906,53 @@ __Lsfr7 0 0 ABS 0 sfr7 -
 __Lsfr8 0 0 ABS 0 sfr8 -
 __Lsfr9 0 0 ABS 0 sfr9 -
 __Ltext 0 0 ABS 0 text -
-_ParallelLCD_WriteCharacter 1C9C 0 CODE 0 text9 dist/default/production/Clock.X.production.obj
+_ParallelLCD_WriteCharacter 1D18 0 CODE 0 text7 dist/default/production/Clock.X.production.obj
 _SSP1CON1 215 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _SSP1STAT 214 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__date_time_ConvertByteToDiscrete@select 21 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+__date_time_ConvertByteToDiscrete@select 73 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 __LcstackBANK0 0 0 ABS 0 cstackBANK0 -
-__date_time_ConvertByteToDiscrete@string 20 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+__end_of_DS1307_GetData 2000 0 CODE 0 text14 dist/default/production/Clock.X.production.obj
+__date_time_ConvertByteToDiscrete@string 72 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+main@portAState 43 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
 __HcstackCOMMON 0 0 ABS 0 cstackCOMMON -
-i1__ds1307_GetData@dataCount 75 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
-_blinkPrescaler 53 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+_blinkPrescaler 50 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 _PR2 1B 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__@i 79 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 __S0 8009 0 ABS 0 - -
 __S1 B6 0 ABS 0 - -
 __S2 0 0 ABS 0 - -
 __size_of__date_time_ConvertByteToDate 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __size_of__date_time_ConvertByteToTime 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__end_of_ParallelLCD_ClearPartial 1D16 0 CODE 0 text13 dist/default/production/Clock.X.production.obj
+__end_of_ParallelLCD_ClearPartial 1D5C 0 CODE 0 text11 dist/default/production/Clock.X.production.obj
 _HEX_TABLE E00 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
 __size_of_ParallelLCD_Initialize 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
+_keyBeepCounter_ 54 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 main@COMPARE_UNITS E20 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
-__end_of__date_time_ConvertByteToDate C62 0 CODE 0 text6 dist/default/production/Clock.X.production.obj
-__end_of__date_time_ConvertByteToTime D4C 0 CODE 0 text4 dist/default/production/Clock.X.production.obj
-main@prevPortAState 5C 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+__end_of__date_time_ConvertByteToDate CDE 0 CODE 0 text4 dist/default/production/Clock.X.production.obj
+__end_of__date_time_ConvertByteToTime DC6 0 CODE 0 text2 dist/default/production/Clock.X.production.obj
+main@prevPortAState 58 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 __CFG_BOREN$ON 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__size_of__ds1307_GetData 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _PWM3CONbits 619 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __Lintentry 8 0 CODE 0 intentry -
-_dateTimer 64 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
-reset_vec 0 0 CODE 0 reset_vec /tmp/cgtjxjgkL.obj
-__end_ofi1__ds1307_GetData E00 0 CODE 0 text16 dist/default/production/Clock.X.production.obj
-_menuSelect 59 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
-__pdataBANK0 6C 0 BANK0 1 dataBANK0 dist/default/production/Clock.X.production.obj
+_dateTimer 60 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+reset_vec 0 0 CODE 0 reset_vec /tmp/cgt2EJAs7.obj
+DS1307_GetData@length 73 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+_menuSelect 56 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+__pdataBANK0 68 0 BANK0 1 dataBANK0 dist/default/production/Clock.X.production.obj
 __pdataBANK1 A0 0 BANK1 1 dataBANK1 dist/default/production/Clock.X.production.obj
-_keyEvents_ 57 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 __size_of_ParallelLCD_WriteString 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __LbssBANK0 0 0 ABS 0 bssBANK0 -
 __CFG_FCMEN$ON 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-_outputEvent 5A 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 _IOCANbits 392 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _PIE1bits 91 0 ABS 0 - dist/default/production/Clock.X.production.obj
-_ParallelLCD_SetCgram 1E02 0 CODE 0 text10 dist/default/production/Clock.X.production.obj
-ParallelLCD_WriteCharacter@character 23 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__ptext10 1E02 0 CODE 0 text10 dist/default/production/Clock.X.production.obj
-__ptext11 1DC0 0 CODE 0 text11 dist/default/production/Clock.X.production.obj
-__ptext12 1D16 0 CODE 0 text12 dist/default/production/Clock.X.production.obj
-__ptext13 1CE4 0 CODE 0 text13 dist/default/production/Clock.X.production.obj
-__ptext14 1D4A 0 CODE 0 text14 dist/default/production/Clock.X.production.obj
-__ptext16 D4C 0 CODE 0 text16 dist/default/production/Clock.X.production.obj
-ParallelLCD_WriteCharacter@position 24 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+_ParallelLCD_SetCgram 1E18 0 CODE 0 text8 dist/default/production/Clock.X.production.obj
+ParallelLCD_WriteCharacter@character 75 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+DS1307_GetData@ramAddress 72 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+__ptext10 1DB6 0 CODE 0 text10 dist/default/production/Clock.X.production.obj
+__ptext11 1D30 0 CODE 0 text11 dist/default/production/Clock.X.production.obj
+__ptext12 1D88 0 CODE 0 text12 dist/default/production/Clock.X.production.obj
+__ptext13 1ECA 0 CODE 0 text13 dist/default/production/Clock.X.production.obj
+__ptext14 1F44 0 CODE 0 text14 dist/default/production/Clock.X.production.obj
+ParallelLCD_WriteCharacter@position 76 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 _MESSAGE_MENU AE 0 BANK1 1 dataBANK1 dist/default/production/Clock.X.production.obj
 __Lbank10 0 0 BANK10 1 bank10 -
 __Lbank11 0 0 BANK11 1 bank11 -
@@ -972,91 +976,90 @@ __Lbank28 0 0 BANK28 1 bank28 -
 __Lbank29 0 0 BANK29 1 bank29 -
 __Lbank30 0 0 BANK30 1 bank30 -
 __Lbank31 0 0 BANK31 1 bank31 -
-__pmaintext 12C 0 CODE 0 maintext dist/default/production/Clock.X.production.obj
+__pmaintext EE 0 CODE 0 maintext dist/default/production/Clock.X.production.obj
 __Lbigram 0 0 ABS 0 bigram -
 __CFG_BORV$HI 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
+__@prescaler10ms 7A 0 COMMON 1 bssCOMMON dist/default/production/Clock.X.production.obj
+_events_ 4B 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 __Lcommon 0 0 ABS 0 common -
 __Lconfig 1000E 0 CONFIG 0 config -
 __CFG_CP$OFF 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __Hinittext 0 0 ABS 0 inittext -
 _LATBbits 10D 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __size_of_ParallelLCD_WriteStringClearing 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-main@F4297 6C 0 BANK0 1 dataBANK0 dist/default/production/Clock.X.production.obj
-i1__ds1307_GetData@length 71 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
-main@keyChange 43 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-stackhi 20EF 0 ABS 0 - /tmp/cgtjxjgkL.obj
-stacklo 2066 0 ABS 0 - /tmp/cgtjxjgkL.obj
+main@F4324 68 0 BANK0 1 dataBANK0 dist/default/production/Clock.X.production.obj
+main@keyChange 3C 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+stackhi 20EF 0 ABS 0 - /tmp/cgt2EJAs7.obj
+stacklo 2066 0 ABS 0 - /tmp/cgt2EJAs7.obj
 __CFG_LVP$OFF 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __Lspace_0 0 0 ABS 0 - -
 __Lspace_1 0 0 ABS 0 - -
 __Lspace_2 0 0 ABS 0 - -
 __Lspace_3 0 0 ABS 0 - -
-_currentValueInfo 51 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+_currentValueInfo 4E 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 __pbssCOMMON 7A 0 COMMON 1 bssCOMMON dist/default/production/Clock.X.production.obj
 __HcstackBANK0 0 0 ABS 0 cstackBANK0 -
 _PIR1bits 11 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__Lend_init E2 0 CODE 0 end_init -
+__Lend_init A2 0 CODE 0 end_init -
 __LcstackCOMMON 0 0 ABS 0 cstackCOMMON -
-__end_of__date_time_ConvertByteToDiscrete A84 0 CODE 0 text5 dist/default/production/Clock.X.production.obj
-end_of_initialization 126 0 CODE 0 cinit dist/default/production/Clock.X.production.obj
-__end_of_ParallelLCD_WriteByte 1D84 0 CODE 0 text14 dist/default/production/Clock.X.production.obj
-main@valueString 3C 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__@isTimeToAlerm 78 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
-__Hintentry E2 0 CODE 0 intentry -
+__end_of__date_time_ConvertByteToDiscrete B02 0 CODE 0 text3 dist/default/production/Clock.X.production.obj
+end_of_initialization E8 0 CODE 0 cinit dist/default/production/Clock.X.production.obj
+__end_of_ParallelLCD_WriteByte 1DB6 0 CODE 0 text12 dist/default/production/Clock.X.production.obj
+main@valueString 34 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+__Hintentry A2 0 CODE 0 intentry -
 __CFG_STVREN$ON 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-i1__ds1307_GetData@date 74 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 __size_of__date_time_ConvertByteToDiscrete 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __Lstrings 0 0 ABS 0 strings -
-i1__ds1307_GetData D4C 0 CODE 0 text16 dist/default/production/Clock.X.production.obj
 __Hreset_vec 4 0 CODE 0 reset_vec -
 __HbssBANK0 0 0 ABS 0 bssBANK0 -
 __size_of__ 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__ptext1 F7E 0 CODE 0 text1 dist/default/production/Clock.X.production.obj
-__ptext2 1EC2 0 CODE 0 text2 dist/default/production/Clock.X.production.obj
-__ptext3 1F3E 0 CODE 0 text3 dist/default/production/Clock.X.production.obj
-__ptext4 C62 0 CODE 0 text4 dist/default/production/Clock.X.production.obj
-__ptext5 842 0 CODE 0 text5 dist/default/production/Clock.X.production.obj
-__ptext6 A84 0 CODE 0 text6 dist/default/production/Clock.X.production.obj
-__ptext7 1E56 0 CODE 0 text7 dist/default/production/Clock.X.production.obj
-__ptext8 1D84 0 CODE 0 text8 dist/default/production/Clock.X.production.obj
-__ptext9 1C9C 0 CODE 0 text9 dist/default/production/Clock.X.production.obj
-_ParallelLCD_WriteByte 1D4A 0 CODE 0 text14 dist/default/production/Clock.X.production.obj
+__ptext1 F6C 0 CODE 0 text1 dist/default/production/Clock.X.production.obj
+__ptext2 CDE 0 CODE 0 text2 dist/default/production/Clock.X.production.obj
+__ptext3 8C2 0 CODE 0 text3 dist/default/production/Clock.X.production.obj
+__ptext4 B02 0 CODE 0 text4 dist/default/production/Clock.X.production.obj
+__ptext5 1E66 0 CODE 0 text5 dist/default/production/Clock.X.production.obj
+__ptext6 1DE4 0 CODE 0 text6 dist/default/production/Clock.X.production.obj
+__ptext7 1D18 0 CODE 0 text7 dist/default/production/Clock.X.production.obj
+__ptext8 1E18 0 CODE 0 text8 dist/default/production/Clock.X.production.obj
+__ptext9 DC6 0 CODE 0 text9 dist/default/production/Clock.X.production.obj
+_ParallelLCD_WriteByte 1D88 0 CODE 0 text12 dist/default/production/Clock.X.production.obj
 __Lpowerup 0 0 CODE 0 powerup -
 __Leeprom_data 0 0 EEDATA 3 eeprom_data -
 __pstringtext E00 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
-ParallelLCD_WriteString@position 25 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__date_time_ConvertByteToDate@stinrg 20 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-_ParallelLCD_ClearRow 1D16 0 CODE 0 text12 dist/default/production/Clock.X.production.obj
+ParallelLCD_WriteString@position 77 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+__date_time_ConvertByteToDate@stinrg 72 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+_ParallelLCD_ClearRow 1DB6 0 CODE 0 text10 dist/default/production/Clock.X.production.obj
 __Lreset_vec 0 0 CODE 0 reset_vec -
-_currentEditValue 54 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+_currentEditValue 51 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+DS1307_GetData@dataCount 78 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+__end_of_DS1307_SetClock 1F44 0 CODE 0 text13 dist/default/production/Clock.X.production.obj
 __CFG_CLKOUTEN$OFF 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __CFG_WDTE$ON 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__end_of__initialization 126 0 CODE 0 cinit dist/default/production/Clock.X.production.obj
+__end_of__initialization E8 0 CODE 0 cinit dist/default/production/Clock.X.production.obj
 __Lfunctab 0 0 CODE 0 functab -
-ParallelLCD_ClearPartial@i 26 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__ds1307_GetData@date 24 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__pidataBANK0 1C7C 0 CODE 0 idataBANK0 dist/default/production/Clock.X.production.obj
-__pidataBANK1 1CB8 0 CODE 0 idataBANK1 dist/default/production/Clock.X.production.obj
-main@string 2B 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+ParallelLCD_ClearPartial@i 78 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+__pidataBANK0 1D04 0 CODE 0 idataBANK0 dist/default/production/Clock.X.production.obj
+__pidataBANK1 1D5C 0 CODE 0 idataBANK1 dist/default/production/Clock.X.production.obj
+main@string 23 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+DS1307_SetClock@i 75 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 __Lclrtext 0 0 ABS 0 clrtext -
 _SSP1CON2bits 216 0 ABS 0 - dist/default/production/Clock.X.production.obj
-_portAState_ 5B 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 __CFG_PWRTE$ON 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-_ParallelLCD_Initialize 1DC0 0 CODE 0 text11 dist/default/production/Clock.X.production.obj
+_ParallelLCD_Initialize DC6 0 CODE 0 text9 dist/default/production/Clock.X.production.obj
 __pcstackCOMMON 70 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
-_initialize F7E 0 CODE 0 text1 dist/default/production/Clock.X.production.obj
-__ds1307_GetData@length 21 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+_initialize F6C 0 CODE 0 text1 dist/default/production/Clock.X.production.obj
 _SSP1ADD 212 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _SSP1BUF 211 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__Hend_init E6 0 CODE 0 end_init -
+__Hend_init A6 0 CODE 0 end_init -
 _CURSOR_BITMAP E62 0 STRCODE 0 stringtext dist/default/production/Clock.X.production.obj
-main@keyReleased 40 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__end_of_main 842 0 CODE 0 maintext dist/default/production/Clock.X.production.obj
-main@string_797 45 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+main@keyReleased 38 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+__end_of_main 8C2 0 CODE 0 maintext dist/default/production/Clock.X.production.obj
+main@string_880 3E 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+__size_of_DS1307_GetData 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _IOCIE 5B 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _IOCIF 58 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _PORTA C 0 ABS 0 - dist/default/production/Clock.X.production.obj
-__date_time_ConvertByteToTime@dateTime 23 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+__date_time_ConvertByteToTime@dateTime 75 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 _TRISA 8C 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _TRISB 8D 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _TRISC 8E 0 ABS 0 - dist/default/production/Clock.X.production.obj
@@ -1065,20 +1068,21 @@ __Lram 0 0 ABS 0 ram -
 __CFG_LPBOR$ON 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
 _SSPSTATbits 214 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __pintentry 8 0 CODE 0 intentry dist/default/production/Clock.X.production.obj
-main@keyPressed 49 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__date_time_ConvertByteToDiscrete@dateTime 25 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+main@keyPressed 42 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+__date_time_ConvertByteToDiscrete@dateTime 77 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
 __HdataBANK0 0 0 ABS 0 dataBANK0 -
 __HdataBANK1 0 0 ABS 0 dataBANK1 -
-__initialization E6 0 CODE 0 cinit dist/default/production/Clock.X.production.obj
-__pbssBANK0 4B 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+_DS1307_SetClock 1ECA 0 CODE 0 text13 dist/default/production/Clock.X.production.obj
+__initialization A6 0 CODE 0 cinit dist/default/production/Clock.X.production.obj
+__pbssBANK0 45 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 _T2CONbits 1C 0 ABS 0 - dist/default/production/Clock.X.production.obj
 __Hstringtext 0 0 ABS 0 stringtext -
 __CFG_WRT$OFF 0 0 ABS 0 - dist/default/production/Clock.X.production.obj
-main@compareUnit 44 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-__ds1307_SetClock 1EC2 0 CODE 0 text2 dist/default/production/Clock.X.production.obj
-ParallelLCD_WriteStringClearing@position 26 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-ParallelLCD_WriteByte@r 20 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
-_cursorPosition 55 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
+main@compareUnit 3D 0 BANK0 1 cstackBANK0 dist/default/production/Clock.X.production.obj
+DS1307_GetData@date 77 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+ParallelLCD_WriteStringClearing@position 78 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+ParallelLCD_WriteByte@r 72 0 COMMON 1 cstackCOMMON dist/default/production/Clock.X.production.obj
+_cursorPosition 52 0 BANK0 1 bssBANK0 dist/default/production/Clock.X.production.obj
 __pswtext1 1000 0 CONST 0 swtext1 dist/default/production/Clock.X.production.obj
 __pswtext2 1020 0 CONST 0 swtext2 dist/default/production/Clock.X.production.obj
 # %SPLITSTAB Section
@@ -1106,26 +1110,24 @@ __pswtext2 1020 0 CONST 0 swtext2 dist/default/production/Clock.X.production.obj
 # and size are in units of delta. The file address is in units of bytes.
 # All other numeric quantities are in decimal.
 %SEGMENTS
-text1 0 7BF F7E 41 2
-text2 0 F61 1EC2 3E 2
-text3 0 F9F 1F3E 61 2
-text7 0 F2B 1E56 36 2
-text8 0 EC2 1D84 1E 2
-text9 0 E4E 1C9C E 2
-text10 0 F01 1E02 2A 2
-text11 0 EE0 1DC0 21 2
-text12 0 E8B 1D16 1A 2
-text13 0 E72 1CE4 19 2
-text14 0 EA5 1D4A 1D 2
-cstackCOMMON 1 70 70 B 1
-cstackBANK0 1 20 20 50 1
-inittext 0 E42 1C84 6 2
+text1 0 7B6 F6C 47 2
+text5 0 F33 1E66 32 2
+text6 0 EF2 1DE4 1A 2
+text7 0 E8C 1D18 C 2
+text8 0 F0C 1E18 27 2
+text10 0 EDB 1DB6 17 2
+text11 0 E98 1D30 16 2
+text12 0 EC4 1D88 17 2
+text13 0 F65 1ECA 3D 2
+text14 0 FA2 1F44 5E 2
+cstackCOMMON 1 70 70 C 1
+cstackBANK0 1 20 20 4C 1
+inittext 0 E86 1D0C 6 2
 intentry 0 4 8 6FC 2
 reset_vec 0 0 0 2 2
-stringtext 0 700 E00 BF 2
-idataBANK0 0 E3E 1C7C 4 2
-idataBANK1 0 E5C 1CB8 16 2
+stringtext 0 700 E00 B6 2
+idataBANK0 0 E82 1D04 4 2
+idataBANK1 0 EAE 1D5C 16 2
 swtext1 0 800 1000 1E 2
 dataBANK1 1 A0 A0 16 1
-clrtext 0 E48 1C90 6 2
 config 0 8007 1000E 2 2

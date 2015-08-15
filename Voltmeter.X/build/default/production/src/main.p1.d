@@ -4,5 +4,6 @@
 src/../../_Common/Util.h  \
 src/../../_Common/AQM0802.h  \
 src/../../_Common/Typedef.h  \
+src/configuration.h  \
 src/../../_Common/typedef.h  \
 src/pic12f1822_init.h 

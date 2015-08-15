@@ -92,9 +92,21 @@ typedef enum {
   STATE_ERROR ,
 } EnMachineState ;
 EnMachineState machineState_ = STATE_BOOT ;
+
+// ----------------------------------------------------------------
+// Error
+typedef enum {
+  ERROR_NONE = 0 ,
+  ERROR_EEPROM ,
+  ERROR_INTERRUPT ,
+} EnErrorType ;
+EnErrorType machineError_ = ERROR_NONE ;
+
+// ----------------------------------------------------------------
+// Other
 Uint08_t stateReturnCounter_ = 0 ;
 Bool_t isMute_ = BOOL_FALSE ;
-#define RETURN_STATE_INTERVAL 0x40
+#define RETURN_STATE_INTERVAL 100
 
 // ----------------------------------------------------------------
 // Configuration
@@ -103,7 +115,7 @@ ConfigurationData configration_ = CONFIG_DEFAULT ;
 // ----------------------------------------------------------------
 // Metronome Counter
 #define _XTAL_FREQ 32000000UL
-#define TOTAL_TEMOPO_COUNT ( _XTAL_FREQ * 3 / 25 )
+#define TOTAL_TEMOPO_COUNT ( _XTAL_FREQ * 3 / 20 )
 #if TOTAL_TEMOPO_COUNT > 0xFFFFFF
 #  error [ERROR] Too Large Tempo Count !!
 #endif
@@ -122,16 +134,12 @@ typedef union {
   } ;
 } UniPortAState ;
 #define ReadKeyState() (~PORTA&0xE0)
-UniPortAState portAState_ = { 0x00 } ;
+UniPortAState sampledPortAState_ = { 0x00 } ;
 
 // ----------------------------------------------------------------
 // Key Count
 #define KEY_COUNT_LOOP_START 0x3C
 #define KEY_COUNT_LOOP_END 0x40
-struct {
-  Uint08_t Up ;
-  Uint08_t Down ;
-} keyHoldCount_ = { 0 , 0 } ;
 
 // ----------------------------------------------------------------
 // Menu State
@@ -200,31 +208,39 @@ StValueInfo valueInfoOscillatorTune_ = { NULL ,
 
 // ----------------------------------------------------------------
 // Events
-union {
-  Uint08_t all ;
-  struct {
-    unsigned keyPressUp : 1 ;
-    unsigned keyPressDown : 1 ;
-    unsigned keyPressMenu : 1 ;
-    unsigned keyPressUpDown : 1 ;
-    unsigned keyPressHeldUp : 1 ;
-    unsigned keyPressHeldDown : 1 ;
-  } ;
-} inputEvent_ = { 0x00 } ;
-union {
-  Uint08_t all ;
-  struct {
-    unsigned changeState : 1 ;
-    unsigned changeMessage : 1 ;
-    unsigned changeValue : 1 ;
-    unsigned soundOnClick : 1 ;
-    unsigned soundOnKey : 1 ;
-    unsigned soundOff : 1 ;
-    unsigned resetMetronome : 1 ;
-    unsigned accessEeprom : 1 ;
-  } ;
-} outputEvent_ = { 0x00 } ;
-
+struct {
+  union {
+    Uint08_t byte ;
+    struct {
+      unsigned keyPressUp : 1 ;
+      unsigned keyPressDown : 1 ;
+      unsigned keyPressMenu : 1 ;
+      unsigned keyPressUpDown : 1 ;
+      unsigned keyPressHeldUp : 1 ;
+      unsigned keyPressHeldDown : 1 ;
+    } ;
+  } input ;
+  union {
+    Uint08_t byte ;
+    struct {
+      unsigned changeState : 1 ;
+      unsigned changeMessage : 1 ;
+      unsigned changeValue : 1 ;
+      unsigned soundOnClick : 1 ;
+      unsigned soundOnKey : 1 ;
+      unsigned soundOff : 1 ;
+      unsigned resetMetronome : 1 ;
+      unsigned accessEeprom : 1 ;
+    } ;
+  } output ;
+  //  union {
+  //    Uint08_t byte ;
+  //    struct {
+  //      unsigned onEeprom : 1 ;
+  //      unsigned onInterrupt : 1 ;
+  //    } ;
+  //  } error ;
+} events_ = { 0x00 , 0x00 , /*0x00*/ } ;
 // ----------------------------------------------------------------
 // Tone
 #define TONE_OFF 0
@@ -247,7 +263,7 @@ void main( void ) {
     machineState_ = STATE_INITIALIZE ;
   else
     machineState_ = STATE_BOOT ;
-  SetEvent( outputEvent_.changeState ) ;
+  SetEvent( events_.output.changeState ) ;
 
   // Boot Beep
   SetSoundTimerPeriod( TONE_SYSTEM ) ;
@@ -331,8 +347,9 @@ void main( void ) {
   // Start Timer Interrupt
   //INTCONbits.GIE = 1 ;
   INTCONbits.PEIE = 1 ;
-  T6CONbits.TMR6ON = 1 ;
+  PIR3bits.TMR6IF = 0 ;
   PIE3bits.TMR6IE = 1 ;
+  T6CONbits.TMR6ON = 1 ;
 
   // Main Loop
   for( ; ; ) {
@@ -342,50 +359,53 @@ void main( void ) {
 
     // Set Input Event ----------------
     static UniPortAState prevPortAState = { 0x00 } ;
+    UniPortAState portAState ;
     UniPortAState keyPressed ;
 
-    keyPressed.byte = ( portAState_.byte ^ prevPortAState.byte ) & portAState_.byte ;
-    prevPortAState.byte = portAState_.byte ;
+    portAState.byte = sampledPortAState_.byte ;
+
+    keyPressed.byte = ( portAState.byte ^ prevPortAState.byte ) & portAState.byte ;
+    prevPortAState.byte = portAState.byte ;
 
     if( keyPressed.keyMenu ) {
-      SetEvent( inputEvent_.keyPressMenu ) ;
+      SetEvent( events_.input.keyPressMenu ) ;
     }
 
     if( keyPressed.keyUp ) {
-      if( portAState_.keyDown )
-        SetEvent( inputEvent_.keyPressUpDown ) ;
+      if( portAState.keyDown )
+        SetEvent( events_.input.keyPressUpDown ) ;
       else
-        SetEvent( inputEvent_.keyPressUp ) ;
+        SetEvent( events_.input.keyPressUp ) ;
     }
 
     if( keyPressed.keyDown ) {
-      if( portAState_.keyUp )
-        SetEvent( inputEvent_.keyPressUpDown ) ;
+      if( portAState.keyUp )
+        SetEvent( events_.input.keyPressUpDown ) ;
       else
-        SetEvent( inputEvent_.keyPressDown ) ;
+        SetEvent( events_.input.keyPressDown ) ;
     }
 
-    if( EvalEvent( inputEvent_.keyPressHeldUp ) )
-      SetEvent( inputEvent_.keyPressUp ) ;
+    if( EvalEvent( events_.input.keyPressHeldUp ) )
+      SetEvent( events_.input.keyPressUp ) ;
 
-    if( EvalEvent( inputEvent_.keyPressHeldDown ) )
-      SetEvent( inputEvent_.keyPressDown ) ;
+    if( EvalEvent( events_.input.keyPressHeldDown ) )
+      SetEvent( events_.input.keyPressDown ) ;
 
-    if( inputEvent_.all ) {
-      SetEvent( outputEvent_.soundOnKey ) ;
+    if( events_.input.byte ) {
+      SetEvent( events_.output.soundOnKey ) ;
     }
 
     // Both Up & Donw ----------------
-    if( EvalEvent( inputEvent_.keyPressUpDown ) ) {
+    if( EvalEvent( events_.input.keyPressUpDown ) ) {
       if( machineState_ == STATE_METRONOME ) {
         ToggleBool( isMute_ ) ;
-        SetEvent( outputEvent_.changeMessage ) ;
+        SetEvent( events_.output.changeMessage ) ;
       }
     }
 
     // Apply Menu Key Event (Action Before State Change) ----------------
-    if( EvalEvent( inputEvent_.keyPressMenu ) ) {
-      SetEvent( outputEvent_.changeState ) ;
+    if( EvalEvent( events_.input.keyPressMenu ) ) {
+      SetEvent( events_.output.changeState ) ;
 
       switch( machineState_ ) {
 
@@ -510,28 +530,36 @@ void main( void ) {
 
         case STATE_ADJUST_OSCILLATOR_TUNE:
           machineState_ = STATE_MENU_MAIN ;
-          SetEvent( outputEvent_.soundOff ) ;
+          SetEvent( events_.output.soundOff ) ;
           break ;
 
         case STATE_ADJUST_TONE:
           machineState_ = STATE_MENU_TONE ;
-          SetEvent( outputEvent_.soundOff ) ;
+          SetEvent( events_.output.soundOff ) ;
           break ;
 
-        case STATE_INITIALIZE:
         case STATE_ERROR:
+          machineError_ = ERROR_NONE ;
+        case STATE_INITIALIZE:
           machineState_ = STATE_METRONOME ;
-          SetEvent( outputEvent_.resetMetronome ) ;
+          SetEvent( events_.output.resetMetronome ) ;
           break ;
 
       }
 
     }
 
-    // Change State (Action After State Change)----------------
-    if( EvalEvent( outputEvent_.changeState ) ) {
+    // Error----------------
+    if( machineError_ && machineState_ != STATE_ERROR ) {
+      machineState_ = STATE_ERROR ;
+      events_.output.byte = 0x00 ;
+      SetEvent( events_.output.changeState ) ;
+    }
 
-      SetEvent( outputEvent_.changeMessage ) ;
+    // Change State (Action After State Change)----------------
+    if( EvalEvent( events_.output.changeState ) ) {
+
+      SetEvent( events_.output.changeMessage ) ;
 
       switch( machineState_ ) {
         case STATE_METRONOME:
@@ -603,7 +631,7 @@ void main( void ) {
         case STATE_INITIALIZE:
         case STATE_LOAD:
         case STATE_SAVE:
-          SetEvent( outputEvent_.accessEeprom ) ;
+          SetEvent( events_.output.accessEeprom ) ;
           break ;
 
         case STATE_RESET:
@@ -611,7 +639,14 @@ void main( void ) {
           RESET( ) ;
 
         case STATE_ERROR:
-          currentSingleMessage_ = MESSAGE.ERROR.MESSAGE ;
+          switch( machineError_ ) {
+            case ERROR_EEPROM:
+              currentSingleMessage_ = MESSAGE.ERROR.EEPROM ;
+              break ;
+            case ERROR_INTERRUPT:
+              currentSingleMessage_ = MESSAGE.ERROR.INTERRUPT ;
+              break ;
+          }
           break ;
 
       }
@@ -619,14 +654,14 @@ void main( void ) {
     }
 
     // EEPROM ----------------
-    if( EvalEvent( outputEvent_.accessEeprom ) ) {
+    if( EvalEvent( events_.output.accessEeprom ) ) {
 
       DisableAllInterrupt( ) ;
 
       ReturnCode returnCode = RETURN_CODE_NOERROR ;
 
-      SetEvent( outputEvent_.resetMetronome ) ;
-      SetEvent( outputEvent_.changeMessage ) ;
+      SetEvent( events_.output.resetMetronome ) ;
+      SetEvent( events_.output.changeMessage ) ;
       stateReturnCounter_ = RETURN_STATE_INTERVAL ;
 
       switch( machineState_ ) {
@@ -660,11 +695,8 @@ void main( void ) {
       informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][4] = HEX_TABLE[ returnCode >> 4 ] ;
       informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][5] = HEX_TABLE[ returnCode & 0x0F ] ;
 
-      if( returnCode ) {
-        machineState_ = STATE_ERROR ;
-        outputEvent_.all = 0x00 ;
-        SetEvent( outputEvent_.changeState ) ;
-      }
+      if( returnCode )
+        machineError_ = ERROR_EEPROM ;
 
       EnableAllInterrupt( ) ;
 
@@ -680,36 +712,36 @@ void main( void ) {
       case STATE_CONFIRM_SAVE:
       case STATE_CONFIRM_RESET:
       case STATE_INFORMATION:
-        if( EvalEvent( inputEvent_.keyPressDown ) ) {
+        if( EvalEvent( events_.input.keyPressDown ) ) {
           if( currentMenuInfoPtr_->select != currentMenuInfoPtr_->limit ) {
             currentMenuInfoPtr_->select++ ;
             if( !currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition++ ;
-            SetEvent( outputEvent_.changeMessage ) ;
+            SetEvent( events_.output.changeMessage ) ;
           }
         }
-        if( EvalEvent( inputEvent_.keyPressUp ) ) {
+        if( EvalEvent( events_.input.keyPressUp ) ) {
           if( currentMenuInfoPtr_->select ) {
             currentMenuInfoPtr_->select-- ;
             if( currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition-- ;
-            SetEvent( outputEvent_.changeMessage ) ;
+            SetEvent( events_.output.changeMessage ) ;
           }
         }
         break ;
 
       case STATE_METRONOME:
-        if( EvalEvent( inputEvent_.keyPressUp ) ) {
+        if( EvalEvent( events_.input.keyPressUp ) ) {
           if( configration_.tempo < 999 ) {
             configration_.tempo++ ;
-            SetEvent( outputEvent_.changeValue ) ;
+            SetEvent( events_.output.changeValue ) ;
           }
-          SetEvent( outputEvent_.resetMetronome ) ;
+          SetEvent( events_.output.resetMetronome ) ;
         }
-        if( EvalEvent( inputEvent_.keyPressDown ) ) {
+        if( EvalEvent( events_.input.keyPressDown ) ) {
           if( configration_.tempo > 1 ) {
             configration_.tempo-- ;
-            SetEvent( outputEvent_.changeValue ) ;
+            SetEvent( events_.output.changeValue ) ;
           }
-          SetEvent( outputEvent_.resetMetronome ) ;
+          SetEvent( events_.output.resetMetronome ) ;
         }
         break ;
 
@@ -719,16 +751,16 @@ void main( void ) {
       case STATE_ADJUST_DURATION_KEY:
       case STATE_ADJUST_TONE:
       case STATE_ADJUST_OSCILLATOR_TUNE:
-        if( EvalEvent( inputEvent_.keyPressUp ) ) {
+        if( EvalEvent( events_.input.keyPressUp ) ) {
           if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.upper ) {
             ( *currentValueInfoPtr_->valuePtr )++ ;
-            SetEvent( outputEvent_.changeValue ) ;
+            SetEvent( events_.output.changeValue ) ;
           }
         }
-        if( EvalEvent( inputEvent_.keyPressDown ) ) {
+        if( EvalEvent( events_.input.keyPressDown ) ) {
           if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.lower ) {
             ( *currentValueInfoPtr_->valuePtr )-- ;
-            SetEvent( outputEvent_.changeValue ) ;
+            SetEvent( events_.output.changeValue ) ;
           }
         }
         break ;
@@ -736,12 +768,11 @@ void main( void ) {
     }
 
     // Reset Metronome ----------------
-    if( EvalEvent( outputEvent_.resetMetronome ) ) {
-      DisableAllInterrupt( ) ;
+    DisableAllInterrupt( ) ;
+    if( EvalEvent( events_.output.resetMetronome ) ) {
       tempoCounter_ = 0 ;
       beatCounter_ = 0 ;
-      SetEvent( outputEvent_.soundOnClick ) ;
-      EnableAllInterrupt( ) ;
+      SetEvent( events_.output.soundOnClick ) ;
     }
     else {
       if( tempoCounter_ >= TOTAL_TEMOPO_COUNT ) {
@@ -749,9 +780,10 @@ void main( void ) {
         if( ++beatCounter_ >= ( configration_.beatCount << 1 ) )
           beatCounter_ = 0 ;
 
-        SetEvent( outputEvent_.soundOnClick ) ;
+        SetEvent( events_.output.soundOnClick ) ;
       }
     }
+    EnableAllInterrupt( ) ;
 
     // Sound On ----------------
     switch( machineState_ ) {
@@ -770,13 +802,13 @@ void main( void ) {
         break ;
 
       default:
-        if( EvalEvent( outputEvent_.soundOnKey ) ) {
+        if( EvalEvent( events_.output.soundOnKey ) ) {
           soundDurationCount_.key = configration_.duration.key ;
           SetSoundTimerPeriod( TONE_SYSTEM ) ;
           SetSoundPulseWidth( 1 ) ;
           SoundOn( ) ;
         }
-        if( EvalEvent( outputEvent_.soundOnClick ) && !isMute_ && !soundDurationCount_.key ) {
+        if( EvalEvent( events_.output.soundOnClick ) && !isMute_ && !soundDurationCount_.key ) {
 
           soundDurationCount_.click = configration_.duration.click ;
 
@@ -811,14 +843,14 @@ void main( void ) {
         break ;
 
       default:
-        if( EvalEvent( outputEvent_.soundOff ) )
+        if( EvalEvent( events_.output.soundOff ) )
           SoundOff( ) ;
 
         break ;
     }
 
     // Message ----------------
-    if( EvalEvent( outputEvent_.changeMessage ) ) {
+    if( EvalEvent( events_.output.changeMessage ) ) {
 
       switch( machineState_ ) {
 
@@ -853,7 +885,7 @@ void main( void ) {
           else if( machineState_ == STATE_ADJUST_TONE )
             ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0x5 , menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 + '0' ) ;
 
-          SetEvent( outputEvent_.changeValue ) ;
+          SetEvent( events_.output.changeValue ) ;
           break ;
 
         case STATE_INFORMATION:
@@ -876,9 +908,13 @@ void main( void ) {
         case STATE_LOAD:
         case STATE_SAVE:
         case STATE_INITIALIZE:
-        case STATE_ERROR:
           ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentSingleMessage_ ) ;
           ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+          break ;
+
+        case STATE_ERROR:
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.ERROR.TITLE ) ;
+          ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , currentSingleMessage_ ) ;
           break ;
 
       }
@@ -886,7 +922,7 @@ void main( void ) {
     }
 
     // Display Value ----------------
-    if( EvalEvent( outputEvent_.changeValue ) ) {
+    if( EvalEvent( events_.output.changeValue ) ) {
 
       Uint16_t tmpValue ;
       Char_t valueString[6] = "= 000" ;
@@ -952,55 +988,65 @@ void main( void ) {
 // [Interrupt Service Routine]
 #define INTERRUPT_FLAG PIR3bits.TMR6IF
 void interrupt isr( void ) {
+  static struct {
+    Uint08_t count1ms ;
+    Uint08_t count10ms ;
+  } prescaler = { 0 , 0 } ;
+
   if( !INTERRUPT_FLAG ) return ;
   INTERRUPT_FLAG = 0 ;
-
-  static Uint16_t eventPrescaler = 0 ;
 
   // Increment Metronome Count ----------------
   tempoCounter_ += configration_.tempo ;
 
-  // Check Sound Duration ----------------
-  if( !( eventPrescaler & 0x7F ) ) {
-    if( soundDurationCount_.click && !--soundDurationCount_.click && !soundDurationCount_.key )
-      SetEvent( outputEvent_.soundOff ) ;
-    if( soundDurationCount_.key && ! --soundDurationCount_.key )
-      SetEvent( outputEvent_.soundOff ) ;
-  }
+  // Prescale 1ms ----------------
+  if( --prescaler.count1ms ) return ;
+  prescaler.count1ms = 80 ;
 
-  // Prescale ----------------
-  if( ++eventPrescaler != 640 ) return ;
-  eventPrescaler = 0 ;
+  // Decrement Sound Duration ----------------
+  if( soundDurationCount_.click && !--soundDurationCount_.click && !soundDurationCount_.key )
+    SetEvent( events_.output.soundOff ) ;
+  if( soundDurationCount_.key && ! --soundDurationCount_.key )
+    SetEvent( events_.output.soundOff ) ;
+
+  // Prescale 10ms ----------------
+  if( --prescaler.count10ms ) return ;
+  prescaler.count10ms = 10 ;
 
   // Count for State Return ----------------
-  if( stateReturnCounter_ &&! --stateReturnCounter_ ) {
-    SetEvent( outputEvent_.changeState ) ;
-    SetEvent( outputEvent_.resetMetronome ) ;
+  if( stateReturnCounter_ && ! --stateReturnCounter_ ) {
+    SetEvent( events_.output.changeState ) ;
+    SetEvent( events_.output.resetMetronome ) ;
     machineState_ = STATE_METRONOME ;
   }
 
   // Read Key State ----------------
-  portAState_.byte = ReadKeyState( ) ;
+  static struct {
+    Uint08_t Up ;
+    Uint08_t Down ;
+  } keyHoldCount = { 0 , 0 } ;
 
-  if( portAState_.keyUp && !portAState_.keyDown ) {
-    if( ++keyHoldCount_.Up == KEY_COUNT_LOOP_END ) {
-      keyHoldCount_.Up = KEY_COUNT_LOOP_START ;
-      SetEvent( inputEvent_.keyPressHeldUp ) ;
+  sampledPortAState_.byte = ReadKeyState( ) ;
+
+  if( sampledPortAState_.keyUp && !sampledPortAState_.keyDown ) {
+    if( ++keyHoldCount.Up == KEY_COUNT_LOOP_END ) {
+      keyHoldCount.Up = KEY_COUNT_LOOP_START ;
+      SetEvent( events_.input.keyPressHeldUp ) ;
     }
   }
   else
-    keyHoldCount_.Up = 0 ;
+    keyHoldCount.Up = 0 ;
 
-  if( portAState_.keyDown && !portAState_.keyUp ) {
-    if( ++keyHoldCount_.Down == KEY_COUNT_LOOP_END ) {
-      keyHoldCount_.Down = KEY_COUNT_LOOP_START ;
-      SetEvent( inputEvent_.keyPressHeldDown ) ;
+  if( sampledPortAState_.keyDown && !sampledPortAState_.keyUp ) {
+    if( ++keyHoldCount.Down == KEY_COUNT_LOOP_END ) {
+      keyHoldCount.Down = KEY_COUNT_LOOP_START ;
+      SetEvent( events_.input.keyPressHeldDown ) ;
     }
   }
   else
-    keyHoldCount_.Down = 0 ;
+    keyHoldCount.Down = 0 ;
 
-  if( INTERRUPT_FLAG ) RESET( ) ;
+  if( INTERRUPT_FLAG ) machineError_ = ERROR_INTERRUPT ;
 
 }//isr
 

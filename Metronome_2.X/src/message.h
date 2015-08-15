@@ -18,7 +18,9 @@ const struct {
     const Char_t* INITIALIZE ;
   } MEMORY ;
   const struct {
-    const Char_t* MESSAGE ;
+    const Char_t* TITLE ;
+    const Char_t* EEPROM ;
+    const Char_t* INTERRUPT ;
   } ERROR ;
 }
 MESSAGE = {
@@ -36,7 +38,9 @@ MESSAGE = {
     "Initialized" ,
   } ,
   {
-    "ERROR !!" ,
+    "Error on ..." ,
+    "EEPROM" ,
+    "Interrupt" ,
   } ,
 } ;
 

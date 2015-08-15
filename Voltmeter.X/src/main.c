@@ -21,6 +21,8 @@
 #include "../../_Common/Util.h"
 #include "../../_Common/AQM0802.h"
 
+#include "configuration.h"
+
 #define SOFTWARE_VERSION " 00.112 "
 
 // --------------------------------
@@ -37,6 +39,13 @@ typedef union {
 } UniPortA ;
 UniPortA portAState_ ;
 #define ReadKeyState() (~PORTA&0b00101001);
+struct {
+  Uint08_t up ;
+  Uint08_t down ;
+} keyCount_ ;
+
+#define KEY_COUNT_LOOP_START 0x3C
+#define KEY_COUNT_LOOP_END 0x40
 
 #define CHAR_CURSOR 0x07
 
@@ -47,11 +56,12 @@ typedef enum {
   STATE_MEASURE ,
   STATE_MENU ,
   STATE_VERSION ,
+  STATE_ADJUST_SLEEP_TIME ,
   STATE_SLEEP ,
   STATE_ERROR ,
 } MachineState ;
 MachineState machineState_ = STATE_BOOT ;
-Bool_t isHold_ = BOOL_FALSE ;
+//Bool_t isHold_ = BOOL_FALSE ;
 Uint16_t sleepTimer_ = 0 ;
 
 // --------------------------------
@@ -70,6 +80,10 @@ const struct {
   const char* VOLTAGE ;
   const char* BAR ;
   const char* AD_VALUE ;
+  struct {
+    const char* TITLE ;
+    const char* VALUE ;
+  } SLEEP ;
   const char* VERSION ;
   const char* ERROR ;
 }
@@ -78,6 +92,10 @@ MESSAGE = {
   "Voltage" ,
   " 2 4 6 8" ,
   "A/D Val" ,
+  {
+    "Sleep" ,
+    "     sec" ,
+  } ,
   "Version" ,
   "Error" ,
 } ;
@@ -91,6 +109,7 @@ enum Menu {
   MENU_VOLTAGE ,
   MENU_BAR ,
   MENU_AD_VALUE ,
+  MENU_SLEEP ,
   MENU_VERSION ,
 } ;
 const char* MESSAGE_MENU[] = {
@@ -98,34 +117,51 @@ const char* MESSAGE_MENU[] = {
   "Voltage" ,
   "Bar" ,
   "A/D Val" ,
+  "Sleep" ,
   "Version" ,
 } ;
 struct {
-  Uint08_t select ;
-  Uint08_t cursor ;
+  unsigned select : 7 ;
+  unsigned cursor : 1 ;
 } menuState_ ;
 
 // --------------------------------
 // A/D Converter
 #define SIZE_OF_AD_BUFFER 16
 typedef Uint16_t ADValue_t ;
+static ADValue_t adBuffer_[ SIZE_OF_AD_BUFFER ] ;
 static ADValue_t sumOfBuffer_ = 0 ;
 
 // --------------------------------
+// Configuration
+StConfigurationData configuration_ = CONFIG_DEFAULT ;
+
+// --------------------------------
 // Event
-union {
-  Uint08_t all ;
-  struct {
-    unsigned keyPressMenu : 1 ;
-    unsigned keyPressUp : 1 ;
-    unsigned keyPressDown : 1 ;
-    unsigned keyPressUpDown : 1 ;
-    unsigned changeValue : 1 ;
-    unsigned changeMessage : 1 ;
-    unsigned sleep : 1 ;
-    unsigned error : 1 ;
-  } ;
+struct {
+  union {
+    Uint08_t byte ;
+    struct {
+      unsigned keyPressMenu : 1 ;
+      unsigned keyPressUp : 1 ;
+      unsigned keyPressDown : 1 ;
+      unsigned : 5 ;
+    } ;
+  } input ;
+  union {
+    Uint08_t byte ;
+    struct {
+      unsigned : 3 ;
+      unsigned changeValue : 1 ;
+      unsigned changeMessage : 1 ;
+      unsigned sleep : 1 ;
+      unsigned wake : 1 ;
+      unsigned error : 1 ;
+    } ;
+  } output ;
 } events_ = { 0x00 } ;
+
+
 
 // ----------------------------------------------------------------
 // [Function] Main
@@ -156,9 +192,11 @@ int main( void ) {
     AQM0802_SendData( 0x40 , barImage ) ;
   }
 
+  Configuration_Load( &configuration_ ) ;
+
   machineState_ = STATE_MEASURE ;
   currentMessage_ = MESSAGE.VOLTAGE ;
-  SetEvent( events_.changeMessage ) ;
+  SetEvent( events_.output.changeMessage ) ;
 
   // Start Timer Interrupt
   TMR0IF = 0 ;
@@ -171,51 +209,62 @@ int main( void ) {
     // Clear Watchdog-Timer
     CLRWDT( ) ;
 
+    // Sleep
+    if( EvalEvent( events_.output.sleep ) ) {
+      if( machineState_ != STATE_SLEEP ) {
+        AQM0802_ClearRow( ROW_SELECT_0 ) ;
+        AQM0802_ClearRow( ROW_SELECT_1 ) ;
+      }
+      WDTCONbits.SWDTEN = 0 ;
+      INTCONbits.TMR0IE = 0 ;
+      INTCONbits.IOCIF = 0 ;
+      INTCONbits.IOCIE = 1 ;
+      sleepTimer_ = 100 ;
+      machineState_ = STATE_SLEEP ;
+      SLEEP( ) ;
+    }
+
+    // Wake
+    if( EvalEvent( events_.output.wake ) ) {
+      if( machineState_ == STATE_SLEEP ) {
+        machineState_ = STATE_MEASURE ;
+        SetEvent( events_.output.changeMessage ) ;
+      }
+      sleepTimer_ = configuration_.sleepTime * 100 ;
+    }
+
+    // Set Key Event
     static UniPortA prevPortAState = { 0x00 } ;
     UniPortA keyPressed ;
 
     keyPressed.byte = ( portAState_.byte ^ prevPortAState.byte ) & portAState_.byte ;
     prevPortAState.byte = portAState_.byte ;
 
-    // Set Key Event
     if( keyPressed.menu )
-      SetEvent( events_.keyPressMenu ) ;
+      SetEvent( events_.input.keyPressMenu ) ;
 
     if( keyPressed.up ) {
-      if( portAState_.down )
-        SetEvent( events_.keyPressUpDown ) ;
-      else
-        SetEvent( events_.keyPressUp ) ;
+      //      if( portAState_.down )
+      //        SetEvent( events_.input.keyPressUpDown ) ;
+      //      else
+      SetEvent( events_.input.keyPressUp ) ;
     }
     if( keyPressed.down ) {
-      if( portAState_.up )
-        SetEvent( events_.keyPressUpDown ) ;
-      else
-        SetEvent( events_.keyPressDown ) ;
+      //      if( portAState_.up )
+      //        SetEvent( events_.input.keyPressUpDown ) ;
+      //      else
+      SetEvent( events_.input.keyPressDown ) ;
     }
 
-    if( EvalEvent( events_.error ) ) {
+    if( EvalEvent( events_.output.error ) ) {
       machineState_ = STATE_ERROR ;
-      SetEvent( events_.changeMessage ) ;
-    }
-
-    // Up Donw Key
-    if( EvalEvent( events_.keyPressUpDown ) ) {
-      switch( machineState_ ) {
-        case STATE_MEASURE:
-          if( isHold_ )
-            isHold_ = BOOL_FALSE ;
-          else
-            isHold_ = BOOL_TRUE ;
-          SetEvent( events_.changeMessage ) ;
-          break ;
-      }
+      SetEvent( events_.output.changeMessage ) ;
     }
 
     // Menu Key
-    if( EvalEvent( events_.keyPressMenu ) ) {
+    if( EvalEvent( events_.input.keyPressMenu ) ) {
 
-      SetEvent( events_.changeMessage ) ;
+      SetEvent( events_.output.changeMessage ) ;
 
       switch( machineState_ ) {
 
@@ -242,12 +291,18 @@ int main( void ) {
               currentMessage_ = MESSAGE.AD_VALUE ;
               break ;
 
+            case MENU_SLEEP:
+              machineState_ = STATE_ADJUST_SLEEP_TIME ;
+              break ;
+
             case MENU_VERSION:
               machineState_ = STATE_VERSION ;
               break ;
           }
           break ;
 
+        case STATE_ADJUST_SLEEP_TIME:
+          Configuration_Save( &configuration_ ) ;
         case STATE_VERSION:
           machineState_ = STATE_MENU ;
           break ;
@@ -258,18 +313,33 @@ int main( void ) {
     switch( machineState_ ) {
 
       case STATE_MENU:
-        if( EvalEvent( events_.keyPressUp ) ) {
+        if( EvalEvent( events_.input.keyPressUp ) ) {
           if( menuState_.select != 0 ) {
             menuState_.select-- ;
             if( menuState_.cursor != 0 ) menuState_.cursor-- ;
-            SetEvent( events_.changeMessage ) ;
+            SetEvent( events_.output.changeMessage ) ;
           }
         }
-        if( EvalEvent( events_.keyPressDown ) ) {
+        if( EvalEvent( events_.input.keyPressDown ) ) {
           if( menuState_.select != ( MENU_SIZE - 1 ) ) {
             menuState_.select++ ;
             if( menuState_.cursor != 1 ) menuState_.cursor++ ;
-            SetEvent( events_.changeMessage ) ;
+            SetEvent( events_.output.changeMessage ) ;
+          }
+        }
+        break ;
+
+      case STATE_ADJUST_SLEEP_TIME:
+        if( EvalEvent( events_.input.keyPressUp ) ) {
+          if( configuration_.sleepTime != 255 ) {
+            configuration_.sleepTime++ ;
+            SetEvent( events_.output.changeValue ) ;
+          }
+        }
+        if( EvalEvent( events_.input.keyPressDown ) ) {
+          if( configuration_.sleepTime != 1 ) {
+            configuration_.sleepTime-- ;
+            SetEvent( events_.output.changeValue ) ;
           }
         }
 
@@ -277,16 +347,14 @@ int main( void ) {
     }
 
     // Change Message
-    if( EvalEvent( events_.changeMessage ) ) {
+    if( EvalEvent( events_.output.changeMessage ) ) {
       switch( machineState_ ) {
 
         case STATE_MEASURE:
           AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , currentMessage_ ) ;
           AQM0802_ClearRow( ROW_SELECT_1 ) ;
-          //          if( isHold_ )
-          //            AQM0802_SendCharacter( ROW_SELECT_0 | 0x7 , CHAR_HOLD ) ;
 
-          SetEvent( events_.changeValue ) ;
+          SetEvent( events_.output.changeValue ) ;
           break ;
 
         case STATE_MENU:
@@ -295,11 +363,16 @@ int main( void ) {
           AQM0802_SendCharacter( ROW_SELECT[ menuState_.cursor ] | 0x0 , CHAR_CURSOR ) ;
           break ;
 
+        case STATE_ADJUST_SLEEP_TIME:
+          AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.SLEEP.TITLE ) ;
+          AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , MESSAGE.SLEEP.VALUE ) ;
+          SetEvent( events_.output.changeValue ) ;
+          break ;
+
         case STATE_VERSION:
           AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.VERSION ) ;
           AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , SOFTWARE_VERSION ) ;
           break ;
-
 
         case STATE_ERROR:
           AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.ERROR ) ;
@@ -309,86 +382,110 @@ int main( void ) {
     }
 
     // Change Value
-    if( machineState_ == STATE_MEASURE && EvalEvent( events_.changeValue ) ) {
+    if( EvalEvent( events_.output.changeValue ) ) {
 
-      // Display Averaged Value
-      ADValue_t currentAdValue ;
-      Uint08_t digit ;
-      char string[8] = "  00000" ;
-      const Uint16_t COMPARE_UNITS[] = { 10000 , 1000 , 100 , 10 , 1 } ;
+      Char_t string[9] ;
 
-      currentAdValue = sumOfBuffer_ ;
-
-      switch( measureMode_ ) {
-        case MEASURE_MODE_VOLTAGE:
-        case MEASURE_MODE_AD_VALUE:
-
-          digit = 0 ;
-          while( digit < 5 ) {
-
-            Uint16_t compareUnit = COMPARE_UNITS[ digit ] ;
-
-            while( currentAdValue >= compareUnit ) {
-              string[digit + 2]++ ;
-              currentAdValue -= compareUnit ;
-            }
-
-            digit++ ;
-
-          }
-
-          if( measureMode_ == MEASURE_MODE_VOLTAGE ) {
-            string[1] = string[2] ;
-            string[2] = string[3] ;
-            string[3] = '.' ;
-            string[6] = 'V' ;
-          }
-
-          AQM0802_SendString( ROW_SELECT_1 | 0x1 , &string ) ;
-
-          break ;
-
-        case MEASURE_MODE_BAR:
+      switch( machineState_ ) {
+        case STATE_MEASURE:
         {
-          Char_t string[9] ;
-          for( Uint08_t i = 0 ; i < 8 ; i++ ) {
-            if( currentAdValue >= 1000 ) {
-              string[i] = '\x05' ;
-              currentAdValue -= 1000 ;
+
+          // Display Averaged Value
+          ADValue_t currentAdValue = sumOfBuffer_ ;
+
+          switch( measureMode_ ) {
+            case MEASURE_MODE_VOLTAGE:
+            case MEASURE_MODE_AD_VALUE:
+            {
+              const Uint16_t COMPARE_UNITS[] = { 10000 , 1000 , 100 , 10 , 1 } ;
+
+              for( Uint08_t i = 0 ; i < 5 ; i++ ) {
+                string[i + 1] = '0' ;
+                Uint16_t compareUnit = COMPARE_UNITS[ i ] ;
+                while( currentAdValue >= compareUnit ) {
+                  string[i + 1]++ ;
+                  currentAdValue -= compareUnit ;
+                }
+              }
+
+              string[0] = ' ' ;
+              if( measureMode_ == MEASURE_MODE_VOLTAGE ) {
+                string[0] = string[1] ;
+                string[1] = string[2] ;
+                string[2] = '.' ;
+                string[5] = 'V' ;
+              }
+              string[6] = 0 ;
+
+              AQM0802_SendString( ROW_SELECT_1 | 0x2 , &string ) ;
             }
-            else {
-              string[i] = currentAdValue / 200 ;
-              string[ i + 1 ] = '\0' ;
               break ;
+
+            case MEASURE_MODE_BAR:
+            {
+              for( Uint08_t i = 0 ; i < 8 ; i++ ) {
+                if( currentAdValue >= 1000 ) {
+                  string[i] = '\x05' ;
+                  currentAdValue -= 1000 ;
+                }
+                else {
+                  string[i] = 0 ;
+                  while( currentAdValue >= 200 ) {
+                    string[i]++ ;
+                    currentAdValue -= 200 ;
+                  }
+                  string[ i + 1 ] = 0 ;
+                  break ;
+                }
+
+              }
+              string[8] = 0 ;
+              AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , string ) ;
             }
+              break ;
 
           }
-          AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , string ) ;
         }
           break ;
 
+        case STATE_ADJUST_SLEEP_TIME:
+        {
+          Uint08_t tmpValue = configuration_.sleepTime ;
+
+          const Uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 } ;
+          Bool_t isNonZero = BOOL_FALSE ;
+
+          for( Uint08_t i = 0 ; i < 3 ; i++ ) {
+            string[i] = '0' ;
+            Uint08_t compareUnit = COMPARE_UNITS[ i ] ;
+            while( tmpValue >= compareUnit ) {
+              string[i]++ ;
+              tmpValue -= compareUnit ;
+            }
+
+            if( isNonZero || string[i] != '0' || i == 2 ) {
+              isNonZero = BOOL_TRUE ;
+            }
+            else {
+              string[i] = ' ' ;
+            }
+          }
+
+          string[3] = 0 ;
+          AQM0802_SendString( ROW_SELECT_1 | 0x2 , &string ) ;
+        }
+          break ;
       }
 
-    }
 
-    // Sleep
-    if( EvalEvent( events_.sleep ) ) {
-      AQM0802_ClearRow( ROW_SELECT_0 ) ;
-      AQM0802_ClearRow( ROW_SELECT_1 ) ;
-      WDTCONbits.SWDTEN = 0 ;
-      INTCONbits.TMR0IE = 0 ;
-      INTCONbits.IOCIF = 0 ;
-      INTCONbits.IOCIE = 1 ;
-      sleepTimer_ = 0 ;
-      machineState_ = STATE_SLEEP ;
-      SLEEP( ) ;
+
     }
 
   }//for(;;)
 
 }
 
-#define INTERRUPT_FLAG INTCONbits.TMR0IF
+#define INTERRUPT_FLAG_TIMER INTCONbits.TMR0IF
 #define INTERRUPT_FLAG_MODE_KEY IOCAFbits.IOCAF3
 // ----------------------------------------------------------------
 // [Interrupt]
@@ -402,34 +499,53 @@ void interrupt _( void ) {
     INTCONbits.IOCIE = 0 ;
   }
 
-  if( !INTERRUPT_FLAG ) return ;
-  INTERRUPT_FLAG = 0 ;
+  if( !INTERRUPT_FLAG_TIMER ) return ;
+  INTERRUPT_FLAG_TIMER = 0 ;
 
   // Read Key State
   static Uint08_t interruptCount = 0 ;
   if( ! --interruptCount ) {
     interruptCount = 10 ;
+
     portAState_.byte = ReadKeyState( ) ;
 
+    if( portAState_.up ) {
+      if( ++keyCount_.up == KEY_COUNT_LOOP_END ) {
+        keyCount_.up = KEY_COUNT_LOOP_START ;
+        SetEvent( events_.input.keyPressUp ) ;
+      }
+    }
+    else
+      keyCount_.up = 0 ;
+
+    if( portAState_.down ) {
+      if( ++keyCount_.down == KEY_COUNT_LOOP_END ) {
+        keyCount_.down = KEY_COUNT_LOOP_START ;
+        SetEvent( events_.input.keyPressDown ) ;
+      }
+    }
+    else
+      keyCount_.down = 0 ;
+
+
+    // Count Sleep Timer
     if( machineState_ == STATE_SLEEP ) {
       if( portAState_.menu ) {
-        if( ++sleepTimer_ == 100 ) {
-          sleepTimer_ = 0 ;
-          machineState_ = STATE_MEASURE ;
-          SetEvent( events_.changeMessage ) ;
-        }
+        if( ! --sleepTimer_ )
+          SetEvent( events_.output.wake ) ;
       }
       else {
-        SetEvent( events_.sleep ) ;
+        SetEvent( events_.output.sleep ) ;
       }
     }
     else {
       if( portAState_.byte ) {
-        sleepTimer_ = 0 ;
+        SetEvent( events_.output.wake ) ;
       }
-      else if( ++sleepTimer_ == 60 * 100 )
-        SetEvent( events_.sleep ) ;
-
+      else {
+        if( ! --sleepTimer_ )
+          SetEvent( events_.output.sleep ) ;
+      }
     }
 
   }
@@ -438,24 +554,20 @@ void interrupt _( void ) {
   if( !ADCON0bits.GO ) {
 
     static Uint08_t bufferPostiion = 0 ;
-    static ADValue_t adBuffer[ SIZE_OF_AD_BUFFER ] ;
     ADValue_t adValue = ( ( ( (Uint16_t)ADRESH ) << 8 ) | ADRESL ) ;
     ADCON0bits.GO = 1 ;
 
-    if( !isHold_ ) {
-      sumOfBuffer_ -= adBuffer[ bufferPostiion ] ;
-      sumOfBuffer_ += adValue ;
-      adBuffer[ bufferPostiion ] = adValue ;
+    sumOfBuffer_ -= adBuffer_[ bufferPostiion ] ;
+    sumOfBuffer_ += adValue ;
+    adBuffer_[ bufferPostiion ] = adValue ;
 
-      if( ++bufferPostiion == SIZE_OF_AD_BUFFER ) bufferPostiion = 0 ;
+    if( ++bufferPostiion == SIZE_OF_AD_BUFFER ) bufferPostiion = 0 ;
 
-    }
-
-    SetEvent( events_.changeValue ) ;
+    SetEvent( events_.output.changeValue ) ;
 
   }
 
-  if( INTERRUPT_FLAG ) SetEvent( events_.error ) ;
+  if( INTERRUPT_FLAG_TIMER ) SetEvent( events_.output.error ) ;
 
 }
 

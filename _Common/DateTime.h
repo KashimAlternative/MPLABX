@@ -1,6 +1,9 @@
 #ifndef DATE_TIME_H
 #  define DATE_TIME_H
 
+#  include "Typedef.h"
+
+
 // Date Select
 typedef enum {
   DATE_ITEM_YEAR = 0 ,
@@ -38,10 +41,14 @@ typedef union {
     Uint08_t year ;
   } ;
   struct {
+    Uint24_t time ;
+    Uint08_t ;
+    Uint24_t date ;
+  } ;
+  struct {
     unsigned : 7 ;
     unsigned clockHalt : 1 ;
   } ;
-  Uint08_t array[7] ;
 } StDateTime ;
 
 // [Function] Convert Byte to Date Time ----------------

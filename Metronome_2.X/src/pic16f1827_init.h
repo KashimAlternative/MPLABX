@@ -37,7 +37,7 @@ void initialize( ) {
   // Timer2 config
   T2CONbits.TMR2ON = 0 ;
   T2CONbits.T2OUTPS = 0b0000 ; // Postscaler 1:1
-  T2CONbits.T2CKPS = 0b11 ; // Prescaler 1/64
+  T2CONbits.T2CKPS = 0b11 ; // Prescaler 1:64
   PR2 = 124 ;
   TMR2 = 0x00 ;
   PIR1bits.TMR2IF = 0 ;
@@ -54,9 +54,9 @@ void initialize( ) {
 
   // Timer6 config
   T6CONbits.TMR6ON = 0 ;
-  T6CONbits.T6OUTPS = 0b0000 ;
-  T6CONbits.T6CKPS = 0b00 ;
-  PR6 = 124 ;
+  T6CONbits.T6OUTPS = 0b0000 ; // Postscaler 1:1
+  T6CONbits.T6CKPS = 0b00 ; // Prescaler 1:1
+  PR6 = 99 ;
   TMR6 = 0x00 ;
   PIR3bits.TMR6IF = 0 ;
   PIE3bits.TMR6IE = 0 ;

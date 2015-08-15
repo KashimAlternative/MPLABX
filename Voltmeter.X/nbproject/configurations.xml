@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>src/pic12f1822_init.h</itemPath>
       <itemPath>../_Common/Util.h</itemPath>
+      <itemPath>src/configuration.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

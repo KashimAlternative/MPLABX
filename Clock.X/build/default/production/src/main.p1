@@ -106,23 +106,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TRISB `Vuc ~T0 @X0 0 e@141 ]
 "1098
 [v _TRISC `Vuc ~T0 @X0 0 e@142 ]
-"63 src/../../_Common/ParallelLCD.h
-[c E4100 128 192 .. ]
-[n E4100 . PARALLEL_LCD_ROW_SELECT_0 PARALLEL_LCD_ROW_SELECT_1  ]
-"84
-[c E4078 0 4 8 16 .. ]
-[n E4078 . PARALLEL_LCD_CONFIG_FUNCTION_NONE PARALLEL_LCD_CONFIG_5x11DOT_MODE PARALLEL_LCD_CONFIG_2LINE_MODE PARALLEL_LCD_CONFIG_8BIT_MODE  ]
-[c E4084 0 1 2 4 .. ]
-[n E4084 . PARALLEL_LCD_CONFIG_DISPLAY_NONE PARALLEL_LCD_CONFIG_BLINK_ON PARALLEL_LCD_CONFIG_CURSOR_ON PARALLEL_LCD_CONFIG_DISPLAY_ON  ]
-[c E4090 0 4 8 .. ]
-[n E4090 . PARALLEL_LCD_CONFIG_CURSOR_NONE PARALLEL_LCD_CONFIG_CURSOR_MOVEMENT_LEFT PARALLEL_LCD_CONFIG_DISPLAY_SHIFT  ]
-[c E4095 0 1 2 .. ]
-[n E4095 . PARALLEL_LCD_CONFIG_ENTRY_MODE_NONE PARALLEL_LCD_CONFIG_SHIFT_ON PARALLEL_LCD_CONFIG_INCREMENTAL  ]
-"85
-[c E4073 0 1 .. ]
-[n E4073 . BOOL_FALSE BOOL_TRUE  ]
-"75
-[v _ParallelLCD_WriteByte `(v ~T0 @X0 0 sf2`uc`E4073 ]
+"60 src/../../_Common/ParallelLCD.h
+[c E4101 128 192 .. ]
+[n E4101 . PARALLEL_LCD_ROW_SELECT_0 PARALLEL_LCD_ROW_SELECT_1  ]
+"81
+[c E4079 0 4 8 16 .. ]
+[n E4079 . PARALLEL_LCD_CONFIG_FUNCTION_NONE PARALLEL_LCD_CONFIG_5x11DOT_MODE PARALLEL_LCD_CONFIG_2LINE_MODE PARALLEL_LCD_CONFIG_8BIT_MODE  ]
+[c E4085 0 1 2 4 .. ]
+[n E4085 . PARALLEL_LCD_CONFIG_DISPLAY_NONE PARALLEL_LCD_CONFIG_BLINK_ON PARALLEL_LCD_CONFIG_CURSOR_ON PARALLEL_LCD_CONFIG_DISPLAY_ON  ]
+[c E4091 0 4 8 .. ]
+[n E4091 . PARALLEL_LCD_CONFIG_CURSOR_NONE PARALLEL_LCD_CONFIG_CURSOR_MOVEMENT_LEFT PARALLEL_LCD_CONFIG_DISPLAY_SHIFT  ]
+[c E4096 0 1 2 .. ]
+[n E4096 . PARALLEL_LCD_CONFIG_ENTRY_MODE_NONE PARALLEL_LCD_CONFIG_SHIFT_ON PARALLEL_LCD_CONFIG_INCREMENTAL  ]
+"82
+[c E4074 0 1 .. ]
+[n E4074 . BOOL_FALSE BOOL_TRUE  ]
+"72
+[v _ParallelLCD_WriteByte `(v ~T0 @X0 0 sf2`uc`E4074 ]
 [v F4059 `(v ~T0 @X0 1 tf1`ul ]
 "150 /Applications/microchip/xc8/v1.34/include/pic.h
 [v __delay `JF4059 ~T0 @X0 0 e ]
@@ -140,18 +140,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 "28 /Applications/microchip/xc8/v1.34/include/pic.h
 [v ___nop `(v ~T0 @X0 0 ef ]
 [p i ___nop ]
-"31 src/../../_Common/DateTime.h
-[s S474 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
-[n S474 . second minute hour dayOfWeek day month year ]
-"40
-[s S475 :7 `uc 1 :1 `uc 1 ]
-[n S475 . . clockHalt ]
-"30
-[u S473 `S474 1 `S475 1 `uc -> 7 `i ]
-[n S473 . . . array ]
-"128
-[c E4142 0 1 2 3 4 5 6 .. ]
-[n E4142 . DATE_ITEM_YEAR DATE_ITEM_MONTH DATE_ITEM_DATE DATE_ITEM_DAY_OF_WEEK DATE_ITEM_HOUR DATE_ITEM_MINUTE DATE_ITEM_SECOND  ]
+"34 src/../../_Common/DateTime.h
+[s S475 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S475 . second minute hour dayOfWeek day month year ]
+"43
+[s S476 `um 1 `uc 1 `um 1 ]
+[n S476 . time . date ]
+"48
+[s S477 :7 `uc 1 :1 `uc 1 ]
+[n S477 . . clockHalt ]
+"33
+[u S474 `S475 1 `S476 1 `S477 1 ]
+[n S474 . . . . ]
+"135
+[c E4144 0 1 2 3 4 5 6 .. ]
+[n E4144 . DATE_ITEM_YEAR DATE_ITEM_MONTH DATE_ITEM_DATE DATE_ITEM_DAY_OF_WEEK DATE_ITEM_HOUR DATE_ITEM_MINUTE DATE_ITEM_SECOND  ]
 "3617 /Applications/microchip/xc8/v1.34/include/pic16f1508.h
 [s S199 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S199 . SEN RSEN PEN RCEN ACKEN ACKDT ACKSTAT GCEN ]
@@ -172,45 +175,57 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S187 . . ]
 "3359
 [v _SSPSTATbits `VS187 ~T0 @X0 0 e@532 ]
-"50 src/main.c
-[s S562 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S562 . keyDown keyUp . keyRight keyLeft ]
-"48
-[u S561 `uc 1 `S562 1 ]
-[n S561 . byte . ]
-"77
-[s S564 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
-[n S564 . keyU keyUD keyD keyL keyLR keyR ]
-"85
-[s S565 `ui 1 `uc 1 `ui 1 ]
-[n S565 . exceptDown _ exceptRight ]
-"90
-[s S566 `uc 1 `ui 1 `uc 1 `ui 1 ]
-[n S566 . _0 exceptUp _1 exceptLeft ]
-"76
-[u S563 `S564 1 `S565 1 `S566 1 ]
-[n S563 . . . . ]
-"97
-[s S567 `uc 1 `uc 1 `uc 1 `uc 1 ]
-[n S567 . position length max min ]
-"103
-[s S568 `S567 1 `S567 1 `S567 1 `S567 1 `S567 1 `S567 1 `S567 1 ]
-[n S568 . year month date dayOfWeek hour minute second ]
-"136
-[c E4248 0 1 2 3 4 5 6 7 8 .. ]
-[n E4248 . STATE_BOOT STATE_CLOCK STATE_MENU STATE_ADJUST_CLOCK STATE_ALERM STATE_SET_TIMER STATE_BUZZER_TEST STATE_VERSION STATE_ERROR  ]
-"152
-[c E4260 0 1 2 3 .. ]
-[n E4260 . MENU_ADJUST MENU_TIMER MENU_BUZZER_TEST MENU_VERSION  ]
-"180
-[s S569 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S569 . up down upDown left right leftRightHold releaseRight ]
-"191
-[s S571 :1 `uc 1 :1 `uc 1 ]
-[n S571 . changeMessage changeValue ]
-"189
-[u S570 `uc 1 `S571 1 ]
-[n S570 . all . ]
+"54 src/main.c
+[s S564 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S564 . keyDown keyUp . keyRight keyLeft ]
+"52
+[u S563 `uc 1 `S564 1 ]
+[n S563 . byte . ]
+"67
+[s S566 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S566 . keyUp keyUD keyDown keyL keyLR keyR ]
+"75
+[s S567 `ui 1 `uc 1 `ui 1 ]
+[n S567 . exceptDown _ exceptRight ]
+"80
+[s S568 `uc 1 `ui 1 `uc 1 `ui 1 ]
+[n S568 . _0 exceptUp _1 exceptLeft ]
+"66
+[u S565 `S566 1 `S567 1 `S568 1 ]
+[n S565 . . . . ]
+"100
+[s S569 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S569 . position length max min ]
+"106
+[s S570 `S569 1 `S569 1 `S569 1 `S569 1 `S569 1 `S569 1 `S569 1 ]
+[n S570 . year month date dayOfWeek hour minute second ]
+"139
+[c E4259 0 1 2 3 4 5 6 7 8 .. ]
+[n E4259 . STATE_BOOT STATE_CLOCK STATE_MENU STATE_ADJUST_CLOCK STATE_ALERM STATE_SET_TIMER STATE_BUZZER_TEST STATE_VERSION STATE_ERROR  ]
+"155
+[c E4271 0 1 2 3 .. ]
+[n E4271 . MENU_ADJUST MENU_TIMER MENU_BUZZER_TEST MENU_VERSION  ]
+"186
+[s S573 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S573 . up upHold down downHold upDown left right leftRightHold ]
+"184
+[u S572 `uc 1 `S573 1 ]
+[n S572 . byte . ]
+"199
+[s S575 :1 `uc 1 ]
+[n S575 . right ]
+"197
+[u S574 `uc 1 `S575 1 ]
+[n S574 . byte . ]
+"205
+[s S577 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S577 . updateClock changeMessage changeValue soundOn soundOff ]
+"203
+[u S576 `uc 1 `S577 1 ]
+[n S576 . byte . ]
+"183
+[s S571 `S572 1 `S574 1 `S576 1 ]
+[n S571 . keyPress keyRelease output ]
 [p mainexit ]
 "10828 /Applications/microchip/xc8/v1.34/include/pic16f1508.h
 [v _PWM3OE `Vb ~T0 @X0 0 e@12494 ]
@@ -4100,6 +4115,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 184: extern unsigned char __resetbits;
 [; ;pic.h: 185: extern __bit __powerdown;
 [; ;pic.h: 186: extern __bit __timeout;
+[; ;stdbool.h: 12: typedef unsigned char bool;
 "3 src/pic16f1508_init.h
 [v _initialize `(v ~T0 @X0 1 ef ]
 {
@@ -4130,9 +4146,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic16f1508_init.h: 17: IOCANbits.IOCAN3 = 1 ;
 "17
 [e = . . _IOCANbits 0 3 -> -> 1 `i `uc ]
-[; ;pic16f1508_init.h: 20: OPTION_REGbits.PSA = 0 ;
+[; ;pic16f1508_init.h: 20: OPTION_REGbits.PSA = 1 ;
 "20
-[e = . . _OPTION_REGbits 0 1 -> -> 0 `i `uc ]
+[e = . . _OPTION_REGbits 0 1 -> -> 1 `i `uc ]
 [; ;pic16f1508_init.h: 21: OPTION_REGbits.PS = 0b010 ;
 "21
 [e = . . _OPTION_REGbits 0 0 -> -> 2 `i `uc ]
@@ -4232,48 +4248,48 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;typedef.h: 37: BOOL_TRUE = 1 ,
 [; ;typedef.h: 38: } EnBool ;
 [; ;typedef.h: 39: typedef EnBool Bool_t;
-[; ;ParallelLCD.h: 28: typedef enum {
-[; ;ParallelLCD.h: 29: PARALLEL_LCD_CONFIG_FUNCTION_NONE = 0x00 ,
-[; ;ParallelLCD.h: 30: PARALLEL_LCD_CONFIG_5x11DOT_MODE = 0x04 ,
-[; ;ParallelLCD.h: 31: PARALLEL_LCD_CONFIG_2LINE_MODE = 0x08 ,
-[; ;ParallelLCD.h: 32: PARALLEL_LCD_CONFIG_8BIT_MODE = 0x10 ,
-[; ;ParallelLCD.h: 33: } ParallelLCD_EnConfigFunction ;
-[; ;ParallelLCD.h: 36: typedef enum {
-[; ;ParallelLCD.h: 37: PARALLEL_LCD_CONFIG_DISPLAY_NONE = 0x00 ,
-[; ;ParallelLCD.h: 38: PARALLEL_LCD_CONFIG_BLINK_ON = 0x01 ,
-[; ;ParallelLCD.h: 39: PARALLEL_LCD_CONFIG_CURSOR_ON = 0x02 ,
-[; ;ParallelLCD.h: 40: PARALLEL_LCD_CONFIG_DISPLAY_ON = 0x04 ,
-[; ;ParallelLCD.h: 41: } ParallelLCD_EnConfigDisplay ;
-[; ;ParallelLCD.h: 44: typedef enum {
-[; ;ParallelLCD.h: 45: PARALLEL_LCD_CONFIG_CURSOR_NONE = 0x00 ,
-[; ;ParallelLCD.h: 46: PARALLEL_LCD_CONFIG_CURSOR_MOVEMENT_LEFT = 0x04 ,
-[; ;ParallelLCD.h: 47: PARALLEL_LCD_CONFIG_DISPLAY_SHIFT = 0x08 ,
-[; ;ParallelLCD.h: 48: } ParallelLCD_EnConfigCursor ;
-[; ;ParallelLCD.h: 51: typedef enum {
-[; ;ParallelLCD.h: 52: PARALLEL_LCD_CONFIG_ENTRY_MODE_NONE = 0x00 ,
-[; ;ParallelLCD.h: 53: PARALLEL_LCD_CONFIG_SHIFT_ON = 0x01 ,
-[; ;ParallelLCD.h: 54: PARALLEL_LCD_CONFIG_INCREMENTAL = 0x02 ,
-[; ;ParallelLCD.h: 55: } ParallelLCD_EnConfigEntryMode ;
-[; ;ParallelLCD.h: 59: typedef enum {
-[; ;ParallelLCD.h: 60: PARALLEL_LCD_ROW_SELECT_0 = 0x80 ,
-[; ;ParallelLCD.h: 61: PARALLEL_LCD_ROW_SELECT_1 = 0xC0 ,
-[; ;ParallelLCD.h: 62: } ParallelLCD_EnRowSelect ;
-"63 src/../../_Common/ParallelLCD.h
-[v _PARALLEL_LCD_ROW_SELECT `CE4100 ~T0 @X0 -> 0 `x e ]
+[; ;ParallelLCD.h: 25: typedef enum {
+[; ;ParallelLCD.h: 26: PARALLEL_LCD_CONFIG_FUNCTION_NONE = 0x00 ,
+[; ;ParallelLCD.h: 27: PARALLEL_LCD_CONFIG_5x11DOT_MODE = 0x04 ,
+[; ;ParallelLCD.h: 28: PARALLEL_LCD_CONFIG_2LINE_MODE = 0x08 ,
+[; ;ParallelLCD.h: 29: PARALLEL_LCD_CONFIG_8BIT_MODE = 0x10 ,
+[; ;ParallelLCD.h: 30: } ParallelLCD_EnConfigFunction ;
+[; ;ParallelLCD.h: 33: typedef enum {
+[; ;ParallelLCD.h: 34: PARALLEL_LCD_CONFIG_DISPLAY_NONE = 0x00 ,
+[; ;ParallelLCD.h: 35: PARALLEL_LCD_CONFIG_BLINK_ON = 0x01 ,
+[; ;ParallelLCD.h: 36: PARALLEL_LCD_CONFIG_CURSOR_ON = 0x02 ,
+[; ;ParallelLCD.h: 37: PARALLEL_LCD_CONFIG_DISPLAY_ON = 0x04 ,
+[; ;ParallelLCD.h: 38: } ParallelLCD_EnConfigDisplay ;
+[; ;ParallelLCD.h: 41: typedef enum {
+[; ;ParallelLCD.h: 42: PARALLEL_LCD_CONFIG_CURSOR_NONE = 0x00 ,
+[; ;ParallelLCD.h: 43: PARALLEL_LCD_CONFIG_CURSOR_MOVEMENT_LEFT = 0x04 ,
+[; ;ParallelLCD.h: 44: PARALLEL_LCD_CONFIG_DISPLAY_SHIFT = 0x08 ,
+[; ;ParallelLCD.h: 45: } ParallelLCD_EnConfigCursor ;
+[; ;ParallelLCD.h: 48: typedef enum {
+[; ;ParallelLCD.h: 49: PARALLEL_LCD_CONFIG_ENTRY_MODE_NONE = 0x00 ,
+[; ;ParallelLCD.h: 50: PARALLEL_LCD_CONFIG_SHIFT_ON = 0x01 ,
+[; ;ParallelLCD.h: 51: PARALLEL_LCD_CONFIG_INCREMENTAL = 0x02 ,
+[; ;ParallelLCD.h: 52: } ParallelLCD_EnConfigEntryMode ;
+[; ;ParallelLCD.h: 56: typedef enum {
+[; ;ParallelLCD.h: 57: PARALLEL_LCD_ROW_SELECT_0 = 0x80 ,
+[; ;ParallelLCD.h: 58: PARALLEL_LCD_ROW_SELECT_1 = 0xC0 ,
+[; ;ParallelLCD.h: 59: } ParallelLCD_EnRowSelect ;
+"60 src/../../_Common/ParallelLCD.h
+[v _PARALLEL_LCD_ROW_SELECT `CE4101 ~T0 @X0 -> 0 `x e ]
 [i _PARALLEL_LCD_ROW_SELECT
 :U ..
-"64
-. `E4100 0
-"65
-. `E4100 1
+"61
+. `E4101 0
+"62
+. `E4101 1
 ..
 ]
-[; ;ParallelLCD.h: 63: const ParallelLCD_EnRowSelect PARALLEL_LCD_ROW_SELECT[] = {
-[; ;ParallelLCD.h: 64: PARALLEL_LCD_ROW_SELECT_0 ,
-[; ;ParallelLCD.h: 65: PARALLEL_LCD_ROW_SELECT_1 ,
-[; ;ParallelLCD.h: 66: } ;
-[; ;ParallelLCD.h: 67: typedef ParallelLCD_EnRowSelect Position_t ;
-"71
+[; ;ParallelLCD.h: 60: const ParallelLCD_EnRowSelect PARALLEL_LCD_ROW_SELECT[] = {
+[; ;ParallelLCD.h: 61: PARALLEL_LCD_ROW_SELECT_0 ,
+[; ;ParallelLCD.h: 62: PARALLEL_LCD_ROW_SELECT_1 ,
+[; ;ParallelLCD.h: 63: } ;
+[; ;ParallelLCD.h: 64: typedef ParallelLCD_EnRowSelect Position_t ;
+"68
 [v _HEX_TABLE `Cuc ~T0 @X0 -> 0 `x s ]
 [i _HEX_TABLE
 :U ..
@@ -4295,106 +4311,106 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 70 `ui `uc
 ..
 ]
-[; ;ParallelLCD.h: 71: static const Char_t HEX_TABLE[] = { '0' , '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9' , 'A' , 'B' , 'C' , 'D' , 'E' , 'F' , } ;
-[; ;ParallelLCD.h: 75: static void ParallelLCD_WriteByte( Uint08_t data , Bool_t r ) ;
-"79
-[v _ParallelLCD_Initialize `(v ~T0 @X0 1 ef4`E4078`E4084`E4090`E4095 ]
-"84
-{
-[; ;ParallelLCD.h: 79: void ParallelLCD_Initialize(
-[; ;ParallelLCD.h: 80: ParallelLCD_EnConfigFunction configFunction ,
-[; ;ParallelLCD.h: 81: ParallelLCD_EnConfigDisplay configDisplay ,
-[; ;ParallelLCD.h: 82: ParallelLCD_EnConfigCursor configCursor ,
-[; ;ParallelLCD.h: 83: ParallelLCD_EnConfigEntryMode configEntryMode
-[; ;ParallelLCD.h: 84: ) {
-[e :U _ParallelLCD_Initialize ]
-"80
-[v _configFunction `E4078 ~T0 @X0 1 r1 ]
+[; ;ParallelLCD.h: 68: static const Char_t HEX_TABLE[] = { '0' , '1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9' , 'A' , 'B' , 'C' , 'D' , 'E' , 'F' , } ;
+[; ;ParallelLCD.h: 72: static void ParallelLCD_WriteByte( Uint08_t data , Bool_t r ) ;
+"76
+[v _ParallelLCD_Initialize `(v ~T0 @X0 1 ef4`E4079`E4085`E4091`E4096 ]
 "81
-[v _configDisplay `E4084 ~T0 @X0 1 r2 ]
-"82
-[v _configCursor `E4090 ~T0 @X0 1 r3 ]
-"83
-[v _configEntryMode `E4095 ~T0 @X0 1 r4 ]
-"84
+{
+[; ;ParallelLCD.h: 76: void ParallelLCD_Initialize(
+[; ;ParallelLCD.h: 77: ParallelLCD_EnConfigFunction configFunction ,
+[; ;ParallelLCD.h: 78: ParallelLCD_EnConfigDisplay configDisplay ,
+[; ;ParallelLCD.h: 79: ParallelLCD_EnConfigCursor configCursor ,
+[; ;ParallelLCD.h: 80: ParallelLCD_EnConfigEntryMode configEntryMode
+[; ;ParallelLCD.h: 81: ) {
+[e :U _ParallelLCD_Initialize ]
+"77
+[v _configFunction `E4079 ~T0 @X0 1 r1 ]
+"78
+[v _configDisplay `E4085 ~T0 @X0 1 r2 ]
+"79
+[v _configCursor `E4091 ~T0 @X0 1 r3 ]
+"80
+[v _configEntryMode `E4096 ~T0 @X0 1 r4 ]
+"81
 [f ]
-[; ;ParallelLCD.h: 85: ParallelLCD_WriteByte( ( configFunction & 0x1C ) | 0x20 , BOOL_FALSE ) ;
+[; ;ParallelLCD.h: 82: ParallelLCD_WriteByte( ( configFunction & 0x1C ) | 0x20 , BOOL_FALSE ) ;
+"82
+[e ( _ParallelLCD_WriteByte (2 , -> | & -> _configFunction `i -> 28 `i -> 32 `i `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 83: ParallelLCD_WriteByte( ( configDisplay & 0x0C ) | 0x08 , BOOL_FALSE ) ;
+"83
+[e ( _ParallelLCD_WriteByte (2 , -> | & -> _configDisplay `i -> 12 `i -> 8 `i `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 84: ParallelLCD_WriteByte( ( configCursor & 0x07 ) | 0x10 , BOOL_FALSE ) ;
+"84
+[e ( _ParallelLCD_WriteByte (2 , -> | & -> _configCursor `i -> 7 `i -> 16 `i `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 85: ParallelLCD_WriteByte( ( configEntryMode & 0x03 ) | 0x04 , BOOL_FALSE ) ;
 "85
-[e ( _ParallelLCD_WriteByte (2 , -> | & -> _configFunction `i -> 28 `i -> 32 `i `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 86: ParallelLCD_WriteByte( ( configDisplay & 0x0C ) | 0x08 , BOOL_FALSE ) ;
+[e ( _ParallelLCD_WriteByte (2 , -> | & -> _configEntryMode `i -> 3 `i -> 4 `i `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 86: }
 "86
-[e ( _ParallelLCD_WriteByte (2 , -> | & -> _configDisplay `i -> 12 `i -> 8 `i `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 87: ParallelLCD_WriteByte( ( configCursor & 0x07 ) | 0x10 , BOOL_FALSE ) ;
-"87
-[e ( _ParallelLCD_WriteByte (2 , -> | & -> _configCursor `i -> 7 `i -> 16 `i `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 88: ParallelLCD_WriteByte( ( configEntryMode & 0x03 ) | 0x04 , BOOL_FALSE ) ;
-"88
-[e ( _ParallelLCD_WriteByte (2 , -> | & -> _configEntryMode `i -> 3 `i -> 4 `i `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 89: }
-"89
 [e :UE 446 ]
 }
-"93
-[v _ParallelLCD_WriteCharacter `(v ~T0 @X0 1 ef2`E4100`uc ]
+"90
+[v _ParallelLCD_WriteCharacter `(v ~T0 @X0 1 ef2`E4101`uc ]
 {
-[; ;ParallelLCD.h: 93: void ParallelLCD_WriteCharacter( Position_t position , Char_t character ) {
+[; ;ParallelLCD.h: 90: void ParallelLCD_WriteCharacter( Position_t position , Char_t character ) {
 [e :U _ParallelLCD_WriteCharacter ]
-[v _position `E4100 ~T0 @X0 1 r1 ]
+[v _position `E4101 ~T0 @X0 1 r1 ]
 [v _character `uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;ParallelLCD.h: 94: ParallelLCD_WriteByte( position , BOOL_FALSE ) ;
-"94
-[e ( _ParallelLCD_WriteByte (2 , -> _position `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 95: ParallelLCD_WriteByte( character , BOOL_TRUE ) ;
-"95
-[e ( _ParallelLCD_WriteByte (2 , _character . `E4073 1 ]
-[; ;ParallelLCD.h: 96: }
-"96
+[; ;ParallelLCD.h: 91: ParallelLCD_WriteByte( position , BOOL_FALSE ) ;
+"91
+[e ( _ParallelLCD_WriteByte (2 , -> _position `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 92: ParallelLCD_WriteByte( character , BOOL_TRUE ) ;
+"92
+[e ( _ParallelLCD_WriteByte (2 , _character . `E4074 1 ]
+[; ;ParallelLCD.h: 93: }
+"93
 [e :UE 447 ]
 }
-"100
-[v _ParallelLCD_WriteString `(v ~T0 @X0 1 ef2`E4100`*Cuc ]
+"97
+[v _ParallelLCD_WriteString `(v ~T0 @X0 1 ef2`E4101`*Cuc ]
 {
-[; ;ParallelLCD.h: 100: void ParallelLCD_WriteString( Position_t position , const Char_t* stringPtr ) {
+[; ;ParallelLCD.h: 97: void ParallelLCD_WriteString( Position_t position , const Char_t* stringPtr ) {
 [e :U _ParallelLCD_WriteString ]
-[v _position `E4100 ~T0 @X0 1 r1 ]
+[v _position `E4101 ~T0 @X0 1 r1 ]
 [v _stringPtr `*Cuc ~T0 @X0 1 r2 ]
 [f ]
-[; ;ParallelLCD.h: 101: ParallelLCD_WriteByte( position , BOOL_FALSE ) ;
-"101
-[e ( _ParallelLCD_WriteByte (2 , -> _position `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 102: while ( *stringPtr ) {
-"102
+[; ;ParallelLCD.h: 98: ParallelLCD_WriteByte( position , BOOL_FALSE ) ;
+"98
+[e ( _ParallelLCD_WriteByte (2 , -> _position `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 99: while ( *stringPtr ) {
+"99
 [e $U 449  ]
 [e :U 450 ]
 {
-[; ;ParallelLCD.h: 103: ParallelLCD_WriteByte( *stringPtr++ , BOOL_TRUE ) ;
-"103
-[e ( _ParallelLCD_WriteByte (2 , *U ++ _stringPtr * -> -> 1 `i `x -> -> # *U _stringPtr `i `x . `E4073 1 ]
-"104
+[; ;ParallelLCD.h: 100: ParallelLCD_WriteByte( *stringPtr++ , BOOL_TRUE ) ;
+"100
+[e ( _ParallelLCD_WriteByte (2 , *U ++ _stringPtr * -> -> 1 `i `x -> -> # *U _stringPtr `i `x . `E4074 1 ]
+"101
 }
 [e :U 449 ]
-"102
+"99
 [e $ != -> *U _stringPtr `i -> -> -> 0 `i `Cuc `i 450  ]
 [e :U 451 ]
-[; ;ParallelLCD.h: 104: }
-[; ;ParallelLCD.h: 105: }
-"105
+[; ;ParallelLCD.h: 101: }
+[; ;ParallelLCD.h: 102: }
+"102
 [e :UE 448 ]
 }
-"109
-[v _ParallelLCD_WriteStringClearing `(v ~T0 @X0 1 ef2`E4100`*Cuc ]
+"106
+[v _ParallelLCD_WriteStringClearing `(v ~T0 @X0 1 ef2`E4101`*Cuc ]
 {
-[; ;ParallelLCD.h: 109: void ParallelLCD_WriteStringClearing( Position_t position , const Char_t* stringPtr ) {
+[; ;ParallelLCD.h: 106: void ParallelLCD_WriteStringClearing( Position_t position , const Char_t* stringPtr ) {
 [e :U _ParallelLCD_WriteStringClearing ]
-[v _position `E4100 ~T0 @X0 1 r1 ]
+[v _position `E4101 ~T0 @X0 1 r1 ]
 [v _stringPtr `*Cuc ~T0 @X0 1 r2 ]
 [f ]
-[; ;ParallelLCD.h: 110: ParallelLCD_WriteByte( position & 0xF0 , BOOL_FALSE ) ;
-"110
-[e ( _ParallelLCD_WriteByte (2 , -> & -> _position `i -> 240 `i `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 111: for ( Uint08_t i = 0 ; i != 16 ; i++ ) {
-"111
+[; ;ParallelLCD.h: 107: ParallelLCD_WriteByte( position & 0xF0 , BOOL_FALSE ) ;
+"107
+[e ( _ParallelLCD_WriteByte (2 , -> & -> _position `i -> 240 `i `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 108: for ( Uint08_t i = 0 ; i != 16 ; i++ ) {
+"108
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
@@ -4402,538 +4418,558 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 454  ]
 [e :U 453 ]
 {
-[; ;ParallelLCD.h: 112: if ( i >= ( position & 0x0F ) && ( *stringPtr ) )
-"112
+[; ;ParallelLCD.h: 109: if ( i >= ( position & 0x0F ) && ( *stringPtr ) )
+"109
 [e $ ! && >= -> _i `i & -> _position `i -> 15 `i != -> *U _stringPtr `i -> -> -> 0 `i `Cuc `i 456  ]
-[; ;ParallelLCD.h: 113: ParallelLCD_WriteByte( *stringPtr++ , BOOL_TRUE ) ;
-"113
-[e ( _ParallelLCD_WriteByte (2 , *U ++ _stringPtr * -> -> 1 `i `x -> -> # *U _stringPtr `i `x . `E4073 1 ]
+[; ;ParallelLCD.h: 110: ParallelLCD_WriteByte( *stringPtr++ , BOOL_TRUE ) ;
+"110
+[e ( _ParallelLCD_WriteByte (2 , *U ++ _stringPtr * -> -> 1 `i `x -> -> # *U _stringPtr `i `x . `E4074 1 ]
 [e $U 457  ]
-"114
-[e :U 456 ]
-[; ;ParallelLCD.h: 114: else
-[; ;ParallelLCD.h: 115: ParallelLCD_WriteByte( ' ' , BOOL_TRUE ) ;
-"115
-[e ( _ParallelLCD_WriteByte (2 , -> -> 32 `ui `uc . `E4073 1 ]
-[e :U 457 ]
-"117
-}
 "111
+[e :U 456 ]
+[; ;ParallelLCD.h: 111: else
+[; ;ParallelLCD.h: 112: ParallelLCD_WriteByte( ' ' , BOOL_TRUE ) ;
+"112
+[e ( _ParallelLCD_WriteByte (2 , -> -> 32 `ui `uc . `E4074 1 ]
+[e :U 457 ]
+"114
+}
+"108
 [e ++ _i -> -> 1 `i `uc ]
 [e $ != -> _i `i -> 16 `i 453  ]
 [e :U 454 ]
-"117
+"114
 }
-[; ;ParallelLCD.h: 117: }
-[; ;ParallelLCD.h: 118: }
-"118
+[; ;ParallelLCD.h: 114: }
+[; ;ParallelLCD.h: 115: }
+"115
 [e :UE 452 ]
 }
-"122
-[v _ParallelLCD_WriteHexNumber `(v ~T0 @X0 1 ef2`E4100`uc ]
+"119
+[v _ParallelLCD_WriteHexNumber `(v ~T0 @X0 1 ef2`E4101`uc ]
 {
-[; ;ParallelLCD.h: 122: void ParallelLCD_WriteHexNumber( Position_t position , Uint08_t number ) {
+[; ;ParallelLCD.h: 119: void ParallelLCD_WriteHexNumber( Position_t position , Uint08_t number ) {
 [e :U _ParallelLCD_WriteHexNumber ]
-[v _position `E4100 ~T0 @X0 1 r1 ]
+[v _position `E4101 ~T0 @X0 1 r1 ]
 [v _number `uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;ParallelLCD.h: 123: ParallelLCD_WriteByte( position , BOOL_FALSE ) ;
+[; ;ParallelLCD.h: 120: ParallelLCD_WriteByte( position , BOOL_FALSE ) ;
+"120
+[e ( _ParallelLCD_WriteByte (2 , -> _position `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 121: ParallelLCD_WriteByte( HEX_TABLE[ number >> 4 ] , BOOL_TRUE ) ;
+"121
+[e ( _ParallelLCD_WriteByte (2 , *U + &U _HEX_TABLE * -> -> >> -> _number `i -> 4 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux . `E4074 1 ]
+[; ;ParallelLCD.h: 122: ParallelLCD_WriteByte( HEX_TABLE[ number & 0x0F ] , BOOL_TRUE ) ;
+"122
+[e ( _ParallelLCD_WriteByte (2 , *U + &U _HEX_TABLE * -> -> & -> _number `i -> 15 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux . `E4074 1 ]
+[; ;ParallelLCD.h: 123: }
 "123
-[e ( _ParallelLCD_WriteByte (2 , -> _position `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 124: ParallelLCD_WriteByte( HEX_TABLE[ number >> 4 ] , BOOL_TRUE ) ;
-"124
-[e ( _ParallelLCD_WriteByte (2 , *U + &U _HEX_TABLE * -> -> >> -> _number `i -> 4 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux . `E4073 1 ]
-[; ;ParallelLCD.h: 125: ParallelLCD_WriteByte( HEX_TABLE[ number & 0x0F ] , BOOL_TRUE ) ;
-"125
-[e ( _ParallelLCD_WriteByte (2 , *U + &U _HEX_TABLE * -> -> & -> _number `i -> 15 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux . `E4073 1 ]
-[; ;ParallelLCD.h: 126: }
-"126
 [e :UE 458 ]
 }
-"130
-[v _ParallelLCD_ClearRow `(v ~T0 @X0 1 ef1`E4100 ]
+"127
+[v _ParallelLCD_ClearRow `(v ~T0 @X0 1 ef1`E4101 ]
 {
-[; ;ParallelLCD.h: 130: void ParallelLCD_ClearRow( ParallelLCD_EnRowSelect rowSelect ) {
+[; ;ParallelLCD.h: 127: void ParallelLCD_ClearRow( ParallelLCD_EnRowSelect rowSelect ) {
 [e :U _ParallelLCD_ClearRow ]
-[v _rowSelect `E4100 ~T0 @X0 1 r1 ]
+[v _rowSelect `E4101 ~T0 @X0 1 r1 ]
 [f ]
-[; ;ParallelLCD.h: 131: ParallelLCD_WriteByte( rowSelect & 0xF0 , BOOL_FALSE ) ;
-"131
-[e ( _ParallelLCD_WriteByte (2 , -> & -> _rowSelect `i -> 240 `i `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 132: for ( Uint08_t i = 0 ; i != 16 ; i++ )
-"132
+[; ;ParallelLCD.h: 128: ParallelLCD_WriteByte( rowSelect & 0xF0 , BOOL_FALSE ) ;
+"128
+[e ( _ParallelLCD_WriteByte (2 , -> & -> _rowSelect `i -> 240 `i `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 129: for ( Uint08_t i = 0 ; i != 16 ; i++ )
+"129
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
 [e $ != -> _i `i -> 16 `i 460  ]
 [e $U 461  ]
-"133
+"130
 [e :U 460 ]
-[; ;ParallelLCD.h: 133: ParallelLCD_WriteByte( ' ' , BOOL_TRUE ) ;
-[e ( _ParallelLCD_WriteByte (2 , -> -> 32 `ui `uc . `E4073 1 ]
-"132
+[; ;ParallelLCD.h: 130: ParallelLCD_WriteByte( ' ' , BOOL_TRUE ) ;
+[e ( _ParallelLCD_WriteByte (2 , -> -> 32 `ui `uc . `E4074 1 ]
+"129
 [e ++ _i -> -> 1 `i `uc ]
 [e $ != -> _i `i -> 16 `i 460  ]
 [e :U 461 ]
-"133
+"130
 }
-[; ;ParallelLCD.h: 134: }
-"134
+[; ;ParallelLCD.h: 131: }
+"131
 [e :UE 459 ]
 }
-"138
-[v _ParallelLCD_ClearPartial `(v ~T0 @X0 1 ef2`E4100`uc ]
+"135
+[v _ParallelLCD_ClearPartial `(v ~T0 @X0 1 ef2`E4101`uc ]
 {
-[; ;ParallelLCD.h: 138: void ParallelLCD_ClearPartial( Position_t position , Uint08_t length ) {
+[; ;ParallelLCD.h: 135: void ParallelLCD_ClearPartial( Position_t position , Uint08_t length ) {
 [e :U _ParallelLCD_ClearPartial ]
-[v _position `E4100 ~T0 @X0 1 r1 ]
+[v _position `E4101 ~T0 @X0 1 r1 ]
 [v _length `uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;ParallelLCD.h: 139: ParallelLCD_WriteByte( position , BOOL_FALSE ) ;
-"139
-[e ( _ParallelLCD_WriteByte (2 , -> _position `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 140: for ( Uint08_t i = 0 ; i != length ; i++ )
-"140
+[; ;ParallelLCD.h: 136: ParallelLCD_WriteByte( position , BOOL_FALSE ) ;
+"136
+[e ( _ParallelLCD_WriteByte (2 , -> _position `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 137: for ( Uint08_t i = 0 ; i != length ; i++ )
+"137
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
 [e $U 467  ]
-"141
+"138
 [e :U 464 ]
-[; ;ParallelLCD.h: 141: ParallelLCD_WriteByte( ' ' , BOOL_TRUE ) ;
-[e ( _ParallelLCD_WriteByte (2 , -> -> 32 `ui `uc . `E4073 1 ]
-"140
+[; ;ParallelLCD.h: 138: ParallelLCD_WriteByte( ' ' , BOOL_TRUE ) ;
+[e ( _ParallelLCD_WriteByte (2 , -> -> 32 `ui `uc . `E4074 1 ]
+"137
 [e ++ _i -> -> 1 `i `uc ]
 [e :U 467 ]
 [e $ != -> _i `i -> _length `i 464  ]
 [e :U 465 ]
-"141
+"138
 }
-[; ;ParallelLCD.h: 142: }
-"142
+[; ;ParallelLCD.h: 139: }
+"139
 [e :UE 463 ]
 }
-"146
+"143
 [v _ParallelLCD_SetCgram `(v ~T0 @X0 1 ef2`uc`*Cuc ]
 {
-[; ;ParallelLCD.h: 146: void ParallelLCD_SetCgram( Char_t charCode , const Char_t* bitmap ) {
+[; ;ParallelLCD.h: 143: void ParallelLCD_SetCgram( Char_t charCode , const Char_t* bitmap ) {
 [e :U _ParallelLCD_SetCgram ]
 [v _charCode `uc ~T0 @X0 1 r1 ]
 [v _bitmap `*Cuc ~T0 @X0 1 r2 ]
 [f ]
-[; ;ParallelLCD.h: 147: ParallelLCD_WriteByte( ( ( charCode << 3 ) & 0b00111111 ) | 0b01000000 , BOOL_FALSE ) ;
-"147
-[e ( _ParallelLCD_WriteByte (2 , -> | & << -> _charCode `i -> 3 `i -> 63 `i -> 64 `i `uc . `E4073 0 ]
-[; ;ParallelLCD.h: 148: for ( Uint08_t i = 0 ; i != 8 ; i++ , bitmap++ )
-"148
+[; ;ParallelLCD.h: 144: ParallelLCD_WriteByte( ( ( charCode << 3 ) & 0b00111111 ) | 0b01000000 , BOOL_FALSE ) ;
+"144
+[e ( _ParallelLCD_WriteByte (2 , -> | & << -> _charCode `i -> 3 `i -> 63 `i -> 64 `i `uc . `E4074 0 ]
+[; ;ParallelLCD.h: 145: for ( Uint08_t i = 0 ; i != 8 ; i++ , bitmap++ )
+"145
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
 [e $ != -> _i `i -> 8 `i 469  ]
 [e $U 470  ]
-"149
+"146
 [e :U 469 ]
-[; ;ParallelLCD.h: 149: ParallelLCD_WriteByte( *bitmap , BOOL_TRUE ) ;
-[e ( _ParallelLCD_WriteByte (2 , *U _bitmap . `E4073 1 ]
-"148
+[; ;ParallelLCD.h: 146: ParallelLCD_WriteByte( *bitmap , BOOL_TRUE ) ;
+[e ( _ParallelLCD_WriteByte (2 , *U _bitmap . `E4074 1 ]
+"145
 [e ; ++ _i -> -> 1 `i `uc ++ _bitmap * -> -> 1 `i `x -> -> # *U _bitmap `i `x ]
 [e $ != -> _i `i -> 8 `i 469  ]
 [e :U 470 ]
-"149
+"146
 }
-[; ;ParallelLCD.h: 150: }
-"150
+[; ;ParallelLCD.h: 147: }
+"147
 [e :UE 468 ]
 }
-"167
-[v _ParallelLCD_WriteByte `(v ~T0 @X0 1 sf2`uc`E4073 ]
+"151
+[v _ParallelLCD_ClearDisplay `(v ~T0 @X0 1 ef ]
 {
-[; ;ParallelLCD.h: 167: static void ParallelLCD_WriteByte( Uint08_t data , Bool_t r ) {
+[; ;ParallelLCD.h: 151: void ParallelLCD_ClearDisplay( ) {
+[e :U _ParallelLCD_ClearDisplay ]
+[f ]
+[; ;ParallelLCD.h: 152: ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_0 ) ;
+"152
+[e ( _ParallelLCD_ClearRow (1 . `E4101 0 ]
+[; ;ParallelLCD.h: 153: ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+"153
+[e ( _ParallelLCD_ClearRow (1 . `E4101 1 ]
+[; ;ParallelLCD.h: 156: }
+"156
+[e :UE 472 ]
+}
+"164
+[v _ParallelLCD_WriteByte `(v ~T0 @X0 1 sf2`uc`E4074 ]
+{
+[; ;ParallelLCD.h: 164: static void ParallelLCD_WriteByte( Uint08_t data , Bool_t r ) {
 [e :U _ParallelLCD_WriteByte ]
 [v _data `uc ~T0 @X0 1 r1 ]
-[v _r `E4073 ~T0 @X0 1 r2 ]
+[v _r `E4074 ~T0 @X0 1 r2 ]
 [f ]
-[; ;ParallelLCD.h: 168: _delay((unsigned long)((40)*(1000000L/4000000.0))); ;
-"168
+[; ;ParallelLCD.h: 165: _delay((unsigned long)((40)*(1000000L/4000000.0))); ;
+"165
 [e ( __delay (1 -> * -> -> 40 `i `d / -> -> 1000000 `l `d .4000000.0 `ul ]
-[; ;ParallelLCD.h: 169: LATC=data; ;
-"169
+[; ;ParallelLCD.h: 166: LATC=data; ;
+"166
 [e = _LATC _data ]
-[; ;ParallelLCD.h: 170: LATBbits.LATB7=r&0x01; ;
-"170
+[; ;ParallelLCD.h: 167: LATBbits.LATB7=r&0x01; ;
+"167
 [e = . . _LATBbits 0 4 -> & -> _r `i -> 1 `i `uc ]
-[; ;ParallelLCD.h: 171: LATBbits.LATB5=1;__nop();LATBbits.LATB5=0; ;
-"171
+[; ;ParallelLCD.h: 168: LATBbits.LATB5=1;__nop();LATBbits.LATB5=0; ;
+"168
 [e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
 [e ( ___nop ..  ]
 [e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
-[; ;ParallelLCD.h: 172: ; ;
-[; ;ParallelLCD.h: 173: }
-"173
-[e :UE 472 ]
+[; ;ParallelLCD.h: 169: ; ;
+[; ;ParallelLCD.h: 170: }
+"170
+[e :UE 473 ]
 }
-[; ;DateTime.h: 5: typedef enum {
-[; ;DateTime.h: 6: DATE_ITEM_YEAR = 0 ,
-[; ;DateTime.h: 7: DATE_ITEM_MONTH ,
-[; ;DateTime.h: 8: DATE_ITEM_DATE ,
-[; ;DateTime.h: 9: DATE_ITEM_DAY_OF_WEEK ,
-[; ;DateTime.h: 10: DATE_ITEM_HOUR ,
-[; ;DateTime.h: 11: DATE_ITEM_MINUTE ,
-[; ;DateTime.h: 12: DATE_ITEM_SECOND ,
-[; ;DateTime.h: 13: } EnDateItem ;
-"19 src/../../_Common/DateTime.h
+[; ;DateTime.h: 8: typedef enum {
+[; ;DateTime.h: 9: DATE_ITEM_YEAR = 0 ,
+[; ;DateTime.h: 10: DATE_ITEM_MONTH ,
+[; ;DateTime.h: 11: DATE_ITEM_DATE ,
+[; ;DateTime.h: 12: DATE_ITEM_DAY_OF_WEEK ,
+[; ;DateTime.h: 13: DATE_ITEM_HOUR ,
+[; ;DateTime.h: 14: DATE_ITEM_MINUTE ,
+[; ;DateTime.h: 15: DATE_ITEM_SECOND ,
+[; ;DateTime.h: 16: } EnDateItem ;
+"22 src/../../_Common/DateTime.h
 [v _STR_DAY_OF_WEEK `*Cuc ~T0 @X0 -> 0 `x e ]
 [i _STR_DAY_OF_WEEK
 :U ..
-"20
-:s 1C
-"21
-:s 2C
-"22
-:s 3C
 "23
-:s 4C
+:s 1C
 "24
-:s 5C
+:s 2C
 "25
-:s 6C
+:s 3C
 "26
+:s 4C
+"27
+:s 5C
+"28
+:s 6C
+"29
 :s 7C
 ..
 ]
-[; ;DateTime.h: 19: const char* STR_DAY_OF_WEEK[] = {
-[; ;DateTime.h: 20: "SUN" ,
-[; ;DateTime.h: 21: "MON" ,
-[; ;DateTime.h: 22: "TUE" ,
-[; ;DateTime.h: 23: "WED" ,
-[; ;DateTime.h: 24: "THU" ,
-[; ;DateTime.h: 25: "FRI" ,
-[; ;DateTime.h: 26: "SAT" ,
-[; ;DateTime.h: 27: } ;
-[; ;DateTime.h: 30: typedef union {
-[; ;DateTime.h: 31: struct {
-[; ;DateTime.h: 32: Uint08_t second ;
-[; ;DateTime.h: 33: Uint08_t minute ;
-[; ;DateTime.h: 34: Uint08_t hour ;
-[; ;DateTime.h: 35: Uint08_t dayOfWeek ;
-[; ;DateTime.h: 36: Uint08_t day ;
-[; ;DateTime.h: 37: Uint08_t month ;
-[; ;DateTime.h: 38: Uint08_t year ;
-[; ;DateTime.h: 39: } ;
-[; ;DateTime.h: 40: struct {
-[; ;DateTime.h: 41: unsigned : 7 ;
-[; ;DateTime.h: 42: unsigned clockHalt : 1 ;
-[; ;DateTime.h: 43: } ;
-[; ;DateTime.h: 44: Uint08_t array[7] ;
-[; ;DateTime.h: 45: } StDateTime ;
-"48
-[v __date_time_ConvertByteToDateTime `(v ~T0 @X0 1 ef2`*S473`*uc ]
-{
-[; ;DateTime.h: 48: void _date_time_ConvertByteToDateTime( StDateTime* dateTime , char* string ) {
-[e :U __date_time_ConvertByteToDateTime ]
-[v _dateTime `*S473 ~T0 @X0 1 r1 ]
-[v _string `*uc ~T0 @X0 1 r2 ]
-[f ]
-[; ;DateTime.h: 50: string[16] = 0 ;
-"50
-[e = *U + _string * -> -> 16 `i `x -> -> # *U _string `i `x -> -> 0 `i `uc ]
-[; ;DateTime.h: 52: string[13] = ':' ;
-"52
-[e = *U + _string * -> -> 13 `i `x -> -> # *U _string `i `x -> -> 58 `ui `uc ]
-[; ;DateTime.h: 53: string[10] = ':' ;
-"53
-[e = *U + _string * -> -> 10 `i `x -> -> # *U _string `i `x -> -> 58 `ui `uc ]
-[; ;DateTime.h: 54: string[5] = '-' ;
-"54
-[e = *U + _string * -> -> 5 `i `x -> -> # *U _string `i `x -> -> 45 `ui `uc ]
-[; ;DateTime.h: 55: string[2] = '-' ;
+[; ;DateTime.h: 22: const char* STR_DAY_OF_WEEK[] = {
+[; ;DateTime.h: 23: "SUN" ,
+[; ;DateTime.h: 24: "MON" ,
+[; ;DateTime.h: 25: "TUE" ,
+[; ;DateTime.h: 26: "WED" ,
+[; ;DateTime.h: 27: "THU" ,
+[; ;DateTime.h: 28: "FRI" ,
+[; ;DateTime.h: 29: "SAT" ,
+[; ;DateTime.h: 30: } ;
+[; ;DateTime.h: 33: typedef union {
+[; ;DateTime.h: 34: struct {
+[; ;DateTime.h: 35: Uint08_t second ;
+[; ;DateTime.h: 36: Uint08_t minute ;
+[; ;DateTime.h: 37: Uint08_t hour ;
+[; ;DateTime.h: 38: Uint08_t dayOfWeek ;
+[; ;DateTime.h: 39: Uint08_t day ;
+[; ;DateTime.h: 40: Uint08_t month ;
+[; ;DateTime.h: 41: Uint08_t year ;
+[; ;DateTime.h: 42: } ;
+[; ;DateTime.h: 43: struct {
+[; ;DateTime.h: 44: Uint24_t time ;
+[; ;DateTime.h: 45: Uint08_t ;
+[; ;DateTime.h: 46: Uint24_t date ;
+[; ;DateTime.h: 47: } ;
+[; ;DateTime.h: 48: struct {
+[; ;DateTime.h: 49: unsigned : 7 ;
+[; ;DateTime.h: 50: unsigned clockHalt : 1 ;
+[; ;DateTime.h: 51: } ;
+[; ;DateTime.h: 52: } StDateTime ;
 "55
-[e = *U + _string * -> -> 2 `i `x -> -> # *U _string `i `x -> -> 45 `ui `uc ]
-[; ;DateTime.h: 58: string[15] = ( dateTime->second & 0x0F ) | '0' ;
-"58
-[e = *U + _string * -> -> 15 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 0 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 59: string[14] = ( dateTime->second >> 4 ) | '0' ;
-"59
-[e = *U + _string * -> -> 14 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 0 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 61: string[12] = ( dateTime->minute & 0x0F ) | '0' ;
-"61
-[e = *U + _string * -> -> 12 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 1 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 62: string[11] = ( dateTime->minute >> 4 ) | '0' ;
-"62
-[e = *U + _string * -> -> 11 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 1 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 64: string[9] = ( dateTime->hour & 0x0F ) | '0' ;
-"64
-[e = *U + _string * -> -> 9 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 2 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 65: string[8] = ( dateTime->hour >> 4 ) | '0' ;
-"65
-[e = *U + _string * -> -> 8 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 2 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 68: string[7] = ( dateTime->day & 0x0F ) | '0' ;
-"68
-[e = *U + _string * -> -> 7 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 4 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 69: string[6] = ( dateTime->day >> 4 ) | '0' ;
-"69
-[e = *U + _string * -> -> 6 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 4 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 71: string[4] = ( dateTime->month & 0x0F ) | '0' ;
-"71
-[e = *U + _string * -> -> 4 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 5 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 72: string[3] = ( dateTime->month >> 4 ) | '0' ;
-"72
-[e = *U + _string * -> -> 3 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 5 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 74: string[1] = ( dateTime->year & 0x0F ) | '0' ;
-"74
-[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 6 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 75: string[0] = ( dateTime->year >> 4 ) | '0' ;
-"75
-[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 6 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 77: }
-"77
-[e :UE 476 ]
-}
-"80
-[v __date_time_ConvertByteToDate `(v ~T0 @X0 1 ef2`*S473`*uc ]
+[v __date_time_ConvertByteToDateTime `(v ~T0 @X0 1 ef2`*S474`*uc ]
 {
-[; ;DateTime.h: 80: void _date_time_ConvertByteToDate( StDateTime* dateTime , char* stinrg ) {
-[e :U __date_time_ConvertByteToDate ]
-[v _dateTime `*S473 ~T0 @X0 1 r1 ]
-[v _stinrg `*uc ~T0 @X0 1 r2 ]
-[f ]
-[; ;DateTime.h: 82: stinrg[16] = 0 ;
-"82
-[e = *U + _stinrg * -> -> 16 `i `x -> -> # *U _stinrg `i `x -> -> 0 `i `uc ]
-[; ;DateTime.h: 83: stinrg[15] = ']' ;
-"83
-[e = *U + _stinrg * -> -> 15 `i `x -> -> # *U _stinrg `i `x -> -> 93 `ui `uc ]
-[; ;DateTime.h: 84: stinrg[11] = '[' ;
-"84
-[e = *U + _stinrg * -> -> 11 `i `x -> -> # *U _stinrg `i `x -> -> 91 `ui `uc ]
-[; ;DateTime.h: 85: stinrg[10] = ' ' ;
-"85
-[e = *U + _stinrg * -> -> 10 `i `x -> -> # *U _stinrg `i `x -> -> 32 `ui `uc ]
-[; ;DateTime.h: 86: stinrg[7] = '-' ;
-"86
-[e = *U + _stinrg * -> -> 7 `i `x -> -> # *U _stinrg `i `x -> -> 45 `ui `uc ]
-[; ;DateTime.h: 87: stinrg[4] = '-' ;
-"87
-[e = *U + _stinrg * -> -> 4 `i `x -> -> # *U _stinrg `i `x -> -> 45 `ui `uc ]
-[; ;DateTime.h: 90: stinrg[14] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][2] ;
-"90
-[e = *U + _stinrg * -> -> 14 `i `x -> -> # *U _stinrg `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 2 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
-[; ;DateTime.h: 91: stinrg[13] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][1] ;
-"91
-[e = *U + _stinrg * -> -> 13 `i `x -> -> # *U _stinrg `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 1 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
-[; ;DateTime.h: 92: stinrg[12] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][0] ;
-"92
-[e = *U + _stinrg * -> -> 12 `i `x -> -> # *U _stinrg `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 0 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
-[; ;DateTime.h: 94: stinrg[9] = ( dateTime->day & 0x0F ) | '0' ;
-"94
-[e = *U + _stinrg * -> -> 9 `i `x -> -> # *U _stinrg `i `x -> | -> & -> . . *U _dateTime 0 4 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 95: stinrg[8] = ( dateTime->day >> 4 ) | '0' ;
-"95
-[e = *U + _stinrg * -> -> 8 `i `x -> -> # *U _stinrg `i `x -> | -> >> -> . . *U _dateTime 0 4 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 97: stinrg[6] = ( dateTime->month & 0x0F ) | '0' ;
-"97
-[e = *U + _stinrg * -> -> 6 `i `x -> -> # *U _stinrg `i `x -> | -> & -> . . *U _dateTime 0 5 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 98: stinrg[5] = ( dateTime->month >> 4 ) | '0' ;
-"98
-[e = *U + _stinrg * -> -> 5 `i `x -> -> # *U _stinrg `i `x -> | -> >> -> . . *U _dateTime 0 5 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 100: stinrg[3] = ( dateTime->year & 0x0F ) | '0' ;
-"100
-[e = *U + _stinrg * -> -> 3 `i `x -> -> # *U _stinrg `i `x -> | -> & -> . . *U _dateTime 0 6 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 101: stinrg[2] = ( dateTime->year >> 4 ) | '0' ;
-"101
-[e = *U + _stinrg * -> -> 2 `i `x -> -> # *U _stinrg `i `x -> | -> >> -> . . *U _dateTime 0 6 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 102: stinrg[1] = '0' ;
-"102
-[e = *U + _stinrg * -> -> 1 `i `x -> -> # *U _stinrg `i `x -> -> 48 `ui `uc ]
-[; ;DateTime.h: 103: stinrg[0] = '2' ;
-"103
-[e = *U + _stinrg * -> -> 0 `i `x -> -> # *U _stinrg `i `x -> -> 50 `ui `uc ]
-[; ;DateTime.h: 105: }
-"105
-[e :UE 477 ]
-}
-"108
-[v __date_time_ConvertByteToTime `(v ~T0 @X0 1 ef2`*S473`*uc ]
-{
-[; ;DateTime.h: 108: void _date_time_ConvertByteToTime( StDateTime* dateTime , char* string ) {
-[e :U __date_time_ConvertByteToTime ]
-[v _dateTime `*S473 ~T0 @X0 1 r1 ]
+[; ;DateTime.h: 55: void _date_time_ConvertByteToDateTime( StDateTime* dateTime , char* string ) {
+[e :U __date_time_ConvertByteToDateTime ]
+[v _dateTime `*S474 ~T0 @X0 1 r1 ]
 [v _string `*uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;DateTime.h: 110: string[8] = 0 ;
-"110
-[e = *U + _string * -> -> 8 `i `x -> -> # *U _string `i `x -> -> 0 `i `uc ]
-[; ;DateTime.h: 112: string[5] = ':' ;
-"112
-[e = *U + _string * -> -> 5 `i `x -> -> # *U _string `i `x -> -> 58 `ui `uc ]
-[; ;DateTime.h: 113: string[2] = ':' ;
-"113
-[e = *U + _string * -> -> 2 `i `x -> -> # *U _string `i `x -> -> 58 `ui `uc ]
-[; ;DateTime.h: 116: string[7] = ( dateTime->second & 0x0F ) | '0' ;
-"116
-[e = *U + _string * -> -> 7 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 0 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 117: string[6] = ( dateTime->second >> 4 ) | '0' ;
-"117
-[e = *U + _string * -> -> 6 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 0 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 119: string[4] = ( dateTime->minute & 0x0F ) | '0' ;
-"119
-[e = *U + _string * -> -> 4 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 1 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 120: string[3] = ( dateTime->minute >> 4 ) | '0' ;
-"120
-[e = *U + _string * -> -> 3 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 1 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 122: string[1] = ( dateTime->hour & 0x0F ) | '0' ;
-"122
-[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 2 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 123: string[0] = ( dateTime->hour >> 4 ) | '0' ;
-"123
-[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 2 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 125: }
-"125
+[; ;DateTime.h: 57: string[16] = 0 ;
+"57
+[e = *U + _string * -> -> 16 `i `x -> -> # *U _string `i `x -> -> 0 `i `uc ]
+[; ;DateTime.h: 59: string[13] = ':' ;
+"59
+[e = *U + _string * -> -> 13 `i `x -> -> # *U _string `i `x -> -> 58 `ui `uc ]
+[; ;DateTime.h: 60: string[10] = ':' ;
+"60
+[e = *U + _string * -> -> 10 `i `x -> -> # *U _string `i `x -> -> 58 `ui `uc ]
+[; ;DateTime.h: 61: string[5] = '-' ;
+"61
+[e = *U + _string * -> -> 5 `i `x -> -> # *U _string `i `x -> -> 45 `ui `uc ]
+[; ;DateTime.h: 62: string[2] = '-' ;
+"62
+[e = *U + _string * -> -> 2 `i `x -> -> # *U _string `i `x -> -> 45 `ui `uc ]
+[; ;DateTime.h: 65: string[15] = ( dateTime->second & 0x0F ) | '0' ;
+"65
+[e = *U + _string * -> -> 15 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 0 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 66: string[14] = ( dateTime->second >> 4 ) | '0' ;
+"66
+[e = *U + _string * -> -> 14 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 0 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 68: string[12] = ( dateTime->minute & 0x0F ) | '0' ;
+"68
+[e = *U + _string * -> -> 12 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 1 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 69: string[11] = ( dateTime->minute >> 4 ) | '0' ;
+"69
+[e = *U + _string * -> -> 11 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 1 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 71: string[9] = ( dateTime->hour & 0x0F ) | '0' ;
+"71
+[e = *U + _string * -> -> 9 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 2 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 72: string[8] = ( dateTime->hour >> 4 ) | '0' ;
+"72
+[e = *U + _string * -> -> 8 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 2 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 75: string[7] = ( dateTime->day & 0x0F ) | '0' ;
+"75
+[e = *U + _string * -> -> 7 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 4 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 76: string[6] = ( dateTime->day >> 4 ) | '0' ;
+"76
+[e = *U + _string * -> -> 6 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 4 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 78: string[4] = ( dateTime->month & 0x0F ) | '0' ;
+"78
+[e = *U + _string * -> -> 4 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 5 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 79: string[3] = ( dateTime->month >> 4 ) | '0' ;
+"79
+[e = *U + _string * -> -> 3 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 5 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 81: string[1] = ( dateTime->year & 0x0F ) | '0' ;
+"81
+[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 6 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 82: string[0] = ( dateTime->year >> 4 ) | '0' ;
+"82
+[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 6 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 84: }
+"84
 [e :UE 478 ]
 }
-"128
-[v __date_time_ConvertByteToDiscrete `(v ~T0 @X0 1 ef3`*S473`*uc`E4142 ]
+"87
+[v __date_time_ConvertByteToDate `(v ~T0 @X0 1 ef2`*S474`*uc ]
 {
-[; ;DateTime.h: 128: void _date_time_ConvertByteToDiscrete( StDateTime* dateTime , char* string , EnDateItem select ) {
-[e :U __date_time_ConvertByteToDiscrete ]
-[v _dateTime `*S473 ~T0 @X0 1 r1 ]
-[v _string `*uc ~T0 @X0 1 r2 ]
-[v _select `E4142 ~T0 @X0 1 r3 ]
+[; ;DateTime.h: 87: void _date_time_ConvertByteToDate( StDateTime* dateTime , char* stinrg ) {
+[e :U __date_time_ConvertByteToDate ]
+[v _dateTime `*S474 ~T0 @X0 1 r1 ]
+[v _stinrg `*uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;DateTime.h: 130: string[2] = 0 ;
-"130
-[e = *U + _string * -> -> 2 `i `x -> -> # *U _string `i `x -> -> 0 `i `uc ]
-[; ;DateTime.h: 132: switch ( select ) {
-"132
-[e $U 481  ]
-{
-[; ;DateTime.h: 133: case DATE_ITEM_YEAR:
-"133
-[e :U 482 ]
-[; ;DateTime.h: 134: string[1] = ( dateTime->year & 0x0F ) | '0' ;
-"134
-[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 6 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 135: string[0] = ( dateTime->year >> 4 ) | '0' ;
-"135
-[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 6 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 136: break ;
-"136
-[e $U 480  ]
-[; ;DateTime.h: 137: case DATE_ITEM_MONTH:
-"137
-[e :U 483 ]
-[; ;DateTime.h: 138: string[1] = ( dateTime->month & 0x0F ) | '0' ;
-"138
-[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 5 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 139: string[0] = ( dateTime->month >> 4 ) | '0' ;
-"139
-[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 5 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 140: break ;
-"140
-[e $U 480  ]
-[; ;DateTime.h: 141: case DATE_ITEM_DATE:
-"141
-[e :U 484 ]
-[; ;DateTime.h: 142: string[1] = ( dateTime->day & 0x0F ) | '0' ;
-"142
-[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 4 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 143: string[0] = ( dateTime->day >> 4 ) | '0' ;
-"143
-[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 4 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 144: break ;
-"144
-[e $U 480  ]
-[; ;DateTime.h: 145: case DATE_ITEM_DAY_OF_WEEK:
-"145
-[e :U 485 ]
-[; ;DateTime.h: 146: string[0] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][0] ;
-"146
-[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 0 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
-[; ;DateTime.h: 147: string[1] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][1] ;
-"147
-[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 1 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
-[; ;DateTime.h: 148: string[2] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][2] ;
-"148
-[e = *U + _string * -> -> 2 `i `x -> -> # *U _string `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 2 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
-[; ;DateTime.h: 149: string[3] = 0 ;
-"149
-[e = *U + _string * -> -> 3 `i `x -> -> # *U _string `i `x -> -> 0 `i `uc ]
-[; ;DateTime.h: 150: break ;
-"150
-[e $U 480  ]
-[; ;DateTime.h: 151: case DATE_ITEM_HOUR:
-"151
-[e :U 486 ]
-[; ;DateTime.h: 152: string[1] = ( dateTime->hour & 0x0F ) | '0' ;
-"152
-[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 2 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 153: string[0] = ( dateTime->hour >> 4 ) | '0' ;
-"153
-[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 2 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 154: break ;
-"154
-[e $U 480  ]
-[; ;DateTime.h: 155: case DATE_ITEM_MINUTE:
-"155
-[e :U 487 ]
-[; ;DateTime.h: 156: string[1] = ( dateTime->minute & 0x0F ) | '0' ;
-"156
-[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 1 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 157: string[0] = ( dateTime->minute >> 4 ) | '0' ;
-"157
-[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 1 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 158: break ;
-"158
-[e $U 480  ]
-[; ;DateTime.h: 159: case DATE_ITEM_SECOND:
-"159
-[e :U 488 ]
-[; ;DateTime.h: 160: string[1] = ( dateTime->second & 0x0F ) | '0' ;
-"160
-[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 0 `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 161: string[0] = ( dateTime->second >> 4 ) | '0' ;
-"161
-[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 0 `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;DateTime.h: 162: break ;
-"162
-[e $U 480  ]
-"163
-}
-[; ;DateTime.h: 163: }
-[e $U 480  ]
-"132
-[e :U 481 ]
-[e [\ _select , $ . `E4142 0 482
- , $ . `E4142 1 483
- , $ . `E4142 2 484
- , $ . `E4142 3 485
- , $ . `E4142 4 486
- , $ . `E4142 5 487
- , $ . `E4142 6 488
- 480 ]
-"163
-[e :U 480 ]
-[; ;DateTime.h: 165: }
-"165
+[; ;DateTime.h: 89: stinrg[16] = 0 ;
+"89
+[e = *U + _stinrg * -> -> 16 `i `x -> -> # *U _stinrg `i `x -> -> 0 `i `uc ]
+[; ;DateTime.h: 90: stinrg[15] = ']' ;
+"90
+[e = *U + _stinrg * -> -> 15 `i `x -> -> # *U _stinrg `i `x -> -> 93 `ui `uc ]
+[; ;DateTime.h: 91: stinrg[11] = '[' ;
+"91
+[e = *U + _stinrg * -> -> 11 `i `x -> -> # *U _stinrg `i `x -> -> 91 `ui `uc ]
+[; ;DateTime.h: 92: stinrg[10] = ' ' ;
+"92
+[e = *U + _stinrg * -> -> 10 `i `x -> -> # *U _stinrg `i `x -> -> 32 `ui `uc ]
+[; ;DateTime.h: 93: stinrg[7] = '-' ;
+"93
+[e = *U + _stinrg * -> -> 7 `i `x -> -> # *U _stinrg `i `x -> -> 45 `ui `uc ]
+[; ;DateTime.h: 94: stinrg[4] = '-' ;
+"94
+[e = *U + _stinrg * -> -> 4 `i `x -> -> # *U _stinrg `i `x -> -> 45 `ui `uc ]
+[; ;DateTime.h: 97: stinrg[14] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][2] ;
+"97
+[e = *U + _stinrg * -> -> 14 `i `x -> -> # *U _stinrg `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 2 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
+[; ;DateTime.h: 98: stinrg[13] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][1] ;
+"98
+[e = *U + _stinrg * -> -> 13 `i `x -> -> # *U _stinrg `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 1 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
+[; ;DateTime.h: 99: stinrg[12] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][0] ;
+"99
+[e = *U + _stinrg * -> -> 12 `i `x -> -> # *U _stinrg `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 0 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
+[; ;DateTime.h: 101: stinrg[9] = ( dateTime->day & 0x0F ) | '0' ;
+"101
+[e = *U + _stinrg * -> -> 9 `i `x -> -> # *U _stinrg `i `x -> | -> & -> . . *U _dateTime 0 4 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 102: stinrg[8] = ( dateTime->day >> 4 ) | '0' ;
+"102
+[e = *U + _stinrg * -> -> 8 `i `x -> -> # *U _stinrg `i `x -> | -> >> -> . . *U _dateTime 0 4 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 104: stinrg[6] = ( dateTime->month & 0x0F ) | '0' ;
+"104
+[e = *U + _stinrg * -> -> 6 `i `x -> -> # *U _stinrg `i `x -> | -> & -> . . *U _dateTime 0 5 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 105: stinrg[5] = ( dateTime->month >> 4 ) | '0' ;
+"105
+[e = *U + _stinrg * -> -> 5 `i `x -> -> # *U _stinrg `i `x -> | -> >> -> . . *U _dateTime 0 5 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 107: stinrg[3] = ( dateTime->year & 0x0F ) | '0' ;
+"107
+[e = *U + _stinrg * -> -> 3 `i `x -> -> # *U _stinrg `i `x -> | -> & -> . . *U _dateTime 0 6 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 108: stinrg[2] = ( dateTime->year >> 4 ) | '0' ;
+"108
+[e = *U + _stinrg * -> -> 2 `i `x -> -> # *U _stinrg `i `x -> | -> >> -> . . *U _dateTime 0 6 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 109: stinrg[1] = '0' ;
+"109
+[e = *U + _stinrg * -> -> 1 `i `x -> -> # *U _stinrg `i `x -> -> 48 `ui `uc ]
+[; ;DateTime.h: 110: stinrg[0] = '2' ;
+"110
+[e = *U + _stinrg * -> -> 0 `i `x -> -> # *U _stinrg `i `x -> -> 50 `ui `uc ]
+[; ;DateTime.h: 112: }
+"112
 [e :UE 479 ]
+}
+"115
+[v __date_time_ConvertByteToTime `(v ~T0 @X0 1 ef2`*S474`*uc ]
+{
+[; ;DateTime.h: 115: void _date_time_ConvertByteToTime( StDateTime* dateTime , char* string ) {
+[e :U __date_time_ConvertByteToTime ]
+[v _dateTime `*S474 ~T0 @X0 1 r1 ]
+[v _string `*uc ~T0 @X0 1 r2 ]
+[f ]
+[; ;DateTime.h: 117: string[8] = 0 ;
+"117
+[e = *U + _string * -> -> 8 `i `x -> -> # *U _string `i `x -> -> 0 `i `uc ]
+[; ;DateTime.h: 119: string[5] = ':' ;
+"119
+[e = *U + _string * -> -> 5 `i `x -> -> # *U _string `i `x -> -> 58 `ui `uc ]
+[; ;DateTime.h: 120: string[2] = ':' ;
+"120
+[e = *U + _string * -> -> 2 `i `x -> -> # *U _string `i `x -> -> 58 `ui `uc ]
+[; ;DateTime.h: 123: string[7] = ( dateTime->second & 0x0F ) | '0' ;
+"123
+[e = *U + _string * -> -> 7 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 0 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 124: string[6] = ( dateTime->second >> 4 ) | '0' ;
+"124
+[e = *U + _string * -> -> 6 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 0 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 126: string[4] = ( dateTime->minute & 0x0F ) | '0' ;
+"126
+[e = *U + _string * -> -> 4 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 1 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 127: string[3] = ( dateTime->minute >> 4 ) | '0' ;
+"127
+[e = *U + _string * -> -> 3 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 1 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 129: string[1] = ( dateTime->hour & 0x0F ) | '0' ;
+"129
+[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 2 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 130: string[0] = ( dateTime->hour >> 4 ) | '0' ;
+"130
+[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 2 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 132: }
+"132
+[e :UE 480 ]
+}
+"135
+[v __date_time_ConvertByteToDiscrete `(v ~T0 @X0 1 ef3`*S474`*uc`E4144 ]
+{
+[; ;DateTime.h: 135: void _date_time_ConvertByteToDiscrete( StDateTime* dateTime , char* string , EnDateItem select ) {
+[e :U __date_time_ConvertByteToDiscrete ]
+[v _dateTime `*S474 ~T0 @X0 1 r1 ]
+[v _string `*uc ~T0 @X0 1 r2 ]
+[v _select `E4144 ~T0 @X0 1 r3 ]
+[f ]
+[; ;DateTime.h: 137: string[2] = 0 ;
+"137
+[e = *U + _string * -> -> 2 `i `x -> -> # *U _string `i `x -> -> 0 `i `uc ]
+[; ;DateTime.h: 139: switch ( select ) {
+"139
+[e $U 483  ]
+{
+[; ;DateTime.h: 140: case DATE_ITEM_YEAR:
+"140
+[e :U 484 ]
+[; ;DateTime.h: 141: string[1] = ( dateTime->year & 0x0F ) | '0' ;
+"141
+[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 6 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 142: string[0] = ( dateTime->year >> 4 ) | '0' ;
+"142
+[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 6 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 143: break ;
+"143
+[e $U 482  ]
+[; ;DateTime.h: 144: case DATE_ITEM_MONTH:
+"144
+[e :U 485 ]
+[; ;DateTime.h: 145: string[1] = ( dateTime->month & 0x0F ) | '0' ;
+"145
+[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 5 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 146: string[0] = ( dateTime->month >> 4 ) | '0' ;
+"146
+[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 5 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 147: break ;
+"147
+[e $U 482  ]
+[; ;DateTime.h: 148: case DATE_ITEM_DATE:
+"148
+[e :U 486 ]
+[; ;DateTime.h: 149: string[1] = ( dateTime->day & 0x0F ) | '0' ;
+"149
+[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 4 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 150: string[0] = ( dateTime->day >> 4 ) | '0' ;
+"150
+[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 4 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 151: break ;
+"151
+[e $U 482  ]
+[; ;DateTime.h: 152: case DATE_ITEM_DAY_OF_WEEK:
+"152
+[e :U 487 ]
+[; ;DateTime.h: 153: string[0] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][0] ;
+"153
+[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 0 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
+[; ;DateTime.h: 154: string[1] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][1] ;
+"154
+[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 1 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
+[; ;DateTime.h: 155: string[2] = STR_DAY_OF_WEEK[dateTime->dayOfWeek][2] ;
+"155
+[e = *U + _string * -> -> 2 `i `x -> -> # *U _string `i `x *U + *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux * -> -> 2 `i `x -> -> # *U *U + &U _STR_DAY_OF_WEEK * -> . . *U _dateTime 0 3 `ux -> -> # *U &U _STR_DAY_OF_WEEK `ui `ux `i `x ]
+[; ;DateTime.h: 156: string[3] = 0 ;
+"156
+[e = *U + _string * -> -> 3 `i `x -> -> # *U _string `i `x -> -> 0 `i `uc ]
+[; ;DateTime.h: 157: break ;
+"157
+[e $U 482  ]
+[; ;DateTime.h: 158: case DATE_ITEM_HOUR:
+"158
+[e :U 488 ]
+[; ;DateTime.h: 159: string[1] = ( dateTime->hour & 0x0F ) | '0' ;
+"159
+[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 2 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 160: string[0] = ( dateTime->hour >> 4 ) | '0' ;
+"160
+[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 2 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 161: break ;
+"161
+[e $U 482  ]
+[; ;DateTime.h: 162: case DATE_ITEM_MINUTE:
+"162
+[e :U 489 ]
+[; ;DateTime.h: 163: string[1] = ( dateTime->minute & 0x0F ) | '0' ;
+"163
+[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 1 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 164: string[0] = ( dateTime->minute >> 4 ) | '0' ;
+"164
+[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 1 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 165: break ;
+"165
+[e $U 482  ]
+[; ;DateTime.h: 166: case DATE_ITEM_SECOND:
+"166
+[e :U 490 ]
+[; ;DateTime.h: 167: string[1] = ( dateTime->second & 0x0F ) | '0' ;
+"167
+[e = *U + _string * -> -> 1 `i `x -> -> # *U _string `i `x -> | -> & -> . . *U _dateTime 0 0 `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 168: string[0] = ( dateTime->second >> 4 ) | '0' ;
+"168
+[e = *U + _string * -> -> 0 `i `x -> -> # *U _string `i `x -> | -> >> -> . . *U _dateTime 0 0 `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;DateTime.h: 169: break ;
+"169
+[e $U 482  ]
+"170
+}
+[; ;DateTime.h: 170: }
+[e $U 482  ]
+"139
+[e :U 483 ]
+[e [\ _select , $ . `E4144 0 484
+ , $ . `E4144 1 485
+ , $ . `E4144 2 486
+ , $ . `E4144 3 487
+ , $ . `E4144 4 488
+ , $ . `E4144 5 489
+ , $ . `E4144 6 490
+ 482 ]
+"170
+[e :U 482 ]
+[; ;DateTime.h: 172: }
+"172
+[e :UE 481 ]
 }
 [; ;DS1307.h: 38: void _date_time_ConvertByteToDiscrete( StDateTime* date , char* dateString , EnDateItem select ) ;
 "41 src/../../_Common/DS1307.h
-[v __ds1307_Counfigurate `(uc ~T0 @X0 1 ef ]
+[v _DS1307_Counfigurate `(uc ~T0 @X0 1 ef ]
 {
-[; ;DS1307.h: 41: Uint08_t _ds1307_Counfigurate( ) {
-[e :U __ds1307_Counfigurate ]
+[; ;DS1307.h: 41: Uint08_t DS1307_Counfigurate( ) {
+[e :U _DS1307_Counfigurate ]
 [f ]
 [; ;DS1307.h: 44: SSP1CON2bits.SEN = 1 ;
 "44
 [e = . . _SSP1CON2bits 0 0 -> -> 1 `i `uc ]
 [; ;DS1307.h: 45: while ( SSP1CON2bits.SEN ) ;
 "45
-[e $U 490  ]
-[e :U 491 ]
-[e :U 490 ]
-[e $ != -> . . _SSP1CON2bits 0 0 `i -> -> -> 0 `i `Vuc `i 491  ]
+[e $U 492  ]
+[e :U 493 ]
 [e :U 492 ]
+[e $ != -> . . _SSP1CON2bits 0 0 `i -> -> -> 0 `i `Vuc `i 493  ]
+[e :U 494 ]
 [; ;DS1307.h: 46: SSP1IF = 0 ;
 "46
 [e = _SSP1IF -> -> 0 `i `b ]
@@ -4942,82 +4978,82 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _SSP1BUF -> -> 208 `i `uc ]
 [; ;DS1307.h: 50: while ( !SSP1IF ) ;
 "50
-[e $U 493  ]
-[e :U 494 ]
-[e :U 493 ]
-[e $ ! _SSP1IF 494  ]
+[e $U 495  ]
+[e :U 496 ]
 [e :U 495 ]
+[e $ ! _SSP1IF 496  ]
+[e :U 497 ]
 [; ;DS1307.h: 51: SSP1IF = 0 ;
 "51
 [e = _SSP1IF -> -> 0 `i `b ]
 [; ;DS1307.h: 52: if ( SSP1CON2bits.ACKSTAT ) return 1 ;
 "52
-[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 496  ]
+[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 498  ]
 [e ) -> -> 1 `i `uc ]
-[e $UE 489  ]
-[e :U 496 ]
+[e $UE 491  ]
+[e :U 498 ]
 [; ;DS1307.h: 55: SSP1BUF = 0x07 ;
 "55
 [e = _SSP1BUF -> -> 7 `i `uc ]
 [; ;DS1307.h: 56: while ( !SSP1IF ) ;
 "56
-[e $U 497  ]
-[e :U 498 ]
-[e :U 497 ]
-[e $ ! _SSP1IF 498  ]
+[e $U 499  ]
+[e :U 500 ]
 [e :U 499 ]
+[e $ ! _SSP1IF 500  ]
+[e :U 501 ]
 [; ;DS1307.h: 57: SSP1IF = 0 ;
 "57
 [e = _SSP1IF -> -> 0 `i `b ]
 [; ;DS1307.h: 58: if ( SSP1CON2bits.ACKSTAT ) return 2 ;
 "58
-[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 500  ]
+[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 502  ]
 [e ) -> -> 2 `i `uc ]
-[e $UE 489  ]
-[e :U 500 ]
+[e $UE 491  ]
+[e :U 502 ]
 [; ;DS1307.h: 61: SSP1BUF = 0x10 ;
 "61
 [e = _SSP1BUF -> -> 16 `i `uc ]
 [; ;DS1307.h: 62: while ( !SSP1IF ) ;
 "62
-[e $U 501  ]
-[e :U 502 ]
-[e :U 501 ]
-[e $ ! _SSP1IF 502  ]
+[e $U 503  ]
+[e :U 504 ]
 [e :U 503 ]
+[e $ ! _SSP1IF 504  ]
+[e :U 505 ]
 [; ;DS1307.h: 63: SSP1IF = 0 ;
 "63
 [e = _SSP1IF -> -> 0 `i `b ]
 [; ;DS1307.h: 64: if ( SSP1CON2bits.ACKSTAT ) return 3 ;
 "64
-[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 504  ]
+[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 506  ]
 [e ) -> -> 3 `i `uc ]
-[e $UE 489  ]
-[e :U 504 ]
+[e $UE 491  ]
+[e :U 506 ]
 [; ;DS1307.h: 67: SSP1CON2bits.PEN = 1 ;
 "67
 [e = . . _SSP1CON2bits 0 2 -> -> 1 `i `uc ]
 [; ;DS1307.h: 68: while ( SSP1CON2bits.PEN ) ;
 "68
-[e $U 505  ]
-[e :U 506 ]
-[e :U 505 ]
-[e $ != -> . . _SSP1CON2bits 0 2 `i -> -> -> 0 `i `Vuc `i 506  ]
+[e $U 507  ]
+[e :U 508 ]
 [e :U 507 ]
+[e $ != -> . . _SSP1CON2bits 0 2 `i -> -> -> 0 `i `Vuc `i 508  ]
+[e :U 509 ]
 [; ;DS1307.h: 70: return 0 ;
 "70
 [e ) -> -> 0 `i `uc ]
-[e $UE 489  ]
+[e $UE 491  ]
 [; ;DS1307.h: 71: }
 "71
-[e :UE 489 ]
+[e :UE 491 ]
 }
 "74
-[v __ds1307_GetData `(uc ~T0 @X0 1 ef3`*S473`uc`uc ]
+[v _DS1307_GetData `(uc ~T0 @X0 1 ef3`*S474`uc`uc ]
 {
-[; ;DS1307.h: 74: Uint08_t _ds1307_GetData( StDateTime* date , Uint08_t ramAddress , Uint08_t length ) {
-[e :U __ds1307_GetData ]
-[v _date `*S473 ~T0 @X0 1 r1 ]
+[; ;DS1307.h: 74: Uint08_t DS1307_GetData( StDateTime* date , Uint08_t ramAddress , Uint08_t length ) {
+[e :U _DS1307_GetData ]
+[v _date `*S474 ~T0 @X0 1 r1 ]
 [v _ramAddress `uc ~T0 @X0 1 r2 ]
 [v _length `uc ~T0 @X0 1 r3 ]
 [f ]
@@ -5026,11 +5062,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _SSP1CON2bits 0 0 -> -> 1 `i `uc ]
 [; ;DS1307.h: 78: while ( SSP1CON2bits.SEN ) ;
 "78
-[e $U 509  ]
-[e :U 510 ]
-[e :U 509 ]
-[e $ != -> . . _SSP1CON2bits 0 0 `i -> -> -> 0 `i `Vuc `i 510  ]
+[e $U 511  ]
+[e :U 512 ]
 [e :U 511 ]
+[e $ != -> . . _SSP1CON2bits 0 0 `i -> -> -> 0 `i `Vuc `i 512  ]
+[e :U 513 ]
 [; ;DS1307.h: 79: SSP1IF = 0 ;
 "79
 [e = _SSP1IF -> -> 0 `i `b ]
@@ -5039,317 +5075,331 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _SSP1BUF -> -> 208 `i `uc ]
 [; ;DS1307.h: 83: while ( !SSP1IF ) ;
 "83
-[e $U 512  ]
-[e :U 513 ]
-[e :U 512 ]
-[e $ ! _SSP1IF 513  ]
+[e $U 514  ]
+[e :U 515 ]
 [e :U 514 ]
+[e $ ! _SSP1IF 515  ]
+[e :U 516 ]
 [; ;DS1307.h: 84: SSP1IF = 0 ;
 "84
 [e = _SSP1IF -> -> 0 `i `b ]
 [; ;DS1307.h: 85: if ( SSP1CON2bits.ACKSTAT ) return 1 ;
 "85
-[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 515  ]
+[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 517  ]
 [e ) -> -> 1 `i `uc ]
-[e $UE 508  ]
-[e :U 515 ]
+[e $UE 510  ]
+[e :U 517 ]
 [; ;DS1307.h: 88: SSP1BUF = ramAddress ;
 "88
 [e = _SSP1BUF _ramAddress ]
 [; ;DS1307.h: 89: while ( !SSP1IF ) ;
 "89
-[e $U 516  ]
-[e :U 517 ]
-[e :U 516 ]
-[e $ ! _SSP1IF 517  ]
+[e $U 518  ]
+[e :U 519 ]
 [e :U 518 ]
+[e $ ! _SSP1IF 519  ]
+[e :U 520 ]
 [; ;DS1307.h: 90: SSP1IF = 0 ;
 "90
 [e = _SSP1IF -> -> 0 `i `b ]
 [; ;DS1307.h: 91: if ( SSP1CON2bits.ACKSTAT ) return 2 ;
 "91
-[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 519  ]
+[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 521  ]
 [e ) -> -> 2 `i `uc ]
-[e $UE 508  ]
-[e :U 519 ]
+[e $UE 510  ]
+[e :U 521 ]
 [; ;DS1307.h: 93: SSP1CON2bits.RSEN = 1 ;
 "93
 [e = . . _SSP1CON2bits 0 1 -> -> 1 `i `uc ]
 [; ;DS1307.h: 94: while ( SSP1CON2bits.RSEN ) ;
 "94
-[e $U 520  ]
-[e :U 521 ]
-[e :U 520 ]
-[e $ != -> . . _SSP1CON2bits 0 1 `i -> -> -> 0 `i `Vuc `i 521  ]
+[e $U 522  ]
+[e :U 523 ]
 [e :U 522 ]
+[e $ != -> . . _SSP1CON2bits 0 1 `i -> -> -> 0 `i `Vuc `i 523  ]
+[e :U 524 ]
 [; ;DS1307.h: 97: SSP1BUF = 0xD0 | 0b1 ;
 "97
 [e = _SSP1BUF -> | -> 208 `i -> 1 `i `uc ]
 [; ;DS1307.h: 98: while ( !SSP1IF ) ;
 "98
-[e $U 523  ]
-[e :U 524 ]
-[e :U 523 ]
-[e $ ! _SSP1IF 524  ]
+[e $U 525  ]
+[e :U 526 ]
 [e :U 525 ]
+[e $ ! _SSP1IF 526  ]
+[e :U 527 ]
 [; ;DS1307.h: 99: SSP1IF = 0 ;
 "99
 [e = _SSP1IF -> -> 0 `i `b ]
 [; ;DS1307.h: 100: if ( SSP1CON2bits.ACKSTAT ) return 3 ;
 "100
-[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 526  ]
+[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 528  ]
 [e ) -> -> 3 `i `uc ]
-[e $UE 508  ]
-[e :U 526 ]
+[e $UE 510  ]
+[e :U 528 ]
 "103
 [v _dataCount `uc ~T0 @X0 1 a ]
 [; ;DS1307.h: 103: Uint08_t dataCount = 0 ;
 [e = _dataCount -> -> 0 `i `uc ]
-[; ;DS1307.h: 104: while ( dataCount < length ) {
 "104
-[e $U 527  ]
-[e :U 528 ]
-{
-[; ;DS1307.h: 105: _delay((unsigned long)((2)*(1000000L/4000.0))) ;
+[v _datePtr `*uc ~T0 @X0 1 a ]
+[; ;DS1307.h: 104: Uint08_t* datePtr = (Uint08_t*) date ;
+[e = _datePtr -> _date `*uc ]
+[; ;DS1307.h: 105: while ( dataCount < length ) {
 "105
-[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;DS1307.h: 106: SSP1CON2bits.RCEN = 1 ;
-"106
-[e = . . _SSP1CON2bits 0 3 -> -> 1 `i `uc ]
-[; ;DS1307.h: 107: while ( SSP1CON2bits.RCEN ) ;
-"107
-[e $U 530  ]
-[e :U 531 ]
+[e $U 529  ]
 [e :U 530 ]
-[e $ != -> . . _SSP1CON2bits 0 3 `i -> -> -> 0 `i `Vuc `i 531  ]
-[e :U 532 ]
-[; ;DS1307.h: 108: while ( !SSPSTATbits.BF ) ;
-"108
-[e $U 533  ]
-[e :U 534 ]
-[e :U 533 ]
-[e $ ! != -> . . _SSPSTATbits 0 0 `i -> -> -> 0 `i `Vuc `i 534  ]
-[e :U 535 ]
-[; ;DS1307.h: 109: date->array[ dataCount++ ] = SSP1BUF ;
-"109
-[e = *U + &U . *U _date 2 * -> ++ _dataCount -> -> 1 `i `uc `ux -> -> # *U &U . *U _date 2 `ui `ux _SSP1BUF ]
-[; ;DS1307.h: 110: SSP1CON2bits.ACKDT = ( dataCount == length ) ;
-"110
-[e = . . _SSP1CON2bits 0 5 -> -> == -> _dataCount `i -> _length `i `i `uc ]
-[; ;DS1307.h: 111: SSP1CON2bits.ACKEN = 1 ;
-"111
-[e = . . _SSP1CON2bits 0 4 -> -> 1 `i `uc ]
-"112
-}
-[e :U 527 ]
-"104
-[e $ < -> _dataCount `i -> _length `i 528  ]
-[e :U 529 ]
-[; ;DS1307.h: 112: }
-[; ;DS1307.h: 115: SSP1CON2bits.PEN = 1 ;
-"115
-[e = . . _SSP1CON2bits 0 2 -> -> 1 `i `uc ]
-[; ;DS1307.h: 116: while ( SSP1CON2bits.PEN ) ;
-"116
-[e $U 536  ]
-[e :U 537 ]
-[e :U 536 ]
-[e $ != -> . . _SSP1CON2bits 0 2 `i -> -> -> 0 `i `Vuc `i 537  ]
-[e :U 538 ]
-[; ;DS1307.h: 118: return 0 ;
-"118
-[e ) -> -> 0 `i `uc ]
-[e $UE 508  ]
-[; ;DS1307.h: 120: }
-"120
-[e :UE 508 ]
-}
-"123
-[v __ds1307_SetClock `(uc ~T0 @X0 1 ef1`*S473 ]
 {
-[; ;DS1307.h: 123: Uint08_t _ds1307_SetClock( StDateTime* date ) {
-[e :U __ds1307_SetClock ]
-[v _date `*S473 ~T0 @X0 1 r1 ]
-[f ]
-[; ;DS1307.h: 126: SSP1CON2bits.SEN = 1 ;
-"126
-[e = . . _SSP1CON2bits 0 0 -> -> 1 `i `uc ]
-[; ;DS1307.h: 127: while ( SSP1CON2bits.SEN ) ;
-"127
-[e $U 540  ]
-[e :U 541 ]
+[; ;DS1307.h: 106: _delay((unsigned long)((2)*(1000000L/4000.0))) ;
+"106
+[e ( __delay (1 -> * -> -> 2 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
+[; ;DS1307.h: 107: SSP1CON2bits.RCEN = 1 ;
+"107
+[e = . . _SSP1CON2bits 0 3 -> -> 1 `i `uc ]
+[; ;DS1307.h: 108: while ( SSP1CON2bits.RCEN ) ;
+"108
+[e $U 532  ]
+[e :U 533 ]
+[e :U 532 ]
+[e $ != -> . . _SSP1CON2bits 0 3 `i -> -> -> 0 `i `Vuc `i 533  ]
+[e :U 534 ]
+[; ;DS1307.h: 109: while ( !SSPSTATbits.BF ) ;
+"109
+[e $U 535  ]
+[e :U 536 ]
+[e :U 535 ]
+[e $ ! != -> . . _SSPSTATbits 0 0 `i -> -> -> 0 `i `Vuc `i 536  ]
+[e :U 537 ]
+[; ;DS1307.h: 110: datePtr[ dataCount++ ] = SSP1BUF ;
+"110
+[e = *U + _datePtr * -> ++ _dataCount -> -> 1 `i `uc `ux -> -> # *U _datePtr `ui `ux _SSP1BUF ]
+[; ;DS1307.h: 111: SSP1CON2bits.ACKDT = ( dataCount == length ) ;
+"111
+[e = . . _SSP1CON2bits 0 5 -> -> == -> _dataCount `i -> _length `i `i `uc ]
+[; ;DS1307.h: 112: SSP1CON2bits.ACKEN = 1 ;
+"112
+[e = . . _SSP1CON2bits 0 4 -> -> 1 `i `uc ]
+"113
+}
+[e :U 529 ]
+"105
+[e $ < -> _dataCount `i -> _length `i 530  ]
+[e :U 531 ]
+[; ;DS1307.h: 113: }
+[; ;DS1307.h: 116: SSP1CON2bits.PEN = 1 ;
+"116
+[e = . . _SSP1CON2bits 0 2 -> -> 1 `i `uc ]
+[; ;DS1307.h: 117: while ( SSP1CON2bits.PEN ) ;
+"117
+[e $U 538  ]
+[e :U 539 ]
+[e :U 538 ]
+[e $ != -> . . _SSP1CON2bits 0 2 `i -> -> -> 0 `i `Vuc `i 539  ]
 [e :U 540 ]
-[e $ != -> . . _SSP1CON2bits 0 0 `i -> -> -> 0 `i `Vuc `i 541  ]
-[e :U 542 ]
-[; ;DS1307.h: 128: SSP1IF = 0 ;
+[; ;DS1307.h: 119: return 0 ;
+"119
+[e ) -> -> 0 `i `uc ]
+[e $UE 510  ]
+[; ;DS1307.h: 121: }
+"121
+[e :UE 510 ]
+}
+"124
+[v _DS1307_SetClock `(uc ~T0 @X0 1 ef1`*S474 ]
+{
+[; ;DS1307.h: 124: Uint08_t DS1307_SetClock( StDateTime* date ) {
+[e :U _DS1307_SetClock ]
+[v _date `*S474 ~T0 @X0 1 r1 ]
+[f ]
+[; ;DS1307.h: 127: SSP1CON2bits.SEN = 1 ;
+"127
+[e = . . _SSP1CON2bits 0 0 -> -> 1 `i `uc ]
+[; ;DS1307.h: 128: while ( SSP1CON2bits.SEN ) ;
 "128
-[e = _SSP1IF -> -> 0 `i `b ]
-[; ;DS1307.h: 131: SSP1BUF = 0xD0 ;
-"131
-[e = _SSP1BUF -> -> 208 `i `uc ]
-[; ;DS1307.h: 132: while ( !SSP1IF ) ;
-"132
-[e $U 543  ]
-[e :U 544 ]
+[e $U 542  ]
 [e :U 543 ]
-[e $ ! _SSP1IF 544  ]
-[e :U 545 ]
-[; ;DS1307.h: 133: SSP1IF = 0 ;
+[e :U 542 ]
+[e $ != -> . . _SSP1CON2bits 0 0 `i -> -> -> 0 `i `Vuc `i 543  ]
+[e :U 544 ]
+[; ;DS1307.h: 129: SSP1IF = 0 ;
+"129
+[e = _SSP1IF -> -> 0 `i `b ]
+[; ;DS1307.h: 132: SSP1BUF = 0xD0 ;
+"132
+[e = _SSP1BUF -> -> 208 `i `uc ]
+[; ;DS1307.h: 133: while ( !SSP1IF ) ;
 "133
-[e = _SSP1IF -> -> 0 `i `b ]
-[; ;DS1307.h: 134: if ( SSP1CON2bits.ACKSTAT ) return 1 ;
-"134
-[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 546  ]
-[e ) -> -> 1 `i `uc ]
-[e $UE 539  ]
+[e $U 545  ]
 [e :U 546 ]
-[; ;DS1307.h: 137: SSP1BUF = 0x00 ;
-"137
-[e = _SSP1BUF -> -> 0 `i `uc ]
-[; ;DS1307.h: 138: while ( !SSP1IF ) ;
-"138
-[e $U 547  ]
-[e :U 548 ]
+[e :U 545 ]
+[e $ ! _SSP1IF 546  ]
 [e :U 547 ]
-[e $ ! _SSP1IF 548  ]
-[e :U 549 ]
-[; ;DS1307.h: 139: SSP1IF = 0 ;
-"139
+[; ;DS1307.h: 134: SSP1IF = 0 ;
+"134
 [e = _SSP1IF -> -> 0 `i `b ]
-[; ;DS1307.h: 140: if ( SSP1CON2bits.ACKSTAT ) return 2 ;
-"140
-[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 550  ]
-[e ) -> -> 2 `i `uc ]
-[e $UE 539  ]
+[; ;DS1307.h: 135: if ( SSP1CON2bits.ACKSTAT ) return 1 ;
+"135
+[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 548  ]
+[e ) -> -> 1 `i `uc ]
+[e $UE 541  ]
+[e :U 548 ]
+[; ;DS1307.h: 138: SSP1BUF = 0x00 ;
+"138
+[e = _SSP1BUF -> -> 0 `i `uc ]
+[; ;DS1307.h: 139: while ( !SSP1IF ) ;
+"139
+[e $U 549  ]
 [e :U 550 ]
-[; ;DS1307.h: 142: for ( Uint08_t i = 0 ; i < sizeof ( StDateTime ) ; i++ ) {
-"142
+[e :U 549 ]
+[e $ ! _SSP1IF 550  ]
+[e :U 551 ]
+[; ;DS1307.h: 140: SSP1IF = 0 ;
+"140
+[e = _SSP1IF -> -> 0 `i `b ]
+[; ;DS1307.h: 141: if ( SSP1CON2bits.ACKSTAT ) return 2 ;
+"141
+[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 552  ]
+[e ) -> -> 2 `i `uc ]
+[e $UE 541  ]
+[e :U 552 ]
+"143
+[v _datePtr `*uc ~T0 @X0 1 a ]
+[; ;DS1307.h: 143: Uint08_t* datePtr = (Uint08_t*) date ;
+[e = _datePtr -> _date `*uc ]
+[; ;DS1307.h: 144: for ( Uint08_t i = 0 ; i < sizeof ( StDateTime ) ; i++ ) {
+"144
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `ui -> # `S473 `ui 551  ]
-[e $U 552  ]
-[e :U 551 ]
-{
-[; ;DS1307.h: 144: SSP1BUF = date->array[i] ;
-"144
-[e = _SSP1BUF *U + &U . *U _date 2 * -> _i `ux -> -> # *U &U . *U _date 2 `ui `ux ]
-[; ;DS1307.h: 145: while ( !SSP1IF ) ;
-"145
+[e $ < -> _i `ui -> # `S474 `ui 553  ]
 [e $U 554  ]
-[e :U 555 ]
-[e :U 554 ]
-[e $ ! _SSP1IF 555  ]
-[e :U 556 ]
-[; ;DS1307.h: 146: SSP1IF = 0 ;
+[e :U 553 ]
+{
+[; ;DS1307.h: 146: SSP1BUF = datePtr[i] ;
 "146
-[e = _SSP1IF -> -> 0 `i `b ]
-[; ;DS1307.h: 147: if ( SSP1CON2bits.ACKSTAT ) return 3 ;
+[e = _SSP1BUF *U + _datePtr * -> _i `ux -> -> # *U _datePtr `ui `ux ]
+[; ;DS1307.h: 147: while ( !SSP1IF ) ;
 "147
-[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 557  ]
-[e ) -> -> 3 `i `uc ]
-[e $UE 539  ]
+[e $U 556  ]
 [e :U 557 ]
-"148
-}
-"142
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `ui -> # `S473 `ui 551  ]
-[e :U 552 ]
-"148
-}
-[; ;DS1307.h: 148: }
-[; ;DS1307.h: 151: SSP1CON2bits.PEN = 1 ;
-"151
-[e = . . _SSP1CON2bits 0 2 -> -> 1 `i `uc ]
-[; ;DS1307.h: 152: while ( SSP1CON2bits.PEN ) ;
-"152
-[e $U 558  ]
-[e :U 559 ]
+[e :U 556 ]
+[e $ ! _SSP1IF 557  ]
 [e :U 558 ]
-[e $ != -> . . _SSP1CON2bits 0 2 `i -> -> -> 0 `i `Vuc `i 559  ]
-[e :U 560 ]
-[; ;DS1307.h: 154: return 0 ;
-"154
-[e ) -> -> 0 `i `uc ]
-[e $UE 539  ]
-[; ;DS1307.h: 155: }
-"155
-[e :UE 539 ]
+[; ;DS1307.h: 148: SSP1IF = 0 ;
+"148
+[e = _SSP1IF -> -> 0 `i `b ]
+[; ;DS1307.h: 149: if ( SSP1CON2bits.ACKSTAT ) return 3 ;
+"149
+[e $ ! != -> . . _SSP1CON2bits 0 6 `i -> -> -> 0 `i `Vuc `i 559  ]
+[e ) -> -> 3 `i `uc ]
+[e $UE 541  ]
+[e :U 559 ]
+"150
 }
-[; ;main.c: 48: typedef union {
-[; ;main.c: 49: Uint08_t byte ;
-[; ;main.c: 50: struct {
-[; ;main.c: 51: unsigned keyDown : 1 ;
-[; ;main.c: 52: unsigned keyUp : 1 ;
-[; ;main.c: 53: unsigned : 2 ;
-[; ;main.c: 54: unsigned keyRight : 1 ;
-[; ;main.c: 55: unsigned keyLeft : 1 ;
-[; ;main.c: 56: } ;
-[; ;main.c: 57: } UniPortA ;
-"58 src/main.c
-[v _portAState_ `S561 ~T0 @X0 1 e ]
-[i _portAState_
+"144
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `ui -> # `S474 `ui 553  ]
+[e :U 554 ]
+"150
+}
+[; ;DS1307.h: 150: }
+[; ;DS1307.h: 153: SSP1CON2bits.PEN = 1 ;
+"153
+[e = . . _SSP1CON2bits 0 2 -> -> 1 `i `uc ]
+[; ;DS1307.h: 154: while ( SSP1CON2bits.PEN ) ;
+"154
+[e $U 560  ]
+[e :U 561 ]
+[e :U 560 ]
+[e $ != -> . . _SSP1CON2bits 0 2 `i -> -> -> 0 `i `Vuc `i 561  ]
+[e :U 562 ]
+[; ;DS1307.h: 156: return 0 ;
+"156
+[e ) -> -> 0 `i `uc ]
+[e $UE 541  ]
+[; ;DS1307.h: 157: }
+"157
+[e :UE 541 ]
+}
+[; ;main.c: 52: typedef union {
+[; ;main.c: 53: Uint08_t byte ;
+[; ;main.c: 54: struct {
+[; ;main.c: 55: unsigned keyDown : 1 ;
+[; ;main.c: 56: unsigned keyUp : 1 ;
+[; ;main.c: 57: unsigned : 2 ;
+[; ;main.c: 58: unsigned keyRight : 1 ;
+[; ;main.c: 59: unsigned keyLeft : 1 ;
+[; ;main.c: 60: } ;
+[; ;main.c: 61: } UniPortA ;
+"62 src/main.c
+[v _sampledPortAState_ `S563 ~T0 @X0 1 e ]
+[i _sampledPortAState_
 :U ..
 :U ..
 -> -> 0 `i `uc
 ..
 ..
 ]
-[; ;main.c: 58: UniPortA portAState_ = { 0x00 } ;
-"68
-[v _dateCurrent `S473 ~T0 @X0 1 e ]
-[; ;main.c: 68: StDateTime dateCurrent ;
-"69
-[v _dateTimer `S473 ~T0 @X0 1 e ]
-[; ;main.c: 69: StDateTime dateTimer ;
-"70
-[v _datePtr `*S473 ~T0 @X0 1 e ]
-[; ;main.c: 70: StDateTime* datePtr ;
-"73
+[; ;main.c: 62: UniPortA sampledPortAState_ = { 0x00 } ;
+"86
+[v _keyCounter_ `S565 ~T0 @X0 1 e ]
+[; ;main.c: 66: union {
+[; ;main.c: 67: struct {
+[; ;main.c: 68: Uint08_t keyUp ;
+[; ;main.c: 69: Uint08_t keyUD ;
+[; ;main.c: 70: Uint08_t keyDown ;
+[; ;main.c: 71: Uint08_t keyL ;
+[; ;main.c: 72: Uint08_t keyLR ;
+[; ;main.c: 73: Uint08_t keyR ;
+[; ;main.c: 74: } ;
+[; ;main.c: 75: struct {
+[; ;main.c: 76: Uint16_t exceptDown ;
+[; ;main.c: 77: Uint08_t _ ;
+[; ;main.c: 78: Uint16_t exceptRight ;
+[; ;main.c: 79: } ;
+[; ;main.c: 80: struct {
+[; ;main.c: 81: Uint08_t _0 ;
+[; ;main.c: 82: Uint16_t exceptUp ;
+[; ;main.c: 83: Uint08_t _1 ;
+[; ;main.c: 84: Uint16_t exceptLeft ;
+[; ;main.c: 85: } ;
+[; ;main.c: 86: } keyCounter_ ;
+"93
+[v _dateCurrent `S474 ~T0 @X0 1 e ]
+[; ;main.c: 93: StDateTime dateCurrent ;
+"94
+[v _dateTimer `S474 ~T0 @X0 1 e ]
+[; ;main.c: 94: StDateTime dateTimer ;
+"95
+[v _datePtr `*S474 ~T0 @X0 1 e ]
+[; ;main.c: 95: StDateTime* datePtr ;
+"98
 [v _blinkPrescaler `uc ~T0 @X0 1 e ]
 [i _blinkPrescaler
 -> -> 0 `i `uc
 ]
-[; ;main.c: 73: Uint08_t blinkPrescaler = 0 ;
-"96
-[v _keyCount `S563 ~T0 @X0 1 e ]
-[; ;main.c: 76: union {
-[; ;main.c: 77: struct {
-[; ;main.c: 78: Uint08_t keyU ;
-[; ;main.c: 79: Uint08_t keyUD ;
-[; ;main.c: 80: Uint08_t keyD ;
-[; ;main.c: 81: Uint08_t keyL ;
-[; ;main.c: 82: Uint08_t keyLR ;
-[; ;main.c: 83: Uint08_t keyR ;
-[; ;main.c: 84: } ;
-[; ;main.c: 85: struct {
-[; ;main.c: 86: Uint16_t exceptDown ;
-[; ;main.c: 87: Uint08_t _ ;
-[; ;main.c: 88: Uint16_t exceptRight ;
-[; ;main.c: 89: } ;
-[; ;main.c: 90: struct {
-[; ;main.c: 91: Uint08_t _0 ;
-[; ;main.c: 92: Uint16_t exceptUp ;
-[; ;main.c: 93: Uint08_t _1 ;
-[; ;main.c: 94: Uint16_t exceptLeft ;
-[; ;main.c: 95: } ;
-[; ;main.c: 96: } keyCount ;
-[; ;main.c: 97: typedef struct {
-[; ;main.c: 98: Uint08_t position ;
-[; ;main.c: 99: Uint08_t length ;
-[; ;main.c: 100: Uint08_t max ;
-[; ;main.c: 101: Uint08_t min ;
-[; ;main.c: 102: } ValueInfo ;
-"112
-[v _VALUE_INFORMATIONS `CS568 ~T0 @X0 1 e ]
+[; ;main.c: 98: Uint08_t blinkPrescaler = 0 ;
+"99
+[v _keyBeepCounter_ `uc ~T0 @X0 1 e ]
+[i _keyBeepCounter_
+-> -> 0 `i `uc
+]
+[; ;main.c: 99: Uint08_t keyBeepCounter_ = 0 ;
+[; ;main.c: 100: typedef struct {
+[; ;main.c: 101: Uint08_t position ;
+[; ;main.c: 102: Uint08_t length ;
+[; ;main.c: 103: Uint08_t max ;
+[; ;main.c: 104: Uint08_t min ;
+[; ;main.c: 105: } ValueInfo ;
+"115
+[v _VALUE_INFORMATIONS `CS570 ~T0 @X0 1 e ]
 [i _VALUE_INFORMATIONS
 :U ..
 :U ..
 :U ..
 :U ..
-"113
--> | -> . `E4100 0 `i -> 2 `i `uc
+"116
+-> | -> . `E4101 0 `i -> 2 `i `uc
 -> -> 2 `i `uc
 -> -> 153 `i `uc
 -> -> 0 `i `uc
@@ -5357,8 +5407,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 :U ..
 :U ..
-"114
--> | -> . `E4100 0 `i -> 5 `i `uc
+"117
+-> | -> . `E4101 0 `i -> 5 `i `uc
 -> -> 2 `i `uc
 -> -> 18 `i `uc
 -> -> 1 `i `uc
@@ -5366,8 +5416,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 :U ..
 :U ..
-"115
--> | -> . `E4100 0 `i -> 8 `i `uc
+"118
+-> | -> . `E4101 0 `i -> 8 `i `uc
 -> -> 2 `i `uc
 -> -> 49 `i `uc
 -> -> 1 `i `uc
@@ -5375,8 +5425,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 :U ..
 :U ..
-"116
--> | -> . `E4100 0 `i -> 12 `i `uc
+"119
+-> | -> . `E4101 0 `i -> 12 `i `uc
 -> -> 3 `i `uc
 -> -> 7 `i `uc
 -> -> 1 `i `uc
@@ -5384,8 +5434,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 :U ..
 :U ..
-"117
--> | -> . `E4100 1 `i -> 0 `i `uc
+"120
+-> | -> . `E4101 1 `i -> 0 `i `uc
 -> -> 2 `i `uc
 -> -> 35 `i `uc
 -> -> 0 `i `uc
@@ -5393,1126 +5443,1296 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 :U ..
 :U ..
-"118
--> | -> . `E4100 1 `i -> 3 `i `uc
--> -> 2 `i `uc
--> -> 89 `i `uc
--> -> 0 `i `uc
-..
-..
-:U ..
-:U ..
-"119
--> | -> . `E4100 1 `i -> 6 `i `uc
--> -> 2 `i `uc
--> -> 89 `i `uc
--> -> 0 `i `uc
-..
-..
-..
-..
-]
-[; ;main.c: 103: const struct {
-[; ;main.c: 104: ValueInfo year ;
-[; ;main.c: 105: ValueInfo month ;
-[; ;main.c: 106: ValueInfo date ;
-[; ;main.c: 107: ValueInfo dayOfWeek ;
-[; ;main.c: 108: ValueInfo hour ;
-[; ;main.c: 109: ValueInfo minute ;
-[; ;main.c: 110: ValueInfo second ;
-[; ;main.c: 111: }
-[; ;main.c: 112: VALUE_INFORMATIONS = {
-[; ;main.c: 113: { PARALLEL_LCD_ROW_SELECT_0 | 0x2 , 2 , 0x99 , 0x00 } ,
-[; ;main.c: 114: { PARALLEL_LCD_ROW_SELECT_0 | 0x5 , 2 , 0x12 , 0x01 } ,
-[; ;main.c: 115: { PARALLEL_LCD_ROW_SELECT_0 | 0x8 , 2 , 0x31 , 0x01 } ,
-[; ;main.c: 116: { PARALLEL_LCD_ROW_SELECT_0 | 0xC , 3 , 0x7 , 0x01 } ,
-[; ;main.c: 117: { PARALLEL_LCD_ROW_SELECT_1 | 0x0 , 2 , 0x23 , 0x00 } ,
-[; ;main.c: 118: { PARALLEL_LCD_ROW_SELECT_1 | 0x3 , 2 , 0x59 , 0x00 } ,
-[; ;main.c: 119: { PARALLEL_LCD_ROW_SELECT_1 | 0x6 , 2 , 0x59 , 0x00 } ,
-[; ;main.c: 120: } ;
 "121
-[v _currentValueInfo `*CS567 ~T0 @X0 1 e ]
-[i _currentValueInfo
--> -> 0 `i `*CS567
-]
-[; ;main.c: 121: const ValueInfo* currentValueInfo ;
+-> | -> . `E4101 1 `i -> 3 `i `uc
+-> -> 2 `i `uc
+-> -> 89 `i `uc
+-> -> 0 `i `uc
+..
+..
+:U ..
+:U ..
 "122
-[v _currentEditValue `*uc ~T0 @X0 1 e ]
-[; ;main.c: 122: Uint08_t* currentEditValue ;
-[; ;main.c: 125: typedef enum {
-[; ;main.c: 126: STATE_BOOT ,
-[; ;main.c: 127: STATE_CLOCK ,
-[; ;main.c: 128: STATE_MENU ,
-[; ;main.c: 129: STATE_ADJUST_CLOCK ,
-[; ;main.c: 130: STATE_ALERM ,
-[; ;main.c: 131: STATE_SET_TIMER ,
-[; ;main.c: 132: STATE_BUZZER_TEST ,
-[; ;main.c: 133: STATE_VERSION ,
-[; ;main.c: 134: STATE_ERROR ,
-[; ;main.c: 135: } MachineState ;
-"136
-[v _machineState_ `E4248 ~T0 @X0 1 e ]
-[i _machineState_
-. `E4248 0
+-> | -> . `E4101 1 `i -> 6 `i `uc
+-> -> 2 `i `uc
+-> -> 89 `i `uc
+-> -> 0 `i `uc
+..
+..
+..
+..
 ]
-[; ;main.c: 136: MachineState machineState_ = STATE_BOOT ;
-[; ;main.c: 140: typedef enum {
-[; ;main.c: 141: MENU_ADJUST = 0 ,
-[; ;main.c: 142: MENU_TIMER ,
-[; ;main.c: 143: MENU_BUZZER_TEST ,
-[; ;main.c: 144: MENU_VERSION ,
-[; ;main.c: 145: } MenuItem ;
-"146
+[; ;main.c: 106: const struct {
+[; ;main.c: 107: ValueInfo year ;
+[; ;main.c: 108: ValueInfo month ;
+[; ;main.c: 109: ValueInfo date ;
+[; ;main.c: 110: ValueInfo dayOfWeek ;
+[; ;main.c: 111: ValueInfo hour ;
+[; ;main.c: 112: ValueInfo minute ;
+[; ;main.c: 113: ValueInfo second ;
+[; ;main.c: 114: }
+[; ;main.c: 115: VALUE_INFORMATIONS = {
+[; ;main.c: 116: { PARALLEL_LCD_ROW_SELECT_0 | 0x2 , 2 , 0x99 , 0x00 } ,
+[; ;main.c: 117: { PARALLEL_LCD_ROW_SELECT_0 | 0x5 , 2 , 0x12 , 0x01 } ,
+[; ;main.c: 118: { PARALLEL_LCD_ROW_SELECT_0 | 0x8 , 2 , 0x31 , 0x01 } ,
+[; ;main.c: 119: { PARALLEL_LCD_ROW_SELECT_0 | 0xC , 3 , 0x7 , 0x01 } ,
+[; ;main.c: 120: { PARALLEL_LCD_ROW_SELECT_1 | 0x0 , 2 , 0x23 , 0x00 } ,
+[; ;main.c: 121: { PARALLEL_LCD_ROW_SELECT_1 | 0x3 , 2 , 0x59 , 0x00 } ,
+[; ;main.c: 122: { PARALLEL_LCD_ROW_SELECT_1 | 0x6 , 2 , 0x59 , 0x00 } ,
+[; ;main.c: 123: } ;
+"124
+[v _currentValueInfo `*CS569 ~T0 @X0 1 e ]
+[i _currentValueInfo
+-> -> 0 `i `*CS569
+]
+[; ;main.c: 124: const ValueInfo* currentValueInfo ;
+"125
+[v _currentEditValue `*uc ~T0 @X0 1 e ]
+[; ;main.c: 125: Uint08_t* currentEditValue ;
+[; ;main.c: 128: typedef enum {
+[; ;main.c: 129: STATE_BOOT ,
+[; ;main.c: 130: STATE_CLOCK ,
+[; ;main.c: 131: STATE_MENU ,
+[; ;main.c: 132: STATE_ADJUST_CLOCK ,
+[; ;main.c: 133: STATE_ALERM ,
+[; ;main.c: 134: STATE_SET_TIMER ,
+[; ;main.c: 135: STATE_BUZZER_TEST ,
+[; ;main.c: 136: STATE_VERSION ,
+[; ;main.c: 137: STATE_ERROR ,
+[; ;main.c: 138: } MachineState ;
+"139
+[v _machineState_ `E4259 ~T0 @X0 1 e ]
+[i _machineState_
+. `E4259 0
+]
+[; ;main.c: 139: MachineState machineState_ = STATE_BOOT ;
+[; ;main.c: 143: typedef enum {
+[; ;main.c: 144: MENU_ADJUST = 0 ,
+[; ;main.c: 145: MENU_TIMER ,
+[; ;main.c: 146: MENU_BUZZER_TEST ,
+[; ;main.c: 147: MENU_VERSION ,
+[; ;main.c: 148: } MenuItem ;
+"149
 [v _MESSAGE_MENU `*Cuc ~T0 @X0 -> 0 `x e ]
 [i _MESSAGE_MENU
 :U ..
-"147
-:s 8C
-"148
-:s 9C
-"149
-:s 10C
 "150
+:s 8C
+"151
+:s 9C
+"152
+:s 10C
+"153
 :s 11C
 ..
 ]
-[; ;main.c: 146: const char* MESSAGE_MENU[] = {
-[; ;main.c: 147: "Adjust Clock" ,
-[; ;main.c: 148: "Set Timer" ,
-[; ;main.c: 149: "Buzzer Test" ,
-[; ;main.c: 150: "Version" ,
-[; ;main.c: 151: } ;
-"152
-[v _menuSelect `E4260 ~T0 @X0 1 e ]
+[; ;main.c: 149: const char* MESSAGE_MENU[] = {
+[; ;main.c: 150: "Adjust Clock" ,
+[; ;main.c: 151: "Set Timer" ,
+[; ;main.c: 152: "Buzzer Test" ,
+[; ;main.c: 153: "Version" ,
+[; ;main.c: 154: } ;
+"155
+[v _menuSelect `E4271 ~T0 @X0 1 e ]
 [i _menuSelect
-. `E4260 0
+. `E4271 0
 ]
-[; ;main.c: 152: MenuItem menuSelect = MENU_ADJUST ;
-"153
+[; ;main.c: 155: MenuItem menuSelect = MENU_ADJUST ;
+"156
 [v _cursorPosition `uc ~T0 @X0 1 e ]
 [i _cursorPosition
 -> -> 0 `i `uc
 ]
-[; ;main.c: 153: Uint08_t cursorPosition = 0 ;
-"155
+[; ;main.c: 156: Uint08_t cursorPosition = 0 ;
+"158
 [v _CURSOR_BITMAP `Cuc ~T0 @X0 -> 8 `i e ]
 [i _CURSOR_BITMAP
 :U ..
-"156
--> -> 16 `i `uc
-"157
--> -> 24 `i `uc
-"158
--> -> 28 `i `uc
 "159
--> -> 30 `i `uc
-"160
--> -> 28 `i `uc
-"161
--> -> 24 `i `uc
-"162
 -> -> 16 `i `uc
+"160
+-> -> 24 `i `uc
+"161
+-> -> 28 `i `uc
+"162
+-> -> 30 `i `uc
 "163
+-> -> 28 `i `uc
+"164
+-> -> 24 `i `uc
+"165
+-> -> 16 `i `uc
+"166
 -> -> 0 `i `uc
 ..
 ]
-[; ;main.c: 155: const Uint08_t CURSOR_BITMAP[8] = {
-[; ;main.c: 156: 0b10000 ,
-[; ;main.c: 157: 0b11000 ,
-[; ;main.c: 158: 0b11100 ,
-[; ;main.c: 159: 0b11110 ,
-[; ;main.c: 160: 0b11100 ,
-[; ;main.c: 161: 0b11000 ,
-[; ;main.c: 162: 0b10000 ,
-[; ;main.c: 163: 0b00000 ,
-[; ;main.c: 164: } ;
-"166
+[; ;main.c: 158: const Uint08_t CURSOR_BITMAP[8] = {
+[; ;main.c: 159: 0b10000 ,
+[; ;main.c: 160: 0b11000 ,
+[; ;main.c: 161: 0b11100 ,
+[; ;main.c: 162: 0b11110 ,
+[; ;main.c: 163: 0b11100 ,
+[; ;main.c: 164: 0b11000 ,
+[; ;main.c: 165: 0b10000 ,
+[; ;main.c: 166: 0b00000 ,
+[; ;main.c: 167: } ;
+"169
 [v _alerm `uc ~T0 @X0 1 e ]
 [i _alerm
 -> -> 0 `i `uc
 ]
-[; ;main.c: 166: Uint08_t alerm = 0 ;
-"168
-[v _editSelect `E4142 ~T0 @X0 1 e ]
+[; ;main.c: 169: Uint08_t alerm = 0 ;
+"171
+[v _editSelect `E4144 ~T0 @X0 1 e ]
 [i _editSelect
-. `E4142 0
+. `E4144 0
 ]
-[; ;main.c: 168: EnDateItem editSelect = DATE_ITEM_YEAR ;
-"188
-[v _keyEvents_ `S569 ~T0 @X0 1 e ]
-[i _keyEvents_
+[; ;main.c: 171: EnDateItem editSelect = DATE_ITEM_YEAR ;
+"213
+[v _events_ `S571 ~T0 @X0 1 e ]
+[i _events_
+:U ..
+:U ..
 :U ..
 :U ..
 -> -> 0 `i `uc
 ..
 ..
-]
-[; ;main.c: 180: struct {
-[; ;main.c: 181: unsigned up : 1 ;
-[; ;main.c: 182: unsigned down : 1 ;
-[; ;main.c: 183: unsigned upDown : 1 ;
-[; ;main.c: 184: unsigned left : 1 ;
-[; ;main.c: 185: unsigned right : 1 ;
-[; ;main.c: 186: unsigned leftRightHold : 1 ;
-[; ;main.c: 187: unsigned releaseRight : 1 ;
-[; ;main.c: 188: } keyEvents_ = 0 ;
-"195
-[v _outputEvent `S570 ~T0 @X0 1 e ]
-[i _outputEvent
 :U ..
 :U ..
 -> -> 0 `i `uc
 ..
 ..
+..
+..
 ]
-[; ;main.c: 189: union {
-[; ;main.c: 190: Uint08_t all ;
-[; ;main.c: 191: struct {
-[; ;main.c: 192: unsigned changeMessage : 1 ;
-[; ;main.c: 193: unsigned changeValue : 1 ;
-[; ;main.c: 194: } ;
-[; ;main.c: 195: } outputEvent = 0 ;
-"198
+[; ;main.c: 183: struct {
+[; ;main.c: 184: union {
+[; ;main.c: 185: Uint08_t byte ;
+[; ;main.c: 186: struct {
+[; ;main.c: 187: unsigned up : 1 ;
+[; ;main.c: 188: unsigned upHold : 1 ;
+[; ;main.c: 189: unsigned down : 1 ;
+[; ;main.c: 190: unsigned downHold : 1 ;
+[; ;main.c: 191: unsigned upDown : 1 ;
+[; ;main.c: 192: unsigned left : 1 ;
+[; ;main.c: 193: unsigned right : 1 ;
+[; ;main.c: 194: unsigned leftRightHold : 1 ;
+[; ;main.c: 195: } ;
+[; ;main.c: 196: } keyPress ;
+[; ;main.c: 197: union {
+[; ;main.c: 198: Uint08_t byte ;
+[; ;main.c: 199: struct {
+[; ;main.c: 200: unsigned right : 1 ;
+[; ;main.c: 201: } ;
+[; ;main.c: 202: } keyRelease ;
+[; ;main.c: 203: union {
+[; ;main.c: 204: Uint08_t byte ;
+[; ;main.c: 205: struct {
+[; ;main.c: 206: unsigned updateClock : 1 ;
+[; ;main.c: 207: unsigned changeMessage : 1 ;
+[; ;main.c: 208: unsigned changeValue : 1 ;
+[; ;main.c: 209: unsigned soundOn : 1 ;
+[; ;main.c: 210: unsigned soundOff : 1 ;
+[; ;main.c: 211: } ;
+[; ;main.c: 212: } output ;
+[; ;main.c: 213: } events_ = { 0x00 , 0x00 } ;
+"216
 [v _main `(i ~T0 @X0 1 ef ]
 {
-[; ;main.c: 198: int main( void ) {
+[; ;main.c: 216: int main( void ) {
 [e :U _main ]
 [f ]
-[; ;main.c: 199: initialize( ) ;
-"199
+[; ;main.c: 218: initialize( ) ;
+"218
 [e ( _initialize ..  ]
-[; ;main.c: 201: PWM3DCH = ( PR2 >> 2 ) ;
-"201
-[e = _PWM3DCH -> >> -> _PR2 `i -> 2 `i `uc ]
-[; ;main.c: 202: PWM3DCL = ( ( PR2 & 0b11 ) << 6 ) ;
-"202
-[e = _PWM3DCL -> << & -> _PR2 `i -> 3 `i -> 6 `i `uc ]
-[; ;main.c: 203: PWM3OE = 0 ;
-"203
-[e = _PWM3OE -> -> 0 `i `b ]
-[; ;main.c: 206: _delay((unsigned long)((20)*(1000000L/4000.0))) ;
-"206
-[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 1000000 `l `d .4000.0 `ul ]
-[; ;main.c: 207: ParallelLCD_Initialize(
-[; ;main.c: 208: PARALLEL_LCD_CONFIG_8BIT_MODE | PARALLEL_LCD_CONFIG_2LINE_MODE ,
-[; ;main.c: 209: PARALLEL_LCD_CONFIG_DISPLAY_ON ,
-[; ;main.c: 210: PARALLEL_LCD_CONFIG_CURSOR_NONE ,
-[; ;main.c: 211: PARALLEL_LCD_CONFIG_INCREMENTAL
-[; ;main.c: 212: ) ;
-"212
-[e ( _ParallelLCD_Initialize (4 , , , -> | -> . `E4078 3 `i -> . `E4078 2 `i `E4078 . `E4084 3 . `E4090 0 . `E4095 2 ]
-[; ;main.c: 215: ParallelLCD_SetCgram( 0x00 , CURSOR_BITMAP ) ;
-"215
-[e ( _ParallelLCD_SetCgram (2 , -> -> 0 `i `uc &U _CURSOR_BITMAP ]
-[; ;main.c: 217: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Boot ..." ) ;
-"217
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 0 `i -> 0 `i `E4100 :s 12C ]
-[; ;main.c: 220: _ds1307_GetData( &dateTimer , 0x10 , 7 ) ;
+[; ;main.c: 220: PWM3DCH = ( PR2 >> 2 ) ;
 "220
-[e ( __ds1307_GetData (3 , , &U _dateTimer -> -> 16 `i `uc -> -> 7 `i `uc ]
-[; ;main.c: 222: INTCONbits.TMR0IE = 1 ;
+[e = _PWM3DCH -> >> -> _PR2 `i -> 2 `i `uc ]
+[; ;main.c: 221: PWM3DCL = ( ( PR2 & 0b11 ) << 6 ) ;
+"221
+[e = _PWM3DCL -> << & -> _PR2 `i -> 3 `i -> 6 `i `uc ]
+[; ;main.c: 222: PWM3OE = 0 ;
 "222
-[e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
-[; ;main.c: 223: IOCIE = 0 ;
-"223
-[e = _IOCIE -> -> 0 `i `b ]
-[; ;main.c: 225: for( ; ; ) {
+[e = _PWM3OE -> -> 0 `i `b ]
+[; ;main.c: 225: DS1307_GetData( &dateTimer , 0x10 , 7 ) ;
 "225
+[e ( _DS1307_GetData (3 , , &U _dateTimer -> -> 16 `i `uc -> -> 7 `i `uc ]
+[; ;main.c: 228: ParallelLCD_Initialize(
+[; ;main.c: 229: PARALLEL_LCD_CONFIG_8BIT_MODE | PARALLEL_LCD_CONFIG_2LINE_MODE ,
+[; ;main.c: 230: PARALLEL_LCD_CONFIG_DISPLAY_ON ,
+[; ;main.c: 231: PARALLEL_LCD_CONFIG_CURSOR_NONE ,
+[; ;main.c: 232: PARALLEL_LCD_CONFIG_INCREMENTAL
+[; ;main.c: 233: ) ;
+"233
+[e ( _ParallelLCD_Initialize (4 , , , -> | -> . `E4079 3 `i -> . `E4079 2 `i `E4079 . `E4085 3 . `E4091 0 . `E4096 2 ]
+[; ;main.c: 236: ParallelLCD_SetCgram( 0x00 , CURSOR_BITMAP ) ;
+"236
+[e ( _ParallelLCD_SetCgram (2 , -> -> 0 `i `uc &U _CURSOR_BITMAP ]
+[; ;main.c: 238: events_.output.updateClock=1 ;
+"238
+[e = . . . _events_ 2 1 0 -> -> 1 `i `uc ]
+[; ;main.c: 239: machineState_ = STATE_CLOCK ;
+"239
+[e = _machineState_ . `E4259 1 ]
+[; ;main.c: 240: datePtr = &dateCurrent ;
+"240
+[e = _datePtr &U _dateCurrent ]
+[; ;main.c: 242: INTCONbits.TMR0IF = 0 ;
+"242
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+[; ;main.c: 243: INTCONbits.TMR0IE = 1 ;
+"243
+[e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
+[; ;main.c: 244: IOCIE = 0 ;
+"244
+[e = _IOCIE -> -> 0 `i `b ]
+[; ;main.c: 246: for( ; ; ) {
+"246
 {
-[e :U 573 ]
+[e :U 579 ]
 {
-[; ;main.c: 228: asm("clrwdt") ;
-"228
+[; ;main.c: 249: asm("clrwdt") ;
+"249
 [; <" clrwdt ;# ">
-"230
-[v F4291 `S561 ~T0 @X0 1 s prevPortAState ]
-[i F4291
+[; ;main.c: 251: if( (events_.output.updateClock&&!(events_.output.updateClock=0)) ) {
+"251
+[e $ ! && != -> . . . _events_ 2 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 2 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 582  ]
+{
+[; ;main.c: 254: if( DS1307_GetData( &dateCurrent , 0x00 , 7 ) ) {
+"254
+[e $ ! != -> ( _DS1307_GetData (3 , , &U _dateCurrent -> -> 0 `i `uc -> -> 7 `i `uc `i -> -> -> 0 `i `uc `i 583  ]
+{
+[; ;main.c: 255: machineState_ = STATE_ERROR ;
+"255
+[e = _machineState_ . `E4259 8 ]
+"256
+}
+[; ;main.c: 256: }
+[e $U 584  ]
+"257
+[e :U 583 ]
+[; ;main.c: 257: else {
+{
+"260
+[v _isTimeToAlerm `E4074 ~T0 @X0 1 a ]
+[; ;main.c: 260: Bool_t isTimeToAlerm = BOOL_FALSE ;
+[e = _isTimeToAlerm . `E4074 0 ]
+[; ;main.c: 261: if( dateCurrent.date == dateTimer.date && dateCurrent.time == dateTimer.time ) {
+"261
+[e $ ! && == . . _dateCurrent 1 2 . . _dateTimer 1 2 == . . _dateCurrent 1 0 . . _dateTimer 1 0 585  ]
+{
+[; ;main.c: 262: if( !dateTimer.dayOfWeek || dateCurrent.dayOfWeek == dateTimer.dayOfWeek )
+"262
+[e $ ! || ! != -> . . _dateTimer 0 3 `i -> -> -> 0 `i `uc `i == -> . . _dateCurrent 0 3 `i -> . . _dateTimer 0 3 `i 586  ]
+[; ;main.c: 263: isTimeToAlerm == BOOL_TRUE ;
+"263
+[e == -> _isTimeToAlerm `i -> . `E4074 1 `i ]
+[e $U 587  ]
+"264
+[e :U 586 ]
+[; ;main.c: 264: else
+[; ;main.c: 265: isTimeToAlerm = BOOL_TRUE ;
+"265
+[e = _isTimeToAlerm . `E4074 1 ]
+[e :U 587 ]
+"266
+}
+[e :U 585 ]
+[; ;main.c: 266: }
+[; ;main.c: 267: events_.output.changeMessage=1 ;
+"267
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+[; ;main.c: 269: if( isTimeToAlerm ) machineState_ = STATE_ALERM ;
+"269
+[e $ ! != -> _isTimeToAlerm `i -> -> -> 0 `i `E4074 `i 588  ]
+[e = _machineState_ . `E4259 4 ]
+[e :U 588 ]
+[; ;main.c: 270: if( dateCurrent.clockHalt ) machineState_ = STATE_ERROR ;
+"270
+[e $ ! != -> . . _dateCurrent 2 1 `i -> -> -> 0 `i `uc `i 589  ]
+[e = _machineState_ . `E4259 8 ]
+[e :U 589 ]
+"271
+}
+[e :U 584 ]
+"273
+}
+[e :U 582 ]
+"275
+[v F4317 `S563 ~T0 @X0 1 s prevPortAState ]
+[i F4317
 :U ..
 :U ..
 -> -> 0 `i `uc
 ..
 ..
 ]
-"231
-[v _keyChange `S561 ~T0 @X0 1 a ]
-[v _keyPressed `S561 ~T0 @X0 1 a ]
-[v _keyReleased `S561 ~T0 @X0 1 a ]
-[; ;main.c: 230: static UniPortA prevPortAState = { 0x00 } ;
-[; ;main.c: 231: UniPortA keyChange , keyPressed , keyReleased ;
-[; ;main.c: 234: keyChange.byte = portAState_.byte ^ prevPortAState.byte ;
-"234
-[e = . _keyChange 0 -> ^ -> . _portAState_ 0 `i -> . F4291 0 `i `uc ]
-[; ;main.c: 235: keyPressed.byte = keyChange.byte & portAState_.byte ;
-"235
-[e = . _keyPressed 0 -> & -> . _keyChange 0 `i -> . _portAState_ 0 `i `uc ]
-[; ;main.c: 236: keyReleased.byte = keyChange.byte & ~portAState_.byte ;
-"236
-[e = . _keyReleased 0 -> & -> . _keyChange 0 `i ~ -> . _portAState_ 0 `i `uc ]
-[; ;main.c: 237: prevPortAState.byte = portAState_.byte ;
-"237
-[e = . F4291 0 . _portAState_ 0 ]
-[; ;main.c: 239: if( keyPressed.keyUp ) {
-"239
-[e $ ! != -> . . _keyPressed 1 1 `i -> -> -> 0 `i `uc `i 576  ]
-{
-[; ;main.c: 240: if( portAState_.keyDown )
-"240
-[e $ ! != -> . . _portAState_ 1 0 `i -> -> -> 0 `i `uc `i 577  ]
-[; ;main.c: 241: keyEvents_.upDown=1 ;
-"241
-[e = . _keyEvents_ 2 -> -> 1 `i `uc ]
-[e $U 578  ]
-"242
-[e :U 577 ]
-[; ;main.c: 242: else
-[; ;main.c: 243: keyEvents_.up=1 ;
-"243
-[e = . _keyEvents_ 0 -> -> 1 `i `uc ]
-[e :U 578 ]
-"244
-}
-[e :U 576 ]
-[; ;main.c: 244: }
-[; ;main.c: 246: if( keyPressed.keyDown ) {
-"246
-[e $ ! != -> . . _keyPressed 1 0 `i -> -> -> 0 `i `uc `i 579  ]
-{
-[; ;main.c: 247: if( portAState_.keyUp )
-"247
-[e $ ! != -> . . _portAState_ 1 1 `i -> -> -> 0 `i `uc `i 580  ]
-[; ;main.c: 248: keyEvents_.upDown=1 ;
-"248
-[e = . _keyEvents_ 2 -> -> 1 `i `uc ]
-[e $U 581  ]
-"249
-[e :U 580 ]
-[; ;main.c: 249: else
-[; ;main.c: 250: keyEvents_.down=1 ;
-"250
-[e = . _keyEvents_ 1 -> -> 1 `i `uc ]
-[e :U 581 ]
-"251
-}
-[e :U 579 ]
-[; ;main.c: 251: }
-[; ;main.c: 253: if( keyPressed.keyLeft ) {
-"253
-[e $ ! != -> . . _keyPressed 1 4 `i -> -> -> 0 `i `uc `i 582  ]
-{
-[; ;main.c: 254: keyEvents_.left=1 ;
-"254
-[e = . _keyEvents_ 3 -> -> 1 `i `uc ]
-"255
-}
-[e :U 582 ]
-[; ;main.c: 255: }
-[; ;main.c: 257: if( keyPressed.keyRight ) {
-"257
-[e $ ! != -> . . _keyPressed 1 3 `i -> -> -> 0 `i `uc `i 583  ]
-{
-[; ;main.c: 258: keyEvents_.right=1 ;
-"258
-[e = . _keyEvents_ 4 -> -> 1 `i `uc ]
-"259
-}
-[e :U 583 ]
-[; ;main.c: 259: }
-[; ;main.c: 260: if( keyReleased.keyRight ) {
-"260
-[e $ ! != -> . . _keyReleased 1 3 `i -> -> -> 0 `i `uc `i 584  ]
-{
-[; ;main.c: 261: keyEvents_.releaseRight=1 ;
-"261
-[e = . _keyEvents_ 6 -> -> 1 `i `uc ]
-"262
-}
-[e :U 584 ]
-[; ;main.c: 262: }
-[; ;main.c: 265: if( (keyEvents_.leftRightHold&&!(keyEvents_.leftRightHold=0)) ) {
-"265
-[e $ ! && != -> . _keyEvents_ 5 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 5 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 585  ]
-{
-[; ;main.c: 267: outputEvent.changeMessage=1 ;
-"267
-[e = . . _outputEvent 1 0 -> -> 1 `i `uc ]
-[; ;main.c: 269: switch( machineState_ ) {
-"269
-[e $U 587  ]
-{
-[; ;main.c: 271: case STATE_ADJUST_CLOCK:
-"271
-[e :U 588 ]
-[; ;main.c: 272: _ds1307_SetClock( &dateCurrent ) ;
-"272
-[e ( __ds1307_SetClock (1 &U _dateCurrent ]
-[; ;main.c: 273: machineState_ = STATE_CLOCK ;
-"273
-[e = _machineState_ . `E4248 1 ]
-[; ;main.c: 274: break ;
-"274
-[e $U 586  ]
-[; ;main.c: 276: case STATE_SET_TIMER:
 "276
-[e :U 589 ]
-[; ;main.c: 277: machineState_ = STATE_CLOCK ;
-"277
-[e = _machineState_ . `E4248 1 ]
-[; ;main.c: 278: break ;
-"278
-[e $U 586  ]
+[v _portAState `S563 ~T0 @X0 1 a ]
+[v _keyChange `S563 ~T0 @X0 1 a ]
+[v _keyPressed `S563 ~T0 @X0 1 a ]
+[v _keyReleased `S563 ~T0 @X0 1 a ]
+[; ;main.c: 271: }
+[; ;main.c: 273: }
+[; ;main.c: 275: static UniPortA prevPortAState = { 0x00 } ;
+[; ;main.c: 276: UniPortA portAState , keyChange , keyPressed , keyReleased ;
+[; ;main.c: 279: portAState.byte = sampledPortAState_.byte ;
+"279
+[e = . _portAState 0 . _sampledPortAState_ 0 ]
+[; ;main.c: 280: keyChange.byte = portAState.byte ^ prevPortAState.byte ;
 "280
-}
-[; ;main.c: 280: }
-[e $U 586  ]
-"269
-[e :U 587 ]
-[e [\ _machineState_ , $ . `E4248 3 588
- , $ . `E4248 5 589
- 586 ]
-"280
-[e :U 586 ]
+[e = . _keyChange 0 -> ^ -> . _portAState 0 `i -> . F4317 0 `i `uc ]
+[; ;main.c: 281: keyPressed.byte = keyChange.byte & portAState.byte ;
 "281
-}
-[e :U 585 ]
-[; ;main.c: 281: }
-[; ;main.c: 284: if( (keyEvents_.left&&!(keyEvents_.left=0)) ) {
-"284
-[e $ ! && != -> . _keyEvents_ 3 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 590  ]
-{
-[; ;main.c: 286: switch( machineState_ ) {
+[e = . _keyPressed 0 -> & -> . _keyChange 0 `i -> . _portAState 0 `i `uc ]
+[; ;main.c: 282: keyReleased.byte = keyChange.byte & ~portAState.byte ;
+"282
+[e = . _keyReleased 0 -> & -> . _keyChange 0 `i ~ -> . _portAState 0 `i `uc ]
+[; ;main.c: 283: prevPortAState.byte = portAState.byte ;
+"283
+[e = . F4317 0 . _portAState 0 ]
+[; ;main.c: 286: if( keyPressed.keyUp || (events_.keyPress.upHold&&!(events_.keyPress.upHold=0)) ) {
 "286
-[e $U 592  ]
+[e $ ! || != -> . . _keyPressed 1 1 `i -> -> -> 0 `i `uc `i && != -> . . . _events_ 0 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 590  ]
 {
-[; ;main.c: 288: case STATE_MENU:
+[; ;main.c: 287: if( portAState.keyDown )
+"287
+[e $ ! != -> . . _portAState 1 0 `i -> -> -> 0 `i `uc `i 591  ]
+[; ;main.c: 288: events_.keyPress.upDown=1 ;
 "288
-[e :U 593 ]
-[; ;main.c: 289: machineState_ = STATE_CLOCK ;
+[e = . . . _events_ 0 1 4 -> -> 1 `i `uc ]
+[e $U 592  ]
 "289
-[e = _machineState_ . `E4248 1 ]
-[; ;main.c: 290: outputEvent.changeMessage=1 ;
-"290
-[e = . . _outputEvent 1 0 -> -> 1 `i `uc ]
-[; ;main.c: 291: break ;
-"291
-[e $U 591  ]
-[; ;main.c: 293: case STATE_ADJUST_CLOCK:
-"293
-[e :U 594 ]
-"294
-[e :U 595 ]
-[; ;main.c: 294: case STATE_SET_TIMER:
-[; ;main.c: 295: if( editSelect == DATE_ITEM_YEAR ) {
-"295
-[e $ ! == -> _editSelect `i -> . `E4142 0 `i 596  ]
-{
-[; ;main.c: 296: editSelect = DATE_ITEM_SECOND ;
-"296
-[e = _editSelect . `E4142 6 ]
-[; ;main.c: 297: currentValueInfo = &VALUE_INFORMATIONS.second ;
-"297
-[e = _currentValueInfo &U . _VALUE_INFORMATIONS 6 ]
-[; ;main.c: 298: currentEditValue = &datePtr->second ;
-"298
-[e = _currentEditValue &U . . *U _datePtr 0 0 ]
-"299
-}
-[; ;main.c: 299: }
-[e $U 597  ]
-"300
-[e :U 596 ]
-[; ;main.c: 300: else {
-{
-[; ;main.c: 301: editSelect-- ;
-"301
-[e -- _editSelect -> -> 1 `i `E4142 ]
-[; ;main.c: 302: currentValueInfo-- ;
-"302
-[e -- _currentValueInfo * -> -> 1 `i `x -> -> # *U _currentValueInfo `i `x ]
-[; ;main.c: 303: currentEditValue++ ;
-"303
-[e ++ _currentEditValue * -> -> 1 `i `x -> -> # *U _currentEditValue `i `x ]
-"304
-}
-[e :U 597 ]
-[; ;main.c: 304: }
-[; ;main.c: 306: blinkPrescaler = 0 ;
-"306
-[e = _blinkPrescaler -> -> 0 `i `uc ]
-[; ;main.c: 307: break ;
-"307
-[e $U 591  ]
-[; ;main.c: 309: case STATE_BUZZER_TEST:
-"309
-[e :U 598 ]
-"310
-[e :U 599 ]
-[; ;main.c: 310: case STATE_VERSION:
-[; ;main.c: 311: machineState_ = STATE_MENU ;
-"311
-[e = _machineState_ . `E4248 2 ]
-[; ;main.c: 312: outputEvent.changeMessage=1 ;
-"312
-[e = . . _outputEvent 1 0 -> -> 1 `i `uc ]
-[; ;main.c: 313: break ;
-"313
-[e $U 591  ]
-"315
-}
-[; ;main.c: 315: }
-[e $U 591  ]
-"286
-[e :U 592 ]
-[e [\ _machineState_ , $ . `E4248 2 593
- , $ . `E4248 3 594
- , $ . `E4248 5 595
- , $ . `E4248 6 598
- , $ . `E4248 7 599
- 591 ]
-"315
 [e :U 591 ]
-"317
+[; ;main.c: 289: else
+[; ;main.c: 290: events_.keyPress.up=1 ;
+"290
+[e = . . . _events_ 0 1 0 -> -> 1 `i `uc ]
+[e :U 592 ]
+"291
 }
 [e :U 590 ]
-[; ;main.c: 317: }
-[; ;main.c: 320: if( (keyEvents_.right&&!(keyEvents_.right=0)) ) {
-"320
-[e $ ! && != -> . _keyEvents_ 4 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 4 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 600  ]
+[; ;main.c: 291: }
+[; ;main.c: 294: if( keyPressed.keyDown || (events_.keyPress.downHold&&!(events_.keyPress.downHold=0)) ) {
+"294
+[e $ ! || != -> . . _keyPressed 1 0 `i -> -> -> 0 `i `uc `i && != -> . . . _events_ 0 1 3 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 593  ]
 {
-[; ;main.c: 322: switch( machineState_ ) {
-"322
+[; ;main.c: 295: if( portAState.keyUp )
+"295
+[e $ ! != -> . . _portAState 1 1 `i -> -> -> 0 `i `uc `i 594  ]
+[; ;main.c: 296: events_.keyPress.upDown=1 ;
+"296
+[e = . . . _events_ 0 1 4 -> -> 1 `i `uc ]
+[e $U 595  ]
+"297
+[e :U 594 ]
+[; ;main.c: 297: else
+[; ;main.c: 298: events_.keyPress.down=1 ;
+"298
+[e = . . . _events_ 0 1 2 -> -> 1 `i `uc ]
+[e :U 595 ]
+"299
+}
+[e :U 593 ]
+[; ;main.c: 299: }
+[; ;main.c: 302: if( keyPressed.keyLeft ) {
+"302
+[e $ ! != -> . . _keyPressed 1 4 `i -> -> -> 0 `i `uc `i 596  ]
+{
+[; ;main.c: 303: events_.keyPress.left=1 ;
+"303
+[e = . . . _events_ 0 1 5 -> -> 1 `i `uc ]
+"304
+}
+[e :U 596 ]
+[; ;main.c: 304: }
+[; ;main.c: 307: if( keyPressed.keyRight ) {
+"307
+[e $ ! != -> . . _keyPressed 1 3 `i -> -> -> 0 `i `uc `i 597  ]
+{
+[; ;main.c: 308: events_.keyPress.right=1 ;
+"308
+[e = . . . _events_ 0 1 6 -> -> 1 `i `uc ]
+"309
+}
+[e :U 597 ]
+[; ;main.c: 309: }
+[; ;main.c: 310: if( keyReleased.keyRight ) {
+"310
+[e $ ! != -> . . _keyReleased 1 3 `i -> -> -> 0 `i `uc `i 598  ]
+{
+[; ;main.c: 311: events_.keyRelease.right=1 ;
+"311
+[e = . . . _events_ 1 1 0 -> -> 1 `i `uc ]
+"312
+}
+[e :U 598 ]
+[; ;main.c: 312: }
+[; ;main.c: 315: if( events_.keyPress.byte ) {
+"315
+[e $ ! != -> . . _events_ 0 0 `i -> -> -> 0 `i `uc `i 599  ]
+{
+[; ;main.c: 316: keyBeepCounter_ = 20 ;
+"316
+[e = _keyBeepCounter_ -> -> 20 `i `uc ]
+[; ;main.c: 317: events_.output.soundOn=1 ;
+"317
+[e = . . . _events_ 2 1 3 -> -> 1 `i `uc ]
+"318
+}
+[e :U 599 ]
+[; ;main.c: 318: }
+[; ;main.c: 321: if( (events_.keyPress.leftRightHold&&!(events_.keyPress.leftRightHold=0)) ) {
+"321
+[e $ ! && != -> . . . _events_ 0 1 7 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 7 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 600  ]
+{
+[; ;main.c: 323: events_.output.changeMessage=1 ;
+"323
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+[; ;main.c: 325: switch( machineState_ ) {
+"325
 [e $U 602  ]
 {
-[; ;main.c: 324: case STATE_CLOCK:
-"324
-[e :U 603 ]
-[; ;main.c: 325: machineState_ = STATE_MENU ;
-"325
-[e = _machineState_ . `E4248 2 ]
-[; ;main.c: 326: datePtr = &dateCurrent ;
-"326
-[e = _datePtr &U _dateCurrent ]
-[; ;main.c: 327: menuSelect = 0 ;
+[; ;main.c: 327: case STATE_ADJUST_CLOCK:
 "327
-[e = _menuSelect -> -> 0 `i `E4260 ]
-[; ;main.c: 328: cursorPosition = 0 ;
+[e :U 603 ]
+[; ;main.c: 328: DS1307_SetClock( &dateCurrent ) ;
 "328
-[e = _cursorPosition -> -> 0 `i `uc ]
-[; ;main.c: 329: outputEvent.changeMessage=1 ;
+[e ( _DS1307_SetClock (1 &U _dateCurrent ]
+[; ;main.c: 329: machineState_ = STATE_CLOCK ;
 "329
-[e = . . _outputEvent 1 0 -> -> 1 `i `uc ]
+[e = _machineState_ . `E4259 1 ]
 [; ;main.c: 330: break ;
 "330
 [e $U 601  ]
-[; ;main.c: 333: case STATE_ADJUST_CLOCK:
-"333
+[; ;main.c: 332: case STATE_SET_TIMER:
+"332
 [e :U 604 ]
+[; ;main.c: 333: machineState_ = STATE_CLOCK ;
+"333
+[e = _machineState_ . `E4259 1 ]
+[; ;main.c: 334: break ;
 "334
-[e :U 605 ]
-[; ;main.c: 334: case STATE_SET_TIMER:
-[; ;main.c: 335: if( editSelect == DATE_ITEM_SECOND ) {
-"335
-[e $ ! == -> _editSelect `i -> . `E4142 6 `i 606  ]
-{
-[; ;main.c: 336: editSelect = DATE_ITEM_YEAR ;
+[e $U 601  ]
 "336
-[e = _editSelect . `E4142 0 ]
-[; ;main.c: 337: currentValueInfo = &VALUE_INFORMATIONS.year ;
-"337
-[e = _currentValueInfo &U . _VALUE_INFORMATIONS 0 ]
-[; ;main.c: 338: currentEditValue = &datePtr->year ;
-"338
-[e = _currentEditValue &U . . *U _datePtr 0 6 ]
-"339
 }
-[; ;main.c: 339: }
-[e $U 607  ]
-"340
-[e :U 606 ]
-[; ;main.c: 340: else {
-{
-[; ;main.c: 341: editSelect++ ;
-"341
-[e ++ _editSelect -> -> 1 `i `E4142 ]
-[; ;main.c: 342: currentValueInfo++ ;
-"342
-[e ++ _currentValueInfo * -> -> 1 `i `x -> -> # *U _currentValueInfo `i `x ]
-[; ;main.c: 343: currentEditValue-- ;
-"343
-[e -- _currentEditValue * -> -> 1 `i `x -> -> # *U _currentEditValue `i `x ]
-"344
-}
-[e :U 607 ]
-[; ;main.c: 344: }
-[; ;main.c: 346: blinkPrescaler = 0 ;
-"346
-[e = _blinkPrescaler -> -> 0 `i `uc ]
-[; ;main.c: 347: break ;
-"347
+[; ;main.c: 336: }
 [e $U 601  ]
-[; ;main.c: 349: case STATE_MENU:
-"349
-[e :U 608 ]
-[; ;main.c: 350: switch( menuSelect ) {
-"350
-[e $U 610  ]
-{
-[; ;main.c: 351: case MENU_ADJUST:
-"351
-[e :U 611 ]
-[; ;main.c: 352: machineState_ = STATE_ADJUST_CLOCK ;
-"352
-[e = _machineState_ . `E4248 3 ]
-[; ;main.c: 353: datePtr = &dateCurrent ;
-"353
-[e = _datePtr &U _dateCurrent ]
-[; ;main.c: 354: currentValueInfo = &VALUE_INFORMATIONS.year ;
-"354
-[e = _currentValueInfo &U . _VALUE_INFORMATIONS 0 ]
-[; ;main.c: 355: currentEditValue = &datePtr->year ;
-"355
-[e = _currentEditValue &U . . *U _datePtr 0 6 ]
-[; ;main.c: 356: break ;
-"356
-[e $U 609  ]
-[; ;main.c: 358: case MENU_TIMER:
-"358
-[e :U 612 ]
-[; ;main.c: 359: machineState_ = STATE_SET_TIMER ;
-"359
-[e = _machineState_ . `E4248 5 ]
-[; ;main.c: 360: datePtr = &dateTimer ;
-"360
-[e = _datePtr &U _dateTimer ]
-[; ;main.c: 361: currentValueInfo = &VALUE_INFORMATIONS.year ;
-"361
-[e = _currentValueInfo &U . _VALUE_INFORMATIONS 0 ]
-[; ;main.c: 362: currentEditValue = &datePtr->year ;
-"362
-[e = _currentEditValue &U . . *U _datePtr 0 6 ]
-[; ;main.c: 363: break ;
-"363
-[e $U 609  ]
-[; ;main.c: 365: case MENU_BUZZER_TEST:
-"365
-[e :U 613 ]
-[; ;main.c: 366: machineState_ = STATE_BUZZER_TEST ;
-"366
-[e = _machineState_ . `E4248 6 ]
-[; ;main.c: 367: break ;
-"367
-[e $U 609  ]
-[; ;main.c: 369: case MENU_VERSION:
-"369
-[e :U 614 ]
-[; ;main.c: 370: machineState_ = STATE_VERSION ;
-"370
-[e = _machineState_ . `E4248 7 ]
-[; ;main.c: 371: break ;
-"371
-[e $U 609  ]
-"372
-}
-[; ;main.c: 372: }
-[e $U 609  ]
-"350
-[e :U 610 ]
-[e [\ _menuSelect , $ . `E4260 0 611
- , $ . `E4260 1 612
- , $ . `E4260 2 613
- , $ . `E4260 3 614
- 609 ]
-"372
-[e :U 609 ]
-[; ;main.c: 373: outputEvent.changeMessage=1 ;
-"373
-[e = . . _outputEvent 1 0 -> -> 1 `i `uc ]
-[; ;main.c: 375: break ;
-"375
-[e $U 601  ]
-[; ;main.c: 377: case STATE_BUZZER_TEST:
-"377
-[e :U 615 ]
-[; ;main.c: 378: PWM3CONbits.PWM3OE=1 ;
-"378
-[e = . . _PWM3CONbits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 379: break ;
-"379
-[e $U 601  ]
-"380
-}
-[; ;main.c: 380: }
-[e $U 601  ]
-"322
+"325
 [e :U 602 ]
-[e [\ _machineState_ , $ . `E4248 1 603
- , $ . `E4248 3 604
- , $ . `E4248 5 605
- , $ . `E4248 2 608
- , $ . `E4248 6 615
+[e [\ _machineState_ , $ . `E4259 3 603
+ , $ . `E4259 5 604
  601 ]
-"380
+"336
 [e :U 601 ]
-"382
+"337
 }
 [e :U 600 ]
-[; ;main.c: 382: }
-[; ;main.c: 384: if( (keyEvents_.releaseRight&&!(keyEvents_.releaseRight=0)) ) {
-"384
-[e $ ! && != -> . _keyEvents_ 6 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 6 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 616  ]
+[; ;main.c: 337: }
+[; ;main.c: 340: if( (events_.keyPress.left&&!(events_.keyPress.left=0)) ) {
+"340
+[e $ ! && != -> . . . _events_ 0 1 5 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 5 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 605  ]
 {
-[; ;main.c: 385: switch( machineState_ ) {
-"385
-[e $U 618  ]
+[; ;main.c: 342: switch( machineState_ ) {
+"342
+[e $U 607  ]
 {
-[; ;main.c: 386: case STATE_BUZZER_TEST:
-"386
-[e :U 619 ]
-[; ;main.c: 387: PWM3CONbits.PWM3OE=0 ;
-"387
-[e = . . _PWM3CONbits 0 3 -> -> 0 `i `uc ]
-[; ;main.c: 388: break ;
-"388
-[e $U 617  ]
-"389
+[; ;main.c: 344: case STATE_MENU:
+"344
+[e :U 608 ]
+[; ;main.c: 345: machineState_ = STATE_CLOCK ;
+"345
+[e = _machineState_ . `E4259 1 ]
+[; ;main.c: 346: events_.output.changeMessage=1 ;
+"346
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+[; ;main.c: 347: break ;
+"347
+[e $U 606  ]
+[; ;main.c: 349: case STATE_ADJUST_CLOCK:
+"349
+[e :U 609 ]
+"350
+[e :U 610 ]
+[; ;main.c: 350: case STATE_SET_TIMER:
+[; ;main.c: 351: if( editSelect == DATE_ITEM_YEAR ) {
+"351
+[e $ ! == -> _editSelect `i -> . `E4144 0 `i 611  ]
+{
+[; ;main.c: 352: editSelect = DATE_ITEM_SECOND ;
+"352
+[e = _editSelect . `E4144 6 ]
+[; ;main.c: 353: currentValueInfo = &VALUE_INFORMATIONS.second ;
+"353
+[e = _currentValueInfo &U . _VALUE_INFORMATIONS 6 ]
+[; ;main.c: 354: currentEditValue = &datePtr->second ;
+"354
+[e = _currentEditValue &U . . *U _datePtr 0 0 ]
+"355
 }
-[; ;main.c: 389: }
+[; ;main.c: 355: }
+[e $U 612  ]
+"356
+[e :U 611 ]
+[; ;main.c: 356: else {
+{
+[; ;main.c: 357: editSelect-- ;
+"357
+[e -- _editSelect -> -> 1 `i `E4144 ]
+[; ;main.c: 358: currentValueInfo-- ;
+"358
+[e -- _currentValueInfo * -> -> 1 `i `x -> -> # *U _currentValueInfo `i `x ]
+[; ;main.c: 359: currentEditValue++ ;
+"359
+[e ++ _currentEditValue * -> -> 1 `i `x -> -> # *U _currentEditValue `i `x ]
+"360
+}
+[e :U 612 ]
+[; ;main.c: 360: }
+[; ;main.c: 362: blinkPrescaler = 0 ;
+"362
+[e = _blinkPrescaler -> -> 0 `i `uc ]
+[; ;main.c: 363: break ;
+"363
+[e $U 606  ]
+[; ;main.c: 365: case STATE_BUZZER_TEST:
+"365
+[e :U 613 ]
+"366
+[e :U 614 ]
+[; ;main.c: 366: case STATE_VERSION:
+[; ;main.c: 367: machineState_ = STATE_MENU ;
+"367
+[e = _machineState_ . `E4259 2 ]
+[; ;main.c: 368: events_.output.changeMessage=1 ;
+"368
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+[; ;main.c: 369: break ;
+"369
+[e $U 606  ]
+"371
+}
+[; ;main.c: 371: }
+[e $U 606  ]
+"342
+[e :U 607 ]
+[e [\ _machineState_ , $ . `E4259 2 608
+ , $ . `E4259 3 609
+ , $ . `E4259 5 610
+ , $ . `E4259 6 613
+ , $ . `E4259 7 614
+ 606 ]
+"371
+[e :U 606 ]
+"373
+}
+[e :U 605 ]
+[; ;main.c: 373: }
+[; ;main.c: 376: if( (events_.keyPress.right&&!(events_.keyPress.right=0)) ) {
+"376
+[e $ ! && != -> . . . _events_ 0 1 6 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 6 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 615  ]
+{
+[; ;main.c: 378: switch( machineState_ ) {
+"378
 [e $U 617  ]
-"385
+{
+[; ;main.c: 380: case STATE_CLOCK:
+"380
 [e :U 618 ]
-[e [\ _machineState_ , $ . `E4248 6 619
- 617 ]
+[; ;main.c: 381: machineState_ = STATE_MENU ;
+"381
+[e = _machineState_ . `E4259 2 ]
+[; ;main.c: 382: datePtr = &dateCurrent ;
+"382
+[e = _datePtr &U _dateCurrent ]
+[; ;main.c: 383: menuSelect = 0 ;
+"383
+[e = _menuSelect -> -> 0 `i `E4271 ]
+[; ;main.c: 384: cursorPosition = 0 ;
+"384
+[e = _cursorPosition -> -> 0 `i `uc ]
+[; ;main.c: 385: events_.output.changeMessage=1 ;
+"385
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+[; ;main.c: 386: break ;
+"386
+[e $U 616  ]
+[; ;main.c: 389: case STATE_ADJUST_CLOCK:
 "389
-[e :U 617 ]
+[e :U 619 ]
 "390
-}
-[e :U 616 ]
-[; ;main.c: 390: }
-[; ;main.c: 393: if( (keyEvents_.upDown&&!(keyEvents_.upDown=0)) ) {
-"393
-[e $ ! && != -> . _keyEvents_ 2 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 620  ]
-{
-[; ;main.c: 394: switch( machineState_ ) {
-"394
-[e $U 622  ]
-{
-[; ;main.c: 396: case STATE_ALERM:
-"396
-[e :U 623 ]
-[; ;main.c: 397: machineState_ = STATE_CLOCK ;
-"397
-[e = _machineState_ . `E4248 1 ]
-[; ;main.c: 398: outputEvent.changeMessage=1 ;
-"398
-[e = . . _outputEvent 1 0 -> -> 1 `i `uc ]
-[; ;main.c: 399: break ;
-"399
-[e $U 621  ]
-"401
-}
-[; ;main.c: 401: }
-[e $U 621  ]
-"394
-[e :U 622 ]
-[e [\ _machineState_ , $ . `E4248 4 623
- 621 ]
-"401
-[e :U 621 ]
-"402
-}
 [e :U 620 ]
-[; ;main.c: 402: }
-[; ;main.c: 405: switch( machineState_ ) {
+[; ;main.c: 390: case STATE_SET_TIMER:
+[; ;main.c: 391: if( editSelect == DATE_ITEM_SECOND ) {
+"391
+[e $ ! == -> _editSelect `i -> . `E4144 6 `i 621  ]
+{
+[; ;main.c: 392: editSelect = DATE_ITEM_YEAR ;
+"392
+[e = _editSelect . `E4144 0 ]
+[; ;main.c: 393: currentValueInfo = &VALUE_INFORMATIONS.year ;
+"393
+[e = _currentValueInfo &U . _VALUE_INFORMATIONS 0 ]
+[; ;main.c: 394: currentEditValue = &datePtr->year ;
+"394
+[e = _currentEditValue &U . . *U _datePtr 0 6 ]
+"395
+}
+[; ;main.c: 395: }
+[e $U 622  ]
+"396
+[e :U 621 ]
+[; ;main.c: 396: else {
+{
+[; ;main.c: 397: editSelect++ ;
+"397
+[e ++ _editSelect -> -> 1 `i `E4144 ]
+[; ;main.c: 398: currentValueInfo++ ;
+"398
+[e ++ _currentValueInfo * -> -> 1 `i `x -> -> # *U _currentValueInfo `i `x ]
+[; ;main.c: 399: currentEditValue-- ;
+"399
+[e -- _currentEditValue * -> -> 1 `i `x -> -> # *U _currentEditValue `i `x ]
+"400
+}
+[e :U 622 ]
+[; ;main.c: 400: }
+[; ;main.c: 402: blinkPrescaler = 0 ;
+"402
+[e = _blinkPrescaler -> -> 0 `i `uc ]
+[; ;main.c: 403: break ;
+"403
+[e $U 616  ]
+[; ;main.c: 405: case STATE_MENU:
 "405
+[e :U 623 ]
+[; ;main.c: 406: switch( menuSelect ) {
+"406
 [e $U 625  ]
 {
-[; ;main.c: 407: case STATE_MENU:
+[; ;main.c: 407: case MENU_ADJUST:
 "407
 [e :U 626 ]
-[; ;main.c: 408: if( (keyEvents_.up&&!(keyEvents_.up=0)) ) {
+[; ;main.c: 408: machineState_ = STATE_ADJUST_CLOCK ;
 "408
-[e $ ! && != -> . _keyEvents_ 0 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 627  ]
-{
-[; ;main.c: 409: if( menuSelect ) menuSelect-- ;
+[e = _machineState_ . `E4259 3 ]
+[; ;main.c: 409: datePtr = &dateCurrent ;
 "409
-[e $ ! != -> _menuSelect `i -> -> -> 0 `i `E4260 `i 628  ]
-[e -- _menuSelect -> -> 1 `i `E4260 ]
-[e :U 628 ]
-[; ;main.c: 410: if( cursorPosition != 0 ) cursorPosition-- ;
+[e = _datePtr &U _dateCurrent ]
+[; ;main.c: 410: currentValueInfo = &VALUE_INFORMATIONS.year ;
 "410
-[e $ ! != -> _cursorPosition `i -> 0 `i 629  ]
-[e -- _cursorPosition -> -> 1 `i `uc ]
-[e :U 629 ]
-[; ;main.c: 411: outputEvent.changeMessage=1 ;
+[e = _currentValueInfo &U . _VALUE_INFORMATIONS 0 ]
+[; ;main.c: 411: currentEditValue = &datePtr->year ;
 "411
-[e = . . _outputEvent 1 0 -> -> 1 `i `uc ]
+[e = _currentEditValue &U . . *U _datePtr 0 6 ]
+[; ;main.c: 412: break ;
 "412
-}
-[e :U 627 ]
-[; ;main.c: 412: }
-[; ;main.c: 413: if( (keyEvents_.down&&!(keyEvents_.down=0)) ) {
-"413
-[e $ ! && != -> . _keyEvents_ 1 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 630  ]
-{
-[; ;main.c: 414: if( menuSelect != ( ( sizeof( MESSAGE_MENU ) / sizeof( MESSAGE_MENU[0] ) ) - 1 ) ) menuSelect++ ;
+[e $U 624  ]
+[; ;main.c: 414: case MENU_TIMER:
 "414
-[e $ ! != -> _menuSelect `ui - / -> # _MESSAGE_MENU `ui -> # *U + &U _MESSAGE_MENU * -> -> -> 0 `i `ui `ux -> -> # *U &U _MESSAGE_MENU `ui `ux `ui -> -> 1 `i `ui 631  ]
-[e ++ _menuSelect -> -> 1 `i `E4260 ]
-[e :U 631 ]
-[; ;main.c: 415: if( cursorPosition != 1 ) cursorPosition++ ;
+[e :U 627 ]
+[; ;main.c: 415: machineState_ = STATE_SET_TIMER ;
 "415
-[e $ ! != -> _cursorPosition `i -> 1 `i 632  ]
-[e ++ _cursorPosition -> -> 1 `i `uc ]
-[e :U 632 ]
-[; ;main.c: 416: outputEvent.changeMessage=1 ;
+[e = _machineState_ . `E4259 5 ]
+[; ;main.c: 416: datePtr = &dateTimer ;
 "416
-[e = . . _outputEvent 1 0 -> -> 1 `i `uc ]
+[e = _datePtr &U _dateTimer ]
+[; ;main.c: 417: currentValueInfo = &VALUE_INFORMATIONS.year ;
 "417
-}
-[e :U 630 ]
-[; ;main.c: 417: }
-[; ;main.c: 418: break ;
+[e = _currentValueInfo &U . _VALUE_INFORMATIONS 0 ]
+[; ;main.c: 418: currentEditValue = &datePtr->year ;
 "418
+[e = _currentEditValue &U . . *U _datePtr 0 6 ]
+[; ;main.c: 419: break ;
+"419
 [e $U 624  ]
-[; ;main.c: 420: case STATE_ADJUST_CLOCK:
-"420
-[e :U 633 ]
+[; ;main.c: 421: case MENU_BUZZER_TEST:
 "421
-[e :U 634 ]
-[; ;main.c: 421: case STATE_SET_TIMER:
-[; ;main.c: 422: if( (keyEvents_.up&&!(keyEvents_.up=0)) ) {
+[e :U 628 ]
+[; ;main.c: 422: machineState_ = STATE_BUZZER_TEST ;
 "422
-[e $ ! && != -> . _keyEvents_ 0 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 635  ]
-{
-[; ;main.c: 423: if( *currentEditValue == currentValueInfo->max )
+[e = _machineState_ . `E4259 6 ]
+[; ;main.c: 423: break ;
 "423
-[e $ ! == -> *U _currentEditValue `i -> . *U _currentValueInfo 2 `i 636  ]
-[; ;main.c: 424: *currentEditValue = currentValueInfo->min ;
-"424
-[e = *U _currentEditValue . *U _currentValueInfo 3 ]
-[e $U 637  ]
-"425
-[e :U 636 ]
-[; ;main.c: 425: else if( ( *currentEditValue & 0x0F ) == 0x09 )
-[e $ ! == & -> *U _currentEditValue `i -> 15 `i -> 9 `i 638  ]
-[; ;main.c: 426: *currentEditValue += 7 ;
-"426
-[e =+ *U _currentEditValue -> -> 7 `i `uc ]
-[e $U 639  ]
-"427
-[e :U 638 ]
-[; ;main.c: 427: else
-[; ;main.c: 428: ( *currentEditValue )++ ;
-"428
-[e ++ *U _currentEditValue -> -> 1 `i `uc ]
-[e :U 639 ]
-[e :U 637 ]
-[; ;main.c: 429: outputEvent.changeValue=1 ;
-"429
-[e = . . _outputEvent 1 1 -> -> 1 `i `uc ]
-"430
-}
-[e :U 635 ]
-[; ;main.c: 430: }
-[; ;main.c: 431: if( (keyEvents_.down&&!(keyEvents_.down=0)) ) {
-"431
-[e $ ! && != -> . _keyEvents_ 1 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 640  ]
-{
-[; ;main.c: 432: if( *currentEditValue == currentValueInfo->min )
-"432
-[e $ ! == -> *U _currentEditValue `i -> . *U _currentValueInfo 3 `i 641  ]
-[; ;main.c: 433: *currentEditValue = currentValueInfo->max ;
-"433
-[e = *U _currentEditValue . *U _currentValueInfo 2 ]
-[e $U 642  ]
-"434
-[e :U 641 ]
-[; ;main.c: 434: else if( ( *currentEditValue & 0x0F ) == 0x00 )
-[e $ ! == & -> *U _currentEditValue `i -> 15 `i -> 0 `i 643  ]
-[; ;main.c: 435: *currentEditValue -= 7 ;
-"435
-[e =- *U _currentEditValue -> -> 7 `i `uc ]
-[e $U 644  ]
-"436
-[e :U 643 ]
-[; ;main.c: 436: else
-[; ;main.c: 437: ( *currentEditValue )-- ;
-"437
-[e -- *U _currentEditValue -> -> 1 `i `uc ]
-[e :U 644 ]
-[e :U 642 ]
-[; ;main.c: 438: outputEvent.changeValue=1 ;
-"438
-[e = . . _outputEvent 1 1 -> -> 1 `i `uc ]
-"439
-}
-[e :U 640 ]
-[; ;main.c: 439: }
-[; ;main.c: 440: break ;
-"440
 [e $U 624  ]
-[; ;main.c: 442: case STATE_BUZZER_TEST:
-"442
-[e :U 645 ]
-[; ;main.c: 443: if( (keyEvents_.up&&!(keyEvents_.up=0)) ) {
-"443
-[e $ ! && != -> . _keyEvents_ 0 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 646  ]
+[; ;main.c: 425: case MENU_VERSION:
+"425
+[e :U 629 ]
+[; ;main.c: 426: machineState_ = STATE_VERSION ;
+"426
+[e = _machineState_ . `E4259 7 ]
+[; ;main.c: 427: break ;
+"427
+[e $U 624  ]
+"428
+}
+[; ;main.c: 428: }
+[e $U 624  ]
+"406
+[e :U 625 ]
+[e [\ _menuSelect , $ . `E4271 0 626
+ , $ . `E4271 1 627
+ , $ . `E4271 2 628
+ , $ . `E4271 3 629
+ 624 ]
+"428
+[e :U 624 ]
+[; ;main.c: 429: events_.output.changeMessage=1 ;
+"429
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+[; ;main.c: 431: break ;
+"431
+[e $U 616  ]
+[; ;main.c: 433: case STATE_BUZZER_TEST:
+"433
+[e :U 630 ]
+[; ;main.c: 434: keyBeepCounter_ = 0 ;
+"434
+[e = _keyBeepCounter_ -> -> 0 `i `uc ]
+[; ;main.c: 435: break ;
+"435
+[e $U 616  ]
+"436
+}
+[; ;main.c: 436: }
+[e $U 616  ]
+"378
+[e :U 617 ]
+[e [\ _machineState_ , $ . `E4259 1 618
+ , $ . `E4259 3 619
+ , $ . `E4259 5 620
+ , $ . `E4259 2 623
+ , $ . `E4259 6 630
+ 616 ]
+"436
+[e :U 616 ]
+"438
+}
+[e :U 615 ]
+[; ;main.c: 438: }
+[; ;main.c: 441: if( (events_.keyRelease.right&&!(events_.keyRelease.right=0)) ) {
+"441
+[e $ ! && != -> . . . _events_ 1 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 631  ]
 {
-[; ;main.c: 444: if( PR2 != 0xFF ) PR2++ ;
+[; ;main.c: 442: switch( machineState_ ) {
+"442
+[e $U 633  ]
+{
+[; ;main.c: 443: case STATE_BUZZER_TEST:
+"443
+[e :U 634 ]
+[; ;main.c: 444: events_.output.soundOff=1 ;
 "444
-[e $ ! != -> _PR2 `i -> 255 `i 647  ]
-[e ++ _PR2 -> -> 1 `i `uc ]
-[e :U 647 ]
-[; ;main.c: 445: outputEvent.changeValue=1 ;
+[e = . . . _events_ 2 1 4 -> -> 1 `i `uc ]
+[; ;main.c: 445: break ;
 "445
-[e = . . _outputEvent 1 1 -> -> 1 `i `uc ]
+[e $U 632  ]
 "446
 }
-[e :U 646 ]
 [; ;main.c: 446: }
-[; ;main.c: 447: if( (keyEvents_.down&&!(keyEvents_.down=0)) ) {
+[e $U 632  ]
+"442
+[e :U 633 ]
+[e [\ _machineState_ , $ . `E4259 6 634
+ 632 ]
+"446
+[e :U 632 ]
 "447
-[e $ ! && != -> . _keyEvents_ 1 `i -> -> -> 0 `i `uc `i ! != -> = . _keyEvents_ 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 648  ]
-{
-[; ;main.c: 448: if( PR2 != 0 ) PR2-- ;
-"448
-[e $ ! != -> _PR2 `i -> 0 `i 649  ]
-[e -- _PR2 -> -> 1 `i `uc ]
-[e :U 649 ]
-[; ;main.c: 449: outputEvent.changeValue=1 ;
-"449
-[e = . . _outputEvent 1 1 -> -> 1 `i `uc ]
+}
+[e :U 631 ]
+[; ;main.c: 447: }
+[; ;main.c: 450: if( (events_.keyPress.upDown&&!(events_.keyPress.upDown=0)) ) {
 "450
-}
-[e :U 648 ]
-[; ;main.c: 450: }
-[; ;main.c: 451: break ;
+[e $ ! && != -> . . . _events_ 0 1 4 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 4 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 635  ]
+{
+[; ;main.c: 451: switch( machineState_ ) {
 "451
-[e $U 624  ]
+[e $U 637  ]
+{
+[; ;main.c: 453: case STATE_ALERM:
 "453
+[e :U 638 ]
+[; ;main.c: 454: machineState_ = STATE_CLOCK ;
+"454
+[e = _machineState_ . `E4259 1 ]
+[; ;main.c: 455: events_.output.changeMessage=1 ;
+"455
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+[; ;main.c: 456: break ;
+"456
+[e $U 636  ]
+"458
 }
-[; ;main.c: 453: }
-[e $U 624  ]
-"405
-[e :U 625 ]
-[e [\ _machineState_ , $ . `E4248 2 626
- , $ . `E4248 3 633
- , $ . `E4248 5 634
- , $ . `E4248 6 645
- 624 ]
-"453
-[e :U 624 ]
-[; ;main.c: 480: if( (outputEvent.changeMessage&&!(outputEvent.changeMessage=0)) ) {
+[; ;main.c: 458: }
+[e $U 636  ]
+"451
+[e :U 637 ]
+[e [\ _machineState_ , $ . `E4259 4 638
+ 636 ]
+"458
+[e :U 636 ]
+"459
+}
+[e :U 635 ]
+[; ;main.c: 459: }
+[; ;main.c: 462: switch( machineState_ ) {
+"462
+[e $U 640  ]
+{
+[; ;main.c: 464: case STATE_MENU:
+"464
+[e :U 641 ]
+[; ;main.c: 465: if( (events_.keyPress.up&&!(events_.keyPress.up=0)) ) {
+"465
+[e $ ! && != -> . . . _events_ 0 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 642  ]
+{
+[; ;main.c: 466: if( menuSelect ) {
+"466
+[e $ ! != -> _menuSelect `i -> -> -> 0 `i `E4271 `i 643  ]
+{
+[; ;main.c: 467: menuSelect-- ;
+"467
+[e -- _menuSelect -> -> 1 `i `E4271 ]
+[; ;main.c: 468: events_.output.changeMessage=1 ;
+"468
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+"469
+}
+[e :U 643 ]
+[; ;main.c: 469: }
+[; ;main.c: 470: if( cursorPosition != 0 ) {
+"470
+[e $ ! != -> _cursorPosition `i -> 0 `i 644  ]
+{
+[; ;main.c: 471: cursorPosition-- ;
+"471
+[e -- _cursorPosition -> -> 1 `i `uc ]
+[; ;main.c: 472: events_.output.changeMessage=1 ;
+"472
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+"473
+}
+[e :U 644 ]
+"475
+}
+[e :U 642 ]
+[; ;main.c: 473: }
+[; ;main.c: 475: }
+[; ;main.c: 476: if( (events_.keyPress.down&&!(events_.keyPress.down=0)) ) {
+"476
+[e $ ! && != -> . . . _events_ 0 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 645  ]
+{
+[; ;main.c: 477: if( menuSelect != ( ( sizeof( MESSAGE_MENU ) / sizeof( MESSAGE_MENU[0] ) ) - 1 ) ) {
+"477
+[e $ ! != -> _menuSelect `ui - / -> # _MESSAGE_MENU `ui -> # *U + &U _MESSAGE_MENU * -> -> -> 0 `i `ui `ux -> -> # *U &U _MESSAGE_MENU `ui `ux `ui -> -> 1 `i `ui 646  ]
+{
+[; ;main.c: 478: menuSelect++ ;
+"478
+[e ++ _menuSelect -> -> 1 `i `E4271 ]
+[; ;main.c: 479: events_.output.changeMessage=1 ;
+"479
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
 "480
-[e $ ! && != -> . . _outputEvent 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . _outputEvent 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 650  ]
+}
+[e :U 646 ]
+[; ;main.c: 480: }
+[; ;main.c: 481: if( cursorPosition != 1 ) {
+"481
+[e $ ! != -> _cursorPosition `i -> 1 `i 647  ]
 {
-[; ;main.c: 482: switch( machineState_ ) {
+[; ;main.c: 482: cursorPosition++ ;
 "482
-[e $U 652  ]
-{
-[; ;main.c: 483: case STATE_CLOCK:
+[e ++ _cursorPosition -> -> 1 `i `uc ]
+[; ;main.c: 483: events_.output.changeMessage=1 ;
 "483
-[e :U 653 ]
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
 "484
-[e :U 654 ]
+}
+[e :U 647 ]
 "485
-[e :U 655 ]
+}
+[e :U 645 ]
+[; ;main.c: 484: }
+[; ;main.c: 485: }
+[; ;main.c: 486: break ;
 "486
-[e :U 656 ]
-[; ;main.c: 484: case STATE_ALERM:
-[; ;main.c: 485: case STATE_ADJUST_CLOCK:
-[; ;main.c: 486: case STATE_SET_TIMER:
-[; ;main.c: 488: ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_0 ) ;
+[e $U 639  ]
+[; ;main.c: 488: case STATE_ADJUST_CLOCK:
 "488
-[e ( _ParallelLCD_ClearRow (1 . `E4100 0 ]
-[; ;main.c: 490: switch( machineState_ ) {
+[e :U 648 ]
+"489
+[e :U 649 ]
+[; ;main.c: 489: case STATE_SET_TIMER:
+[; ;main.c: 490: if( (events_.keyPress.up&&!(events_.keyPress.up=0)) ) {
 "490
-[e $U 658  ]
+[e $ ! && != -> . . . _events_ 0 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 650  ]
 {
-[; ;main.c: 491: case STATE_CLOCK:
+[; ;main.c: 491: if( *currentEditValue == currentValueInfo->max )
 "491
-[e :U 659 ]
-[; ;main.c: 492: ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+[e $ ! == -> *U _currentEditValue `i -> . *U _currentValueInfo 2 `i 651  ]
+[; ;main.c: 492: *currentEditValue = currentValueInfo->min ;
 "492
-[e ( _ParallelLCD_ClearRow (1 . `E4100 1 ]
-[; ;main.c: 493: break ;
+[e = *U _currentEditValue . *U _currentValueInfo 3 ]
+[e $U 652  ]
 "493
-[e $U 657  ]
-[; ;main.c: 494: case STATE_ALERM:
-"494
-[e :U 660 ]
-[; ;main.c: 495: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x9 , "ALERM!!" ) ;
-"495
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 1 `i -> 9 `i `E4100 :s 13C ]
-[; ;main.c: 496: break ;
-"496
-[e $U 657  ]
-[; ;main.c: 497: case STATE_ADJUST_CLOCK:
-"497
-[e :U 661 ]
-[; ;main.c: 498: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xA , "adjust" ) ;
-"498
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 1 `i -> 10 `i `E4100 :s 14C ]
-[; ;main.c: 499: break ;
-"499
-[e $U 657  ]
-[; ;main.c: 500: case STATE_SET_TIMER:
-"500
-[e :U 662 ]
-[; ;main.c: 501: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xB , "timer" ) ;
-"501
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 1 `i -> 11 `i `E4100 :s 15C ]
-[; ;main.c: 502: break ;
-"502
-[e $U 657  ]
-"503
-}
-[; ;main.c: 503: }
-[e $U 657  ]
-"490
-[e :U 658 ]
-[e [\ _machineState_ , $ . `E4248 1 659
- , $ . `E4248 4 660
- , $ . `E4248 3 661
- , $ . `E4248 5 662
- 657 ]
-"503
-[e :U 657 ]
-[; ;main.c: 504: outputEvent.changeValue=1 ;
-"504
-[e = . . _outputEvent 1 1 -> -> 1 `i `uc ]
-[; ;main.c: 506: break ;
-"506
-[e $U 651  ]
-[; ;main.c: 508: case STATE_MENU:
-"508
-[e :U 663 ]
-[; ;main.c: 509: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x1 , MESSAGE_MENU[ menuSelect - cursorPosition ] ) ;
-"509
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 0 `i -> 1 `i `E4100 *U + &U _MESSAGE_MENU * -> -> - -> _menuSelect `i -> _cursorPosition `i `ui `ux -> -> # *U &U _MESSAGE_MENU `ui `ux ]
-[; ;main.c: 510: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x1 , MESSAGE_MENU[ menuSelect - cursorPosition + 1] ) ;
-"510
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 1 `i -> 1 `i `E4100 *U + &U _MESSAGE_MENU * -> -> + - -> _menuSelect `i -> _cursorPosition `i -> 1 `i `ui `ux -> -> # *U &U _MESSAGE_MENU `ui `ux ]
-[; ;main.c: 511: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[cursorPosition] | 0x0 , 0x00 ) ;
-"511
-[e ( _ParallelLCD_WriteCharacter (2 , -> | -> *U + &U _PARALLEL_LCD_ROW_SELECT * -> _cursorPosition `ux -> -> # *U &U _PARALLEL_LCD_ROW_SELECT `ui `ux `i -> 0 `i `E4100 -> -> 0 `i `uc ]
-[; ;main.c: 512: break ;
-"512
-[e $U 651  ]
-[; ;main.c: 514: case STATE_BUZZER_TEST:
-"514
-[e :U 664 ]
-[; ;main.c: 515: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Buzzer Test" ) ;
-"515
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 0 `i -> 0 `i `E4100 :s 16C ]
-[; ;main.c: 516: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , "Period =" ) ;
-"516
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 1 `i -> 0 `i `E4100 :s 17C ]
-[; ;main.c: 517: outputEvent.changeValue=1 ;
-"517
-[e = . . _outputEvent 1 1 -> -> 1 `i `uc ]
-[; ;main.c: 518: break ;
-"518
-[e $U 651  ]
-[; ;main.c: 520: case STATE_VERSION:
-"520
-[e :U 665 ]
-[; ;main.c: 521: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Version" ) ;
-"521
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 0 `i -> 0 `i `E4100 :s 18C ]
-[; ;main.c: 522: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x8 , "00.100" ) ;
-"522
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 1 `i -> 8 `i `E4100 :s 19C ]
-[; ;main.c: 523: break ;
-"523
-[e $U 651  ]
-[; ;main.c: 525: case STATE_ERROR:
-"525
-[e :U 666 ]
-[; ;main.c: 526: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Receive Error !!" ) ;
-"526
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4100 0 `i -> 0 `i `E4100 :s 20C ]
-[; ;main.c: 527: ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
-"527
-[e ( _ParallelLCD_ClearRow (1 . `E4100 1 ]
-[; ;main.c: 528: break ;
-"528
-[e $U 651  ]
-"529
-}
-[; ;main.c: 529: }
-[e $U 651  ]
-"482
-[e :U 652 ]
-[e [\ _machineState_ , $ . `E4248 1 653
- , $ . `E4248 4 654
- , $ . `E4248 3 655
- , $ . `E4248 5 656
- , $ . `E4248 2 663
- , $ . `E4248 6 664
- , $ . `E4248 7 665
- , $ . `E4248 8 666
- 651 ]
-"529
 [e :U 651 ]
-"531
+[; ;main.c: 493: else if( ( *currentEditValue & 0x0F ) == 0x09 )
+[e $ ! == & -> *U _currentEditValue `i -> 15 `i -> 9 `i 653  ]
+[; ;main.c: 494: *currentEditValue += 7 ;
+"494
+[e =+ *U _currentEditValue -> -> 7 `i `uc ]
+[e $U 654  ]
+"495
+[e :U 653 ]
+[; ;main.c: 495: else
+[; ;main.c: 496: ( *currentEditValue )++ ;
+"496
+[e ++ *U _currentEditValue -> -> 1 `i `uc ]
+[e :U 654 ]
+[e :U 652 ]
+[; ;main.c: 497: events_.output.changeValue=1 ;
+"497
+[e = . . . _events_ 2 1 2 -> -> 1 `i `uc ]
+"498
 }
 [e :U 650 ]
-[; ;main.c: 531: }
-[; ;main.c: 534: if( (outputEvent.changeValue&&!(outputEvent.changeValue=0)) ) {
-"534
-[e $ ! && != -> . . _outputEvent 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . _outputEvent 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 667  ]
+[; ;main.c: 498: }
+[; ;main.c: 499: if( (events_.keyPress.down&&!(events_.keyPress.down=0)) ) {
+"499
+[e $ ! && != -> . . . _events_ 0 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 655  ]
 {
-[; ;main.c: 535: switch( machineState_ ) {
-"535
-[e $U 669  ]
-{
-[; ;main.c: 536: case STATE_CLOCK:
-"536
-[e :U 670 ]
-"537
-[e :U 671 ]
-"538
-[e :U 672 ]
-"539
-[e :U 673 ]
-[; ;main.c: 537: case STATE_ALERM:
-[; ;main.c: 538: case STATE_ADJUST_CLOCK:
-[; ;main.c: 539: case STATE_SET_TIMER:
-[; ;main.c: 540: {
-"540
-{
-"541
-[v _string `uc ~T0 @X0 -> 17 `i a ]
-[; ;main.c: 541: char string[17] ;
-[; ;main.c: 542: _date_time_ConvertByteToDate( datePtr , &string ) ;
-"542
-[e ( __date_time_ConvertByteToDate (2 , _datePtr &U _string ]
-[; ;main.c: 543: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , &string ) ;
-"543
-[e ( _ParallelLCD_WriteString (2 , -> | -> . `E4100 0 `i -> 0 `i `E4100 -> &U _string `*Cuc ]
-[; ;main.c: 544: _date_time_ConvertByteToTime( datePtr , &string ) ;
-"544
-[e ( __date_time_ConvertByteToTime (2 , _datePtr &U _string ]
-[; ;main.c: 545: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , &string ) ;
-"545
-[e ( _ParallelLCD_WriteString (2 , -> | -> . `E4100 1 `i -> 0 `i `E4100 -> &U _string `*Cuc ]
-[; ;main.c: 546: blinkPrescaler = 0 ;
-"546
-[e = _blinkPrescaler -> -> 0 `i `uc ]
-"547
+[; ;main.c: 500: if( *currentEditValue == currentValueInfo->min )
+"500
+[e $ ! == -> *U _currentEditValue `i -> . *U _currentValueInfo 3 `i 656  ]
+[; ;main.c: 501: *currentEditValue = currentValueInfo->max ;
+"501
+[e = *U _currentEditValue . *U _currentValueInfo 2 ]
+[e $U 657  ]
+"502
+[e :U 656 ]
+[; ;main.c: 502: else if( ( *currentEditValue & 0x0F ) == 0x00 )
+[e $ ! == & -> *U _currentEditValue `i -> 15 `i -> 0 `i 658  ]
+[; ;main.c: 503: *currentEditValue -= 7 ;
+"503
+[e =- *U _currentEditValue -> -> 7 `i `uc ]
+[e $U 659  ]
+"504
+[e :U 658 ]
+[; ;main.c: 504: else
+[; ;main.c: 505: ( *currentEditValue )-- ;
+"505
+[e -- *U _currentEditValue -> -> 1 `i `uc ]
+[e :U 659 ]
+[e :U 657 ]
+[; ;main.c: 506: events_.output.changeValue=1 ;
+"506
+[e = . . . _events_ 2 1 2 -> -> 1 `i `uc ]
+"507
 }
-[; ;main.c: 547: }
-[; ;main.c: 548: break ;
-"548
-[e $U 668  ]
-[; ;main.c: 550: case STATE_BUZZER_TEST:
-"550
-[e :U 674 ]
-[; ;main.c: 551: {
-"551
+[e :U 655 ]
+[; ;main.c: 507: }
+[; ;main.c: 508: break ;
+"508
+[e $U 639  ]
+[; ;main.c: 510: case STATE_BUZZER_TEST:
+"510
+[e :U 660 ]
+[; ;main.c: 511: if( (events_.keyPress.up&&!(events_.keyPress.up=0)) ) {
+"511
+[e $ ! && != -> . . . _events_ 0 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 661  ]
 {
-[v F4297 `uc ~T0 @X0 -> 4 `i s ]
-[i F4297
+[; ;main.c: 512: if( PR2 != 0xFF ) PR2++ ;
+"512
+[e $ ! != -> _PR2 `i -> 255 `i 662  ]
+[e ++ _PR2 -> -> 1 `i `uc ]
+[e :U 662 ]
+[; ;main.c: 513: events_.output.changeValue=1 ;
+"513
+[e = . . . _events_ 2 1 2 -> -> 1 `i `uc ]
+"514
+}
+[e :U 661 ]
+[; ;main.c: 514: }
+[; ;main.c: 515: if( (events_.keyPress.down&&!(events_.keyPress.down=0)) ) {
+"515
+[e $ ! && != -> . . . _events_ 0 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 663  ]
+{
+[; ;main.c: 516: if( PR2 != 0 ) PR2-- ;
+"516
+[e $ ! != -> _PR2 `i -> 0 `i 664  ]
+[e -- _PR2 -> -> 1 `i `uc ]
+[e :U 664 ]
+[; ;main.c: 517: events_.output.changeValue=1 ;
+"517
+[e = . . . _events_ 2 1 2 -> -> 1 `i `uc ]
+"518
+}
+[e :U 663 ]
+[; ;main.c: 518: }
+[; ;main.c: 519: break ;
+"519
+[e $U 639  ]
+[; ;main.c: 521: case STATE_CLOCK:
+"521
+[e :U 665 ]
+[; ;main.c: 522: if( (events_.keyPress.up&&!(events_.keyPress.up=0)) || (events_.keyPress.down&&!(events_.keyPress.down=0)) ) {
+"522
+[e $ ! || && != -> . . . _events_ 0 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i && != -> . . . _events_ 0 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 666  ]
+{
+[; ;main.c: 523: machineState_ = STATE_MENU ;
+"523
+[e = _machineState_ . `E4259 2 ]
+[; ;main.c: 524: events_.output.changeMessage=1 ;
+"524
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+"525
+}
+[e :U 666 ]
+[; ;main.c: 525: }
+[; ;main.c: 526: break ;
+"526
+[e $U 639  ]
+"528
+}
+[; ;main.c: 528: }
+[e $U 639  ]
+"462
+[e :U 640 ]
+[e [\ _machineState_ , $ . `E4259 2 641
+ , $ . `E4259 3 648
+ , $ . `E4259 5 649
+ , $ . `E4259 6 660
+ , $ . `E4259 1 665
+ 639 ]
+"528
+[e :U 639 ]
+[; ;main.c: 530: if( (events_.output.soundOn&&!(events_.output.soundOn=0)) )
+"530
+[e $ ! && != -> . . . _events_ 2 1 3 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 2 1 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 667  ]
+[; ;main.c: 531: PWM3CONbits.PWM3OE=1 ;
+"531
+[e = . . _PWM3CONbits 0 3 -> -> 1 `i `uc ]
+[e :U 667 ]
+[; ;main.c: 533: if( (events_.output.soundOff&&!(events_.output.soundOff=0)) )
+"533
+[e $ ! && != -> . . . _events_ 2 1 4 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 2 1 4 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 668  ]
+[; ;main.c: 534: PWM3CONbits.PWM3OE=0 ;
+"534
+[e = . . _PWM3CONbits 0 3 -> -> 0 `i `uc ]
+[e :U 668 ]
+[; ;main.c: 562: if( (events_.output.changeMessage&&!(events_.output.changeMessage=0)) ) {
+"562
+[e $ ! && != -> . . . _events_ 2 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 2 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 669  ]
+{
+[; ;main.c: 564: switch( machineState_ ) {
+"564
+[e $U 671  ]
+{
+[; ;main.c: 565: case STATE_CLOCK:
+"565
+[e :U 672 ]
+"566
+[e :U 673 ]
+"567
+[e :U 674 ]
+"568
+[e :U 675 ]
+[; ;main.c: 566: case STATE_ALERM:
+[; ;main.c: 567: case STATE_ADJUST_CLOCK:
+[; ;main.c: 568: case STATE_SET_TIMER:
+[; ;main.c: 570: ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_0 ) ;
+"570
+[e ( _ParallelLCD_ClearRow (1 . `E4101 0 ]
+[; ;main.c: 572: switch( machineState_ ) {
+"572
+[e $U 677  ]
+{
+[; ;main.c: 573: case STATE_CLOCK:
+"573
+[e :U 678 ]
+[; ;main.c: 574: ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+"574
+[e ( _ParallelLCD_ClearRow (1 . `E4101 1 ]
+[; ;main.c: 575: break ;
+"575
+[e $U 676  ]
+[; ;main.c: 576: case STATE_ALERM:
+"576
+[e :U 679 ]
+[; ;main.c: 577: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x9 , "ALERM!!" ) ;
+"577
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4101 1 `i -> 9 `i `E4101 :s 12C ]
+[; ;main.c: 578: break ;
+"578
+[e $U 676  ]
+[; ;main.c: 579: case STATE_ADJUST_CLOCK:
+"579
+[e :U 680 ]
+[; ;main.c: 580: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xA , "adjust" ) ;
+"580
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4101 1 `i -> 10 `i `E4101 :s 13C ]
+[; ;main.c: 581: break ;
+"581
+[e $U 676  ]
+[; ;main.c: 582: case STATE_SET_TIMER:
+"582
+[e :U 681 ]
+[; ;main.c: 583: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xB , "timer" ) ;
+"583
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4101 1 `i -> 11 `i `E4101 :s 14C ]
+[; ;main.c: 584: break ;
+"584
+[e $U 676  ]
+"585
+}
+[; ;main.c: 585: }
+[e $U 676  ]
+"572
+[e :U 677 ]
+[e [\ _machineState_ , $ . `E4259 1 678
+ , $ . `E4259 4 679
+ , $ . `E4259 3 680
+ , $ . `E4259 5 681
+ 676 ]
+"585
+[e :U 676 ]
+[; ;main.c: 586: events_.output.changeValue=1 ;
+"586
+[e = . . . _events_ 2 1 2 -> -> 1 `i `uc ]
+[; ;main.c: 588: break ;
+"588
+[e $U 670  ]
+[; ;main.c: 590: case STATE_MENU:
+"590
+[e :U 682 ]
+[; ;main.c: 591: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x1 , MESSAGE_MENU[ menuSelect - cursorPosition ] ) ;
+"591
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4101 0 `i -> 1 `i `E4101 *U + &U _MESSAGE_MENU * -> -> - -> _menuSelect `i -> _cursorPosition `i `ui `ux -> -> # *U &U _MESSAGE_MENU `ui `ux ]
+[; ;main.c: 592: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x1 , MESSAGE_MENU[ menuSelect - cursorPosition + 1] ) ;
+"592
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4101 1 `i -> 1 `i `E4101 *U + &U _MESSAGE_MENU * -> -> + - -> _menuSelect `i -> _cursorPosition `i -> 1 `i `ui `ux -> -> # *U &U _MESSAGE_MENU `ui `ux ]
+[; ;main.c: 593: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[cursorPosition] | 0x0 , 0x00 ) ;
+"593
+[e ( _ParallelLCD_WriteCharacter (2 , -> | -> *U + &U _PARALLEL_LCD_ROW_SELECT * -> _cursorPosition `ux -> -> # *U &U _PARALLEL_LCD_ROW_SELECT `ui `ux `i -> 0 `i `E4101 -> -> 0 `i `uc ]
+[; ;main.c: 594: break ;
+"594
+[e $U 670  ]
+[; ;main.c: 596: case STATE_BUZZER_TEST:
+"596
+[e :U 683 ]
+[; ;main.c: 597: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Buzzer Test" ) ;
+"597
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4101 0 `i -> 0 `i `E4101 :s 15C ]
+[; ;main.c: 598: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , "Period =" ) ;
+"598
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4101 1 `i -> 0 `i `E4101 :s 16C ]
+[; ;main.c: 599: events_.output.changeValue=1 ;
+"599
+[e = . . . _events_ 2 1 2 -> -> 1 `i `uc ]
+[; ;main.c: 600: break ;
+"600
+[e $U 670  ]
+[; ;main.c: 602: case STATE_VERSION:
+"602
+[e :U 684 ]
+[; ;main.c: 603: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Version" ) ;
+"603
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4101 0 `i -> 0 `i `E4101 :s 17C ]
+[; ;main.c: 604: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x8 , "00.100" ) ;
+"604
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4101 1 `i -> 8 `i `E4101 :s 18C ]
+[; ;main.c: 605: break ;
+"605
+[e $U 670  ]
+[; ;main.c: 607: case STATE_ERROR:
+"607
+[e :U 685 ]
+[; ;main.c: 608: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Receive Error !!" ) ;
+"608
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E4101 0 `i -> 0 `i `E4101 :s 19C ]
+[; ;main.c: 609: ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+"609
+[e ( _ParallelLCD_ClearRow (1 . `E4101 1 ]
+[; ;main.c: 610: break ;
+"610
+[e $U 670  ]
+"611
+}
+[; ;main.c: 611: }
+[e $U 670  ]
+"564
+[e :U 671 ]
+[e [\ _machineState_ , $ . `E4259 1 672
+ , $ . `E4259 4 673
+ , $ . `E4259 3 674
+ , $ . `E4259 5 675
+ , $ . `E4259 2 682
+ , $ . `E4259 6 683
+ , $ . `E4259 7 684
+ , $ . `E4259 8 685
+ 670 ]
+"611
+[e :U 670 ]
+"613
+}
+[e :U 669 ]
+[; ;main.c: 613: }
+[; ;main.c: 616: if( (events_.output.changeValue&&!(events_.output.changeValue=0)) ) {
+"616
+[e $ ! && != -> . . . _events_ 2 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 2 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 686  ]
+{
+[; ;main.c: 617: switch( machineState_ ) {
+"617
+[e $U 688  ]
+{
+[; ;main.c: 618: case STATE_CLOCK:
+"618
+[e :U 689 ]
+"619
+[e :U 690 ]
+"620
+[e :U 691 ]
+"621
+[e :U 692 ]
+[; ;main.c: 619: case STATE_ALERM:
+[; ;main.c: 620: case STATE_ADJUST_CLOCK:
+[; ;main.c: 621: case STATE_SET_TIMER:
+[; ;main.c: 622: {
+"622
+{
+"623
+[v _string `uc ~T0 @X0 -> 17 `i a ]
+[; ;main.c: 623: char string[17] ;
+[; ;main.c: 624: _date_time_ConvertByteToDate( datePtr , &string ) ;
+"624
+[e ( __date_time_ConvertByteToDate (2 , _datePtr &U _string ]
+[; ;main.c: 625: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , &string ) ;
+"625
+[e ( _ParallelLCD_WriteString (2 , -> | -> . `E4101 0 `i -> 0 `i `E4101 -> &U _string `*Cuc ]
+[; ;main.c: 626: _date_time_ConvertByteToTime( datePtr , &string ) ;
+"626
+[e ( __date_time_ConvertByteToTime (2 , _datePtr &U _string ]
+[; ;main.c: 627: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , &string ) ;
+"627
+[e ( _ParallelLCD_WriteString (2 , -> | -> . `E4101 1 `i -> 0 `i `E4101 -> &U _string `*Cuc ]
+[; ;main.c: 628: blinkPrescaler = 0 ;
+"628
+[e = _blinkPrescaler -> -> 0 `i `uc ]
+"629
+}
+[; ;main.c: 629: }
+[; ;main.c: 630: break ;
+"630
+[e $U 687  ]
+[; ;main.c: 632: case STATE_BUZZER_TEST:
+"632
+[e :U 693 ]
+[; ;main.c: 633: {
+"633
+{
+[v F4324 `uc ~T0 @X0 -> 4 `i s ]
+[i F4324
 :U ..
 -> 48 `c
 -> 48 `c
@@ -6520,306 +6740,289 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"552
+"634
 [v _valueString `uc ~T0 @X0 -> 4 `i a ]
-[; ;main.c: 552: char valueString[4] = "000" ;
-[e = _valueString F4297 ]
-[; ;main.c: 553: PWM3DCH = PR2 >> 2 ;
-"553
+[; ;main.c: 634: char valueString[4] = "000" ;
+[e = _valueString F4324 ]
+[; ;main.c: 635: PWM3DCH = PR2 >> 2 ;
+"635
 [e = _PWM3DCH -> >> -> _PR2 `i -> 2 `i `uc ]
-"554
+"636
 [v _tmpValue `uc ~T0 @X0 1 a ]
-[; ;main.c: 554: Uint08_t tmpValue = PR2 ;
+[; ;main.c: 636: Uint08_t tmpValue = PR2 ;
 [e = _tmpValue _PR2 ]
-"555
+"637
 [v _isNonZero `uc ~T0 @X0 1 a ]
-[; ;main.c: 555: Uint08_t isNonZero = 0 ;
+[; ;main.c: 637: Uint08_t isNonZero = 0 ;
 [e = _isNonZero -> -> 0 `i `uc ]
-"556
-[v F4300 `Cuc ~T0 @X0 -> 0 `x s COMPARE_UNITS ]
-[i F4300
+"638
+[v F4327 `Cuc ~T0 @X0 -> 0 `x s COMPARE_UNITS ]
+[i F4327
 :U ..
 -> -> 100 `i `uc
 -> -> 10 `i `uc
 -> -> 1 `i `uc
 ..
 ]
-[; ;main.c: 556: static const Uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 } ;
-[; ;main.c: 558: for( Uint08_t i = 0 ; i != 3 ; i++ ) {
-"558
+[; ;main.c: 638: static const Uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 } ;
+[; ;main.c: 640: for( Uint08_t i = 0 ; i != 3 ; i++ ) {
+"640
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $ != -> _i `i -> 3 `i 675  ]
-[e $U 676  ]
-[e :U 675 ]
-{
-"559
-[v _compareUnit `uc ~T0 @X0 1 a ]
-[; ;main.c: 559: Uint08_t compareUnit = COMPARE_UNITS[i] ;
-[e = _compareUnit *U + &U F4300 * -> _i `ux -> -> # *U &U F4300 `ui `ux ]
-[; ;main.c: 560: while( tmpValue >= compareUnit ) {
-"560
-[e $U 678  ]
-[e :U 679 ]
-{
-[; ;main.c: 561: tmpValue -= compareUnit ;
-"561
-[e =- _tmpValue _compareUnit ]
-[; ;main.c: 562: valueString[i]++ ;
-"562
-[e ++ *U + &U _valueString * -> _i `ux -> -> # *U &U _valueString `ui `ux -> -> 1 `i `uc ]
-[; ;main.c: 563: isNonZero = 1 ;
-"563
-[e = _isNonZero -> -> 1 `i `uc ]
-"564
-}
-[e :U 678 ]
-"560
-[e $ >= -> _tmpValue `i -> _compareUnit `i 679  ]
-[e :U 680 ]
-[; ;main.c: 564: }
-[; ;main.c: 566: if( i == 2 ) break ;
-"566
-[e $ ! == -> _i `i -> 2 `i 681  ]
-[e $U 676  ]
-[e :U 681 ]
-[; ;main.c: 567: if( isNonZero ) continue ;
-"567
-[e $ ! != -> _isNonZero `i -> -> -> 0 `i `uc `i 682  ]
-[e $U 677  ]
-[e :U 682 ]
-[; ;main.c: 569: valueString[i] = ' ' ;
-"569
-[e = *U + &U _valueString * -> _i `ux -> -> # *U &U _valueString `ui `ux -> -> 32 `ui `uc ]
-"570
-}
-"558
-[e :U 677 ]
-[e ++ _i -> -> 1 `i `uc ]
-[e $ != -> _i `i -> 3 `i 675  ]
-[e :U 676 ]
-"570
-}
-[; ;main.c: 570: }
-[; ;main.c: 572: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xD , &valueString ) ;
-"572
-[e ( _ParallelLCD_WriteString (2 , -> | -> . `E4100 1 `i -> 13 `i `E4100 -> &U _valueString `*Cuc ]
-"573
-}
-[; ;main.c: 573: }
-[; ;main.c: 574: break ;
-"574
-[e $U 668  ]
-"575
-}
-[; ;main.c: 575: }
-[e $U 668  ]
-"535
-[e :U 669 ]
-[e [\ _machineState_ , $ . `E4248 1 670
- , $ . `E4248 4 671
- , $ . `E4248 3 672
- , $ . `E4248 5 673
- , $ . `E4248 6 674
- 668 ]
-"575
-[e :U 668 ]
-"577
-}
-[e :U 667 ]
-[; ;main.c: 577: }
-[; ;main.c: 579: if( machineState_ == STATE_ADJUST_CLOCK || machineState_ == STATE_SET_TIMER ) {
-"579
-[e $ ! || == -> _machineState_ `i -> . `E4248 3 `i == -> _machineState_ `i -> . `E4248 5 `i 683  ]
-{
-"580
-[v _string `uc ~T0 @X0 -> 4 `i a ]
-[; ;main.c: 580: char string[4] ;
-[; ;main.c: 581: if( blinkPrescaler == 0x00 ) {
-"581
-[e $ ! == -> _blinkPrescaler `i -> 0 `i 684  ]
-{
-[; ;main.c: 582: _date_time_ConvertByteToDiscrete( datePtr , &string , editSelect ) ;
-"582
-[e ( __date_time_ConvertByteToDiscrete (3 , , _datePtr &U _string _editSelect ]
-[; ;main.c: 583: ParallelLCD_WriteString( currentValueInfo->position , &string ) ;
-"583
-[e ( _ParallelLCD_WriteString (2 , -> . *U _currentValueInfo 0 `E4100 -> &U _string `*Cuc ]
-"584
-}
-[e :U 684 ]
-[; ;main.c: 584: }
-[; ;main.c: 585: if( blinkPrescaler == 0xC0 ) {
-"585
-[e $ ! == -> _blinkPrescaler `i -> 192 `i 685  ]
-{
-[; ;main.c: 586: ParallelLCD_ClearPartial( currentValueInfo->position , currentValueInfo->length ) ;
-"586
-[e ( _ParallelLCD_ClearPartial (2 , -> . *U _currentValueInfo 0 `E4100 . *U _currentValueInfo 1 ]
-"587
-}
-[e :U 685 ]
-"588
-}
-[e :U 683 ]
-"589
-}
-[; ;main.c: 587: }
-[; ;main.c: 588: }
-[; ;main.c: 589: }
-[e $U 573  ]
-[e :U 574 ]
-}
-[; ;main.c: 591: }
-"591
-[e :UE 572 ]
-}
-[v F4306 `(v ~T0 @X0 1 tf ]
-"596
-[v __ `IF4306 ~T0 @X0 1 e ]
-{
-[; ;main.c: 596: void interrupt _( void ) {
-[e :U __ ]
-[f ]
-[; ;main.c: 598: if( INTCONbits.TMR0IF ) {
-"598
-[e $ ! != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 687  ]
-{
-[; ;main.c: 599: INTCONbits.TMR0IF = 0 ;
-"599
-[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
-[; ;main.c: 602: portAState_.byte = (~PORTA&0x33) ;
-"602
-[e = . _portAState_ 0 -> & ~ -> _PORTA `i -> 51 `i `uc ]
-[; ;main.c: 604: blinkPrescaler++ ;
-"604
-[e ++ _blinkPrescaler -> -> 1 `i `uc ]
-"605
-}
-[e :U 687 ]
-[; ;main.c: 605: }
-[; ;main.c: 608: if( IOCIF && machineState_ != STATE_ADJUST_CLOCK ) {
-"608
-[e $ ! && _IOCIF != -> _machineState_ `i -> . `E4248 3 `i 688  ]
-{
-[; ;main.c: 609: IOCAF3 = 0 ;
-"609
-[e = _IOCAF3 -> -> 0 `i `b ]
-[; ;main.c: 611: if( machineState_ == STATE_BOOT ) {
-"611
-[e $ ! == -> _machineState_ `i -> . `E4248 0 `i 689  ]
-{
-[; ;main.c: 612: machineState_ = STATE_CLOCK ;
-"612
-[e = _machineState_ . `E4248 1 ]
-[; ;main.c: 613: datePtr = &dateCurrent ;
-"613
-[e = _datePtr &U _dateCurrent ]
-[; ;main.c: 614: outputEvent.changeMessage=1 ;
-"614
-[e = . . _outputEvent 1 0 -> -> 1 `i `uc ]
-"615
-}
-[; ;main.c: 615: }
-[e $U 690  ]
-"616
-[e :U 689 ]
-[; ;main.c: 616: else {
-{
-[; ;main.c: 617: outputEvent.changeValue=1 ;
-"617
-[e = . . _outputEvent 1 1 -> -> 1 `i `uc ]
-"618
-}
-[e :U 690 ]
-[; ;main.c: 618: }
-[; ;main.c: 622: if( _ds1307_GetData( &dateCurrent , 0x00 , 7 ) ) {
-"622
-[e $ ! != -> ( __ds1307_GetData (3 , , &U _dateCurrent -> -> 0 `i `uc -> -> 7 `i `uc `i -> -> -> 0 `i `uc `i 691  ]
-{
-[; ;main.c: 623: machineState_ = STATE_ERROR ;
-"623
-[e = _machineState_ . `E4248 8 ]
-"624
-}
-[; ;main.c: 624: }
-[e $U 692  ]
-"625
-[e :U 691 ]
-[; ;main.c: 625: else {
-{
-"628
-[v _isTimeToAlerm `uc ~T0 @X0 1 a ]
-[; ;main.c: 628: Uint08_t isTimeToAlerm = 1 ;
-[e = _isTimeToAlerm -> -> 1 `i `uc ]
-[; ;main.c: 629: for( Uint08_t i = 0 ; i < 7 ; i++ ) {
-"629
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 7 `i 693  ]
-[e $U 694  ]
-[e :U 693 ]
-{
-[; ;main.c: 630: if( ( !dateTimer.dayOfWeek ) && i == 3 ) continue ;
-"630
-[e $ ! && ! != -> . . _dateTimer 0 3 `i -> -> -> 0 `i `uc `i == -> _i `i -> 3 `i 696  ]
+[e $ != -> _i `i -> 3 `i 694  ]
 [e $U 695  ]
-[e :U 696 ]
-[; ;main.c: 631: if( dateCurrent.array[i] != dateTimer.array[i] ) {
-"631
-[e $ ! != -> *U + &U . _dateCurrent 2 * -> _i `ux -> -> # *U &U . _dateCurrent 2 `ui `ux `i -> *U + &U . _dateTimer 2 * -> _i `ux -> -> # *U &U . _dateTimer 2 `ui `ux `i 697  ]
+[e :U 694 ]
 {
-[; ;main.c: 632: isTimeToAlerm = 0 ;
-"632
-[e = _isTimeToAlerm -> -> 0 `i `uc ]
-[; ;main.c: 633: break ;
-"633
-[e $U 694  ]
-"634
+"641
+[v _compareUnit `uc ~T0 @X0 1 a ]
+[; ;main.c: 641: Uint08_t compareUnit = COMPARE_UNITS[i] ;
+[e = _compareUnit *U + &U F4327 * -> _i `ux -> -> # *U &U F4327 `ui `ux ]
+[; ;main.c: 642: while( tmpValue >= compareUnit ) {
+"642
+[e $U 697  ]
+[e :U 698 ]
+{
+[; ;main.c: 643: tmpValue -= compareUnit ;
+"643
+[e =- _tmpValue _compareUnit ]
+[; ;main.c: 644: valueString[i]++ ;
+"644
+[e ++ *U + &U _valueString * -> _i `ux -> -> # *U &U _valueString `ui `ux -> -> 1 `i `uc ]
+[; ;main.c: 645: isNonZero = 1 ;
+"645
+[e = _isNonZero -> -> 1 `i `uc ]
+"646
 }
 [e :U 697 ]
-"635
-}
-"629
-[e :U 695 ]
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 7 `i 693  ]
-[e :U 694 ]
-"635
-}
-[; ;main.c: 634: }
-[; ;main.c: 635: }
-[; ;main.c: 637: if( isTimeToAlerm ) machineState_ = STATE_ALERM ;
-"637
-[e $ ! != -> _isTimeToAlerm `i -> -> -> 0 `i `uc `i 698  ]
-[e = _machineState_ . `E4248 4 ]
-[e :U 698 ]
-[; ;main.c: 638: if( dateCurrent.clockHalt ) machineState_ = STATE_ERROR ;
-"638
-[e $ ! != -> . . _dateCurrent 1 1 `i -> -> -> 0 `i `uc `i 699  ]
-[e = _machineState_ . `E4248 8 ]
+"642
+[e $ >= -> _tmpValue `i -> _compareUnit `i 698  ]
 [e :U 699 ]
-"639
+[; ;main.c: 646: }
+[; ;main.c: 648: if( i == 2 ) break ;
+"648
+[e $ ! == -> _i `i -> 2 `i 700  ]
+[e $U 695  ]
+[e :U 700 ]
+[; ;main.c: 649: if( isNonZero ) continue ;
+"649
+[e $ ! != -> _isNonZero `i -> -> -> 0 `i `uc `i 701  ]
+[e $U 696  ]
+[e :U 701 ]
+[; ;main.c: 651: valueString[i] = ' ' ;
+"651
+[e = *U + &U _valueString * -> _i `ux -> -> # *U &U _valueString `ui `ux -> -> 32 `ui `uc ]
+"652
 }
-[e :U 692 ]
-"641
+"640
+[e :U 696 ]
+[e ++ _i -> -> 1 `i `uc ]
+[e $ != -> _i `i -> 3 `i 694  ]
+[e :U 695 ]
+"652
 }
+[; ;main.c: 652: }
+[; ;main.c: 654: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xD , &valueString ) ;
+"654
+[e ( _ParallelLCD_WriteString (2 , -> | -> . `E4101 1 `i -> 13 `i `E4101 -> &U _valueString `*Cuc ]
+"655
+}
+[; ;main.c: 655: }
+[; ;main.c: 656: break ;
+"656
+[e $U 687  ]
+"657
+}
+[; ;main.c: 657: }
+[e $U 687  ]
+"617
 [e :U 688 ]
-[; ;main.c: 639: }
-[; ;main.c: 641: }
-[; ;main.c: 643: }
-"643
-[e :UE 686 ]
+[e [\ _machineState_ , $ . `E4259 1 689
+ , $ . `E4259 4 690
+ , $ . `E4259 3 691
+ , $ . `E4259 5 692
+ , $ . `E4259 6 693
+ 687 ]
+"657
+[e :U 687 ]
+"659
 }
-[a 14C 97 100 106 117 115 116 0 ]
+[e :U 686 ]
+[; ;main.c: 659: }
+[; ;main.c: 661: if( machineState_ == STATE_ADJUST_CLOCK || machineState_ == STATE_SET_TIMER ) {
+"661
+[e $ ! || == -> _machineState_ `i -> . `E4259 3 `i == -> _machineState_ `i -> . `E4259 5 `i 702  ]
+{
+"662
+[v _string `uc ~T0 @X0 -> 4 `i a ]
+[; ;main.c: 662: char string[4] ;
+[; ;main.c: 663: if( blinkPrescaler == 0x00 ) {
+"663
+[e $ ! == -> _blinkPrescaler `i -> 0 `i 703  ]
+{
+[; ;main.c: 664: _date_time_ConvertByteToDiscrete( datePtr , &string , editSelect ) ;
+"664
+[e ( __date_time_ConvertByteToDiscrete (3 , , _datePtr &U _string _editSelect ]
+[; ;main.c: 665: ParallelLCD_WriteString( currentValueInfo->position , &string ) ;
+"665
+[e ( _ParallelLCD_WriteString (2 , -> . *U _currentValueInfo 0 `E4101 -> &U _string `*Cuc ]
+"666
+}
+[e :U 703 ]
+[; ;main.c: 666: }
+[; ;main.c: 667: if( blinkPrescaler == 0xC0 ) {
+"667
+[e $ ! == -> _blinkPrescaler `i -> 192 `i 704  ]
+{
+[; ;main.c: 668: ParallelLCD_ClearPartial( currentValueInfo->position , currentValueInfo->length ) ;
+"668
+[e ( _ParallelLCD_ClearPartial (2 , -> . *U _currentValueInfo 0 `E4101 . *U _currentValueInfo 1 ]
+"669
+}
+[e :U 704 ]
+"670
+}
+[e :U 702 ]
+"671
+}
+[; ;main.c: 669: }
+[; ;main.c: 670: }
+[; ;main.c: 671: }
+[e $U 579  ]
+[e :U 580 ]
+}
+[; ;main.c: 673: }
+"673
+[e :UE 578 ]
+}
+[v F4333 `(v ~T0 @X0 1 tf ]
+"678
+[v __ `IF4333 ~T0 @X0 1 e ]
+{
+[; ;main.c: 678: void interrupt _( void ) {
+[e :U __ ]
+[f ]
+[; ;main.c: 680: if( INTCONbits.TMR0IF ) {
+"680
+[e $ ! != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 706  ]
+{
+[; ;main.c: 681: INTCONbits.TMR0IF = 0 ;
+"681
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+[; ;main.c: 683: if( keyBeepCounter_ && !--keyBeepCounter_ )
+"683
+[e $ ! && != -> _keyBeepCounter_ `i -> -> -> 0 `i `uc `i ! != -> =- _keyBeepCounter_ -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 707  ]
+[; ;main.c: 684: events_.output.soundOff=1 ;
+"684
+[e = . . . _events_ 2 1 4 -> -> 1 `i `uc ]
+[e :U 707 ]
+"686
+[v F4334 `uc ~T0 @X0 1 s prescaler10ms ]
+[i F4334
+-> -> 0 `i `uc
+]
+[; ;main.c: 686: static Uint08_t prescaler10ms = 0 ;
+[; ;main.c: 689: if( ! --prescaler10ms ) {
+"689
+[e $ ! ! != -> =- F4334 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 708  ]
+{
+[; ;main.c: 690: prescaler10ms = 10 ;
+"690
+[e = F4334 -> -> 10 `i `uc ]
+[; ;main.c: 693: sampledPortAState_.byte = (~PORTA&0x33) ;
+"693
+[e = . _sampledPortAState_ 0 -> & ~ -> _PORTA `i -> 51 `i `uc ]
+[; ;main.c: 695: if( sampledPortAState_.keyUp && !sampledPortAState_.keyDown ) {
+"695
+[e $ ! && != -> . . _sampledPortAState_ 1 1 `i -> -> -> 0 `i `uc `i ! != -> . . _sampledPortAState_ 1 0 `i -> -> -> 0 `i `uc `i 709  ]
+{
+[; ;main.c: 696: if( ++keyCounter_.keyUp == 0x40 ) {
+"696
+[e $ ! == -> =+ . . _keyCounter_ 0 0 -> -> 1 `i `uc `i -> 64 `i 710  ]
+{
+[; ;main.c: 697: keyCounter_.keyUp = 0x3C ;
+"697
+[e = . . _keyCounter_ 0 0 -> -> 60 `i `uc ]
+[; ;main.c: 698: events_.keyPress.upHold=1 ;
+"698
+[e = . . . _events_ 0 1 1 -> -> 1 `i `uc ]
+"699
+}
+[e :U 710 ]
+"700
+}
+[; ;main.c: 699: }
+[; ;main.c: 700: }
+[e $U 711  ]
+"701
+[e :U 709 ]
+[; ;main.c: 701: else
+[; ;main.c: 702: keyCounter_.keyUp = 0 ;
+"702
+[e = . . _keyCounter_ 0 0 -> -> 0 `i `uc ]
+[e :U 711 ]
+[; ;main.c: 704: if( sampledPortAState_.keyDown && !sampledPortAState_.keyUp ) {
+"704
+[e $ ! && != -> . . _sampledPortAState_ 1 0 `i -> -> -> 0 `i `uc `i ! != -> . . _sampledPortAState_ 1 1 `i -> -> -> 0 `i `uc `i 712  ]
+{
+[; ;main.c: 705: if( ++keyCounter_.keyDown == 0x40 ) {
+"705
+[e $ ! == -> =+ . . _keyCounter_ 0 2 -> -> 1 `i `uc `i -> 64 `i 713  ]
+{
+[; ;main.c: 706: keyCounter_.keyDown = 0x3C ;
+"706
+[e = . . _keyCounter_ 0 2 -> -> 60 `i `uc ]
+[; ;main.c: 707: events_.keyPress.downHold=1 ;
+"707
+[e = . . . _events_ 0 1 3 -> -> 1 `i `uc ]
+"708
+}
+[e :U 713 ]
+"709
+}
+[; ;main.c: 708: }
+[; ;main.c: 709: }
+[e $U 714  ]
+"710
+[e :U 712 ]
+[; ;main.c: 710: else
+[; ;main.c: 711: keyCounter_.keyDown = 0 ;
+"711
+[e = . . _keyCounter_ 0 2 -> -> 0 `i `uc ]
+[e :U 714 ]
+"713
+}
+[e :U 708 ]
+"714
+}
+[e :U 706 ]
+[; ;main.c: 713: }
+[; ;main.c: 714: }
+[; ;main.c: 717: if( IOCIF && machineState_ != STATE_ADJUST_CLOCK ) {
+"717
+[e $ ! && _IOCIF != -> _machineState_ `i -> . `E4259 3 `i 715  ]
+{
+[; ;main.c: 718: IOCAF3 = 0 ;
+"718
+[e = _IOCAF3 -> -> 0 `i `b ]
+[; ;main.c: 720: events_.output.updateClock=1 ;
+"720
+[e = . . . _events_ 2 1 0 -> -> 1 `i `uc ]
+"723
+}
+[e :U 715 ]
+[; ;main.c: 723: }
+[; ;main.c: 725: }
+"725
+[e :UE 705 ]
+}
+[a 13C 97 100 106 117 115 116 0 ]
 [a 10C 66 117 122 122 101 114 32 84 101 115 116 0 ]
-[a 16C 66 117 122 122 101 114 32 84 101 115 116 0 ]
-[a 15C 116 105 109 101 114 0 ]
+[a 15C 66 117 122 122 101 114 32 84 101 115 116 0 ]
+[a 14C 116 105 109 101 114 0 ]
 [a 9C 83 101 116 32 84 105 109 101 114 0 ]
 [a 11C 86 101 114 115 105 111 110 0 ]
-[a 18C 86 101 114 115 105 111 110 0 ]
+[a 17C 86 101 114 115 105 111 110 0 ]
 [a 8C 65 100 106 117 115 116 32 67 108 111 99 107 0 ]
 [a 5C 84 72 85 0 ]
 [a 7C 83 65 84 0 ]
@@ -6828,8 +7031,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [a 6C 70 82 73 0 ]
 [a 3C 84 85 69 0 ]
 [a 4C 87 69 68 0 ]
-[a 17C 80 101 114 105 111 100 32 61 0 ]
-[a 19C 48 48 46 49 48 48 0 ]
-[a 12C 66 111 111 116 32 46 46 46 0 ]
-[a 13C 65 76 69 82 77 33 33 0 ]
-[a 20C 82 101 99 101 105 118 101 32 69 114 114 111 114 32 33 33 0 ]
+[a 16C 80 101 114 105 111 100 32 61 0 ]
+[a 18C 48 48 46 49 48 48 0 ]
+[a 12C 65 76 69 82 77 33 33 0 ]
+[a 19C 82 101 99 101 105 118 101 32 69 114 114 111 114 32 33 33 0 ]

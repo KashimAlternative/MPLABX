@@ -17,7 +17,7 @@ void initialize( ) {
   IOCANbits.IOCAN3 = 1 ;
 
   // Timer0 config
-  OPTION_REGbits.PSA = 0 ; // Assign Prescaler
+  OPTION_REGbits.PSA = 1 ; // Assign No Prescaler
   OPTION_REGbits.PS = 0b010 ; // Prescaler 1:8
   OPTION_REGbits.TMR0CS = 0 ;
   OPTION_REGbits.TMR0SE = 1 ;

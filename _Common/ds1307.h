@@ -38,7 +38,7 @@
 void _date_time_ConvertByteToDiscrete( StDateTime* date , char* dateString , EnDateItem select ) ;
 
 // [Function] Counfigurate ----------------
-Uint08_t _ds1307_Counfigurate( ) {
+Uint08_t DS1307_Counfigurate( ) {
 
   // SEN
   BIT_SEN = 1 ;
@@ -71,7 +71,7 @@ Uint08_t _ds1307_Counfigurate( ) {
 }
 
 // [Function] Get Data ----------------
-Uint08_t _ds1307_GetData( StDateTime* date , Uint08_t ramAddress , Uint08_t length ) {
+Uint08_t DS1307_GetData( StDateTime* date , Uint08_t ramAddress , Uint08_t length ) {
 
   // SEN
   BIT_SEN = 1 ;
@@ -101,12 +101,13 @@ Uint08_t _ds1307_GetData( StDateTime* date , Uint08_t ramAddress , Uint08_t leng
 
   // Receive Data
   Uint08_t dataCount = 0 ;
+  Uint08_t* datePtr = (Uint08_t*) date ;
   while ( dataCount < length ) {
     __delay_ms( 2 ) ;
     BIT_RCEN = 1 ;
     while ( BIT_RCEN ) ;
     while ( !BIT_BF ) ;
-    date->array[ dataCount++ ] = SSP1BUF ;
+    datePtr[ dataCount++ ] = SSP1BUF ;
     BIT_ACKDT = ( dataCount == length ) ;
     BIT_ACKEN = 1 ;
   }
@@ -120,7 +121,7 @@ Uint08_t _ds1307_GetData( StDateTime* date , Uint08_t ramAddress , Uint08_t leng
 }
 
 // [Function] Write Data ----------------
-Uint08_t _ds1307_SetClock( StDateTime* date ) {
+Uint08_t DS1307_SetClock( StDateTime* date ) {
 
   // SEN
   BIT_SEN = 1 ;
@@ -139,9 +140,10 @@ Uint08_t _ds1307_SetClock( StDateTime* date ) {
   SSP1IF = 0 ;
   if ( BIT_ACKSTAT ) return 2 ;
 
+  Uint08_t* datePtr = (Uint08_t*) date ;
   for ( Uint08_t i = 0 ; i < sizeof ( StDateTime ) ; i++ ) {
     // Send Data
-    SSP1BUF = date->array[i] ;
+    SSP1BUF = datePtr[i] ;
     while ( !SSP1IF ) ;
     SSP1IF = 0 ;
     if ( BIT_ACKSTAT ) return 3 ;

@@ -39,7 +39,7 @@ typedef struct {
   Sint08_t oscillatorTune ;
   Uint08_t checkSum ; // must be last
 } ConfigurationData ;
-#  define CONFIG_DEFAULT { 0 , 0 , 120 , 4 , { 16 , 16 , } , { 249 , 62 , 82 , } , 1 , 0 , 0 }
+#  define CONFIG_DEFAULT { 0 , 0 , 120 , 4 , { 30 , 30 , } , { 249 , 62 , 82 , } , 1 , 0 , 0 }
 #  define CONFIG_DATA_SIZE sizeof(ConfigurationData)
 
 // ----------------------------------------------------------------

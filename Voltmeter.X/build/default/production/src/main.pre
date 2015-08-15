@@ -3164,7 +3164,87 @@ return 0x00 ;
 
 }
 
-# 28 "src/main.c"
+# 27 "src/configuration.h"
+typedef struct {
+Uint08_t sleepTime ;
+} StConfigurationData ;
+
+# 35
+typedef Uint08_t EepromData_t ;
+typedef Uint08_t EepromAddress_t ;
+
+
+
+static void Configuration_WriteByte( EepromAddress_t address , EepromData_t data ) ;
+static EepromData_t Configuration_ReadByte( EepromAddress_t address ) ;
+
+
+
+void Configuration_Save( StConfigurationData* config ) {
+
+EepromData_t* ptrConfig = (EepromData_t*) config ;
+
+
+INTCONbits.GIE=0; ;
+
+
+EECON1bits.WREN=1; ;
+
+
+for ( Uint08_t i = 0 ; i < sizeof(StConfigurationData) ; i++ ) {
+Configuration_WriteByte( i , ptrConfig[i] ) ;
+if ( EECON1bits.WRERR ) break ;
+}
+
+
+EECON1bits.WREN=0; ;
+
+
+INTCONbits.GIE=1; ;
+
+}
+
+
+
+void Configuration_Load( StConfigurationData* config ) {
+
+EepromData_t* ptrConfig = (EepromData_t*) config ;
+
+
+INTCONbits.GIE=0; ;
+
+
+for ( Uint08_t i = 0 ; i < sizeof(StConfigurationData) ; i++ ) {
+ptrConfig[i] = Configuration_ReadByte( i ) ;
+}
+
+
+INTCONbits.GIE=1; ;
+
+}
+
+
+
+static void Configuration_WriteByte( EepromAddress_t address , EepromData_t data ) {
+EEADRH=0x00;EEADRL=(address); ;
+EEDATH=0x00;EEDATL=(data); ;
+EECON2=0x55;EECON2=0xAA; ;
+EECON1bits.WR=1; ;
+while(!PIR2bits.EEIF);PIR2bits.EEIF=0; ;
+}
+
+
+
+static EepromData_t Configuration_ReadByte( EepromAddress_t address ) {
+EEADRH=0x00;EEADRL=(address); ;
+EECON1bits.EEPGD=0;EECON1bits.CFGS=0; ;
+EECON1bits.RD=1; ;
+__nop() ;
+__nop() ;
+return EEDATL ;
+}
+
+# 30 "src/main.c"
 typedef union {
 Uint08_t byte ;
 struct {
@@ -3177,17 +3257,23 @@ unsigned up : 1 ;
 } UniPortA ;
 UniPortA portAState_ ;
 
-# 45
+struct {
+Uint08_t up ;
+Uint08_t down ;
+} keyCount_ ;
+
+# 54
 typedef enum {
 STATE_BOOT ,
 STATE_MEASURE ,
 STATE_MENU ,
 STATE_VERSION ,
+STATE_ADJUST_SLEEP_TIME ,
 STATE_SLEEP ,
 STATE_ERROR ,
 } MachineState ;
 MachineState machineState_ = STATE_BOOT ;
-Bool_t isHold_ = BOOL_FALSE ;
+
 Uint16_t sleepTimer_ = 0 ;
 
 
@@ -3206,6 +3292,10 @@ const char* BOOT ;
 const char* VOLTAGE ;
 const char* BAR ;
 const char* AD_VALUE ;
+struct {
+const char* TITLE ;
+const char* VALUE ;
+} SLEEP ;
 const char* VERSION ;
 const char* ERROR ;
 }
@@ -3214,6 +3304,10 @@ MESSAGE = {
 "Voltage" ,
 " 2 4 6 8" ,
 "A/D Val" ,
+{
+"Sleep" ,
+"     sec" ,
+} ,
 "Version" ,
 "Error" ,
 } ;
@@ -3227,6 +3321,7 @@ MENU_RETURN = 0 ,
 MENU_VOLTAGE ,
 MENU_BAR ,
 MENU_AD_VALUE ,
+MENU_SLEEP ,
 MENU_VERSION ,
 } ;
 const char* MESSAGE_MENU[] = {
@@ -3234,37 +3329,51 @@ const char* MESSAGE_MENU[] = {
 "Voltage" ,
 "Bar" ,
 "A/D Val" ,
+"Sleep" ,
 "Version" ,
 } ;
 struct {
-Uint08_t select ;
-Uint08_t cursor ;
+unsigned select : 7 ;
+unsigned cursor : 1 ;
 } menuState_ ;
 
 
 
 
 typedef Uint16_t ADValue_t ;
+static ADValue_t adBuffer_[ 16 ] ;
 static ADValue_t sumOfBuffer_ = 0 ;
 
 
 
+StConfigurationData configuration_ = { 60 } ;
+
+
+
+struct {
 union {
-Uint08_t all ;
+Uint08_t byte ;
 struct {
 unsigned keyPressMenu : 1 ;
 unsigned keyPressUp : 1 ;
 unsigned keyPressDown : 1 ;
-unsigned keyPressUpDown : 1 ;
+unsigned : 5 ;
+} ;
+} input ;
+union {
+Uint08_t byte ;
+struct {
+unsigned : 3 ;
 unsigned changeValue : 1 ;
 unsigned changeMessage : 1 ;
 unsigned sleep : 1 ;
+unsigned wake : 1 ;
 unsigned error : 1 ;
 } ;
+} output ;
 } events_ = { 0x00 } ;
 
-
-
+# 168
 int main( void ) {
 
 initialize( ) ;
@@ -3292,9 +3401,11 @@ barImage |= ( barImage >> 1 ) ;
 AQM0802_SendData( 0x40 , barImage ) ;
 }
 
+Configuration_Load( &configuration_ ) ;
+
 machineState_ = STATE_MEASURE ;
 currentMessage_ = MESSAGE.VOLTAGE ;
-events_.changeMessage=1 ;
+events_.output.changeMessage=1 ;
 
 
 TMR0IF = 0 ;
@@ -3307,51 +3418,62 @@ for( ; ; ) {
 
 asm("clrwdt") ;
 
+
+if( (events_.output.sleep&&!(events_.output.sleep=0)) ) {
+if( machineState_ != STATE_SLEEP ) {
+AQM0802_ClearRow( ROW_SELECT_0 ) ;
+AQM0802_ClearRow( ROW_SELECT_1 ) ;
+}
+WDTCONbits.SWDTEN = 0 ;
+INTCONbits.TMR0IE = 0 ;
+INTCONbits.IOCIF = 0 ;
+INTCONbits.IOCIE = 1 ;
+sleepTimer_ = 100 ;
+machineState_ = STATE_SLEEP ;
+asm("sleep") ;
+}
+
+
+if( (events_.output.wake&&!(events_.output.wake=0)) ) {
+if( machineState_ == STATE_SLEEP ) {
+machineState_ = STATE_MEASURE ;
+events_.output.changeMessage=1 ;
+}
+sleepTimer_ = configuration_.sleepTime * 100 ;
+}
+
+
 static UniPortA prevPortAState = { 0x00 } ;
 UniPortA keyPressed ;
 
 keyPressed.byte = ( portAState_.byte ^ prevPortAState.byte ) & portAState_.byte ;
 prevPortAState.byte = portAState_.byte ;
 
-
 if( keyPressed.menu )
-events_.keyPressMenu=1 ;
+events_.input.keyPressMenu=1 ;
 
 if( keyPressed.up ) {
-if( portAState_.down )
-events_.keyPressUpDown=1 ;
-else
-events_.keyPressUp=1 ;
+
+
+
+events_.input.keyPressUp=1 ;
 }
 if( keyPressed.down ) {
-if( portAState_.up )
-events_.keyPressUpDown=1 ;
-else
-events_.keyPressDown=1 ;
+
+
+
+events_.input.keyPressDown=1 ;
 }
 
-if( (events_.error&&!(events_.error=0)) ) {
+if( (events_.output.error&&!(events_.output.error=0)) ) {
 machineState_ = STATE_ERROR ;
-events_.changeMessage=1 ;
+events_.output.changeMessage=1 ;
 }
 
 
-if( (events_.keyPressUpDown&&!(events_.keyPressUpDown=0)) ) {
-switch( machineState_ ) {
-case STATE_MEASURE:
-if( isHold_ )
-isHold_ = BOOL_FALSE ;
-else
-isHold_ = BOOL_TRUE ;
-events_.changeMessage=1 ;
-break ;
-}
-}
+if( (events_.input.keyPressMenu&&!(events_.input.keyPressMenu=0)) ) {
 
-
-if( (events_.keyPressMenu&&!(events_.keyPressMenu=0)) ) {
-
-events_.changeMessage=1 ;
+events_.output.changeMessage=1 ;
 
 switch( machineState_ ) {
 
@@ -3378,12 +3500,18 @@ measureMode_ = MEASURE_MODE_AD_VALUE ;
 currentMessage_ = MESSAGE.AD_VALUE ;
 break ;
 
+case MENU_SLEEP:
+machineState_ = STATE_ADJUST_SLEEP_TIME ;
+break ;
+
 case MENU_VERSION:
 machineState_ = STATE_VERSION ;
 break ;
 }
 break ;
 
+case STATE_ADJUST_SLEEP_TIME:
+Configuration_Save( &configuration_ ) ;
 case STATE_VERSION:
 machineState_ = STATE_MENU ;
 break ;
@@ -3394,18 +3522,33 @@ break ;
 switch( machineState_ ) {
 
 case STATE_MENU:
-if( (events_.keyPressUp&&!(events_.keyPressUp=0)) ) {
+if( (events_.input.keyPressUp&&!(events_.input.keyPressUp=0)) ) {
 if( menuState_.select != 0 ) {
 menuState_.select-- ;
 if( menuState_.cursor != 0 ) menuState_.cursor-- ;
-events_.changeMessage=1 ;
+events_.output.changeMessage=1 ;
 }
 }
-if( (events_.keyPressDown&&!(events_.keyPressDown=0)) ) {
+if( (events_.input.keyPressDown&&!(events_.input.keyPressDown=0)) ) {
 if( menuState_.select != ( ( sizeof( MESSAGE_MENU ) / sizeof( MESSAGE_MENU[0] ) ) - 1 ) ) {
 menuState_.select++ ;
 if( menuState_.cursor != 1 ) menuState_.cursor++ ;
-events_.changeMessage=1 ;
+events_.output.changeMessage=1 ;
+}
+}
+break ;
+
+case STATE_ADJUST_SLEEP_TIME:
+if( (events_.input.keyPressUp&&!(events_.input.keyPressUp=0)) ) {
+if( configuration_.sleepTime != 255 ) {
+configuration_.sleepTime++ ;
+events_.output.changeValue=1 ;
+}
+}
+if( (events_.input.keyPressDown&&!(events_.input.keyPressDown=0)) ) {
+if( configuration_.sleepTime != 1 ) {
+configuration_.sleepTime-- ;
+events_.output.changeValue=1 ;
 }
 }
 
@@ -3413,16 +3556,14 @@ break ;
 }
 
 
-if( (events_.changeMessage&&!(events_.changeMessage=0)) ) {
+if( (events_.output.changeMessage&&!(events_.output.changeMessage=0)) ) {
 switch( machineState_ ) {
 
 case STATE_MEASURE:
 AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , currentMessage_ ) ;
 AQM0802_ClearRow( ROW_SELECT_1 ) ;
 
-
-
-events_.changeValue=1 ;
+events_.output.changeValue=1 ;
 break ;
 
 case STATE_MENU:
@@ -3431,11 +3572,16 @@ AQM0802_SendStringClearing( ROW_SELECT_1 | 0x1 , MESSAGE_MENU[ menuState_.select
 AQM0802_SendCharacter( ROW_SELECT[ menuState_.cursor ] | 0x0 , 0x07 ) ;
 break ;
 
+case STATE_ADJUST_SLEEP_TIME:
+AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.SLEEP.TITLE ) ;
+AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , MESSAGE.SLEEP.VALUE ) ;
+events_.output.changeValue=1 ;
+break ;
+
 case STATE_VERSION:
 AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.VERSION ) ;
 AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , " 00.112 " ) ;
 break ;
-
 
 case STATE_ERROR:
 AQM0802_SendStringClearing( ROW_SELECT_0 | 0x0 , MESSAGE.ERROR ) ;
@@ -3445,86 +3591,110 @@ break ;
 }
 
 
-if( machineState_ == STATE_MEASURE && (events_.changeValue&&!(events_.changeValue=0)) ) {
+if( (events_.output.changeValue&&!(events_.output.changeValue=0)) ) {
+
+Char_t string[9] ;
+
+switch( machineState_ ) {
+case STATE_MEASURE:
+{
 
 
-ADValue_t currentAdValue ;
-Uint08_t digit ;
-char string[8] = "  00000" ;
-const Uint16_t COMPARE_UNITS[] = { 10000 , 1000 , 100 , 10 , 1 } ;
-
-currentAdValue = sumOfBuffer_ ;
+ADValue_t currentAdValue = sumOfBuffer_ ;
 
 switch( measureMode_ ) {
 case MEASURE_MODE_VOLTAGE:
 case MEASURE_MODE_AD_VALUE:
+{
+const Uint16_t COMPARE_UNITS[] = { 10000 , 1000 , 100 , 10 , 1 } ;
 
-digit = 0 ;
-while( digit < 5 ) {
-
-Uint16_t compareUnit = COMPARE_UNITS[ digit ] ;
-
+for( Uint08_t i = 0 ; i < 5 ; i++ ) {
+string[i + 1] = '0' ;
+Uint16_t compareUnit = COMPARE_UNITS[ i ] ;
 while( currentAdValue >= compareUnit ) {
-string[digit + 2]++ ;
+string[i + 1]++ ;
 currentAdValue -= compareUnit ;
 }
-
-digit++ ;
-
 }
 
+string[0] = ' ' ;
 if( measureMode_ == MEASURE_MODE_VOLTAGE ) {
+string[0] = string[1] ;
 string[1] = string[2] ;
-string[2] = string[3] ;
-string[3] = '.' ;
-string[6] = 'V' ;
+string[2] = '.' ;
+string[5] = 'V' ;
 }
+string[6] = 0 ;
 
-AQM0802_SendString( ROW_SELECT_1 | 0x1 , &string ) ;
-
+AQM0802_SendString( ROW_SELECT_1 | 0x2 , &string ) ;
+}
 break ;
 
 case MEASURE_MODE_BAR:
 {
-Char_t string[9] ;
 for( Uint08_t i = 0 ; i < 8 ; i++ ) {
 if( currentAdValue >= 1000 ) {
 string[i] = '\x05' ;
 currentAdValue -= 1000 ;
 }
 else {
-string[i] = currentAdValue / 200 ;
-string[ i + 1 ] = '\0' ;
+string[i] = 0 ;
+while( currentAdValue >= 200 ) {
+string[i]++ ;
+currentAdValue -= 200 ;
+}
+string[ i + 1 ] = 0 ;
 break ;
 }
 
 }
+string[8] = 0 ;
 AQM0802_SendStringClearing( ROW_SELECT_1 | 0x0 , string ) ;
 }
 break ;
 
 }
+}
+break ;
 
+case STATE_ADJUST_SLEEP_TIME:
+{
+Uint08_t tmpValue = configuration_.sleepTime ;
+
+const Uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 } ;
+Bool_t isNonZero = BOOL_FALSE ;
+
+for( Uint08_t i = 0 ; i < 3 ; i++ ) {
+string[i] = '0' ;
+Uint08_t compareUnit = COMPARE_UNITS[ i ] ;
+while( tmpValue >= compareUnit ) {
+string[i]++ ;
+tmpValue -= compareUnit ;
+}
+
+if( isNonZero || string[i] != '0' || i == 2 ) {
+isNonZero = BOOL_TRUE ;
+}
+else {
+string[i] = ' ' ;
+}
+}
+
+string[3] = 0 ;
+AQM0802_SendString( ROW_SELECT_1 | 0x2 , &string ) ;
+}
+break ;
 }
 
 
-if( (events_.sleep&&!(events_.sleep=0)) ) {
-AQM0802_ClearRow( ROW_SELECT_0 ) ;
-AQM0802_ClearRow( ROW_SELECT_1 ) ;
-WDTCONbits.SWDTEN = 0 ;
-INTCONbits.TMR0IE = 0 ;
-INTCONbits.IOCIF = 0 ;
-INTCONbits.IOCIE = 1 ;
-sleepTimer_ = 0 ;
-machineState_ = STATE_SLEEP ;
-asm("sleep") ;
+
 }
 
 }
 
 }
 
-# 395
+# 492
 void interrupt _( void ) {
 
 if( IOCAFbits.IOCAF3 ) {
@@ -3542,27 +3712,46 @@ INTCONbits.TMR0IF = 0 ;
 static Uint08_t interruptCount = 0 ;
 if( ! --interruptCount ) {
 interruptCount = 10 ;
+
 portAState_.byte = (~PORTA&0b00101001); ;
+
+if( portAState_.up ) {
+if( ++keyCount_.up == 0x40 ) {
+keyCount_.up = 0x3C ;
+events_.input.keyPressUp=1 ;
+}
+}
+else
+keyCount_.up = 0 ;
+
+if( portAState_.down ) {
+if( ++keyCount_.down == 0x40 ) {
+keyCount_.down = 0x3C ;
+events_.input.keyPressDown=1 ;
+}
+}
+else
+keyCount_.down = 0 ;
+
+
 
 if( machineState_ == STATE_SLEEP ) {
 if( portAState_.menu ) {
-if( ++sleepTimer_ == 100 ) {
-sleepTimer_ = 0 ;
-machineState_ = STATE_MEASURE ;
-events_.changeMessage=1 ;
-}
+if( ! --sleepTimer_ )
+events_.output.wake=1 ;
 }
 else {
-events_.sleep=1 ;
+events_.output.sleep=1 ;
 }
 }
 else {
 if( portAState_.byte ) {
-sleepTimer_ = 0 ;
+events_.output.wake=1 ;
 }
-else if( ++sleepTimer_ == 60 * 100 )
-events_.sleep=1 ;
-
+else {
+if( ! --sleepTimer_ )
+events_.output.sleep=1 ;
+}
 }
 
 }
@@ -3571,24 +3760,20 @@ events_.sleep=1 ;
 if( !ADCON0bits.GO ) {
 
 static Uint08_t bufferPostiion = 0 ;
-static ADValue_t adBuffer[ 16 ] ;
 ADValue_t adValue = ( ( ( (Uint16_t)ADRESH ) << 8 ) | ADRESL ) ;
 ADCON0bits.GO = 1 ;
 
-if( !isHold_ ) {
-sumOfBuffer_ -= adBuffer[ bufferPostiion ] ;
+sumOfBuffer_ -= adBuffer_[ bufferPostiion ] ;
 sumOfBuffer_ += adValue ;
-adBuffer[ bufferPostiion ] = adValue ;
+adBuffer_[ bufferPostiion ] = adValue ;
 
 if( ++bufferPostiion == 16 ) bufferPostiion = 0 ;
 
-}
-
-events_.changeValue=1 ;
+events_.output.changeValue=1 ;
 
 }
 
-if( INTCONbits.TMR0IF ) events_.error=1 ;
+if( INTCONbits.TMR0IF ) events_.output.error=1 ;
 
 }
 

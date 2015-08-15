@@ -22,9 +22,13 @@
 #pragma config LVP = OFF        // Low-Voltage Programming Enable (High-voltage on MCLR/VPP must be used for programming)
 
 #include <xc.h>
+#include <stdbool.h>
 #include "pic16f1508_init.h"
 
 #define _XTAL_FREQ 1000000L
+
+#define DisableAllInterrupt() INTCONbits.GIE=0;
+#define EnableAllInterrupt() INTCONbits.GIE=1;
 
 #define parallel_lcd_EnableWrite() LATBbits.LATB5=1;NOP();LATBbits.LATB5=0;
 #define parallel_lcd_SelectResister( r ) if(r){LATBbits.LATB7=1;}else{LATBbits.LATB7=0;};
@@ -55,29 +59,15 @@ typedef union {
     unsigned keyLeft : 1 ;
   } ;
 } UniPortA ;
-UniPortA portAState_ = { 0x00 } ;
+UniPortA sampledPortAState_ = { 0x00 } ;
 #define ReadKeyState() (~PORTA&0x33)
-
-#define PRESS_COUNT      0x08
-#define PRESS_LOOP_END   0xFF
-#define PRESS_LOOP_START 0xF0
-
-#define CHAR_CURSOR 0x00
-
-// Date and Time Data
-StDateTime dateCurrent ;
-StDateTime dateTimer ;
-StDateTime* datePtr ;
-
-// Prescaler
-Uint08_t blinkPrescaler = 0 ;
 
 // Key Counter
 union {
   struct {
-    Uint08_t keyU ;
+    Uint08_t keyUp ;
     Uint08_t keyUD ;
-    Uint08_t keyD ;
+    Uint08_t keyDown ;
     Uint08_t keyL ;
     Uint08_t keyLR ;
     Uint08_t keyR ;
@@ -93,7 +83,20 @@ union {
     Uint08_t _1 ;
     Uint16_t exceptLeft ;
   } ;
-} keyCount ;
+} keyCounter_ ;
+#define KEY_COUNT_LOOP_END   0x40
+#define KEY_COUNT_LOOP_START 0x3C
+
+#define CHAR_CURSOR 0x00
+
+// Date and Time Data
+StDateTime dateCurrent ;
+StDateTime dateTimer ;
+StDateTime* datePtr ;
+
+// Prescaler
+Uint08_t blinkPrescaler = 0 ;
+Uint08_t keyBeepCounter_ = 0 ;
 typedef struct {
   Uint08_t position ;
   Uint08_t length ;
@@ -178,32 +181,50 @@ EnDateItem editSelect = DATE_ITEM_YEAR ;
 #define ClearEvent(event) event=0
 #define EvalEvent(event)  (event&&!(event=0))
 struct {
-  unsigned up : 1 ;
-  unsigned down : 1 ;
-  unsigned upDown : 1 ;
-  unsigned left : 1 ;
-  unsigned right : 1 ;
-  unsigned leftRightHold : 1 ;
-  unsigned releaseRight : 1 ;
-} keyEvents_ = 0 ;
-union {
-  Uint08_t all ;
-  struct {
-    unsigned changeMessage : 1 ;
-    unsigned changeValue : 1 ;
-  } ;
-} outputEvent = 0 ;
+  union {
+    Uint08_t byte ;
+    struct {
+      unsigned up : 1 ;
+      unsigned upHold : 1 ;
+      unsigned down : 1 ;
+      unsigned downHold : 1 ;
+      unsigned upDown : 1 ;
+      unsigned left : 1 ;
+      unsigned right : 1 ;
+      unsigned leftRightHold : 1 ;
+    } ;
+  } keyPress ;
+  union {
+    Uint08_t byte ;
+    struct {
+      unsigned right : 1 ;
+    } ;
+  } keyRelease ;
+  union {
+    Uint08_t byte ;
+    struct {
+      unsigned updateClock : 1 ;
+      unsigned changeMessage : 1 ;
+      unsigned changeValue : 1 ;
+      unsigned soundOn : 1 ;
+      unsigned soundOff : 1 ;
+    } ;
+  } output ;
+} events_ = { 0x00 , 0x00 } ;
 
 // [Function] Main ----------------
 int main( void ) {
+
   initialize( ) ;
 
   PWM3DCH = ( PR2 >> 2 ) ;
   PWM3DCL = ( ( PR2 & 0b11 ) << 6 ) ;
   PWM3OE = 0 ;
 
+  // Read Timer From RAM of RTC
+  DS1307_GetData( &dateTimer , 0x10 , 7 ) ;
+
   // Initialize parallel_lcd
-  __delay_ms( 20 ) ;
   ParallelLCD_Initialize(
                           PARALLEL_LCD_CONFIG_8BIT_MODE | PARALLEL_LCD_CONFIG_2LINE_MODE ,
                           PARALLEL_LCD_CONFIG_DISPLAY_ON ,
@@ -214,11 +235,11 @@ int main( void ) {
   // Write CGRAM
   ParallelLCD_SetCgram( CHAR_CURSOR , CURSOR_BITMAP ) ;
 
-  ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Boot ..." ) ;
+  SetEvent( events_.output.updateClock ) ;
+  machineState_ = STATE_CLOCK ;
+  datePtr = &dateCurrent ;
 
-  // Read Timer From RAM of RTC
-  _ds1307_GetData( &dateTimer , 0x10 , 7 ) ;
-
+  INTCONbits.TMR0IF = 0 ;
   INTCONbits.TMR0IE = 1 ;
   IOCIE = 0 ;
 
@@ -227,49 +248,84 @@ int main( void ) {
     // Clear Watchdog-timer
     CLRWDT( ) ;
 
+    if( EvalEvent( events_.output.updateClock ) ) {
+
+      // Get Data from RTC
+      if( DS1307_GetData( &dateCurrent , 0x00 , 7 ) ) {
+        machineState_ = STATE_ERROR ;
+      }
+      else {
+
+        // Check Alerm Time
+        Bool_t isTimeToAlerm = BOOL_FALSE ;
+        if( dateCurrent.date == dateTimer.date && dateCurrent.time == dateTimer.time ) {
+          if( !dateTimer.dayOfWeek || dateCurrent.dayOfWeek == dateTimer.dayOfWeek )
+            isTimeToAlerm = BOOL_TRUE ;
+          else
+            isTimeToAlerm = BOOL_FALSE ;
+        }
+        SetEvent( events_.output.changeMessage ) ;
+
+        if( isTimeToAlerm ) machineState_ = STATE_ALERM ;
+        if( dateCurrent.clockHalt ) machineState_ = STATE_ERROR ;
+      }
+
+    }
+
     static UniPortA prevPortAState = { 0x00 } ;
-    UniPortA keyChange , keyPressed , keyReleased ;
+    UniPortA portAState , keyChange , keyPressed , keyReleased ;
 
     // Set Key Event
-    keyChange.byte = portAState_.byte ^ prevPortAState.byte ;
-    keyPressed.byte = keyChange.byte & portAState_.byte ;
-    keyReleased.byte = keyChange.byte & ~portAState_.byte ;
-    prevPortAState.byte = portAState_.byte ;
+    portAState.byte = sampledPortAState_.byte ;
+    keyChange.byte = portAState.byte ^ prevPortAState.byte ;
+    keyPressed.byte = keyChange.byte & portAState.byte ;
+    keyReleased.byte = keyChange.byte & ~portAState.byte ;
+    prevPortAState.byte = portAState.byte ;
 
-    if( keyPressed.keyUp ) {
-      if( portAState_.keyDown )
-        SetEvent( keyEvents_.upDown ) ;
+    // Up
+    if( keyPressed.keyUp || EvalEvent( events_.keyPress.upHold ) ) {
+      if( portAState.keyDown )
+        SetEvent( events_.keyPress.upDown ) ;
       else
-        SetEvent( keyEvents_.up ) ;
+        SetEvent( events_.keyPress.up ) ;
     }
 
-    if( keyPressed.keyDown ) {
-      if( portAState_.keyUp )
-        SetEvent( keyEvents_.upDown ) ;
+    // Down
+    if( keyPressed.keyDown || EvalEvent( events_.keyPress.downHold ) ) {
+      if( portAState.keyUp )
+        SetEvent( events_.keyPress.upDown ) ;
       else
-        SetEvent( keyEvents_.down ) ;
+        SetEvent( events_.keyPress.down ) ;
     }
 
+    // Left
     if( keyPressed.keyLeft ) {
-      SetEvent( keyEvents_.left ) ;
+      SetEvent( events_.keyPress.left ) ;
     }
 
+    // Right
     if( keyPressed.keyRight ) {
-      SetEvent( keyEvents_.right ) ;
+      SetEvent( events_.keyPress.right ) ;
     }
     if( keyReleased.keyRight ) {
-      SetEvent( keyEvents_.releaseRight ) ;
+      SetEvent( events_.keyRelease.right ) ;
+    }
+
+    // Start Beep
+    if( events_.keyPress.byte ) {
+      keyBeepCounter_ = 20 ;
+      SetEvent( events_.output.soundOn ) ;
     }
 
     // Left and Right
-    if( EvalEvent( keyEvents_.leftRightHold ) ) {
+    if( EvalEvent( events_.keyPress.leftRightHold ) ) {
 
-      SetEvent( outputEvent.changeMessage ) ;
+      SetEvent( events_.output.changeMessage ) ;
 
       switch( machineState_ ) {
 
         case STATE_ADJUST_CLOCK:
-          _ds1307_SetClock( &dateCurrent ) ;
+          DS1307_SetClock( &dateCurrent ) ;
           machineState_ = STATE_CLOCK ;
           break ;
 
@@ -281,13 +337,13 @@ int main( void ) {
     }
 
     // Left Key
-    if( EvalEvent( keyEvents_.left ) ) {
+    if( EvalEvent( events_.keyPress.left ) ) {
 
       switch( machineState_ ) {
 
         case STATE_MENU:
           machineState_ = STATE_CLOCK ;
-          SetEvent( outputEvent.changeMessage ) ;
+          SetEvent( events_.output.changeMessage ) ;
           break ;
 
         case STATE_ADJUST_CLOCK:
@@ -309,7 +365,7 @@ int main( void ) {
         case STATE_BUZZER_TEST:
         case STATE_VERSION:
           machineState_ = STATE_MENU ;
-          SetEvent( outputEvent.changeMessage ) ;
+          SetEvent( events_.output.changeMessage ) ;
           break ;
 
       }
@@ -317,7 +373,7 @@ int main( void ) {
     }
 
     // Right Key
-    if( EvalEvent( keyEvents_.right ) ) {
+    if( EvalEvent( events_.keyPress.right ) ) {
 
       switch( machineState_ ) {
 
@@ -326,7 +382,7 @@ int main( void ) {
           datePtr = &dateCurrent ;
           menuSelect = 0 ;
           cursorPosition = 0 ;
-          SetEvent( outputEvent.changeMessage ) ;
+          SetEvent( events_.output.changeMessage ) ;
           break ;
 
 
@@ -370,32 +426,33 @@ int main( void ) {
               machineState_ = STATE_VERSION ;
               break ;
           }
-          SetEvent( outputEvent.changeMessage ) ;
+          SetEvent( events_.output.changeMessage ) ;
 
           break ;
 
         case STATE_BUZZER_TEST:
-          SoundOn( ) ;
+          keyBeepCounter_ = 0 ;
           break ;
       }
 
     }
 
-    if( EvalEvent( keyEvents_.releaseRight ) ) {
+    // Right Key Release
+    if( EvalEvent( events_.keyRelease.right ) ) {
       switch( machineState_ ) {
         case STATE_BUZZER_TEST:
-          SoundOff( ) ;
+          SetEvent( events_.output.soundOff ) ;
           break ;
       }
     }
 
     // Both Up and Down Key
-    if( EvalEvent( keyEvents_.upDown ) ) {
+    if( EvalEvent( events_.keyPress.upDown ) ) {
       switch( machineState_ ) {
 
         case STATE_ALERM:
           machineState_ = STATE_CLOCK ;
-          SetEvent( outputEvent.changeMessage ) ;
+          SetEvent( events_.output.changeMessage ) ;
           break ;
 
       }
@@ -405,52 +462,77 @@ int main( void ) {
     switch( machineState_ ) {
 
       case STATE_MENU:
-        if( EvalEvent( keyEvents_.up ) ) {
-          if( menuSelect ) menuSelect-- ;
-          if( cursorPosition != 0 ) cursorPosition-- ;
-          SetEvent( outputEvent.changeMessage ) ;
+        if( EvalEvent( events_.keyPress.up ) ) {
+          if( menuSelect ) {
+            menuSelect-- ;
+            SetEvent( events_.output.changeMessage ) ;
+          }
+          if( cursorPosition != 0 ) {
+            cursorPosition-- ;
+            SetEvent( events_.output.changeMessage ) ;
+          }
+
         }
-        if( EvalEvent( keyEvents_.down ) ) {
-          if( menuSelect != ( MENU_SIZE - 1 ) ) menuSelect++ ;
-          if( cursorPosition != 1 ) cursorPosition++ ;
-          SetEvent( outputEvent.changeMessage ) ;
+        if( EvalEvent( events_.keyPress.down ) ) {
+          if( menuSelect != ( MENU_SIZE - 1 ) ) {
+            menuSelect++ ;
+            SetEvent( events_.output.changeMessage ) ;
+          }
+          if( cursorPosition != 1 ) {
+            cursorPosition++ ;
+            SetEvent( events_.output.changeMessage ) ;
+          }
         }
         break ;
 
       case STATE_ADJUST_CLOCK:
       case STATE_SET_TIMER:
-        if( EvalEvent( keyEvents_.up ) ) {
+        if( EvalEvent( events_.keyPress.up ) ) {
           if( *currentEditValue == currentValueInfo->max )
             *currentEditValue = currentValueInfo->min ;
           else if( ( *currentEditValue & 0x0F ) == 0x09 )
             *currentEditValue += 7 ;
           else
             ( *currentEditValue )++ ;
-          SetEvent( outputEvent.changeValue ) ;
+          SetEvent( events_.output.changeValue ) ;
         }
-        if( EvalEvent( keyEvents_.down ) ) {
+        if( EvalEvent( events_.keyPress.down ) ) {
           if( *currentEditValue == currentValueInfo->min )
             *currentEditValue = currentValueInfo->max ;
           else if( ( *currentEditValue & 0x0F ) == 0x00 )
             *currentEditValue -= 7 ;
           else
             ( *currentEditValue )-- ;
-          SetEvent( outputEvent.changeValue ) ;
+          SetEvent( events_.output.changeValue ) ;
         }
         break ;
 
       case STATE_BUZZER_TEST:
-        if( EvalEvent( keyEvents_.up ) ) {
+        if( EvalEvent( events_.keyPress.up ) ) {
           if( PR2 != 0xFF ) PR2++ ;
-          SetEvent( outputEvent.changeValue ) ;
+          SetEvent( events_.output.changeValue ) ;
         }
-        if( EvalEvent( keyEvents_.down ) ) {
+        if( EvalEvent( events_.keyPress.down ) ) {
           if( PR2 != 0 ) PR2-- ;
-          SetEvent( outputEvent.changeValue ) ;
+          SetEvent( events_.output.changeValue ) ;
+        }
+        break ;
+
+      case STATE_CLOCK:
+        if( EvalEvent( events_.keyPress.up ) || EvalEvent( events_.keyPress.down ) ) {
+          machineState_ = STATE_MENU ;
+          SetEvent( events_.output.changeMessage ) ;
         }
         break ;
 
     }
+
+    if( EvalEvent( events_.output.soundOn ) )
+      SoundOn( ) ;
+
+    if( EvalEvent( events_.output.soundOff ) )
+      SoundOff( ) ;
+
 
     //    // Buzzer
     //    switch( machineState ) {
@@ -477,7 +559,7 @@ int main( void ) {
     //    }
 
     // Change Message
-    if( EvalEvent( outputEvent.changeMessage ) ) {
+    if( EvalEvent( events_.output.changeMessage ) ) {
 
       switch( machineState_ ) {
         case STATE_CLOCK:
@@ -501,7 +583,7 @@ int main( void ) {
               ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xB , "timer" ) ;
               break ;
           }
-          SetEvent( outputEvent.changeValue ) ;
+          SetEvent( events_.output.changeValue ) ;
 
           break ;
 
@@ -514,7 +596,7 @@ int main( void ) {
         case STATE_BUZZER_TEST:
           ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Buzzer Test" ) ;
           ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , "Period =" ) ;
-          SetEvent( outputEvent.changeValue ) ;
+          SetEvent( events_.output.changeValue ) ;
           break ;
 
         case STATE_VERSION:
@@ -531,7 +613,7 @@ int main( void ) {
     }
 
     // Change Value
-    if( EvalEvent( outputEvent.changeValue ) ) {
+    if( EvalEvent( events_.output.changeValue ) ) {
       switch( machineState_ ) {
         case STATE_CLOCK:
         case STATE_ALERM:
@@ -595,49 +677,46 @@ int main( void ) {
 // [Interrupt] ----------------
 void interrupt _( void ) {
 
+  // Reload Clock
+  if( IOCIF ) {
+    IOCAF3 = 0 ;
+    SetEvent( events_.output.updateClock ) ;
+  }
+
   if( INTERRUPT_FLAG_TIMER ) {
     INTERRUPT_FLAG_TIMER = 0 ;
 
-    // Read Key State
-    portAState_.byte = ReadKeyState( ) ;
+    if( keyBeepCounter_ && !--keyBeepCounter_ )
+      SetEvent( events_.output.soundOff ) ;
 
-    blinkPrescaler++ ;
-  }
+    static Uint08_t prescaler10ms = 0 ;
 
-  // Reload Clock
-  if( IOCIF && machineState_ != STATE_ADJUST_CLOCK ) {
-    IOCAF3 = 0 ;
+    // Prescale to 10ms
+    if( ! --prescaler10ms ) {
+      prescaler10ms = 10 ;
 
-    if( machineState_ == STATE_BOOT ) {
-      machineState_ = STATE_CLOCK ;
-      datePtr = &dateCurrent ;
-      SetEvent( outputEvent.changeMessage ) ;
-    }
-    else {
-      SetEvent( outputEvent.changeValue ) ;
-    }
+      // Read Key State
+      sampledPortAState_.byte = ReadKeyState( ) ;
 
-
-    // Get Data from RTC
-    if( _ds1307_GetData( &dateCurrent , 0x00 , 7 ) ) {
-      machineState_ = STATE_ERROR ;
-    }
-    else {
-
-      // Check Alerm Time
-      Uint08_t isTimeToAlerm = 1 ;
-      for( Uint08_t i = 0 ; i < 7 ; i++ ) {
-        if( ( !dateTimer.dayOfWeek ) && i == 3 ) continue ;
-        if( dateCurrent.array[i] != dateTimer.array[i] ) {
-          isTimeToAlerm = 0 ;
-          break ;
+      if( sampledPortAState_.keyUp && !sampledPortAState_.keyDown ) {
+        if( ++keyCounter_.keyUp == KEY_COUNT_LOOP_END ) {
+          keyCounter_.keyUp = KEY_COUNT_LOOP_START ;
+          SetEvent( events_.keyPress.upHold ) ;
         }
       }
+      else
+        keyCounter_.keyUp = 0 ;
 
-      if( isTimeToAlerm ) machineState_ = STATE_ALERM ;
-      if( dateCurrent.clockHalt ) machineState_ = STATE_ERROR ;
+      if( sampledPortAState_.keyDown && !sampledPortAState_.keyUp ) {
+        if( ++keyCounter_.keyDown == KEY_COUNT_LOOP_END ) {
+          keyCounter_.keyDown = KEY_COUNT_LOOP_START ;
+          SetEvent( events_.keyPress.downHold ) ;
+        }
+      }
+      else
+        keyCounter_.keyDown = 0 ;
+
     }
-
   }
 
 }

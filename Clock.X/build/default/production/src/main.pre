@@ -5200,6 +5200,9 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
+# 12 "/Applications/microchip/xc8/v1.34/include/stdbool.h"
+typedef unsigned char bool;
+
 # 3 "src/pic16f1508_init.h"
 void initialize( ) {
 
@@ -5218,7 +5221,7 @@ INTCONbits.IOCIE = 0 ;
 IOCANbits.IOCAN3 = 1 ;
 
 
-OPTION_REGbits.PSA = 0 ;
+OPTION_REGbits.PSA = 1 ;
 OPTION_REGbits.PS = 0b010 ;
 OPTION_REGbits.TMR0CS = 0 ;
 OPTION_REGbits.TMR0SE = 1 ;
@@ -5282,7 +5285,7 @@ BOOL_TRUE = 1 ,
 } EnBool ;
 typedef EnBool Bool_t;
 
-# 28 "src/../../_Common/ParallelLCD.h"
+# 25 "src/../../_Common/ParallelLCD.h"
 typedef enum {
 PARALLEL_LCD_CONFIG_FUNCTION_NONE = 0x00 ,
 PARALLEL_LCD_CONFIG_5x11DOT_MODE = 0x04 ,
@@ -5407,7 +5410,16 @@ for ( Uint08_t i = 0 ; i != 8 ; i++ , bitmap++ )
 ParallelLCD_WriteByte( *bitmap , BOOL_TRUE ) ;
 }
 
-# 167
+
+
+void ParallelLCD_ClearDisplay( ) {
+ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_0 ) ;
+ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+
+
+}
+
+# 164
 static void ParallelLCD_WriteByte( Uint08_t data , Bool_t r ) {
 _delay((unsigned long)((40)*(1000000L/4000000.0))); ;
 LATC=data; ;
@@ -5416,7 +5428,7 @@ LATBbits.LATB5=1;__nop();LATBbits.LATB5=0; ;
 ; ;
 }
 
-# 5 "src/../../_Common/DateTime.h"
+# 8 "src/../../_Common/DateTime.h"
 typedef enum {
 DATE_ITEM_YEAR = 0 ,
 DATE_ITEM_MONTH ,
@@ -5427,7 +5439,7 @@ DATE_ITEM_MINUTE ,
 DATE_ITEM_SECOND ,
 } EnDateItem ;
 
-# 19
+# 22
 const char* STR_DAY_OF_WEEK[] = {
 "SUN" ,
 "MON" ,
@@ -5450,10 +5462,14 @@ Uint08_t month ;
 Uint08_t year ;
 } ;
 struct {
+Uint24_t time ;
+Uint08_t ;
+Uint24_t date ;
+} ;
+struct {
 unsigned : 7 ;
 unsigned clockHalt : 1 ;
 } ;
-Uint08_t array[7] ;
 } StDateTime ;
 
 
@@ -5580,7 +5596,7 @@ break ;
 void _date_time_ConvertByteToDiscrete( StDateTime* date , char* dateString , EnDateItem select ) ;
 
 
-Uint08_t _ds1307_Counfigurate( ) {
+Uint08_t DS1307_Counfigurate( ) {
 
 
 SSP1CON2bits.SEN = 1 ;
@@ -5613,7 +5629,7 @@ return 0 ;
 }
 
 
-Uint08_t _ds1307_GetData( StDateTime* date , Uint08_t ramAddress , Uint08_t length ) {
+Uint08_t DS1307_GetData( StDateTime* date , Uint08_t ramAddress , Uint08_t length ) {
 
 
 SSP1CON2bits.SEN = 1 ;
@@ -5643,12 +5659,13 @@ if ( SSP1CON2bits.ACKSTAT ) return 3 ;
 
 
 Uint08_t dataCount = 0 ;
+Uint08_t* datePtr = (Uint08_t*) date ;
 while ( dataCount < length ) {
 _delay((unsigned long)((2)*(1000000L/4000.0))) ;
 SSP1CON2bits.RCEN = 1 ;
 while ( SSP1CON2bits.RCEN ) ;
 while ( !SSPSTATbits.BF ) ;
-date->array[ dataCount++ ] = SSP1BUF ;
+datePtr[ dataCount++ ] = SSP1BUF ;
 SSP1CON2bits.ACKDT = ( dataCount == length ) ;
 SSP1CON2bits.ACKEN = 1 ;
 }
@@ -5662,7 +5679,7 @@ return 0 ;
 }
 
 
-Uint08_t _ds1307_SetClock( StDateTime* date ) {
+Uint08_t DS1307_SetClock( StDateTime* date ) {
 
 
 SSP1CON2bits.SEN = 1 ;
@@ -5681,9 +5698,10 @@ while ( !SSP1IF ) ;
 SSP1IF = 0 ;
 if ( SSP1CON2bits.ACKSTAT ) return 2 ;
 
+Uint08_t* datePtr = (Uint08_t*) date ;
 for ( Uint08_t i = 0 ; i < sizeof ( StDateTime ) ; i++ ) {
 
-SSP1BUF = date->array[i] ;
+SSP1BUF = datePtr[i] ;
 while ( !SSP1IF ) ;
 SSP1IF = 0 ;
 if ( SSP1CON2bits.ACKSTAT ) return 3 ;
@@ -5696,7 +5714,7 @@ while ( SSP1CON2bits.PEN ) ;
 return 0 ;
 }
 
-# 48 "src/main.c"
+# 52 "src/main.c"
 typedef union {
 Uint08_t byte ;
 struct {
@@ -5707,22 +5725,15 @@ unsigned keyRight : 1 ;
 unsigned keyLeft : 1 ;
 } ;
 } UniPortA ;
-UniPortA portAState_ = { 0x00 } ;
+UniPortA sampledPortAState_ = { 0x00 } ;
 
-# 68
-StDateTime dateCurrent ;
-StDateTime dateTimer ;
-StDateTime* datePtr ;
-
-
-Uint08_t blinkPrescaler = 0 ;
 
 
 union {
 struct {
-Uint08_t keyU ;
+Uint08_t keyUp ;
 Uint08_t keyUD ;
-Uint08_t keyD ;
+Uint08_t keyDown ;
 Uint08_t keyL ;
 Uint08_t keyLR ;
 Uint08_t keyR ;
@@ -5738,7 +5749,16 @@ Uint16_t exceptUp ;
 Uint08_t _1 ;
 Uint16_t exceptLeft ;
 } ;
-} keyCount ;
+} keyCounter_ ;
+
+# 93
+StDateTime dateCurrent ;
+StDateTime dateTimer ;
+StDateTime* datePtr ;
+
+
+Uint08_t blinkPrescaler = 0 ;
+Uint08_t keyBeepCounter_ = 0 ;
 typedef struct {
 Uint08_t position ;
 Uint08_t length ;
@@ -5812,26 +5832,42 @@ Uint08_t alerm = 0 ;
 
 EnDateItem editSelect = DATE_ITEM_YEAR ;
 
-# 180
+# 183
+struct {
+union {
+Uint08_t byte ;
 struct {
 unsigned up : 1 ;
+unsigned upHold : 1 ;
 unsigned down : 1 ;
+unsigned downHold : 1 ;
 unsigned upDown : 1 ;
 unsigned left : 1 ;
 unsigned right : 1 ;
 unsigned leftRightHold : 1 ;
-unsigned releaseRight : 1 ;
-} keyEvents_ = 0 ;
+} ;
+} keyPress ;
 union {
-Uint08_t all ;
+Uint08_t byte ;
 struct {
+unsigned right : 1 ;
+} ;
+} keyRelease ;
+union {
+Uint08_t byte ;
+struct {
+unsigned updateClock : 1 ;
 unsigned changeMessage : 1 ;
 unsigned changeValue : 1 ;
+unsigned soundOn : 1 ;
+unsigned soundOff : 1 ;
 } ;
-} outputEvent = 0 ;
+} output ;
+} events_ = { 0x00 , 0x00 } ;
 
 
 int main( void ) {
+
 initialize( ) ;
 
 PWM3DCH = ( PR2 >> 2 ) ;
@@ -5839,7 +5875,9 @@ PWM3DCL = ( ( PR2 & 0b11 ) << 6 ) ;
 PWM3OE = 0 ;
 
 
-_delay((unsigned long)((20)*(1000000L/4000.0))) ;
+DS1307_GetData( &dateTimer , 0x10 , 7 ) ;
+
+
 ParallelLCD_Initialize(
 PARALLEL_LCD_CONFIG_8BIT_MODE | PARALLEL_LCD_CONFIG_2LINE_MODE ,
 PARALLEL_LCD_CONFIG_DISPLAY_ON ,
@@ -5850,11 +5888,11 @@ PARALLEL_LCD_CONFIG_INCREMENTAL
 
 ParallelLCD_SetCgram( 0x00 , CURSOR_BITMAP ) ;
 
-ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Boot ..." ) ;
+events_.output.updateClock=1 ;
+machineState_ = STATE_CLOCK ;
+datePtr = &dateCurrent ;
 
-
-_ds1307_GetData( &dateTimer , 0x10 , 7 ) ;
-
+INTCONbits.TMR0IF = 0 ;
 INTCONbits.TMR0IE = 1 ;
 IOCIE = 0 ;
 
@@ -5863,49 +5901,84 @@ for( ; ; ) {
 
 asm("clrwdt") ;
 
+if( (events_.output.updateClock&&!(events_.output.updateClock=0)) ) {
+
+
+if( DS1307_GetData( &dateCurrent , 0x00 , 7 ) ) {
+machineState_ = STATE_ERROR ;
+}
+else {
+
+
+Bool_t isTimeToAlerm = BOOL_FALSE ;
+if( dateCurrent.date == dateTimer.date && dateCurrent.time == dateTimer.time ) {
+if( !dateTimer.dayOfWeek || dateCurrent.dayOfWeek == dateTimer.dayOfWeek )
+isTimeToAlerm == BOOL_TRUE ;
+else
+isTimeToAlerm = BOOL_TRUE ;
+}
+events_.output.changeMessage=1 ;
+
+if( isTimeToAlerm ) machineState_ = STATE_ALERM ;
+if( dateCurrent.clockHalt ) machineState_ = STATE_ERROR ;
+}
+
+}
+
 static UniPortA prevPortAState = { 0x00 } ;
-UniPortA keyChange , keyPressed , keyReleased ;
+UniPortA portAState , keyChange , keyPressed , keyReleased ;
 
 
-keyChange.byte = portAState_.byte ^ prevPortAState.byte ;
-keyPressed.byte = keyChange.byte & portAState_.byte ;
-keyReleased.byte = keyChange.byte & ~portAState_.byte ;
-prevPortAState.byte = portAState_.byte ;
+portAState.byte = sampledPortAState_.byte ;
+keyChange.byte = portAState.byte ^ prevPortAState.byte ;
+keyPressed.byte = keyChange.byte & portAState.byte ;
+keyReleased.byte = keyChange.byte & ~portAState.byte ;
+prevPortAState.byte = portAState.byte ;
 
-if( keyPressed.keyUp ) {
-if( portAState_.keyDown )
-keyEvents_.upDown=1 ;
+
+if( keyPressed.keyUp || (events_.keyPress.upHold&&!(events_.keyPress.upHold=0)) ) {
+if( portAState.keyDown )
+events_.keyPress.upDown=1 ;
 else
-keyEvents_.up=1 ;
+events_.keyPress.up=1 ;
 }
 
-if( keyPressed.keyDown ) {
-if( portAState_.keyUp )
-keyEvents_.upDown=1 ;
+
+if( keyPressed.keyDown || (events_.keyPress.downHold&&!(events_.keyPress.downHold=0)) ) {
+if( portAState.keyUp )
+events_.keyPress.upDown=1 ;
 else
-keyEvents_.down=1 ;
+events_.keyPress.down=1 ;
 }
+
 
 if( keyPressed.keyLeft ) {
-keyEvents_.left=1 ;
+events_.keyPress.left=1 ;
 }
+
 
 if( keyPressed.keyRight ) {
-keyEvents_.right=1 ;
+events_.keyPress.right=1 ;
 }
 if( keyReleased.keyRight ) {
-keyEvents_.releaseRight=1 ;
+events_.keyRelease.right=1 ;
 }
 
 
-if( (keyEvents_.leftRightHold&&!(keyEvents_.leftRightHold=0)) ) {
+if( events_.keyPress.byte ) {
+keyBeepCounter_ = 20 ;
+events_.output.soundOn=1 ;
+}
 
-outputEvent.changeMessage=1 ;
+
+if( (events_.keyPress.leftRightHold&&!(events_.keyPress.leftRightHold=0)) ) {
+
+events_.output.changeMessage=1 ;
 
 switch( machineState_ ) {
 
 case STATE_ADJUST_CLOCK:
-_ds1307_SetClock( &dateCurrent ) ;
+DS1307_SetClock( &dateCurrent ) ;
 machineState_ = STATE_CLOCK ;
 break ;
 
@@ -5917,13 +5990,13 @@ break ;
 }
 
 
-if( (keyEvents_.left&&!(keyEvents_.left=0)) ) {
+if( (events_.keyPress.left&&!(events_.keyPress.left=0)) ) {
 
 switch( machineState_ ) {
 
 case STATE_MENU:
 machineState_ = STATE_CLOCK ;
-outputEvent.changeMessage=1 ;
+events_.output.changeMessage=1 ;
 break ;
 
 case STATE_ADJUST_CLOCK:
@@ -5945,7 +6018,7 @@ break ;
 case STATE_BUZZER_TEST:
 case STATE_VERSION:
 machineState_ = STATE_MENU ;
-outputEvent.changeMessage=1 ;
+events_.output.changeMessage=1 ;
 break ;
 
 }
@@ -5953,7 +6026,7 @@ break ;
 }
 
 
-if( (keyEvents_.right&&!(keyEvents_.right=0)) ) {
+if( (events_.keyPress.right&&!(events_.keyPress.right=0)) ) {
 
 switch( machineState_ ) {
 
@@ -5962,7 +6035,7 @@ machineState_ = STATE_MENU ;
 datePtr = &dateCurrent ;
 menuSelect = 0 ;
 cursorPosition = 0 ;
-outputEvent.changeMessage=1 ;
+events_.output.changeMessage=1 ;
 break ;
 
 
@@ -6006,32 +6079,33 @@ case MENU_VERSION:
 machineState_ = STATE_VERSION ;
 break ;
 }
-outputEvent.changeMessage=1 ;
+events_.output.changeMessage=1 ;
 
 break ;
 
 case STATE_BUZZER_TEST:
-PWM3CONbits.PWM3OE=1 ;
+keyBeepCounter_ = 0 ;
 break ;
 }
 
 }
 
-if( (keyEvents_.releaseRight&&!(keyEvents_.releaseRight=0)) ) {
+
+if( (events_.keyRelease.right&&!(events_.keyRelease.right=0)) ) {
 switch( machineState_ ) {
 case STATE_BUZZER_TEST:
-PWM3CONbits.PWM3OE=0 ;
+events_.output.soundOff=1 ;
 break ;
 }
 }
 
 
-if( (keyEvents_.upDown&&!(keyEvents_.upDown=0)) ) {
+if( (events_.keyPress.upDown&&!(events_.keyPress.upDown=0)) ) {
 switch( machineState_ ) {
 
 case STATE_ALERM:
 machineState_ = STATE_CLOCK ;
-outputEvent.changeMessage=1 ;
+events_.output.changeMessage=1 ;
 break ;
 
 }
@@ -6041,55 +6115,79 @@ break ;
 switch( machineState_ ) {
 
 case STATE_MENU:
-if( (keyEvents_.up&&!(keyEvents_.up=0)) ) {
-if( menuSelect ) menuSelect-- ;
-if( cursorPosition != 0 ) cursorPosition-- ;
-outputEvent.changeMessage=1 ;
+if( (events_.keyPress.up&&!(events_.keyPress.up=0)) ) {
+if( menuSelect ) {
+menuSelect-- ;
+events_.output.changeMessage=1 ;
 }
-if( (keyEvents_.down&&!(keyEvents_.down=0)) ) {
-if( menuSelect != ( ( sizeof( MESSAGE_MENU ) / sizeof( MESSAGE_MENU[0] ) ) - 1 ) ) menuSelect++ ;
-if( cursorPosition != 1 ) cursorPosition++ ;
-outputEvent.changeMessage=1 ;
+if( cursorPosition != 0 ) {
+cursorPosition-- ;
+events_.output.changeMessage=1 ;
+}
+
+}
+if( (events_.keyPress.down&&!(events_.keyPress.down=0)) ) {
+if( menuSelect != ( ( sizeof( MESSAGE_MENU ) / sizeof( MESSAGE_MENU[0] ) ) - 1 ) ) {
+menuSelect++ ;
+events_.output.changeMessage=1 ;
+}
+if( cursorPosition != 1 ) {
+cursorPosition++ ;
+events_.output.changeMessage=1 ;
+}
 }
 break ;
 
 case STATE_ADJUST_CLOCK:
 case STATE_SET_TIMER:
-if( (keyEvents_.up&&!(keyEvents_.up=0)) ) {
+if( (events_.keyPress.up&&!(events_.keyPress.up=0)) ) {
 if( *currentEditValue == currentValueInfo->max )
 *currentEditValue = currentValueInfo->min ;
 else if( ( *currentEditValue & 0x0F ) == 0x09 )
 *currentEditValue += 7 ;
 else
 ( *currentEditValue )++ ;
-outputEvent.changeValue=1 ;
+events_.output.changeValue=1 ;
 }
-if( (keyEvents_.down&&!(keyEvents_.down=0)) ) {
+if( (events_.keyPress.down&&!(events_.keyPress.down=0)) ) {
 if( *currentEditValue == currentValueInfo->min )
 *currentEditValue = currentValueInfo->max ;
 else if( ( *currentEditValue & 0x0F ) == 0x00 )
 *currentEditValue -= 7 ;
 else
 ( *currentEditValue )-- ;
-outputEvent.changeValue=1 ;
+events_.output.changeValue=1 ;
 }
 break ;
 
 case STATE_BUZZER_TEST:
-if( (keyEvents_.up&&!(keyEvents_.up=0)) ) {
+if( (events_.keyPress.up&&!(events_.keyPress.up=0)) ) {
 if( PR2 != 0xFF ) PR2++ ;
-outputEvent.changeValue=1 ;
+events_.output.changeValue=1 ;
 }
-if( (keyEvents_.down&&!(keyEvents_.down=0)) ) {
+if( (events_.keyPress.down&&!(events_.keyPress.down=0)) ) {
 if( PR2 != 0 ) PR2-- ;
-outputEvent.changeValue=1 ;
+events_.output.changeValue=1 ;
+}
+break ;
+
+case STATE_CLOCK:
+if( (events_.keyPress.up&&!(events_.keyPress.up=0)) || (events_.keyPress.down&&!(events_.keyPress.down=0)) ) {
+machineState_ = STATE_MENU ;
+events_.output.changeMessage=1 ;
 }
 break ;
 
 }
 
-# 480
-if( (outputEvent.changeMessage&&!(outputEvent.changeMessage=0)) ) {
+if( (events_.output.soundOn&&!(events_.output.soundOn=0)) )
+PWM3CONbits.PWM3OE=1 ;
+
+if( (events_.output.soundOff&&!(events_.output.soundOff=0)) )
+PWM3CONbits.PWM3OE=0 ;
+
+# 562
+if( (events_.output.changeMessage&&!(events_.output.changeMessage=0)) ) {
 
 switch( machineState_ ) {
 case STATE_CLOCK:
@@ -6113,7 +6211,7 @@ case STATE_SET_TIMER:
 ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xB , "timer" ) ;
 break ;
 }
-outputEvent.changeValue=1 ;
+events_.output.changeValue=1 ;
 
 break ;
 
@@ -6126,7 +6224,7 @@ break ;
 case STATE_BUZZER_TEST:
 ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , "Buzzer Test" ) ;
 ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , "Period =" ) ;
-outputEvent.changeValue=1 ;
+events_.output.changeValue=1 ;
 break ;
 
 case STATE_VERSION:
@@ -6143,7 +6241,7 @@ break ;
 }
 
 
-if( (outputEvent.changeValue&&!(outputEvent.changeValue=0)) ) {
+if( (events_.output.changeValue&&!(events_.output.changeValue=0)) ) {
 switch( machineState_ ) {
 case STATE_CLOCK:
 case STATE_ALERM:
@@ -6210,45 +6308,45 @@ void interrupt _( void ) {
 if( INTCONbits.TMR0IF ) {
 INTCONbits.TMR0IF = 0 ;
 
+if( keyBeepCounter_ && !--keyBeepCounter_ )
+events_.output.soundOff=1 ;
 
-portAState_.byte = (~PORTA&0x33) ;
+static Uint08_t prescaler10ms = 0 ;
 
-blinkPrescaler++ ;
+
+if( ! --prescaler10ms ) {
+prescaler10ms = 10 ;
+
+
+sampledPortAState_.byte = (~PORTA&0x33) ;
+
+if( sampledPortAState_.keyUp && !sampledPortAState_.keyDown ) {
+if( ++keyCounter_.keyUp == 0x40 ) {
+keyCounter_.keyUp = 0x3C ;
+events_.keyPress.upHold=1 ;
+}
+}
+else
+keyCounter_.keyUp = 0 ;
+
+if( sampledPortAState_.keyDown && !sampledPortAState_.keyUp ) {
+if( ++keyCounter_.keyDown == 0x40 ) {
+keyCounter_.keyDown = 0x3C ;
+events_.keyPress.downHold=1 ;
+}
+}
+else
+keyCounter_.keyDown = 0 ;
+
+}
 }
 
 
 if( IOCIF && machineState_ != STATE_ADJUST_CLOCK ) {
 IOCAF3 = 0 ;
 
-if( machineState_ == STATE_BOOT ) {
-machineState_ = STATE_CLOCK ;
-datePtr = &dateCurrent ;
-outputEvent.changeMessage=1 ;
-}
-else {
-outputEvent.changeValue=1 ;
-}
+events_.output.updateClock=1 ;
 
-
-
-if( _ds1307_GetData( &dateCurrent , 0x00 , 7 ) ) {
-machineState_ = STATE_ERROR ;
-}
-else {
-
-
-Uint08_t isTimeToAlerm = 1 ;
-for( Uint08_t i = 0 ; i < 7 ; i++ ) {
-if( ( !dateTimer.dayOfWeek ) && i == 3 ) continue ;
-if( dateCurrent.array[i] != dateTimer.array[i] ) {
-isTimeToAlerm = 0 ;
-break ;
-}
-}
-
-if( isTimeToAlerm ) machineState_ = STATE_ALERM ;
-if( dateCurrent.clockHalt ) machineState_ = STATE_ERROR ;
-}
 
 }
 
