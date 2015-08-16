@@ -308,104 +308,117 @@ Version 3.2 HI-TECH Software Intermediate Code
 "59
 [s S414 `Cuc -> 8 `i `Cuc -> 8 `i `Cuc -> 8 `i ]
 [n S414 . CURSOR_RIGHT CURSOR_UP CURSOR_DOWN ]
-"94 src/main.c
-[c E2963 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 .. ]
-[n E2963 . STATE_BOOT STATE_METRONOME STATE_MENU_MAIN STATE_MENU_TONE STATE_MENU_DURATION STATE_ADJUST_BEAT_COUNT STATE_ADJUST_DURATION_CLICK STATE_ADJUST_DURATION_KEY STATE_ADJUST_PULSE_WIDTH STATE_ADJUST_TONE STATE_ADJUST_OSCILLATOR_TUNE STATE_INFORMATION STATE_CONFIRM_SAVE STATE_SAVE STATE_CONFIRM_LOAD STATE_LOAD STATE_CONFIRM_RESET STATE_INITIALIZE STATE_RESET STATE_ERROR  ]
-"103
-[c E2986 0 1 2 .. ]
-[n E2986 . ERROR_NONE ERROR_EEPROM ERROR_INTERRUPT  ]
-"129
-[s S416 :5 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S416 . . keyMenu keyDown keyUp ]
-"127
+"83 src/main.c
+[c E2960 0 1 2 3 4 5 6 7 8 9 10 11 12 13 .. ]
+[n E2960 . STATE_BOOT STATE_METRONOME STATE_MENU_MAIN STATE_MENU_TONE STATE_MENU_DURATION STATE_ADJUST_VALUE STATE_ADJUST_OSCILLATOR_TUNE STATE_INFORMATION STATE_CONFIRM STATE_SAVE STATE_LOAD STATE_INITIALIZE STATE_RESET STATE_ERROR  ]
+"92
+[c E2977 0 1 2 .. ]
+[n E2977 . ERROR_NONE ERROR_EEPROM ERROR_INTERRUPT  ]
+"99
+[s S416 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S416 . isUserMute isSystemMute isBusy ]
+"97
 [u S415 `uc 1 `S416 1 ]
 [n S415 . byte . ]
-"146
-[s S417 `uc 1 `uc 1 `Cuc 1 `**Cuc 1 `*Cuc 1 ]
-[n S417 . select cursorPosition limit menuMessage singleMessage ]
-"170
-[s S419 `Cuc 1 `Cuc 1 ]
-[n S419 . upper lower ]
-"174
-[s S420 `*Cuc 1 `*Cuc 1 ]
-[n S420 . title value ]
-"168
-[s S418 `*uc 1 `CS419 1 `CS420 1 ]
-[n S418 . valuePtr limit message ]
-"214
-[s S423 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S423 . keyPressUp keyPressDown keyPressMenu keyPressUpDown keyPressHeldUp keyPressHeldDown ]
-"212
-[u S422 `uc 1 `S423 1 ]
-[n S422 . byte . ]
-"225
-[s S425 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S425 . changeState changeMessage changeValue soundOnClick soundOnKey soundOff resetMetronome accessEeprom ]
-"223
-[u S424 `uc 1 `S425 1 ]
-[n S424 . byte . ]
-"211
-[s S421 `S422 1 `S424 1 ]
-[n S421 . input output ]
-"249
-[s S426 `uc 1 `uc 1 ]
-[n S426 . click key ]
+"125
+[s S418 :5 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S418 . . keyMenu keyDown keyUp ]
+"123
+[u S417 `uc 1 `S418 1 ]
+[n S417 . byte . ]
+"142
+[s S419 `uc 1 `uc 1 `Cuc 1 `**Cuc 1 ]
+[n S419 . select cursorPosition limit menuMessage ]
+"156
+[s S420 `E2778 1 `E2960 1 `E2960 1 `*Cuc 1 ]
+[n S420 . isSelectYes stateYes stateNo message ]
+"178
+[s S422 `Cuc 1 `Cuc 1 ]
+[n S422 . upper lower ]
+"182
+[s S423 `*Cuc 1 `*Cuc 1 ]
+[n S423 . title value ]
+"175
+[s S421 `*uc 1 `E2960 1 `CS422 1 `CS423 1 ]
+[n S421 . valuePtr parentState limit message ]
+"241
+[s S426 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S426 . up down menu bothUpDown upHold downHold ]
+"239
+[u S425 `uc 1 `S426 1 ]
+[n S425 . byte . ]
+"252
+[s S428 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S428 . changeState changeMessage changeValue resetMetronome accessEeprom ]
+"250
+[u S427 `uc 1 `S428 1 ]
+[n S427 . byte . ]
+"262
+[s S430 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S430 . off click key oscillatorTune ]
+"260
+[u S429 `uc 1 `S430 1 ]
+[n S429 . byte . ]
+"238
+[s S424 `S425 1 `S427 1 `S429 1 ]
+[n S424 . keyPress output sound ]
+"276
+[s S431 `uc 1 `uc 1 ]
+[n S431 . click key ]
 [p mainexit ]
 "414 /Applications/microchip/xc8/v1.34/include/pic16f1827.h
 [v _PORTA `Vuc ~T0 @X0 0 e@12 ]
-"303 src/main.c
+"330 src/main.c
 [c E2925 0 1 2 3 .. ]
 [n E2925 . INFORMATION_ITEM_VERSION INFORMATION_ITEM_ROM_OFFSET INFORMATION_ITEM_WRITE_COUNT INFORMATION_ITEM_ERROR_CODE  ]
-"419
+"449
 [c E2900 0 1 2 3 4 5 6 7 8 9 .. ]
 [n E2900 . MENU_ITEM_MAIN_RETURN MENU_ITEM_MAIN_BEAT_COUNT MENU_ITEM_MAIN_TONE_MENU MENU_ITEM_MAIN_ADJUST_DURATION MENU_ITEM_MAIN_PULSE_WIDTH MENU_ITEM_MAIN_ADJUST_OSCILLATOR_TUNE MENU_ITEM_MAIN_LOAD_CONFIGURATION MENU_ITEM_MAIN_SAVE_CONFIGURATION MENU_ITEM_MAIN_INFORMATION MENU_ITEM_MAIN_RESET  ]
-"475
+"507
 [c E2912 0 1 2 3 .. ]
 [n E2912 . MENU_ITEM_TONE_RETURN MENU_ITEM_TONE_ADJUST_TONE0 MENU_ITEM_TONE_ADJUST_TONE1 MENU_ITEM_TONE_ADJUST_TONE2  ]
-"482
+"516
 [c E2918 0 1 2 .. ]
 [n E2918 . MENU_ITEM_DURATION_RETURN MENU_ITEM_DURATION_ADJUST_CLICK MENU_ITEM_DURATION_ADJUST_KEY  ]
 "1607 /Applications/microchip/xc8/v1.34/include/pic16f1827.h
 [v _OSCTUNE `Vuc ~T0 @X0 0 e@152 ]
-"3 src/main.c
-[p n 758 ]
-"10
+"5 src/main.c
 [p x FOSC=INTOSC ]
-"11
+"6
 [p x WDTE=ON ]
-"12
+"7
 [p x PWRTE=ON ]
-"13
+"8
 [p x MCLRE=OFF ]
-"14
+"9
 [p x CP=OFF ]
-"15
+"10
 [p x CPD=OFF ]
-"16
+"11
 [p x BOREN=ON ]
-"17
+"12
 [p x CLKOUTEN=OFF ]
-"18
+"13
 [p x IESO=OFF ]
-"19
+"14
 [p x FCMEN=OFF ]
-"22
+"17
 [p x WRT=OFF ]
-"23
+"18
 [p x PLLEN=OFF ]
-"24
+"19
 [p x STVREN=ON ]
-"25
+"20
 [p x BORV=HI ]
-"26
+"21
 [p x LVP=OFF ]
-"30
+"25
 [p x IDLOC0=0x1 ]
-"31
+"26
 [p x IDLOC1=0x1 ]
-"32
+"27
 [p x IDLOC2=0x0 ]
-"33
+"28
 [p x IDLOC3=0x0 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -3346,6 +3359,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;Typedef.h: 37: BOOL_TRUE = 1 ,
 [; ;Typedef.h: 38: } EnBool ;
 [; ;Typedef.h: 39: typedef EnBool Bool_t;
+"11 src/../../_Common/Util.h
+[p n 758 ]
 [; ;ParallelLCD.h: 25: typedef enum {
 [; ;ParallelLCD.h: 26: PARALLEL_LCD_CONFIG_FUNCTION_NONE = 0x00 ,
 [; ;ParallelLCD.h: 27: PARALLEL_LCD_CONFIG_5x11DOT_MODE = 0x04 ,
@@ -4184,10 +4199,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;menu.h: 86: INFORMATION_ITEM_WRITE_COUNT ,
 [; ;menu.h: 87: INFORMATION_ITEM_ERROR_CODE ,
 [; ;menu.h: 88: } ;
-[; ;menu.h: 93: enum {
-[; ;menu.h: 94: MENU_ITEM_CONFIRM_NO = 0 ,
-[; ;menu.h: 95: MENU_ITEM_CONFIRM_YES ,
-[; ;menu.h: 96: } ;
 "26 src/message.h
 [v _MESSAGE `CS408 ~T0 @X0 1 e ]
 [i _MESSAGE
@@ -4395,58 +4406,63 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;message.h: 93: 0b00000 ,
 [; ;message.h: 94: } ,
 [; ;message.h: 96: } ;
-[; ;main.c: 72: typedef enum {
-[; ;main.c: 73: STATE_BOOT ,
-[; ;main.c: 74: STATE_METRONOME ,
-[; ;main.c: 75: STATE_MENU_MAIN ,
-[; ;main.c: 76: STATE_MENU_TONE ,
-[; ;main.c: 77: STATE_MENU_DURATION ,
-[; ;main.c: 78: STATE_ADJUST_BEAT_COUNT ,
-[; ;main.c: 79: STATE_ADJUST_DURATION_CLICK ,
-[; ;main.c: 80: STATE_ADJUST_DURATION_KEY ,
-[; ;main.c: 81: STATE_ADJUST_PULSE_WIDTH ,
-[; ;main.c: 82: STATE_ADJUST_TONE ,
-[; ;main.c: 83: STATE_ADJUST_OSCILLATOR_TUNE ,
-[; ;main.c: 84: STATE_INFORMATION ,
-[; ;main.c: 85: STATE_CONFIRM_SAVE ,
-[; ;main.c: 86: STATE_SAVE ,
-[; ;main.c: 87: STATE_CONFIRM_LOAD ,
-[; ;main.c: 88: STATE_LOAD ,
-[; ;main.c: 89: STATE_CONFIRM_RESET ,
-[; ;main.c: 90: STATE_INITIALIZE ,
-[; ;main.c: 91: STATE_RESET ,
-[; ;main.c: 92: STATE_ERROR ,
-[; ;main.c: 93: } EnMachineState ;
-"94 src/main.c
-[v _machineState_ `E2963 ~T0 @X0 1 e ]
+[; ;main.c: 67: typedef enum {
+[; ;main.c: 68: STATE_BOOT ,
+[; ;main.c: 69: STATE_METRONOME ,
+[; ;main.c: 70: STATE_MENU_MAIN ,
+[; ;main.c: 71: STATE_MENU_TONE ,
+[; ;main.c: 72: STATE_MENU_DURATION ,
+[; ;main.c: 73: STATE_ADJUST_VALUE ,
+[; ;main.c: 74: STATE_ADJUST_OSCILLATOR_TUNE ,
+[; ;main.c: 75: STATE_INFORMATION ,
+[; ;main.c: 76: STATE_CONFIRM ,
+[; ;main.c: 77: STATE_SAVE ,
+[; ;main.c: 78: STATE_LOAD ,
+[; ;main.c: 79: STATE_INITIALIZE ,
+[; ;main.c: 80: STATE_RESET ,
+[; ;main.c: 81: STATE_ERROR ,
+[; ;main.c: 82: } EnMachineState ;
+"83 src/main.c
+[v _machineState_ `E2960 ~T0 @X0 1 e ]
 [i _machineState_
-. `E2963 0
+. `E2960 0
 ]
-[; ;main.c: 94: EnMachineState machineState_ = STATE_BOOT ;
-[; ;main.c: 98: typedef enum {
-[; ;main.c: 99: ERROR_NONE = 0 ,
-[; ;main.c: 100: ERROR_EEPROM ,
-[; ;main.c: 101: ERROR_INTERRUPT ,
-[; ;main.c: 102: } EnErrorType ;
-"103
-[v _machineError_ `E2986 ~T0 @X0 1 e ]
+[; ;main.c: 83: EnMachineState machineState_ = STATE_BOOT ;
+[; ;main.c: 87: typedef enum {
+[; ;main.c: 88: ERROR_NONE = 0 ,
+[; ;main.c: 89: ERROR_EEPROM ,
+[; ;main.c: 90: ERROR_INTERRUPT ,
+[; ;main.c: 91: } EnErrorType ;
+"92
+[v _machineError_ `E2977 ~T0 @X0 1 e ]
 [i _machineError_
-. `E2986 0
+. `E2977 0
 ]
-[; ;main.c: 103: EnErrorType machineError_ = ERROR_NONE ;
-"107
+[; ;main.c: 92: EnErrorType machineError_ = ERROR_NONE ;
+"96
 [v _stateReturnCounter_ `uc ~T0 @X0 1 e ]
 [i _stateReturnCounter_
 -> -> 0 `i `uc
 ]
-[; ;main.c: 107: Uint08_t stateReturnCounter_ = 0 ;
-"108
-[v _isMute_ `E2778 ~T0 @X0 1 e ]
-[i _isMute_
-. `E2778 0
+[; ;main.c: 96: Uint08_t stateReturnCounter_ = 0 ;
+"104
+[v _soundState_ `S415 ~T0 @X0 1 e ]
+[i _soundState_
+:U ..
+:U ..
+-> -> 0 `i `uc
+..
+..
 ]
-[; ;main.c: 108: Bool_t isMute_ = BOOL_FALSE ;
-"113
+[; ;main.c: 97: union {
+[; ;main.c: 98: Uint08_t byte ;
+[; ;main.c: 99: struct {
+[; ;main.c: 100: unsigned isUserMute : 1 ;
+[; ;main.c: 101: unsigned isSystemMute : 1 ;
+[; ;main.c: 102: unsigned isBusy : 1 ;
+[; ;main.c: 103: } ;
+[; ;main.c: 104: } soundState_ = { 0x00 , } ;
+"109
 [v _configration_ `S384 ~T0 @X0 1 e ]
 [i _configration_
 :U ..
@@ -4472,30 +4488,30 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;main.c: 113: ConfigurationData configration_ = { 0 , 0 , 120 , 4 , { 30 , 30 , } , { 249 , 62 , 82 , } , 1 , 0 , 0 } ;
-"122
+[; ;main.c: 109: ConfigurationData configration_ = { 0 , 0 , 120 , 4 , { 30 , 30 , } , { 249 , 62 , 82 , } , 1 , 0 , 0 } ;
+"118
 [v _tempoCounter_ `um ~T0 @X0 1 e ]
 [i _tempoCounter_
 -> -> -> 0 `i `m `um
 ]
-[; ;main.c: 122: Uint24_t tempoCounter_ = 0 ;
-"123
+[; ;main.c: 118: Uint24_t tempoCounter_ = 0 ;
+"119
 [v _beatCounter_ `uc ~T0 @X0 1 e ]
 [i _beatCounter_
 -> -> 0 `i `uc
 ]
-[; ;main.c: 123: Uint08_t beatCounter_ = 0 ;
-[; ;main.c: 127: typedef union {
-[; ;main.c: 128: Uint08_t byte ;
-[; ;main.c: 129: struct {
-[; ;main.c: 130: unsigned : 5 ;
-[; ;main.c: 131: unsigned keyMenu : 1 ;
-[; ;main.c: 132: unsigned keyDown : 1 ;
-[; ;main.c: 133: unsigned keyUp : 1 ;
-[; ;main.c: 134: } ;
-[; ;main.c: 135: } UniPortAState ;
-"137
-[v _sampledPortAState_ `S415 ~T0 @X0 1 e ]
+[; ;main.c: 119: Uint08_t beatCounter_ = 0 ;
+[; ;main.c: 123: typedef union {
+[; ;main.c: 124: Uint08_t byte ;
+[; ;main.c: 125: struct {
+[; ;main.c: 126: unsigned : 5 ;
+[; ;main.c: 127: unsigned keyMenu : 1 ;
+[; ;main.c: 128: unsigned keyDown : 1 ;
+[; ;main.c: 129: unsigned keyUp : 1 ;
+[; ;main.c: 130: } ;
+[; ;main.c: 131: } UniPortAState ;
+"133
+[v _sampledPortAState_ `S417 ~T0 @X0 1 e ]
 [i _sampledPortAState_
 :U ..
 :U ..
@@ -4503,16 +4519,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;main.c: 137: UniPortAState sampledPortAState_ = { 0x00 } ;
-[; ;main.c: 146: typedef struct {
-[; ;main.c: 147: Uint08_t select ;
-[; ;main.c: 148: Uint08_t cursorPosition ;
-[; ;main.c: 149: const Uint08_t limit ;
-[; ;main.c: 150: const Char_t** menuMessage ;
-[; ;main.c: 151: const Char_t* singleMessage ;
-[; ;main.c: 152: } StMenuInfo ;
-"153
-[v _menuInfoMain_ `S417 ~T0 @X0 1 e ]
+[; ;main.c: 133: UniPortAState sampledPortAState_ = { 0x00 } ;
+[; ;main.c: 142: typedef struct {
+[; ;main.c: 143: Uint08_t select ;
+[; ;main.c: 144: Uint08_t cursorPosition ;
+[; ;main.c: 145: const Uint08_t limit ;
+[; ;main.c: 146: const Char_t** menuMessage ;
+[; ;main.c: 147: } StMenuInfo ;
+"148
+[v _menuInfoMain_ `S419 ~T0 @X0 1 e ]
 [i _menuInfoMain_
 :U ..
 :U ..
@@ -4520,13 +4535,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 -> - / -> # _MESSAGE_MENU_ITEM_MAIN `ui -> # *U + &U _MESSAGE_MENU_ITEM_MAIN * -> -> -> 0 `i `ui `ux -> -> # *U &U _MESSAGE_MENU_ITEM_MAIN `ui `ux `ui -> -> 1 `i `ui `uc
 &U _MESSAGE_MENU_ITEM_MAIN
--> -> 0 `i `*Cuc
 ..
 ..
 ]
-[; ;main.c: 153: StMenuInfo menuInfoMain_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_MAIN ) / sizeof( MESSAGE_MENU_ITEM_MAIN[0] ) ) - 1 , &MESSAGE_MENU_ITEM_MAIN , 0 , } ;
-"154
-[v _menuInfoTone_ `S417 ~T0 @X0 1 e ]
+[; ;main.c: 148: StMenuInfo menuInfoMain_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_MAIN ) / sizeof( MESSAGE_MENU_ITEM_MAIN[0] ) ) - 1 , &MESSAGE_MENU_ITEM_MAIN , } ;
+"149
+[v _menuInfoTone_ `S419 ~T0 @X0 1 e ]
 [i _menuInfoTone_
 :U ..
 :U ..
@@ -4534,13 +4548,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 -> - / -> # _MESSAGE_MENU_ITEM_TONE `ui -> # *U + &U _MESSAGE_MENU_ITEM_TONE * -> -> -> 0 `i `ui `ux -> -> # *U &U _MESSAGE_MENU_ITEM_TONE `ui `ux `ui -> -> 1 `i `ui `uc
 &U _MESSAGE_MENU_ITEM_TONE
--> -> 0 `i `*Cuc
 ..
 ..
 ]
-[; ;main.c: 154: StMenuInfo menuInfoTone_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_TONE ) / sizeof( MESSAGE_MENU_ITEM_TONE[0] ) ) - 1 , &MESSAGE_MENU_ITEM_TONE , 0 , } ;
-"155
-[v _menuInfoDuration_ `S417 ~T0 @X0 1 e ]
+[; ;main.c: 149: StMenuInfo menuInfoTone_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_TONE ) / sizeof( MESSAGE_MENU_ITEM_TONE[0] ) ) - 1 , &MESSAGE_MENU_ITEM_TONE , } ;
+"150
+[v _menuInfoDuration_ `S419 ~T0 @X0 1 e ]
 [i _menuInfoDuration_
 :U ..
 :U ..
@@ -4548,55 +4561,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 -> - / -> # _MESSAGE_MENU_ITEM_DURATION `ui -> # *U + &U _MESSAGE_MENU_ITEM_DURATION * -> -> -> 0 `i `ui `ux -> -> # *U &U _MESSAGE_MENU_ITEM_DURATION `ui `ux `ui -> -> 1 `i `ui `uc
 &U _MESSAGE_MENU_ITEM_DURATION
--> -> 0 `i `*Cuc
 ..
 ..
 ]
-[; ;main.c: 155: StMenuInfo menuInfoDuration_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_DURATION ) / sizeof( MESSAGE_MENU_ITEM_DURATION[0] ) ) - 1 , &MESSAGE_MENU_ITEM_DURATION , 0 , } ;
-"156
-[v _menuInfoConfirmLoad_ `S417 ~T0 @X0 1 e ]
-[i _menuInfoConfirmLoad_
-:U ..
-:U ..
--> -> 0 `i `uc
--> -> 0 `i `uc
--> - -> 2 `i -> 1 `i `uc
--> -> 0 `i `**Cuc
-:s 32C
-..
-..
-]
-[; ;main.c: 156: StMenuInfo menuInfoConfirmLoad_ = { 0 , 0 , 2 - 1 , 0 , "Load ?" , } ;
-"157
-[v _menuInfoConfirmSave_ `S417 ~T0 @X0 1 e ]
-[i _menuInfoConfirmSave_
-:U ..
-:U ..
--> -> 0 `i `uc
--> -> 0 `i `uc
--> - -> 2 `i -> 1 `i `uc
--> -> 0 `i `**Cuc
-:s 33C
-..
-..
-]
-[; ;main.c: 157: StMenuInfo menuInfoConfirmSave_ = { 0 , 0 , 2 - 1 , 0 , "Save ?" , } ;
-"158
-[v _menuInfoConfirmReset_ `S417 ~T0 @X0 1 e ]
-[i _menuInfoConfirmReset_
-:U ..
-:U ..
--> -> 0 `i `uc
--> -> 0 `i `uc
--> - -> 2 `i -> 1 `i `uc
--> -> 0 `i `**Cuc
-:s 34C
-..
-..
-]
-[; ;main.c: 158: StMenuInfo menuInfoConfirmReset_ = { 0 , 0 , 2 - 1 , 0 , "Reset ?" , } ;
-"159
-[v _menuInfoInformation_ `S417 ~T0 @X0 1 e ]
+[; ;main.c: 150: StMenuInfo menuInfoDuration_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_DURATION ) / sizeof( MESSAGE_MENU_ITEM_DURATION[0] ) ) - 1 , &MESSAGE_MENU_ITEM_DURATION , } ;
+"151
+[v _menuInfoInformation_ `S419 ~T0 @X0 1 e ]
 [i _menuInfoInformation_
 :U ..
 :U ..
@@ -4604,238 +4574,365 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 -> - / -> # _MESSAGE_INFORMATION `ui -> # *U + &U _MESSAGE_INFORMATION * -> -> -> 0 `i `ui `ux -> -> # *U &U _MESSAGE_INFORMATION `ui `ux `ui -> -> 2 `i `ui `uc
 -> -> 0 `i `**Cuc
--> -> 0 `i `*Cuc
 ..
 ..
 ]
-[; ;main.c: 159: StMenuInfo menuInfoInformation_ = { 0 , 0 , ( sizeof ( MESSAGE_INFORMATION ) / sizeof ( MESSAGE_INFORMATION[0] ) ) - 2 , 0 , 0 , } ;
-"160
-[v _currentMenuInfoPtr_ `*S417 ~T0 @X0 1 e ]
+[; ;main.c: 151: StMenuInfo menuInfoInformation_ = { 0 , 0 , ( sizeof ( MESSAGE_INFORMATION ) / sizeof ( MESSAGE_INFORMATION[0] ) ) - 2 , 0 , } ;
+"152
+[v _currentMenuInfoPtr_ `*S419 ~T0 @X0 1 e ]
 [i _currentMenuInfoPtr_
--> -> 0 `i `*S417
+-> -> 0 `i `*S419
 ]
-[; ;main.c: 160: StMenuInfo* currentMenuInfoPtr_ = 0 ;
+[; ;main.c: 152: StMenuInfo* currentMenuInfoPtr_ = 0 ;
+[; ;main.c: 156: typedef struct {
+[; ;main.c: 157: Bool_t isSelectYes ;
+[; ;main.c: 158: EnMachineState stateYes ;
+[; ;main.c: 159: EnMachineState stateNo ;
+[; ;main.c: 160: const Char_t* message ;
+[; ;main.c: 161: } StConfirmationInfo ;
+"162
+[v _confirmationLoad_ `S420 ~T0 @X0 1 e ]
+[i _confirmationLoad_
+:U ..
+:U ..
+. `E2778 0
+. `E2960 10
+. `E2960 2
+:s 32C
+..
+..
+]
+[; ;main.c: 162: StConfirmationInfo confirmationLoad_ = { BOOL_FALSE , STATE_LOAD , STATE_MENU_MAIN , "Load ?" , } ;
+"163
+[v _ConfirmationSave_ `S420 ~T0 @X0 1 e ]
+[i _ConfirmationSave_
+:U ..
+:U ..
+. `E2778 0
+. `E2960 9
+. `E2960 2
+:s 33C
+..
+..
+]
+[; ;main.c: 163: StConfirmationInfo ConfirmationSave_ = { BOOL_FALSE , STATE_SAVE , STATE_MENU_MAIN , "Save ?" , } ;
 "164
+[v _confirmationReset_ `S420 ~T0 @X0 1 e ]
+[i _confirmationReset_
+:U ..
+:U ..
+. `E2778 0
+. `E2960 12
+. `E2960 2
+:s 34C
+..
+..
+]
+[; ;main.c: 164: StConfirmationInfo confirmationReset_ = { BOOL_FALSE , STATE_RESET , STATE_MENU_MAIN , "Reset ?" , } ;
+"165
+[v _currentConfirmationInfoPtr_ `*S420 ~T0 @X0 1 e ]
+[i _currentConfirmationInfoPtr_
+-> -> 0 `i `*S420
+]
+[; ;main.c: 165: StConfirmationInfo* currentConfirmationInfoPtr_ = 0 ;
+"169
 [v _currentSingleMessage_ `*Cuc ~T0 @X0 1 e ]
 [i _currentSingleMessage_
 -> -> 0 `i `*Cuc
 ]
-[; ;main.c: 164: const Char_t* currentSingleMessage_ = 0 ;
-[; ;main.c: 168: typedef struct {
-[; ;main.c: 169: Uint08_t* valuePtr ;
-[; ;main.c: 170: const struct {
-[; ;main.c: 171: const Uint08_t upper ;
-[; ;main.c: 172: const Uint08_t lower ;
-[; ;main.c: 173: } limit ;
-[; ;main.c: 174: const struct {
-[; ;main.c: 175: const Char_t* title ;
-[; ;main.c: 176: const Char_t* value ;
-[; ;main.c: 177: } message ;
-[; ;main.c: 178: } StValueInfo ;
-"179
-[v _currentValueInfoPtr_ `*S418 ~T0 @X0 1 e ]
+[; ;main.c: 169: const Char_t* currentSingleMessage_ = 0 ;
+[; ;main.c: 175: typedef struct {
+[; ;main.c: 176: Uint08_t* valuePtr ;
+[; ;main.c: 177: EnMachineState parentState ;
+[; ;main.c: 178: const struct {
+[; ;main.c: 179: const Uint08_t upper ;
+[; ;main.c: 180: const Uint08_t lower ;
+[; ;main.c: 181: } limit ;
+[; ;main.c: 182: const struct {
+[; ;main.c: 183: const Char_t* title ;
+[; ;main.c: 184: const Char_t* value ;
+[; ;main.c: 185: } message ;
+[; ;main.c: 186: } StValueInfo ;
+"187
+[v _currentValueInfoPtr_ `*S421 ~T0 @X0 1 e ]
 [i _currentValueInfoPtr_
--> -> 0 `i `*S418
+-> -> 0 `i `*S421
 ]
-[; ;main.c: 179: StValueInfo* currentValueInfoPtr_ = 0 ;
-"180
-[v _valueInfoTempo_ `S418 ~T0 @X0 1 e ]
+[; ;main.c: 187: StValueInfo* currentValueInfoPtr_ = 0 ;
+"188
+[v _valueInfoTempo_ `S421 ~T0 @X0 1 e ]
 [i _valueInfoTempo_
 :U ..
 :U ..
 -> -> 0 `i `*uc
+"189
+. `E2960 1
 :U ..
 :U ..
-"181
+"190
 -> -> 0 `i `uc
 -> -> 0 `i `uc
 ..
 ..
 :U ..
 :U ..
-"182
+"191
 :s 35C
-"183
+"192
 :s 36C
 ..
 ..
 ..
 ..
 ]
-[; ;main.c: 180: StValueInfo valueInfoTempo_ = { 0 ,
-[; ;main.c: 181: { 0 , 0 } ,
-[; ;main.c: 182: "Metronome" ,
-[; ;main.c: 183: "Tempo" , } ;
-"184
-[v _valueInfoBeatCount_ `S418 ~T0 @X0 1 e ]
+[; ;main.c: 188: StValueInfo valueInfoTempo_ = { 0 ,
+[; ;main.c: 189: STATE_METRONOME ,
+[; ;main.c: 190: { 0 , 0 } ,
+[; ;main.c: 191: "Metronome" ,
+[; ;main.c: 192: "Tempo" , } ;
+"193
+[v _valueInfoBeatCount_ `S421 ~T0 @X0 1 e ]
 [i _valueInfoBeatCount_
 :U ..
 :U ..
 -> -> 0 `i `*uc
+"194
+. `E2960 2
 :U ..
 :U ..
-"185
+"195
 -> -> 64 `i `uc
 -> -> 0 `i `uc
 ..
 ..
 :U ..
 :U ..
-"186
+"196
 :s 37C
-"187
+"197
 :s 38C
 ..
 ..
 ..
 ..
 ]
-[; ;main.c: 184: StValueInfo valueInfoBeatCount_ = { 0 ,
-[; ;main.c: 185: { 64 , 0 } ,
-[; ;main.c: 186: "Configuration" ,
-[; ;main.c: 187: "Beat Count" , } ;
-"188
-[v _valueInfoTone_ `S418 ~T0 @X0 1 e ]
+[; ;main.c: 193: StValueInfo valueInfoBeatCount_ = { 0 ,
+[; ;main.c: 194: STATE_MENU_MAIN ,
+[; ;main.c: 195: { 64 , 0 } ,
+[; ;main.c: 196: "Configuration" ,
+[; ;main.c: 197: "Beat Count" , } ;
+"198
+[v _valueInfoTone_ `S421 ~T0 @X0 -> 3 `i e ]
 [i _valueInfoTone_
 :U ..
 :U ..
+"199
 -> -> 0 `i `*uc
+"200
+. `E2960 3
 :U ..
 :U ..
-"189
+"201
 -> -> 255 `i `uc
 -> -> 0 `i `uc
 ..
 ..
 :U ..
 :U ..
-"190
+"202
 :s 39C
-"191
+"203
 :s 40C
 ..
 ..
 ..
-..
-]
-[; ;main.c: 188: StValueInfo valueInfoTone_ = { 0 ,
-[; ;main.c: 189: { 0xFF , 0x00 } ,
-[; ;main.c: 190: "Tone" ,
-[; ;main.c: 191: "Tone" , } ;
-"192
-[v _valueInfoDurationClick_ `S418 ~T0 @X0 1 e ]
-[i _valueInfoDurationClick_
 :U ..
-:U ..
+"204
 -> -> 0 `i `*uc
+"205
+. `E2960 3
 :U ..
 :U ..
-"193
+"206
 -> -> 255 `i `uc
 -> -> 0 `i `uc
 ..
 ..
 :U ..
 :U ..
-"194
+"207
 :s 41C
-"195
+"208
 :s 42C
 ..
 ..
 ..
-..
-]
-[; ;main.c: 192: StValueInfo valueInfoDurationClick_ = { 0 ,
-[; ;main.c: 193: { 0xFF , 0x00 } ,
-[; ;main.c: 194: "Duration" ,
-[; ;main.c: 195: "Click" , } ;
-"196
-[v _valueInfoDurationKey_ `S418 ~T0 @X0 1 e ]
-[i _valueInfoDurationKey_
 :U ..
-:U ..
+"209
 -> -> 0 `i `*uc
+"210
+. `E2960 3
 :U ..
 :U ..
-"197
+"211
 -> -> 255 `i `uc
 -> -> 0 `i `uc
 ..
 ..
 :U ..
 :U ..
-"198
+"212
 :s 43C
-"199
+"213
 :s 44C
 ..
 ..
 ..
 ..
 ]
-[; ;main.c: 196: StValueInfo valueInfoDurationKey_ = { 0 ,
-[; ;main.c: 197: { 0xFF , 0x00 } ,
-[; ;main.c: 198: "Duration" ,
-[; ;main.c: 199: "Key Beep" , } ;
-"200
-[v _valueInfoPulseWidth_ `S418 ~T0 @X0 1 e ]
-[i _valueInfoPulseWidth_
+[; ;main.c: 198: StValueInfo valueInfoTone_[3] = {
+[; ;main.c: 199: { 0 ,
+[; ;main.c: 200: STATE_MENU_TONE ,
+[; ;main.c: 201: { 0xFF , 0x00 } ,
+[; ;main.c: 202: "Tone" ,
+[; ;main.c: 203: "Tone0" , } ,
+[; ;main.c: 204: { 0 ,
+[; ;main.c: 205: STATE_MENU_TONE ,
+[; ;main.c: 206: { 0xFF , 0x00 } ,
+[; ;main.c: 207: "Tone" ,
+[; ;main.c: 208: "Tone1" , } ,
+[; ;main.c: 209: { 0 ,
+[; ;main.c: 210: STATE_MENU_TONE ,
+[; ;main.c: 211: { 0xFF , 0x00 } ,
+[; ;main.c: 212: "Tone" ,
+[; ;main.c: 213: "Tone2" , }
+[; ;main.c: 214: } ;
+"215
+[v _valueInfoDurationClick_ `S421 ~T0 @X0 1 e ]
+[i _valueInfoDurationClick_
 :U ..
 :U ..
 -> -> 0 `i `*uc
+"216
+. `E2960 4
 :U ..
 :U ..
-"201
--> -> 7 `i `uc
--> -> 1 `i `uc
+"217
+-> -> 255 `i `uc
+-> -> 0 `i `uc
 ..
 ..
 :U ..
 :U ..
-"202
+"218
 :s 45C
-"203
+"219
 :s 46C
 ..
 ..
 ..
 ..
 ]
-[; ;main.c: 200: StValueInfo valueInfoPulseWidth_ = { 0 ,
-[; ;main.c: 201: { 7 , 1 } ,
-[; ;main.c: 202: "Configuration" ,
-[; ;main.c: 203: "Pulse Width" , } ;
-"204
-[v _valueInfoOscillatorTune_ `S418 ~T0 @X0 1 e ]
-[i _valueInfoOscillatorTune_
+[; ;main.c: 215: StValueInfo valueInfoDurationClick_ = { 0 ,
+[; ;main.c: 216: STATE_MENU_DURATION ,
+[; ;main.c: 217: { 0xFF , 0x00 } ,
+[; ;main.c: 218: "Duration" ,
+[; ;main.c: 219: "Click" , } ;
+"220
+[v _valueInfoDurationKey_ `S421 ~T0 @X0 1 e ]
+[i _valueInfoDurationKey_
 :U ..
 :U ..
 -> -> 0 `i `*uc
+"221
+. `E2960 4
 :U ..
 :U ..
-"205
--> -> 30 `i `uc
--> -U -> 30 `i `uc
+"222
+-> -> 255 `i `uc
+-> -> 0 `i `uc
 ..
 ..
 :U ..
 :U ..
-"206
+"223
 :s 47C
-"207
+"224
 :s 48C
 ..
 ..
 ..
 ..
 ]
-[; ;main.c: 204: StValueInfo valueInfoOscillatorTune_ = { 0 ,
-[; ;main.c: 205: { (Uint08_t)30 , (Uint08_t)( -30 ) } ,
-[; ;main.c: 206: "Configuration" ,
-[; ;main.c: 207: "Osc. Tune" , } ;
-"243
-[v _events_ `S421 ~T0 @X0 1 e ]
+[; ;main.c: 220: StValueInfo valueInfoDurationKey_ = { 0 ,
+[; ;main.c: 221: STATE_MENU_DURATION ,
+[; ;main.c: 222: { 0xFF , 0x00 } ,
+[; ;main.c: 223: "Duration" ,
+[; ;main.c: 224: "Key Beep" , } ;
+"225
+[v _valueInfoPulseWidth_ `S421 ~T0 @X0 1 e ]
+[i _valueInfoPulseWidth_
+:U ..
+:U ..
+-> -> 0 `i `*uc
+"226
+. `E2960 2
+:U ..
+:U ..
+"227
+-> -> 7 `i `uc
+-> -> 1 `i `uc
+..
+..
+:U ..
+:U ..
+"228
+:s 49C
+"229
+:s 50C
+..
+..
+..
+..
+]
+[; ;main.c: 225: StValueInfo valueInfoPulseWidth_ = { 0 ,
+[; ;main.c: 226: STATE_MENU_MAIN ,
+[; ;main.c: 227: { 7 , 1 } ,
+[; ;main.c: 228: "Configuration" ,
+[; ;main.c: 229: "Pulse Width" , } ;
+"230
+[v _valueInfoOscillatorTune_ `S421 ~T0 @X0 1 e ]
+[i _valueInfoOscillatorTune_
+:U ..
+:U ..
+-> -> 0 `i `*uc
+"231
+. `E2960 2
+:U ..
+:U ..
+"232
+-> -> 30 `i `uc
+-> -U -> 30 `i `uc
+..
+..
+:U ..
+:U ..
+"233
+:s 51C
+"234
+:s 52C
+..
+..
+..
+..
+]
+[; ;main.c: 230: StValueInfo valueInfoOscillatorTune_ = { 0 ,
+[; ;main.c: 231: STATE_MENU_MAIN ,
+[; ;main.c: 232: { (Uint08_t)30 , (Uint08_t)( -30 ) } ,
+[; ;main.c: 233: "Configuration" ,
+[; ;main.c: 234: "Osc. Tune" , } ;
+"269
+[v _events_ `S424 ~T0 @X0 1 e ]
 [i _events_
 :U ..
 :U ..
@@ -4849,37 +4946,48 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 ..
 ..
+:U ..
+:U ..
+-> -> 0 `i `uc
+..
+..
 ..
 ..
 ]
-[; ;main.c: 211: struct {
-[; ;main.c: 212: union {
-[; ;main.c: 213: Uint08_t byte ;
-[; ;main.c: 214: struct {
-[; ;main.c: 215: unsigned keyPressUp : 1 ;
-[; ;main.c: 216: unsigned keyPressDown : 1 ;
-[; ;main.c: 217: unsigned keyPressMenu : 1 ;
-[; ;main.c: 218: unsigned keyPressUpDown : 1 ;
-[; ;main.c: 219: unsigned keyPressHeldUp : 1 ;
-[; ;main.c: 220: unsigned keyPressHeldDown : 1 ;
-[; ;main.c: 221: } ;
-[; ;main.c: 222: } input ;
-[; ;main.c: 223: union {
-[; ;main.c: 224: Uint08_t byte ;
-[; ;main.c: 225: struct {
-[; ;main.c: 226: unsigned changeState : 1 ;
-[; ;main.c: 227: unsigned changeMessage : 1 ;
-[; ;main.c: 228: unsigned changeValue : 1 ;
-[; ;main.c: 229: unsigned soundOnClick : 1 ;
-[; ;main.c: 230: unsigned soundOnKey : 1 ;
-[; ;main.c: 231: unsigned soundOff : 1 ;
-[; ;main.c: 232: unsigned resetMetronome : 1 ;
-[; ;main.c: 233: unsigned accessEeprom : 1 ;
-[; ;main.c: 234: } ;
-[; ;main.c: 235: } output ;
-[; ;main.c: 243: } events_ = { 0x00 , 0x00 , } ;
-"252
-[v _soundDurationCount_ `S426 ~T0 @X0 1 e ]
+[; ;main.c: 238: struct {
+[; ;main.c: 239: union {
+[; ;main.c: 240: Uint08_t byte ;
+[; ;main.c: 241: struct {
+[; ;main.c: 242: unsigned up : 1 ;
+[; ;main.c: 243: unsigned down : 1 ;
+[; ;main.c: 244: unsigned menu : 1 ;
+[; ;main.c: 245: unsigned bothUpDown : 1 ;
+[; ;main.c: 246: unsigned upHold : 1 ;
+[; ;main.c: 247: unsigned downHold : 1 ;
+[; ;main.c: 248: } ;
+[; ;main.c: 249: } keyPress ;
+[; ;main.c: 250: union {
+[; ;main.c: 251: Uint08_t byte ;
+[; ;main.c: 252: struct {
+[; ;main.c: 253: unsigned changeState : 1 ;
+[; ;main.c: 254: unsigned changeMessage : 1 ;
+[; ;main.c: 255: unsigned changeValue : 1 ;
+[; ;main.c: 256: unsigned resetMetronome : 1 ;
+[; ;main.c: 257: unsigned accessEeprom : 1 ;
+[; ;main.c: 258: } ;
+[; ;main.c: 259: } output ;
+[; ;main.c: 260: union {
+[; ;main.c: 261: Uint08_t byte ;
+[; ;main.c: 262: struct {
+[; ;main.c: 263: unsigned off : 1 ;
+[; ;main.c: 264: unsigned click : 1 ;
+[; ;main.c: 265: unsigned key : 1 ;
+[; ;main.c: 266: unsigned oscillatorTune : 1 ;
+[; ;main.c: 267: } ;
+[; ;main.c: 268: } sound ;
+[; ;main.c: 269: } events_ = { 0x00 , 0x00 , 0x00 , } ;
+"279
+[v _soundDurationCount_ `S431 ~T0 @X0 1 e ]
 [i _soundDurationCount_
 :U ..
 :U ..
@@ -4888,2085 +4996,1880 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;main.c: 249: struct {
-[; ;main.c: 250: Uint08_t click ;
-[; ;main.c: 251: Uint08_t key ;
-[; ;main.c: 252: } soundDurationCount_ = { 0 , 0 } ;
-"256
+[; ;main.c: 276: struct {
+[; ;main.c: 277: Uint08_t click ;
+[; ;main.c: 278: Uint08_t key ;
+[; ;main.c: 279: } soundDurationCount_ = { 0 , 0 } ;
+"283
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 256: void main( void ) {
+[; ;main.c: 283: void main( void ) {
 [e :U _main ]
 [f ]
-[; ;main.c: 259: initialize( ) ;
-"259
+[; ;main.c: 286: initialize( ) ;
+"286
 [e ( _initialize ..  ]
-[; ;main.c: 262: if( (~PORTA&0xE0) == 0xC0 )
-"262
-[e $ ! == & ~ -> _PORTA `i -> 224 `i -> 192 `i 428  ]
-[; ;main.c: 263: machineState_ = STATE_INITIALIZE ;
-"263
-[e = _machineState_ . `E2963 17 ]
-[e $U 429  ]
-"264
-[e :U 428 ]
-[; ;main.c: 264: else
-[; ;main.c: 265: machineState_ = STATE_BOOT ;
-"265
-[e = _machineState_ . `E2963 0 ]
-[e :U 429 ]
-[; ;main.c: 266: events_.output.changeState=1 ;
-"266
+[; ;main.c: 289: if( (~PORTA&0xE0) == 0xC0 )
+"289
+[e $ ! == & ~ -> _PORTA `i -> 224 `i -> 192 `i 433  ]
+[; ;main.c: 290: machineState_ = STATE_INITIALIZE ;
+"290
+[e = _machineState_ . `E2960 11 ]
+[e $U 434  ]
+"291
+[e :U 433 ]
+[; ;main.c: 291: else
+[; ;main.c: 292: machineState_ = STATE_BOOT ;
+"292
+[e = _machineState_ . `E2960 0 ]
+[e :U 434 ]
+[; ;main.c: 293: events_.output.changeState=1 ;
+"293
 [e = . . . _events_ 1 1 0 -> -> 1 `i `uc ]
-[; ;main.c: 269: PR2 = 124 ;
-"269
+[; ;main.c: 296: PR2 = 124 ;
+"296
 [e = _PR2 -> -> 124 `i `uc ]
-[; ;main.c: 270: {CCPR4L=(PR2>>1);} ;
-"270
+[; ;main.c: 297: {CCPR4L=(PR2>>1);} ;
+"297
 {
 [e = _CCPR4L -> >> -> _PR2 `i -> 1 `i `uc ]
 }
-[; ;main.c: 273: T4CONbits.TMR4ON = 1 ;
-"273
+[; ;main.c: 300: T4CONbits.TMR4ON = 1 ;
+"300
 [e = . . _T4CONbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 276: T1CONbits.TMR1ON = 1 ;
-"276
+[; ;main.c: 303: T1CONbits.TMR1ON = 1 ;
+"303
 [e = . . _T1CONbits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 279: for( Uint08_t phase = 0 ; phase < 0xE ; phase++ ) {
-"279
+[; ;main.c: 306: for( Uint08_t phase = 0 ; phase < 0xE ; phase++ ) {
+"306
 {
 [v _phase `uc ~T0 @X0 1 a ]
 [e = _phase -> -> 0 `i `uc ]
-[e $ < -> _phase `i -> 14 `i 430  ]
-[e $U 431  ]
-[e :U 430 ]
-{
-[; ;main.c: 281: asm("clrwdt") ;
-"281
-[; <" clrwdt ;# ">
-[; ;main.c: 283: TMR1 = 0x0000 ;
-"283
-[e = _TMR1 -> -> 0 `i `us ]
-[; ;main.c: 285: switch( phase ) {
-"285
-[e $U 434  ]
-{
-[; ;main.c: 286: case 0x0:
-"286
+[e $ < -> _phase `i -> 14 `i 435  ]
+[e $U 436  ]
 [e :U 435 ]
-"287
-[e :U 436 ]
-[; ;main.c: 287: case 0x2:
-[; ;main.c: 289: T2CONbits.TMR2ON = 1 ;
-"289
-[e = . . _T2CONbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 290: break ;
-"290
-[e $U 433  ]
-[; ;main.c: 292: case 0x1:
-"292
-[e :U 437 ]
-"293
-[e :U 438 ]
-[; ;main.c: 293: case 0xC:
-[; ;main.c: 295: T2CONbits.TMR2ON = 0 ;
-"295
-[e = . . _T2CONbits 0 2 -> -> 0 `i `uc ]
-[; ;main.c: 296: break ;
-"296
-[e $U 433  ]
-[; ;main.c: 298: case 0x3:
-"298
-[e :U 439 ]
-[; ;main.c: 300: {
-"300
 {
-"301
-[v _userId `uc ~T0 @X0 1 a ]
-[; ;main.c: 301: Uint08_t userId ;
-[; ;main.c: 302: userId = Configuration_ReadByte( 0 , MEMORY_SELECT_CONFIGURATION ) ;
-"302
-[e = _userId ( _Configuration_ReadByte (2 , -> -> 0 `i `uc . `E2869 1 ]
-[; ;main.c: 303: informationValueBuffer[ INFORMATION_ITEM_VERSION ][1] = ( ( userId >> 4 ) | '0' ) ;
-"303
-[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux -> | -> >> -> _userId `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;main.c: 304: informationValueBuffer[ INFORMATION_ITEM_VERSION ][2] = ( ( userId & 0x0F ) | '0' ) ;
-"304
-[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 2 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux -> | -> & -> _userId `i -> 15 `i `ui -> 48 `ui `uc ]
-[; ;main.c: 305: userId = Configuration_ReadByte( 1 , MEMORY_SELECT_CONFIGURATION ) ;
-"305
-[e = _userId ( _Configuration_ReadByte (2 , -> -> 1 `i `uc . `E2869 1 ]
-[; ;main.c: 306: informationValueBuffer[ INFORMATION_ITEM_VERSION ][4] = ( ( userId >> 4 ) | '0' ) ;
-"306
-[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 4 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux -> | -> >> -> _userId `i -> 4 `i `ui -> 48 `ui `uc ]
-[; ;main.c: 307: informationValueBuffer[ INFORMATION_ITEM_VERSION ][5] = ( ( userId & 0x0F ) | '0' ) ;
-"307
-[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 5 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux -> | -> & -> _userId `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;main.c: 308: asm("clrwdt") ;
 "308
-}
-[; ;main.c: 308: }
-[; ;main.c: 309: break ;
-"309
-[e $U 433  ]
-[; ;main.c: 311: case 0x4:
-"311
-[e :U 440 ]
-[; ;main.c: 313: ParallelLCD_Initialize(
-[; ;main.c: 314: PARALLEL_LCD_CONFIG_8BIT_MODE | PARALLEL_LCD_CONFIG_2LINE_MODE ,
-[; ;main.c: 315: PARALLEL_LCD_CONFIG_DISPLAY_ON ,
-[; ;main.c: 316: PARALLEL_LCD_CONFIG_CURSOR_NONE ,
-[; ;main.c: 317: PARALLEL_LCD_CONFIG_INCREMENTAL
-[; ;main.c: 318: ) ;
-"318
-[e ( _ParallelLCD_Initialize (4 , , , -> | -> . `E2783 3 `i -> . `E2783 2 `i `E2783 . `E2789 3 . `E2795 0 . `E2800 2 ]
-[; ;main.c: 321: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.METRONOME.MAIN_TILE ) ;
-"321
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 0 `i -> 0 `i `E2805 -> . . _MESSAGE 0 0 `*Cuc ]
-[; ;main.c: 322: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFORMATION[ INFORMATION_ITEM_VERSION ] ) ;
-"322
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 1 `i -> 0 `i `E2805 *U + &U _MESSAGE_INFORMATION * -> . `E2925 0 `ux -> -> # *U &U _MESSAGE_INFORMATION `ui `ux ]
-[; ;main.c: 323: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ INFORMATION_ITEM_VERSION ] ) ;
-"323
-[e ( _ParallelLCD_WriteString (2 , -> | -> . `E2805 1 `i -> 10 `i `E2805 -> &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `*Cuc ]
-[; ;main.c: 325: case 0x5:
-"325
-[e :U 441 ]
-[; ;main.c: 326: valueInfoBeatCount_.valuePtr = &configration_.beatCount ;
-"326
-[e = . _valueInfoBeatCount_ 0 &U . _configration_ 3 ]
-[; ;main.c: 327: valueInfoDurationClick_.valuePtr = &configration_.duration.click ;
-"327
-[e = . _valueInfoDurationClick_ 0 &U . . _configration_ 4 0 ]
-[; ;main.c: 328: valueInfoDurationKey_.valuePtr = &configration_.duration.key ;
-"328
-[e = . _valueInfoDurationKey_ 0 &U . . _configration_ 4 1 ]
-[; ;main.c: 329: valueInfoPulseWidth_.valuePtr = &configration_.pulseWidth ;
-"329
-[e = . _valueInfoPulseWidth_ 0 &U . _configration_ 6 ]
-[; ;main.c: 330: valueInfoOscillatorTune_.valuePtr = ( Uint08_t* ) & configration_.oscillatorTune ;
-"330
-[e = . _valueInfoOscillatorTune_ 0 -> &U . _configration_ 7 `*uc ]
-[; ;main.c: 331: break ;
-"331
-[e $U 433  ]
-[; ;main.c: 333: case 0x6:
-"333
-[e :U 442 ]
-[; ;main.c: 335: ParallelLCD_SetCgram( CHAR_CODE.CURSOR_UP , & BITMAP.CURSOR_UP ) ;
-"335
-[e ( _ParallelLCD_SetCgram (2 , . _CHAR_CODE 1 &U . _BITMAP 1 ]
-[; ;main.c: 336: ParallelLCD_SetCgram( CHAR_CODE.CURSOR_DOWN , & BITMAP.CURSOR_DOWN ) ;
-"336
-[e ( _ParallelLCD_SetCgram (2 , . _CHAR_CODE 2 &U . _BITMAP 2 ]
-[; ;main.c: 337: ParallelLCD_SetCgram( CHAR_CODE.CURSOR_RIGHT , & BITMAP.CURSOR_RIGHT ) ;
-"337
-[e ( _ParallelLCD_SetCgram (2 , . _CHAR_CODE 0 &U . _BITMAP 0 ]
-[; ;main.c: 338: break ;
-"338
-[e $U 433  ]
-"340
-}
-[; ;main.c: 340: }
-[e $U 433  ]
-"285
-[e :U 434 ]
-[e [\ _phase , $ -> -> 0 `i `uc 435
- , $ -> -> 2 `i `uc 436
- , $ -> -> 1 `i `uc 437
- , $ -> -> 12 `i `uc 438
- , $ -> -> 3 `i `uc 439
- , $ -> -> 4 `i `uc 440
- , $ -> -> 5 `i `uc 441
- , $ -> -> 6 `i `uc 442
- 433 ]
-"340
-[e :U 433 ]
-[; ;main.c: 342: while( !PIR1bits.TMR1IF ) ;
-"342
-[e $U 443  ]
-[e :U 444 ]
-[e :U 443 ]
-[e $ ! != -> . . _PIR1bits 0 0 `i -> -> -> 0 `i `Vuc `i 444  ]
-[e :U 445 ]
-[; ;main.c: 343: PIR1bits.TMR1IF = 0 ;
-"343
-[e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
-"345
-}
-"279
-[e ++ _phase -> -> 1 `i `uc ]
-[e $ < -> _phase `i -> 14 `i 430  ]
-[e :U 431 ]
-"345
-}
-[; ;main.c: 345: }
-[; ;main.c: 349: INTCONbits.PEIE = 1 ;
-"349
-[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
-[; ;main.c: 350: PIR3bits.TMR6IF = 0 ;
-"350
-[e = . . _PIR3bits 0 3 -> -> 0 `i `uc ]
-[; ;main.c: 351: PIE3bits.TMR6IE = 1 ;
-"351
-[e = . . _PIE3bits 0 3 -> -> 1 `i `uc ]
-[; ;main.c: 352: T6CONbits.TMR6ON = 1 ;
-"352
-[e = . . _T6CONbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 355: for( ; ; ) {
-"355
-{
-[e :U 446 ]
-{
-[; ;main.c: 358: asm("clrwdt") ;
-"358
 [; <" clrwdt ;# ">
+[; ;main.c: 310: TMR1 = 0x0000 ;
+"310
+[e = _TMR1 -> -> 0 `i `us ]
+[; ;main.c: 312: switch( phase ) {
+"312
+[e $U 439  ]
+{
+[; ;main.c: 313: case 0x0:
+"313
+[e :U 440 ]
+"314
+[e :U 441 ]
+[; ;main.c: 314: case 0x2:
+[; ;main.c: 316: T2CONbits.TMR2ON = 1 ;
+"316
+[e = . . _T2CONbits 0 2 -> -> 1 `i `uc ]
+[; ;main.c: 317: break ;
+"317
+[e $U 438  ]
+[; ;main.c: 319: case 0x1:
+"319
+[e :U 442 ]
+"320
+[e :U 443 ]
+[; ;main.c: 320: case 0xC:
+[; ;main.c: 322: T2CONbits.TMR2ON = 0 ;
+"322
+[e = . . _T2CONbits 0 2 -> -> 0 `i `uc ]
+[; ;main.c: 323: break ;
+"323
+[e $U 438  ]
+[; ;main.c: 325: case 0x3:
+"325
+[e :U 444 ]
+[; ;main.c: 327: {
+"327
+{
+"328
+[v _userId `uc ~T0 @X0 1 a ]
+[; ;main.c: 328: Uint08_t userId ;
+[; ;main.c: 329: userId = Configuration_ReadByte( 0 , MEMORY_SELECT_CONFIGURATION ) ;
+"329
+[e = _userId ( _Configuration_ReadByte (2 , -> -> 0 `i `uc . `E2869 1 ]
+[; ;main.c: 330: informationValueBuffer[ INFORMATION_ITEM_VERSION ][1] = ( ( userId >> 4 ) | '0' ) ;
+"330
+[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 1 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux -> | -> >> -> _userId `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;main.c: 331: informationValueBuffer[ INFORMATION_ITEM_VERSION ][2] = ( ( userId & 0x0F ) | '0' ) ;
+"331
+[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 2 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux -> | -> & -> _userId `i -> 15 `i `ui -> 48 `ui `uc ]
+[; ;main.c: 332: userId = Configuration_ReadByte( 1 , MEMORY_SELECT_CONFIGURATION ) ;
+"332
+[e = _userId ( _Configuration_ReadByte (2 , -> -> 1 `i `uc . `E2869 1 ]
+[; ;main.c: 333: informationValueBuffer[ INFORMATION_ITEM_VERSION ][4] = ( ( userId >> 4 ) | '0' ) ;
+"333
+[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 4 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux -> | -> >> -> _userId `i -> 4 `i `ui -> 48 `ui `uc ]
+[; ;main.c: 334: informationValueBuffer[ INFORMATION_ITEM_VERSION ][5] = ( ( userId & 0x0F ) | '0' ) ;
+"334
+[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 5 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux -> | -> & -> _userId `i -> 15 `i `ui -> 48 `ui `uc ]
+"335
+}
+[; ;main.c: 335: }
+[; ;main.c: 336: break ;
+"336
+[e $U 438  ]
+[; ;main.c: 338: case 0x4:
+"338
+[e :U 445 ]
+[; ;main.c: 340: ParallelLCD_Initialize(
+[; ;main.c: 341: PARALLEL_LCD_CONFIG_8BIT_MODE | PARALLEL_LCD_CONFIG_2LINE_MODE ,
+[; ;main.c: 342: PARALLEL_LCD_CONFIG_DISPLAY_ON ,
+[; ;main.c: 343: PARALLEL_LCD_CONFIG_CURSOR_NONE ,
+[; ;main.c: 344: PARALLEL_LCD_CONFIG_INCREMENTAL
+[; ;main.c: 345: ) ;
+"345
+[e ( _ParallelLCD_Initialize (4 , , , -> | -> . `E2783 3 `i -> . `E2783 2 `i `E2783 . `E2789 3 . `E2795 0 . `E2800 2 ]
+[; ;main.c: 348: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.METRONOME.MAIN_TILE ) ;
+"348
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 0 `i -> 0 `i `E2805 -> . . _MESSAGE 0 0 `*Cuc ]
+[; ;main.c: 349: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFORMATION[ INFORMATION_ITEM_VERSION ] ) ;
+"349
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 1 `i -> 0 `i `E2805 *U + &U _MESSAGE_INFORMATION * -> . `E2925 0 `ux -> -> # *U &U _MESSAGE_INFORMATION `ui `ux ]
+[; ;main.c: 350: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ INFORMATION_ITEM_VERSION ] ) ;
+"350
+[e ( _ParallelLCD_WriteString (2 , -> | -> . `E2805 1 `i -> 10 `i `E2805 -> &U *U + &U _informationValueBuffer * -> . `E2925 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `*Cuc ]
+[; ;main.c: 352: case 0x5:
+"352
+[e :U 446 ]
+[; ;main.c: 353: valueInfoBeatCount_.valuePtr = &configration_.beatCount ;
+"353
+[e = . _valueInfoBeatCount_ 0 &U . _configration_ 3 ]
+[; ;main.c: 354: valueInfoTone_[0].valuePtr = &configration_.tone[0] ;
+"354
+[e = . *U + &U _valueInfoTone_ * -> -> -> 0 `i `ui `ux -> -> # *U &U _valueInfoTone_ `ui `ux 0 &U *U + &U . _configration_ 5 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _configration_ 5 `ui `ux ]
+[; ;main.c: 355: valueInfoTone_[1].valuePtr = &configration_.tone[1] ;
+"355
+[e = . *U + &U _valueInfoTone_ * -> -> -> 1 `i `ui `ux -> -> # *U &U _valueInfoTone_ `ui `ux 0 &U *U + &U . _configration_ 5 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _configration_ 5 `ui `ux ]
+[; ;main.c: 356: valueInfoTone_[2].valuePtr = &configration_.tone[2] ;
+"356
+[e = . *U + &U _valueInfoTone_ * -> -> -> 2 `i `ui `ux -> -> # *U &U _valueInfoTone_ `ui `ux 0 &U *U + &U . _configration_ 5 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _configration_ 5 `ui `ux ]
+[; ;main.c: 357: valueInfoDurationClick_.valuePtr = &configration_.duration.click ;
+"357
+[e = . _valueInfoDurationClick_ 0 &U . . _configration_ 4 0 ]
+[; ;main.c: 358: valueInfoDurationKey_.valuePtr = &configration_.duration.key ;
+"358
+[e = . _valueInfoDurationKey_ 0 &U . . _configration_ 4 1 ]
+[; ;main.c: 359: valueInfoPulseWidth_.valuePtr = &configration_.pulseWidth ;
+"359
+[e = . _valueInfoPulseWidth_ 0 &U . _configration_ 6 ]
+[; ;main.c: 360: valueInfoOscillatorTune_.valuePtr = ( Uint08_t* ) & configration_.oscillatorTune ;
+"360
+[e = . _valueInfoOscillatorTune_ 0 -> &U . _configration_ 7 `*uc ]
+[; ;main.c: 361: break ;
 "361
-[v F3083 `S415 ~T0 @X0 1 s prevPortAState ]
-[i F3083
+[e $U 438  ]
+[; ;main.c: 363: case 0x6:
+"363
+[e :U 447 ]
+[; ;main.c: 365: ParallelLCD_SetCgram( CHAR_CODE.CURSOR_UP , & BITMAP.CURSOR_UP ) ;
+"365
+[e ( _ParallelLCD_SetCgram (2 , . _CHAR_CODE 1 &U . _BITMAP 1 ]
+[; ;main.c: 366: ParallelLCD_SetCgram( CHAR_CODE.CURSOR_DOWN , & BITMAP.CURSOR_DOWN ) ;
+"366
+[e ( _ParallelLCD_SetCgram (2 , . _CHAR_CODE 2 &U . _BITMAP 2 ]
+[; ;main.c: 367: ParallelLCD_SetCgram( CHAR_CODE.CURSOR_RIGHT , & BITMAP.CURSOR_RIGHT ) ;
+"367
+[e ( _ParallelLCD_SetCgram (2 , . _CHAR_CODE 0 &U . _BITMAP 0 ]
+[; ;main.c: 368: break ;
+"368
+[e $U 438  ]
+"370
+}
+[; ;main.c: 370: }
+[e $U 438  ]
+"312
+[e :U 439 ]
+[e [\ _phase , $ -> -> 0 `i `uc 440
+ , $ -> -> 2 `i `uc 441
+ , $ -> -> 1 `i `uc 442
+ , $ -> -> 12 `i `uc 443
+ , $ -> -> 3 `i `uc 444
+ , $ -> -> 4 `i `uc 445
+ , $ -> -> 5 `i `uc 446
+ , $ -> -> 6 `i `uc 447
+ 438 ]
+"370
+[e :U 438 ]
+[; ;main.c: 372: while( !PIR1bits.TMR1IF ) ;
+"372
+[e $U 448  ]
+[e :U 449 ]
+[e :U 448 ]
+[e $ ! != -> . . _PIR1bits 0 0 `i -> -> -> 0 `i `Vuc `i 449  ]
+[e :U 450 ]
+[; ;main.c: 373: PIR1bits.TMR1IF = 0 ;
+"373
+[e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
+"375
+}
+"306
+[e ++ _phase -> -> 1 `i `uc ]
+[e $ < -> _phase `i -> 14 `i 435  ]
+[e :U 436 ]
+"375
+}
+[; ;main.c: 375: }
+[; ;main.c: 379: INTCONbits.PEIE = 1 ;
+"379
+[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
+[; ;main.c: 380: PIR3bits.TMR6IF = 0 ;
+"380
+[e = . . _PIR3bits 0 3 -> -> 0 `i `uc ]
+[; ;main.c: 381: PIE3bits.TMR6IE = 1 ;
+"381
+[e = . . _PIE3bits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 382: T6CONbits.TMR6ON = 1 ;
+"382
+[e = . . _T6CONbits 0 2 -> -> 1 `i `uc ]
+[; ;main.c: 385: for( ; ; ) {
+"385
+{
+[e :U 451 ]
+{
+[; ;main.c: 388: asm("clrwdt") ;
+"388
+[; <" clrwdt ;# ">
+"391
+[v F3094 `S417 ~T0 @X0 1 s prevPortAState ]
+[i F3094
 :U ..
 :U ..
 -> -> 0 `i `uc
 ..
 ..
 ]
-"362
-[v _portAState `S415 ~T0 @X0 1 a ]
-"363
-[v _keyPressed `S415 ~T0 @X0 1 a ]
-[; ;main.c: 361: static UniPortAState prevPortAState = { 0x00 } ;
-[; ;main.c: 362: UniPortAState portAState ;
-[; ;main.c: 363: UniPortAState keyPressed ;
-[; ;main.c: 365: portAState.byte = sampledPortAState_.byte ;
-"365
-[e = . _portAState 0 . _sampledPortAState_ 0 ]
-[; ;main.c: 367: keyPressed.byte = ( portAState.byte ^ prevPortAState.byte ) & portAState.byte ;
-"367
-[e = . _keyPressed 0 -> & ^ -> . _portAState 0 `i -> . F3083 0 `i -> . _portAState 0 `i `uc ]
-[; ;main.c: 368: prevPortAState.byte = portAState.byte ;
-"368
-[e = . F3083 0 . _portAState 0 ]
-[; ;main.c: 370: if( keyPressed.keyMenu ) {
-"370
-[e $ ! != -> . . _keyPressed 1 1 `i -> -> -> 0 `i `uc `i 449  ]
-{
-[; ;main.c: 371: events_.input.keyPressMenu=1 ;
-"371
-[e = . . . _events_ 0 1 2 -> -> 1 `i `uc ]
-"372
-}
-[e :U 449 ]
-[; ;main.c: 372: }
-[; ;main.c: 374: if( keyPressed.keyUp ) {
-"374
-[e $ ! != -> . . _keyPressed 1 3 `i -> -> -> 0 `i `uc `i 450  ]
-{
-[; ;main.c: 375: if( portAState.keyDown )
-"375
-[e $ ! != -> . . _portAState 1 2 `i -> -> -> 0 `i `uc `i 451  ]
-[; ;main.c: 376: events_.input.keyPressUpDown=1 ;
-"376
-[e = . . . _events_ 0 1 3 -> -> 1 `i `uc ]
-[e $U 452  ]
-"377
-[e :U 451 ]
-[; ;main.c: 377: else
-[; ;main.c: 378: events_.input.keyPressUp=1 ;
-"378
-[e = . . . _events_ 0 1 0 -> -> 1 `i `uc ]
-[e :U 452 ]
-"379
-}
-[e :U 450 ]
-[; ;main.c: 379: }
-[; ;main.c: 381: if( keyPressed.keyDown ) {
-"381
-[e $ ! != -> . . _keyPressed 1 2 `i -> -> -> 0 `i `uc `i 453  ]
-{
-[; ;main.c: 382: if( portAState.keyUp )
-"382
-[e $ ! != -> . . _portAState 1 3 `i -> -> -> 0 `i `uc `i 454  ]
-[; ;main.c: 383: events_.input.keyPressUpDown=1 ;
-"383
-[e = . . . _events_ 0 1 3 -> -> 1 `i `uc ]
-[e $U 455  ]
-"384
-[e :U 454 ]
-[; ;main.c: 384: else
-[; ;main.c: 385: events_.input.keyPressDown=1 ;
-"385
-[e = . . . _events_ 0 1 1 -> -> 1 `i `uc ]
-[e :U 455 ]
-"386
-}
-[e :U 453 ]
-[; ;main.c: 386: }
-[; ;main.c: 388: if( (events_.input.keyPressHeldUp&&!(events_.input.keyPressHeldUp=0)) )
-"388
-[e $ ! && != -> . . . _events_ 0 1 4 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 4 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 456  ]
-[; ;main.c: 389: events_.input.keyPressUp=1 ;
-"389
-[e = . . . _events_ 0 1 0 -> -> 1 `i `uc ]
-[e :U 456 ]
-[; ;main.c: 391: if( (events_.input.keyPressHeldDown&&!(events_.input.keyPressHeldDown=0)) )
-"391
-[e $ ! && != -> . . . _events_ 0 1 5 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 5 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 457  ]
-[; ;main.c: 392: events_.input.keyPressDown=1 ;
 "392
-[e = . . . _events_ 0 1 1 -> -> 1 `i `uc ]
-[e :U 457 ]
-[; ;main.c: 394: if( events_.input.byte ) {
-"394
-[e $ ! != -> . . _events_ 0 0 `i -> -> -> 0 `i `uc `i 458  ]
-{
-[; ;main.c: 395: events_.output.soundOnKey=1 ;
+[v _portAState `S417 ~T0 @X0 1 a ]
+"393
+[v _keyPressed `S417 ~T0 @X0 1 a ]
+[; ;main.c: 391: static UniPortAState prevPortAState = { 0x00 } ;
+[; ;main.c: 392: UniPortAState portAState ;
+[; ;main.c: 393: UniPortAState keyPressed ;
+[; ;main.c: 395: portAState.byte = sampledPortAState_.byte ;
 "395
-[e = . . . _events_ 1 1 4 -> -> 1 `i `uc ]
-"396
+[e = . _portAState 0 . _sampledPortAState_ 0 ]
+[; ;main.c: 397: keyPressed.byte = ( portAState.byte ^ prevPortAState.byte ) & portAState.byte ;
+"397
+[e = . _keyPressed 0 -> & ^ -> . _portAState 0 `i -> . F3094 0 `i -> . _portAState 0 `i `uc ]
+[; ;main.c: 398: prevPortAState.byte = portAState.byte ;
+"398
+[e = . F3094 0 . _portAState 0 ]
+[; ;main.c: 400: if( keyPressed.keyMenu ) {
+"400
+[e $ ! != -> . . _keyPressed 1 1 `i -> -> -> 0 `i `uc `i 454  ]
+{
+[; ;main.c: 401: events_.keyPress.menu=1 ;
+"401
+[e = . . . _events_ 0 1 2 -> -> 1 `i `uc ]
+"402
+}
+[e :U 454 ]
+[; ;main.c: 402: }
+[; ;main.c: 404: if( keyPressed.keyUp ) {
+"404
+[e $ ! != -> . . _keyPressed 1 3 `i -> -> -> 0 `i `uc `i 455  ]
+{
+[; ;main.c: 405: if( portAState.keyDown )
+"405
+[e $ ! != -> . . _portAState 1 2 `i -> -> -> 0 `i `uc `i 456  ]
+[; ;main.c: 406: events_.keyPress.bothUpDown=1 ;
+"406
+[e = . . . _events_ 0 1 3 -> -> 1 `i `uc ]
+[e $U 457  ]
+"407
+[e :U 456 ]
+[; ;main.c: 407: else
+[; ;main.c: 408: events_.keyPress.up=1 ;
+"408
+[e = . . . _events_ 0 1 0 -> -> 1 `i `uc ]
+[e :U 457 ]
+"409
+}
+[e :U 455 ]
+[; ;main.c: 409: }
+[; ;main.c: 411: if( keyPressed.keyDown ) {
+"411
+[e $ ! != -> . . _keyPressed 1 2 `i -> -> -> 0 `i `uc `i 458  ]
+{
+[; ;main.c: 412: if( portAState.keyUp )
+"412
+[e $ ! != -> . . _portAState 1 3 `i -> -> -> 0 `i `uc `i 459  ]
+[; ;main.c: 413: events_.keyPress.bothUpDown=1 ;
+"413
+[e = . . . _events_ 0 1 3 -> -> 1 `i `uc ]
+[e $U 460  ]
+"414
+[e :U 459 ]
+[; ;main.c: 414: else
+[; ;main.c: 415: events_.keyPress.down=1 ;
+"415
+[e = . . . _events_ 0 1 1 -> -> 1 `i `uc ]
+[e :U 460 ]
+"416
 }
 [e :U 458 ]
-[; ;main.c: 396: }
-[; ;main.c: 399: if( (events_.input.keyPressUpDown&&!(events_.input.keyPressUpDown=0)) ) {
-"399
-[e $ ! && != -> . . . _events_ 0 1 3 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 459  ]
-{
-[; ;main.c: 400: if( machineState_ == STATE_METRONOME ) {
-"400
-[e $ ! == -> _machineState_ `i -> . `E2963 1 `i 460  ]
-{
-[; ;main.c: 401: {if(isMute_){isMute_=0;}else{isMute_=1;}} ;
-"401
-{
-[e $ ! != -> _isMute_ `i -> -> -> 0 `i `E2778 `i 461  ]
-{
-[e = _isMute_ -> -> 0 `i `E2778 ]
-}
-[e $U 462  ]
-[e :U 461 ]
-{
-[e = _isMute_ -> -> 1 `i `E2778 ]
-}
-[e :U 462 ]
-}
-[; ;main.c: 402: events_.output.changeMessage=1 ;
-"402
-[e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
-"403
-}
-[e :U 460 ]
-"404
-}
-[e :U 459 ]
-[; ;main.c: 403: }
-[; ;main.c: 404: }
-[; ;main.c: 407: if( (events_.input.keyPressMenu&&!(events_.input.keyPressMenu=0)) ) {
-"407
-[e $ ! && != -> . . . _events_ 0 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 463  ]
-{
-[; ;main.c: 408: events_.output.changeState=1 ;
-"408
-[e = . . . _events_ 1 1 0 -> -> 1 `i `uc ]
-[; ;main.c: 410: switch( machineState_ ) {
-"410
-[e $U 465  ]
-{
-[; ;main.c: 412: case STATE_METRONOME:
-"412
-[e :U 466 ]
-[; ;main.c: 413: machineState_ = STATE_MENU_MAIN ;
-"413
-[e = _machineState_ . `E2963 2 ]
-[; ;main.c: 414: menuInfoMain_.select = 0 ;
-"414
-[e = . _menuInfoMain_ 0 -> -> 0 `i `uc ]
-[; ;main.c: 415: menuInfoMain_.cursorPosition = 0 ;
-"415
-[e = . _menuInfoMain_ 1 -> -> 0 `i `uc ]
-[; ;main.c: 416: break ;
-"416
-[e $U 464  ]
-[; ;main.c: 418: case STATE_MENU_MAIN:
+[; ;main.c: 416: }
+[; ;main.c: 418: if( (events_.keyPress.upHold&&!(events_.keyPress.upHold=0)) )
 "418
-[e :U 467 ]
-[; ;main.c: 419: switch( menuInfoMain_.select ) {
+[e $ ! && != -> . . . _events_ 0 1 4 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 4 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 461  ]
+[; ;main.c: 419: events_.keyPress.up=1 ;
 "419
-[e $U 469  ]
-{
-[; ;main.c: 420: case MENU_ITEM_MAIN_BEAT_COUNT:
-"420
-[e :U 470 ]
-[; ;main.c: 421: machineState_ = STATE_ADJUST_BEAT_COUNT ;
+[e = . . . _events_ 0 1 0 -> -> 1 `i `uc ]
+[e :U 461 ]
+[; ;main.c: 421: if( (events_.keyPress.downHold&&!(events_.keyPress.downHold=0)) )
 "421
-[e = _machineState_ . `E2963 5 ]
-[; ;main.c: 422: break ;
+[e $ ! && != -> . . . _events_ 0 1 5 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 5 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 462  ]
+[; ;main.c: 422: events_.keyPress.down=1 ;
 "422
-[e $U 468  ]
-[; ;main.c: 424: case MENU_ITEM_MAIN_TONE_MENU:
+[e = . . . _events_ 0 1 1 -> -> 1 `i `uc ]
+[e :U 462 ]
+[; ;main.c: 424: if( events_.keyPress.byte ) {
 "424
-[e :U 471 ]
-[; ;main.c: 425: machineState_ = STATE_MENU_TONE ;
-"425
-[e = _machineState_ . `E2963 3 ]
-[; ;main.c: 426: menuInfoTone_.select = 0 ;
-"426
-[e = . _menuInfoTone_ 0 -> -> 0 `i `uc ]
-[; ;main.c: 427: menuInfoTone_.cursorPosition = 0 ;
-"427
-[e = . _menuInfoTone_ 1 -> -> 0 `i `uc ]
-[; ;main.c: 428: break ;
-"428
-[e $U 468  ]
-[; ;main.c: 430: case MENU_ITEM_MAIN_ADJUST_DURATION:
-"430
-[e :U 472 ]
-[; ;main.c: 431: machineState_ = STATE_MENU_DURATION ;
-"431
-[e = _machineState_ . `E2963 4 ]
-[; ;main.c: 432: menuInfoDuration_.select = 0 ;
-"432
-[e = . _menuInfoDuration_ 0 -> -> 0 `i `uc ]
-[; ;main.c: 433: menuInfoDuration_.cursorPosition = 0 ;
-"433
-[e = . _menuInfoDuration_ 1 -> -> 0 `i `uc ]
-[; ;main.c: 434: break ;
-"434
-[e $U 468  ]
-[; ;main.c: 436: case MENU_ITEM_MAIN_PULSE_WIDTH:
-"436
-[e :U 473 ]
-[; ;main.c: 437: machineState_ = STATE_ADJUST_PULSE_WIDTH ;
-"437
-[e = _machineState_ . `E2963 8 ]
-[; ;main.c: 438: break ;
-"438
-[e $U 468  ]
-[; ;main.c: 440: case MENU_ITEM_MAIN_ADJUST_OSCILLATOR_TUNE:
-"440
-[e :U 474 ]
-[; ;main.c: 441: machineState_ = STATE_ADJUST_OSCILLATOR_TUNE ;
-"441
-[e = _machineState_ . `E2963 10 ]
-[; ;main.c: 442: break ;
-"442
-[e $U 468  ]
-[; ;main.c: 444: case MENU_ITEM_MAIN_INFORMATION:
-"444
-[e :U 475 ]
-[; ;main.c: 445: machineState_ = STATE_INFORMATION ;
-"445
-[e = _machineState_ . `E2963 11 ]
-[; ;main.c: 446: break ;
-"446
-[e $U 468  ]
-[; ;main.c: 448: case MENU_ITEM_MAIN_LOAD_CONFIGURATION:
-"448
-[e :U 476 ]
-[; ;main.c: 449: machineState_ = STATE_CONFIRM_LOAD ;
-"449
-[e = _machineState_ . `E2963 14 ]
-[; ;main.c: 450: menuInfoConfirmLoad_.select = 0 ;
-"450
-[e = . _menuInfoConfirmLoad_ 0 -> -> 0 `i `uc ]
-[; ;main.c: 451: menuInfoConfirmLoad_.cursorPosition = 0 ;
-"451
-[e = . _menuInfoConfirmLoad_ 1 -> -> 0 `i `uc ]
-[; ;main.c: 452: break ;
-"452
-[e $U 468  ]
-[; ;main.c: 454: case MENU_ITEM_MAIN_SAVE_CONFIGURATION:
-"454
-[e :U 477 ]
-[; ;main.c: 455: machineState_ = STATE_CONFIRM_SAVE ;
-"455
-[e = _machineState_ . `E2963 12 ]
-[; ;main.c: 456: menuInfoConfirmSave_.select = 0 ;
-"456
-[e = . _menuInfoConfirmSave_ 0 -> -> 0 `i `uc ]
-[; ;main.c: 457: menuInfoConfirmSave_.cursorPosition = 0 ;
-"457
-[e = . _menuInfoConfirmSave_ 1 -> -> 0 `i `uc ]
-[; ;main.c: 458: break ;
-"458
-[e $U 468  ]
-[; ;main.c: 460: case MENU_ITEM_MAIN_RESET:
-"460
-[e :U 478 ]
-[; ;main.c: 461: machineState_ = STATE_CONFIRM_RESET ;
-"461
-[e = _machineState_ . `E2963 16 ]
-[; ;main.c: 462: menuInfoConfirmReset_.select = 0 ;
-"462
-[e = . _menuInfoConfirmReset_ 0 -> -> 0 `i `uc ]
-[; ;main.c: 463: menuInfoConfirmReset_.cursorPosition = 0 ;
-"463
-[e = . _menuInfoConfirmReset_ 1 -> -> 0 `i `uc ]
-[; ;main.c: 464: break ;
-"464
-[e $U 468  ]
-[; ;main.c: 466: case MENU_ITEM_MAIN_RETURN:
-"466
-[e :U 479 ]
-[; ;main.c: 467: default:
-"467
-[e :U 480 ]
-[; ;main.c: 468: machineState_ = STATE_METRONOME ;
-"468
-[e = _machineState_ . `E2963 1 ]
-[; ;main.c: 469: break ;
-"469
-[e $U 468  ]
-"471
-}
-[; ;main.c: 471: }
-[e $U 468  ]
-"419
-[e :U 469 ]
-[e [\ . _menuInfoMain_ 0 , $ -> . `E2900 1 `uc 470
- , $ -> . `E2900 2 `uc 471
- , $ -> . `E2900 3 `uc 472
- , $ -> . `E2900 4 `uc 473
- , $ -> . `E2900 5 `uc 474
- , $ -> . `E2900 8 `uc 475
- , $ -> . `E2900 6 `uc 476
- , $ -> . `E2900 7 `uc 477
- , $ -> . `E2900 9 `uc 478
- , $ -> . `E2900 0 `uc 479
- 480 ]
-"471
-[e :U 468 ]
-[; ;main.c: 472: break ;
-"472
-[e $U 464  ]
-[; ;main.c: 474: case STATE_MENU_TONE:
-"474
-[e :U 481 ]
-[; ;main.c: 475: if( menuInfoTone_.select == MENU_ITEM_TONE_RETURN )
-"475
-[e $ ! == -> . _menuInfoTone_ 0 `i -> . `E2912 0 `i 482  ]
-[; ;main.c: 476: machineState_ = STATE_MENU_MAIN ;
-"476
-[e = _machineState_ . `E2963 2 ]
-[e $U 483  ]
-"477
-[e :U 482 ]
-[; ;main.c: 477: else
-[; ;main.c: 478: machineState_ = STATE_ADJUST_TONE ;
-"478
-[e = _machineState_ . `E2963 9 ]
-[e :U 483 ]
-[; ;main.c: 479: break ;
-"479
-[e $U 464  ]
-[; ;main.c: 481: case STATE_MENU_DURATION:
-"481
-[e :U 484 ]
-[; ;main.c: 482: switch( currentMenuInfoPtr_->select ) {
-"482
-[e $U 486  ]
+[e $ ! != -> . . _events_ 0 0 `i -> -> -> 0 `i `uc `i 463  ]
 {
-[; ;main.c: 483: case MENU_ITEM_DURATION_ADJUST_CLICK:
-"483
-[e :U 487 ]
-[; ;main.c: 484: machineState_ = STATE_ADJUST_DURATION_CLICK ;
-"484
-[e = _machineState_ . `E2963 6 ]
-[; ;main.c: 485: break ;
-"485
-[e $U 485  ]
-[; ;main.c: 487: case MENU_ITEM_DURATION_ADJUST_KEY:
-"487
-[e :U 488 ]
-[; ;main.c: 488: machineState_ = STATE_ADJUST_DURATION_KEY ;
-"488
-[e = _machineState_ . `E2963 7 ]
-[; ;main.c: 489: break ;
-"489
-[e $U 485  ]
-[; ;main.c: 491: case MENU_ITEM_DURATION_RETURN:
-"491
-[e :U 489 ]
-[; ;main.c: 492: default:
-"492
-[e :U 490 ]
-[; ;main.c: 493: machineState_ = STATE_MENU_MAIN ;
-"493
-[e = _machineState_ . `E2963 2 ]
-[; ;main.c: 494: break ;
-"494
-[e $U 485  ]
-"496
-}
-[; ;main.c: 496: }
-[e $U 485  ]
-"482
-[e :U 486 ]
-[e [\ . *U _currentMenuInfoPtr_ 0 , $ -> . `E2918 1 `uc 487
- , $ -> . `E2918 2 `uc 488
- , $ -> . `E2918 0 `uc 489
- 490 ]
-"496
-[e :U 485 ]
-[; ;main.c: 497: break ;
-"497
-[e $U 464  ]
-[; ;main.c: 499: case STATE_CONFIRM_LOAD:
-"499
-[e :U 491 ]
-[; ;main.c: 500: if( menuInfoConfirmLoad_.select )
-"500
-[e $ ! != -> . _menuInfoConfirmLoad_ 0 `i -> -> -> 0 `i `uc `i 492  ]
-[; ;main.c: 501: machineState_ = STATE_LOAD ;
-"501
-[e = _machineState_ . `E2963 15 ]
-[e $U 493  ]
-"502
-[e :U 492 ]
-[; ;main.c: 502: else
-[; ;main.c: 503: machineState_ = STATE_MENU_MAIN ;
-"503
-[e = _machineState_ . `E2963 2 ]
-[e :U 493 ]
-[; ;main.c: 504: break ;
-"504
-[e $U 464  ]
-[; ;main.c: 506: case STATE_CONFIRM_SAVE:
-"506
-[e :U 494 ]
-[; ;main.c: 507: if( menuInfoConfirmSave_.select )
-"507
-[e $ ! != -> . _menuInfoConfirmSave_ 0 `i -> -> -> 0 `i `uc `i 495  ]
-[; ;main.c: 508: machineState_ = STATE_SAVE ;
-"508
-[e = _machineState_ . `E2963 13 ]
-[e $U 496  ]
-"509
-[e :U 495 ]
-[; ;main.c: 509: else
-[; ;main.c: 510: machineState_ = STATE_MENU_MAIN ;
-"510
-[e = _machineState_ . `E2963 2 ]
-[e :U 496 ]
-[; ;main.c: 511: break ;
-"511
-[e $U 464  ]
-[; ;main.c: 513: case STATE_CONFIRM_RESET:
-"513
-[e :U 497 ]
-[; ;main.c: 514: if( menuInfoConfirmReset_.select )
-"514
-[e $ ! != -> . _menuInfoConfirmReset_ 0 `i -> -> -> 0 `i `uc `i 498  ]
-[; ;main.c: 515: machineState_ = STATE_RESET ;
-"515
-[e = _machineState_ . `E2963 18 ]
-[e $U 499  ]
-"516
-[e :U 498 ]
-[; ;main.c: 516: else
-[; ;main.c: 517: machineState_ = STATE_MENU_MAIN ;
-"517
-[e = _machineState_ . `E2963 2 ]
-[e :U 499 ]
-[; ;main.c: 518: break ;
-"518
-[e $U 464  ]
-[; ;main.c: 520: case STATE_ADJUST_BEAT_COUNT:
-"520
-[e :U 500 ]
-"521
-[e :U 501 ]
-"522
-[e :U 502 ]
-[; ;main.c: 521: case STATE_ADJUST_PULSE_WIDTH:
-[; ;main.c: 522: case STATE_INFORMATION:
-[; ;main.c: 523: machineState_ = STATE_MENU_MAIN ;
-"523
-[e = _machineState_ . `E2963 2 ]
-[; ;main.c: 524: break ;
-"524
-[e $U 464  ]
-[; ;main.c: 526: case STATE_ADJUST_DURATION_CLICK:
-"526
-[e :U 503 ]
-"527
-[e :U 504 ]
-[; ;main.c: 527: case STATE_ADJUST_DURATION_KEY:
-[; ;main.c: 528: machineState_ = STATE_MENU_DURATION ;
-"528
-[e = _machineState_ . `E2963 4 ]
-[; ;main.c: 529: break ;
-"529
-[e $U 464  ]
-[; ;main.c: 531: case STATE_ADJUST_OSCILLATOR_TUNE:
-"531
-[e :U 505 ]
-[; ;main.c: 532: machineState_ = STATE_MENU_MAIN ;
-"532
-[e = _machineState_ . `E2963 2 ]
-[; ;main.c: 533: events_.output.soundOff=1 ;
-"533
-[e = . . . _events_ 1 1 5 -> -> 1 `i `uc ]
-[; ;main.c: 534: break ;
-"534
-[e $U 464  ]
-[; ;main.c: 536: case STATE_ADJUST_TONE:
-"536
-[e :U 506 ]
-[; ;main.c: 537: machineState_ = STATE_MENU_TONE ;
-"537
-[e = _machineState_ . `E2963 3 ]
-[; ;main.c: 538: events_.output.soundOff=1 ;
-"538
-[e = . . . _events_ 1 1 5 -> -> 1 `i `uc ]
-[; ;main.c: 539: break ;
-"539
-[e $U 464  ]
-[; ;main.c: 541: case STATE_ERROR:
-"541
-[e :U 507 ]
-[; ;main.c: 542: machineError_ = ERROR_NONE ;
-"542
-[e = _machineError_ . `E2986 0 ]
-[; ;main.c: 543: case STATE_INITIALIZE:
-"543
-[e :U 508 ]
-[; ;main.c: 544: machineState_ = STATE_METRONOME ;
-"544
-[e = _machineState_ . `E2963 1 ]
-[; ;main.c: 545: events_.output.resetMetronome=1 ;
-"545
-[e = . . . _events_ 1 1 6 -> -> 1 `i `uc ]
-[; ;main.c: 546: break ;
-"546
-[e $U 464  ]
-"548
-}
-[; ;main.c: 548: }
-[e $U 464  ]
-"410
-[e :U 465 ]
-[e [\ _machineState_ , $ . `E2963 1 466
- , $ . `E2963 2 467
- , $ . `E2963 3 481
- , $ . `E2963 4 484
- , $ . `E2963 14 491
- , $ . `E2963 12 494
- , $ . `E2963 16 497
- , $ . `E2963 5 500
- , $ . `E2963 8 501
- , $ . `E2963 11 502
- , $ . `E2963 6 503
- , $ . `E2963 7 504
- , $ . `E2963 10 505
- , $ . `E2963 9 506
- , $ . `E2963 19 507
- , $ . `E2963 17 508
- 464 ]
-"548
-[e :U 464 ]
-"550
+[; ;main.c: 425: events_.sound.key=1 ;
+"425
+[e = . . . _events_ 2 1 2 -> -> 1 `i `uc ]
+"426
 }
 [e :U 463 ]
-[; ;main.c: 550: }
-[; ;main.c: 553: if( machineError_ && machineState_ != STATE_ERROR ) {
-"553
-[e $ ! && != -> _machineError_ `i -> -> -> 0 `i `E2986 `i != -> _machineState_ `i -> . `E2963 19 `i 509  ]
+[; ;main.c: 426: }
+[; ;main.c: 429: if( (events_.keyPress.bothUpDown&&!(events_.keyPress.bothUpDown=0)) ) {
+"429
+[e $ ! && != -> . . . _events_ 0 1 3 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 464  ]
 {
-[; ;main.c: 554: machineState_ = STATE_ERROR ;
-"554
-[e = _machineState_ . `E2963 19 ]
-[; ;main.c: 555: events_.output.byte = 0x00 ;
-"555
-[e = . . _events_ 1 0 -> -> 0 `i `uc ]
-[; ;main.c: 556: events_.output.changeState=1 ;
-"556
-[e = . . . _events_ 1 1 0 -> -> 1 `i `uc ]
-"557
+[; ;main.c: 430: if( machineState_ == STATE_METRONOME ) {
+"430
+[e $ ! == -> _machineState_ `i -> . `E2960 1 `i 465  ]
+{
+[; ;main.c: 431: {if(soundState_.isUserMute){soundState_.isUserMute=0;}else{soundState_.isUserMute=1;}} ;
+"431
+{
+[e $ ! != -> . . _soundState_ 1 0 `i -> -> -> 0 `i `uc `i 466  ]
+{
+[e = . . _soundState_ 1 0 -> -> 0 `i `uc ]
 }
-[e :U 509 ]
-[; ;main.c: 557: }
-[; ;main.c: 560: if( (events_.output.changeState&&!(events_.output.changeState=0)) ) {
-"560
-[e $ ! && != -> . . . _events_ 1 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 510  ]
+[e $U 467  ]
+[e :U 466 ]
 {
-[; ;main.c: 562: events_.output.changeMessage=1 ;
-"562
+[e = . . _soundState_ 1 0 -> -> 1 `i `uc ]
+}
+[e :U 467 ]
+}
+[; ;main.c: 432: events_.output.changeMessage=1 ;
+"432
 [e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
-[; ;main.c: 564: switch( machineState_ ) {
-"564
-[e $U 512  ]
+"433
+}
+[e :U 465 ]
+"434
+}
+[e :U 464 ]
+[; ;main.c: 433: }
+[; ;main.c: 434: }
+[; ;main.c: 437: if( (events_.keyPress.menu&&!(events_.keyPress.menu=0)) ) {
+"437
+[e $ ! && != -> . . . _events_ 0 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 468  ]
 {
-[; ;main.c: 565: case STATE_METRONOME:
+[; ;main.c: 438: events_.output.changeState=1 ;
+"438
+[e = . . . _events_ 1 1 0 -> -> 1 `i `uc ]
+[; ;main.c: 440: switch( machineState_ ) {
+"440
+[e $U 470  ]
+{
+[; ;main.c: 442: case STATE_METRONOME:
+"442
+[e :U 471 ]
+[; ;main.c: 443: machineState_ = STATE_MENU_MAIN ;
+"443
+[e = _machineState_ . `E2960 2 ]
+[; ;main.c: 444: menuInfoMain_.select = 0 ;
+"444
+[e = . _menuInfoMain_ 0 -> -> 0 `i `uc ]
+[; ;main.c: 445: menuInfoMain_.cursorPosition = 0 ;
+"445
+[e = . _menuInfoMain_ 1 -> -> 0 `i `uc ]
+[; ;main.c: 446: break ;
+"446
+[e $U 469  ]
+[; ;main.c: 448: case STATE_MENU_MAIN:
+"448
+[e :U 472 ]
+[; ;main.c: 449: switch( menuInfoMain_.select ) {
+"449
+[e $U 474  ]
+{
+[; ;main.c: 450: case MENU_ITEM_MAIN_BEAT_COUNT:
+"450
+[e :U 475 ]
+[; ;main.c: 451: machineState_ = STATE_ADJUST_VALUE ;
+"451
+[e = _machineState_ . `E2960 5 ]
+[; ;main.c: 452: currentValueInfoPtr_ = &valueInfoBeatCount_ ;
+"452
+[e = _currentValueInfoPtr_ &U _valueInfoBeatCount_ ]
+[; ;main.c: 453: break ;
+"453
+[e $U 473  ]
+[; ;main.c: 455: case MENU_ITEM_MAIN_TONE_MENU:
+"455
+[e :U 476 ]
+[; ;main.c: 456: machineState_ = STATE_MENU_TONE ;
+"456
+[e = _machineState_ . `E2960 3 ]
+[; ;main.c: 457: menuInfoTone_.select = 0 ;
+"457
+[e = . _menuInfoTone_ 0 -> -> 0 `i `uc ]
+[; ;main.c: 458: menuInfoTone_.cursorPosition = 0 ;
+"458
+[e = . _menuInfoTone_ 1 -> -> 0 `i `uc ]
+[; ;main.c: 459: break ;
+"459
+[e $U 473  ]
+[; ;main.c: 461: case MENU_ITEM_MAIN_ADJUST_DURATION:
+"461
+[e :U 477 ]
+[; ;main.c: 462: machineState_ = STATE_MENU_DURATION ;
+"462
+[e = _machineState_ . `E2960 4 ]
+[; ;main.c: 463: menuInfoDuration_.select = 0 ;
+"463
+[e = . _menuInfoDuration_ 0 -> -> 0 `i `uc ]
+[; ;main.c: 464: menuInfoDuration_.cursorPosition = 0 ;
+"464
+[e = . _menuInfoDuration_ 1 -> -> 0 `i `uc ]
+[; ;main.c: 465: break ;
+"465
+[e $U 473  ]
+[; ;main.c: 467: case MENU_ITEM_MAIN_PULSE_WIDTH:
+"467
+[e :U 478 ]
+[; ;main.c: 468: currentValueInfoPtr_ = &valueInfoPulseWidth_ ;
+"468
+[e = _currentValueInfoPtr_ &U _valueInfoPulseWidth_ ]
+[; ;main.c: 469: machineState_ = STATE_ADJUST_VALUE ;
+"469
+[e = _machineState_ . `E2960 5 ]
+[; ;main.c: 470: break ;
+"470
+[e $U 473  ]
+[; ;main.c: 472: case MENU_ITEM_MAIN_ADJUST_OSCILLATOR_TUNE:
+"472
+[e :U 479 ]
+[; ;main.c: 473: machineState_ = STATE_ADJUST_OSCILLATOR_TUNE ;
+"473
+[e = _machineState_ . `E2960 6 ]
+[; ;main.c: 474: break ;
+"474
+[e $U 473  ]
+[; ;main.c: 476: case MENU_ITEM_MAIN_INFORMATION:
+"476
+[e :U 480 ]
+[; ;main.c: 477: machineState_ = STATE_INFORMATION ;
+"477
+[e = _machineState_ . `E2960 7 ]
+[; ;main.c: 478: break ;
+"478
+[e $U 473  ]
+[; ;main.c: 480: case MENU_ITEM_MAIN_LOAD_CONFIGURATION:
+"480
+[e :U 481 ]
+[; ;main.c: 481: machineState_ = STATE_CONFIRM ;
+"481
+[e = _machineState_ . `E2960 8 ]
+[; ;main.c: 482: confirmationLoad_.isSelectYes = BOOL_FALSE ;
+"482
+[e = . _confirmationLoad_ 0 . `E2778 0 ]
+[; ;main.c: 483: currentConfirmationInfoPtr_ = &confirmationLoad_ ;
+"483
+[e = _currentConfirmationInfoPtr_ &U _confirmationLoad_ ]
+[; ;main.c: 484: break ;
+"484
+[e $U 473  ]
+[; ;main.c: 486: case MENU_ITEM_MAIN_SAVE_CONFIGURATION:
+"486
+[e :U 482 ]
+[; ;main.c: 487: machineState_ = STATE_CONFIRM ;
+"487
+[e = _machineState_ . `E2960 8 ]
+[; ;main.c: 488: ConfirmationSave_.isSelectYes = BOOL_FALSE ;
+"488
+[e = . _ConfirmationSave_ 0 . `E2778 0 ]
+[; ;main.c: 489: currentConfirmationInfoPtr_ = &ConfirmationSave_ ;
+"489
+[e = _currentConfirmationInfoPtr_ &U _ConfirmationSave_ ]
+[; ;main.c: 490: break ;
+"490
+[e $U 473  ]
+[; ;main.c: 492: case MENU_ITEM_MAIN_RESET:
+"492
+[e :U 483 ]
+[; ;main.c: 493: machineState_ = STATE_CONFIRM ;
+"493
+[e = _machineState_ . `E2960 8 ]
+[; ;main.c: 494: confirmationReset_.isSelectYes = BOOL_FALSE ;
+"494
+[e = . _confirmationReset_ 0 . `E2778 0 ]
+[; ;main.c: 495: currentConfirmationInfoPtr_ = &confirmationReset_ ;
+"495
+[e = _currentConfirmationInfoPtr_ &U _confirmationReset_ ]
+[; ;main.c: 496: break ;
+"496
+[e $U 473  ]
+[; ;main.c: 498: case MENU_ITEM_MAIN_RETURN:
+"498
+[e :U 484 ]
+[; ;main.c: 499: default:
+"499
+[e :U 485 ]
+[; ;main.c: 500: machineState_ = STATE_METRONOME ;
+"500
+[e = _machineState_ . `E2960 1 ]
+[; ;main.c: 501: break ;
+"501
+[e $U 473  ]
+"503
+}
+[; ;main.c: 503: }
+[e $U 473  ]
+"449
+[e :U 474 ]
+[e [\ . _menuInfoMain_ 0 , $ -> . `E2900 1 `uc 475
+ , $ -> . `E2900 2 `uc 476
+ , $ -> . `E2900 3 `uc 477
+ , $ -> . `E2900 4 `uc 478
+ , $ -> . `E2900 5 `uc 479
+ , $ -> . `E2900 8 `uc 480
+ , $ -> . `E2900 6 `uc 481
+ , $ -> . `E2900 7 `uc 482
+ , $ -> . `E2900 9 `uc 483
+ , $ -> . `E2900 0 `uc 484
+ 485 ]
+"503
+[e :U 473 ]
+[; ;main.c: 504: break ;
+"504
+[e $U 469  ]
+[; ;main.c: 506: case STATE_MENU_TONE:
+"506
+[e :U 486 ]
+[; ;main.c: 507: if( menuInfoTone_.select == MENU_ITEM_TONE_RETURN )
+"507
+[e $ ! == -> . _menuInfoTone_ 0 `i -> . `E2912 0 `i 487  ]
+[; ;main.c: 508: machineState_ = STATE_MENU_MAIN ;
+"508
+[e = _machineState_ . `E2960 2 ]
+[e $U 488  ]
+"509
+[e :U 487 ]
+[; ;main.c: 509: else {
+{
+[; ;main.c: 510: machineState_ = STATE_ADJUST_VALUE ;
+"510
+[e = _machineState_ . `E2960 5 ]
+[; ;main.c: 511: currentValueInfoPtr_ = &valueInfoTone_[ menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 ] ;
+"511
+[e = _currentValueInfoPtr_ &U *U + &U _valueInfoTone_ * -> -> - -> . _menuInfoTone_ 0 `i -> . `E2912 1 `i `ui `ux -> -> # *U &U _valueInfoTone_ `ui `ux ]
+"512
+}
+[e :U 488 ]
+[; ;main.c: 512: }
+[; ;main.c: 513: break ;
+"513
+[e $U 469  ]
+[; ;main.c: 515: case STATE_MENU_DURATION:
+"515
+[e :U 489 ]
+[; ;main.c: 516: switch( currentMenuInfoPtr_->select ) {
+"516
+[e $U 491  ]
+{
+[; ;main.c: 517: case MENU_ITEM_DURATION_ADJUST_CLICK:
+"517
+[e :U 492 ]
+[; ;main.c: 518: machineState_ = STATE_ADJUST_VALUE ;
+"518
+[e = _machineState_ . `E2960 5 ]
+[; ;main.c: 519: currentValueInfoPtr_ = &valueInfoDurationClick_ ;
+"519
+[e = _currentValueInfoPtr_ &U _valueInfoDurationClick_ ]
+[; ;main.c: 520: break ;
+"520
+[e $U 490  ]
+[; ;main.c: 522: case MENU_ITEM_DURATION_ADJUST_KEY:
+"522
+[e :U 493 ]
+[; ;main.c: 523: machineState_ = STATE_ADJUST_VALUE ;
+"523
+[e = _machineState_ . `E2960 5 ]
+[; ;main.c: 524: currentValueInfoPtr_ = &valueInfoDurationKey_ ;
+"524
+[e = _currentValueInfoPtr_ &U _valueInfoDurationKey_ ]
+[; ;main.c: 525: break ;
+"525
+[e $U 490  ]
+[; ;main.c: 527: case MENU_ITEM_DURATION_RETURN:
+"527
+[e :U 494 ]
+[; ;main.c: 528: default:
+"528
+[e :U 495 ]
+[; ;main.c: 529: machineState_ = STATE_MENU_MAIN ;
+"529
+[e = _machineState_ . `E2960 2 ]
+[; ;main.c: 530: break ;
+"530
+[e $U 490  ]
+"532
+}
+[; ;main.c: 532: }
+[e $U 490  ]
+"516
+[e :U 491 ]
+[e [\ . *U _currentMenuInfoPtr_ 0 , $ -> . `E2918 1 `uc 492
+ , $ -> . `E2918 2 `uc 493
+ , $ -> . `E2918 0 `uc 494
+ 495 ]
+"532
+[e :U 490 ]
+[; ;main.c: 533: break ;
+"533
+[e $U 469  ]
+[; ;main.c: 535: case STATE_CONFIRM:
+"535
+[e :U 496 ]
+[; ;main.c: 536: if( currentConfirmationInfoPtr_->isSelectYes )
+"536
+[e $ ! != -> . *U _currentConfirmationInfoPtr_ 0 `i -> -> -> 0 `i `E2778 `i 497  ]
+[; ;main.c: 537: machineState_ = currentConfirmationInfoPtr_->stateYes ;
+"537
+[e = _machineState_ . *U _currentConfirmationInfoPtr_ 1 ]
+[e $U 498  ]
+"538
+[e :U 497 ]
+[; ;main.c: 538: else
+[; ;main.c: 539: machineState_ = currentConfirmationInfoPtr_->stateNo ;
+"539
+[e = _machineState_ . *U _currentConfirmationInfoPtr_ 2 ]
+[e :U 498 ]
+[; ;main.c: 540: break ;
+"540
+[e $U 469  ]
+[; ;main.c: 542: case STATE_INFORMATION:
+"542
+[e :U 499 ]
+[; ;main.c: 543: machineError_ = STATE_MENU_MAIN ;
+"543
+[e = _machineError_ . `E2960 2 ]
+[; ;main.c: 544: break ;
+"544
+[e $U 469  ]
+[; ;main.c: 546: case STATE_ADJUST_VALUE:
+"546
+[e :U 500 ]
+[; ;main.c: 547: machineState_ = currentValueInfoPtr_->parentState ;
+"547
+[e = _machineState_ . *U _currentValueInfoPtr_ 1 ]
+[; ;main.c: 548: break ;
+"548
+[e $U 469  ]
+[; ;main.c: 550: case STATE_ADJUST_OSCILLATOR_TUNE:
+"550
+[e :U 501 ]
+[; ;main.c: 551: machineState_ = STATE_MENU_MAIN ;
+"551
+[e = _machineState_ . `E2960 2 ]
+[; ;main.c: 552: soundState_.isBusy = BOOL_FALSE ;
+"552
+[e = . . _soundState_ 1 2 -> . `E2778 0 `uc ]
+[; ;main.c: 553: events_.sound.off=1 ;
+"553
+[e = . . . _events_ 2 1 0 -> -> 1 `i `uc ]
+[; ;main.c: 554: break ;
+"554
+[e $U 469  ]
+[; ;main.c: 556: case STATE_ERROR:
+"556
+[e :U 502 ]
+[; ;main.c: 557: machineError_ = ERROR_NONE ;
+"557
+[e = _machineError_ . `E2977 0 ]
+[; ;main.c: 558: case STATE_INITIALIZE:
+"558
+[e :U 503 ]
+[; ;main.c: 559: machineState_ = STATE_METRONOME ;
+"559
+[e = _machineState_ . `E2960 1 ]
+[; ;main.c: 560: events_.output.resetMetronome=1 ;
+"560
+[e = . . . _events_ 1 1 3 -> -> 1 `i `uc ]
+[; ;main.c: 561: break ;
+"561
+[e $U 469  ]
+"563
+}
+[; ;main.c: 563: }
+[e $U 469  ]
+"440
+[e :U 470 ]
+[e [\ _machineState_ , $ . `E2960 1 471
+ , $ . `E2960 2 472
+ , $ . `E2960 3 486
+ , $ . `E2960 4 489
+ , $ . `E2960 8 496
+ , $ . `E2960 7 499
+ , $ . `E2960 5 500
+ , $ . `E2960 6 501
+ , $ . `E2960 13 502
+ , $ . `E2960 11 503
+ 469 ]
+"563
+[e :U 469 ]
 "565
-[e :U 513 ]
-[; ;main.c: 566: currentValueInfoPtr_ = &valueInfoTempo_ ;
-"566
-[e = _currentValueInfoPtr_ &U _valueInfoTempo_ ]
-[; ;main.c: 567: break ;
-"567
-[e $U 511  ]
-[; ;main.c: 569: case STATE_MENU_MAIN:
+}
+[e :U 468 ]
+[; ;main.c: 565: }
+[; ;main.c: 568: if( machineError_ && machineState_ != STATE_ERROR ) {
+"568
+[e $ ! && != -> _machineError_ `i -> -> -> 0 `i `E2977 `i != -> _machineState_ `i -> . `E2960 13 `i 504  ]
+{
+[; ;main.c: 569: machineState_ = STATE_ERROR ;
 "569
-[e :U 514 ]
-[; ;main.c: 570: currentMenuInfoPtr_ = &menuInfoMain_ ;
+[e = _machineState_ . `E2960 13 ]
+[; ;main.c: 570: events_.output.byte = 0x00 ;
 "570
-[e = _currentMenuInfoPtr_ &U _menuInfoMain_ ]
-[; ;main.c: 571: break ;
+[e = . . _events_ 1 0 -> -> 0 `i `uc ]
+[; ;main.c: 571: events_.output.changeState=1 ;
 "571
-[e $U 511  ]
-[; ;main.c: 573: case STATE_MENU_TONE:
-"573
-[e :U 515 ]
-[; ;main.c: 574: currentMenuInfoPtr_ = &menuInfoTone_ ;
-"574
-[e = _currentMenuInfoPtr_ &U _menuInfoTone_ ]
-[; ;main.c: 575: break ;
+[e = . . . _events_ 1 1 0 -> -> 1 `i `uc ]
+"572
+}
+[e :U 504 ]
+[; ;main.c: 572: }
+[; ;main.c: 575: if( (events_.output.changeState&&!(events_.output.changeState=0)) ) {
 "575
-[e $U 511  ]
-[; ;main.c: 577: case STATE_MENU_DURATION:
+[e $ ! && != -> . . . _events_ 1 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 505  ]
+{
+[; ;main.c: 577: events_.output.changeMessage=1 ;
 "577
-[e :U 516 ]
-[; ;main.c: 578: currentMenuInfoPtr_ = &menuInfoDuration_ ;
-"578
-[e = _currentMenuInfoPtr_ &U _menuInfoDuration_ ]
-[; ;main.c: 579: break ;
+[e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
+[; ;main.c: 579: switch( machineState_ ) {
 "579
-[e $U 511  ]
-[; ;main.c: 581: case STATE_CONFIRM_LOAD:
+[e $U 507  ]
+{
+[; ;main.c: 580: case STATE_METRONOME:
+"580
+[e :U 508 ]
+[; ;main.c: 581: currentValueInfoPtr_ = &valueInfoTempo_ ;
 "581
-[e :U 517 ]
-[; ;main.c: 582: currentMenuInfoPtr_ = &menuInfoConfirmLoad_ ;
+[e = _currentValueInfoPtr_ &U _valueInfoTempo_ ]
+[; ;main.c: 582: soundState_.isSystemMute = BOOL_FALSE ;
 "582
-[e = _currentMenuInfoPtr_ &U _menuInfoConfirmLoad_ ]
+[e = . . _soundState_ 1 1 -> . `E2778 0 `uc ]
 [; ;main.c: 583: break ;
 "583
-[e $U 511  ]
-[; ;main.c: 585: case STATE_CONFIRM_SAVE:
+[e $U 506  ]
+[; ;main.c: 585: case STATE_MENU_MAIN:
 "585
-[e :U 518 ]
-[; ;main.c: 586: currentMenuInfoPtr_ = &menuInfoConfirmSave_ ;
+[e :U 509 ]
+[; ;main.c: 586: currentMenuInfoPtr_ = &menuInfoMain_ ;
 "586
-[e = _currentMenuInfoPtr_ &U _menuInfoConfirmSave_ ]
+[e = _currentMenuInfoPtr_ &U _menuInfoMain_ ]
 [; ;main.c: 587: break ;
 "587
-[e $U 511  ]
-[; ;main.c: 589: case STATE_CONFIRM_RESET:
+[e $U 506  ]
+[; ;main.c: 589: case STATE_MENU_TONE:
 "589
-[e :U 519 ]
-[; ;main.c: 590: currentMenuInfoPtr_ = &menuInfoConfirmReset_ ;
+[e :U 510 ]
+[; ;main.c: 590: currentMenuInfoPtr_ = &menuInfoTone_ ;
 "590
-[e = _currentMenuInfoPtr_ &U _menuInfoConfirmReset_ ]
+[e = _currentMenuInfoPtr_ &U _menuInfoTone_ ]
 [; ;main.c: 591: break ;
 "591
-[e $U 511  ]
-[; ;main.c: 593: case STATE_ADJUST_BEAT_COUNT:
+[e $U 506  ]
+[; ;main.c: 593: case STATE_MENU_DURATION:
 "593
-[e :U 520 ]
-[; ;main.c: 594: currentValueInfoPtr_ = &valueInfoBeatCount_ ;
+[e :U 511 ]
+[; ;main.c: 594: currentMenuInfoPtr_ = &menuInfoDuration_ ;
 "594
-[e = _currentValueInfoPtr_ &U _valueInfoBeatCount_ ]
+[e = _currentMenuInfoPtr_ &U _menuInfoDuration_ ]
 [; ;main.c: 595: break ;
 "595
-[e $U 511  ]
-[; ;main.c: 597: case STATE_ADJUST_DURATION_CLICK:
+[e $U 506  ]
+[; ;main.c: 597: case STATE_ADJUST_OSCILLATOR_TUNE:
 "597
-[e :U 521 ]
-[; ;main.c: 598: currentValueInfoPtr_ = &valueInfoDurationClick_ ;
+[e :U 512 ]
+[; ;main.c: 598: currentValueInfoPtr_ = &valueInfoOscillatorTune_ ;
 "598
-[e = _currentValueInfoPtr_ &U _valueInfoDurationClick_ ]
-[; ;main.c: 599: break ;
+[e = _currentValueInfoPtr_ &U _valueInfoOscillatorTune_ ]
+[; ;main.c: 599: soundState_.isBusy = BOOL_TRUE ;
 "599
-[e $U 511  ]
-[; ;main.c: 601: case STATE_ADJUST_DURATION_KEY:
+[e = . . _soundState_ 1 2 -> . `E2778 1 `uc ]
+[; ;main.c: 600: events_.sound.oscillatorTune=1 ;
+"600
+[e = . . . _events_ 2 1 3 -> -> 1 `i `uc ]
+[; ;main.c: 601: break ;
 "601
-[e :U 522 ]
-[; ;main.c: 602: currentValueInfoPtr_ = &valueInfoDurationKey_ ;
-"602
-[e = _currentValueInfoPtr_ &U _valueInfoDurationKey_ ]
-[; ;main.c: 603: break ;
+[e $U 506  ]
+[; ;main.c: 603: case STATE_INFORMATION:
 "603
-[e $U 511  ]
-[; ;main.c: 605: case STATE_ADJUST_PULSE_WIDTH:
+[e :U 513 ]
+[; ;main.c: 604: menuInfoInformation_.select = 0 ;
+"604
+[e = . _menuInfoInformation_ 0 -> -> 0 `i `uc ]
+[; ;main.c: 605: menuInfoInformation_.cursorPosition = 0 ;
 "605
-[e :U 523 ]
-[; ;main.c: 606: currentValueInfoPtr_ = &valueInfoPulseWidth_ ;
+[e = . _menuInfoInformation_ 1 -> -> 0 `i `uc ]
+[; ;main.c: 606: currentMenuInfoPtr_ = &menuInfoInformation_ ;
 "606
-[e = _currentValueInfoPtr_ &U _valueInfoPulseWidth_ ]
+[e = _currentMenuInfoPtr_ &U _menuInfoInformation_ ]
 [; ;main.c: 607: break ;
 "607
-[e $U 511  ]
-[; ;main.c: 609: case STATE_ADJUST_OSCILLATOR_TUNE:
+[e $U 506  ]
+[; ;main.c: 609: case STATE_BOOT:
 "609
-[e :U 524 ]
-[; ;main.c: 610: currentValueInfoPtr_ = &valueInfoOscillatorTune_ ;
+[e :U 514 ]
 "610
-[e = _currentValueInfoPtr_ &U _valueInfoOscillatorTune_ ]
-[; ;main.c: 611: PR2 = 141 ;
+[e :U 515 ]
 "611
-[e = _PR2 -> -> 141 `i `uc ]
-[; ;main.c: 612: {CCPR4L=(PR2>>1);} ;
+[e :U 516 ]
 "612
-{
-[e = _CCPR4L -> >> -> _PR2 `i -> 1 `i `uc ]
-}
-[; ;main.c: 613: T2CONbits.TMR2ON = 1 ;
+[e :U 517 ]
+[; ;main.c: 610: case STATE_INITIALIZE:
+[; ;main.c: 611: case STATE_LOAD:
+[; ;main.c: 612: case STATE_SAVE:
+[; ;main.c: 613: soundState_.isSystemMute = BOOL_TRUE ;
 "613
-[e = . . _T2CONbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 614: break ;
+[e = . . _soundState_ 1 1 -> . `E2778 1 `uc ]
+[; ;main.c: 614: events_.sound.off=1 ;
 "614
-[e $U 511  ]
-[; ;main.c: 616: case STATE_ADJUST_TONE:
+[e = . . . _events_ 2 1 0 -> -> 1 `i `uc ]
+[; ;main.c: 615: events_.output.accessEeprom=1 ;
+"615
+[e = . . . _events_ 1 1 4 -> -> 1 `i `uc ]
+[; ;main.c: 616: break ;
 "616
-[e :U 525 ]
-[; ;main.c: 617: valueInfoTone_.valuePtr = &configration_.tone[ menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 ] ;
-"617
-[e = . _valueInfoTone_ 0 &U *U + &U . _configration_ 5 * -> -> - -> . _menuInfoTone_ 0 `i -> . `E2912 1 `i `ui `ux -> -> # *U &U . _configration_ 5 `ui `ux ]
-[; ;main.c: 618: currentValueInfoPtr_ = &valueInfoTone_ ;
+[e $U 506  ]
+[; ;main.c: 618: case STATE_RESET:
 "618
-[e = _currentValueInfoPtr_ &U _valueInfoTone_ ]
-[; ;main.c: 619: PR2 = *currentValueInfoPtr_->valuePtr ;
+[e :U 518 ]
+[; ;main.c: 619: ParallelLCD_ClearDisplay( ) ;
 "619
-[e = _PR2 *U . *U _currentValueInfoPtr_ 0 ]
-[; ;main.c: 620: {CCPR4L=(PR2>>configration_.pulseWidth);} ;
+[e ( _ParallelLCD_ClearDisplay ..  ]
+[; ;main.c: 620: asm("reset") ;
 "620
-{
-[e = _CCPR4L -> >> -> _PR2 `i . _configration_ 6 `uc ]
-}
-[; ;main.c: 621: T2CONbits.TMR2ON = 1 ;
-"621
-[e = . . _T2CONbits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 622: break ;
+[; <" reset ;# ">
+[; ;main.c: 622: case STATE_ERROR:
 "622
-[e $U 511  ]
-[; ;main.c: 624: case STATE_INFORMATION:
+[e :U 519 ]
+[; ;main.c: 623: soundState_.isSystemMute = BOOL_TRUE ;
+"623
+[e = . . _soundState_ 1 1 -> . `E2778 1 `uc ]
+[; ;main.c: 624: events_.sound.off=1 ;
 "624
-[e :U 526 ]
-[; ;main.c: 625: menuInfoInformation_.select = 0 ;
+[e = . . . _events_ 2 1 0 -> -> 1 `i `uc ]
+[; ;main.c: 625: switch( machineError_ ) {
 "625
-[e = . _menuInfoInformation_ 0 -> -> 0 `i `uc ]
-[; ;main.c: 626: menuInfoInformation_.cursorPosition = 0 ;
+[e $U 521  ]
+{
+[; ;main.c: 626: case ERROR_EEPROM:
 "626
-[e = . _menuInfoInformation_ 1 -> -> 0 `i `uc ]
-[; ;main.c: 627: currentMenuInfoPtr_ = &menuInfoInformation_ ;
+[e :U 522 ]
+[; ;main.c: 627: currentSingleMessage_ = MESSAGE.ERROR.EEPROM ;
 "627
-[e = _currentMenuInfoPtr_ &U _menuInfoInformation_ ]
+[e = _currentSingleMessage_ -> . . _MESSAGE 3 1 `*Cuc ]
 [; ;main.c: 628: break ;
 "628
-[e $U 511  ]
-[; ;main.c: 630: case STATE_BOOT:
+[e $U 520  ]
+[; ;main.c: 629: case ERROR_INTERRUPT:
+"629
+[e :U 523 ]
+[; ;main.c: 630: currentSingleMessage_ = MESSAGE.ERROR.INTERRUPT ;
 "630
-[e :U 527 ]
-"631
-[e :U 528 ]
-"632
-[e :U 529 ]
-"633
-[e :U 530 ]
-[; ;main.c: 631: case STATE_INITIALIZE:
-[; ;main.c: 632: case STATE_LOAD:
-[; ;main.c: 633: case STATE_SAVE:
-[; ;main.c: 634: events_.output.accessEeprom=1 ;
-"634
-[e = . . . _events_ 1 1 7 -> -> 1 `i `uc ]
-[; ;main.c: 635: break ;
-"635
-[e $U 511  ]
-[; ;main.c: 637: case STATE_RESET:
-"637
-[e :U 531 ]
-[; ;main.c: 638: ParallelLCD_ClearDisplay( ) ;
-"638
-[e ( _ParallelLCD_ClearDisplay ..  ]
-[; ;main.c: 639: asm("reset") ;
-"639
-[; <" reset ;# ">
-[; ;main.c: 641: case STATE_ERROR:
-"641
-[e :U 532 ]
-[; ;main.c: 642: switch( machineError_ ) {
-"642
-[e $U 534  ]
-{
-[; ;main.c: 643: case ERROR_EEPROM:
-"643
-[e :U 535 ]
-[; ;main.c: 644: currentSingleMessage_ = MESSAGE.ERROR.EEPROM ;
-"644
-[e = _currentSingleMessage_ -> . . _MESSAGE 3 1 `*Cuc ]
-[; ;main.c: 645: break ;
-"645
-[e $U 533  ]
-[; ;main.c: 646: case ERROR_INTERRUPT:
-"646
-[e :U 536 ]
-[; ;main.c: 647: currentSingleMessage_ = MESSAGE.ERROR.INTERRUPT ;
-"647
 [e = _currentSingleMessage_ -> . . _MESSAGE 3 2 `*Cuc ]
-[; ;main.c: 648: break ;
-"648
-[e $U 533  ]
-"649
+[; ;main.c: 631: break ;
+"631
+[e $U 520  ]
+"632
 }
-[; ;main.c: 649: }
-[e $U 533  ]
+[; ;main.c: 632: }
+[e $U 520  ]
+"625
+[e :U 521 ]
+[e [\ _machineError_ , $ . `E2977 1 522
+ , $ . `E2977 2 523
+ 520 ]
+"632
+[e :U 520 ]
+[; ;main.c: 633: break ;
+"633
+[e $U 506  ]
+"635
+}
+[; ;main.c: 635: }
+[e $U 506  ]
+"579
+[e :U 507 ]
+[e [\ _machineState_ , $ . `E2960 1 508
+ , $ . `E2960 2 509
+ , $ . `E2960 3 510
+ , $ . `E2960 4 511
+ , $ . `E2960 6 512
+ , $ . `E2960 7 513
+ , $ . `E2960 0 514
+ , $ . `E2960 11 515
+ , $ . `E2960 10 516
+ , $ . `E2960 9 517
+ , $ . `E2960 12 518
+ , $ . `E2960 13 519
+ 506 ]
+"635
+[e :U 506 ]
+"637
+}
+[e :U 505 ]
+[; ;main.c: 637: }
+[; ;main.c: 641: INTCONbits.GIE=0 ;
+"641
+[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
+[; ;main.c: 642: if( (events_.output.resetMetronome&&!(events_.output.resetMetronome=0)) ) {
 "642
-[e :U 534 ]
-[e [\ _machineError_ , $ . `E2986 1 535
- , $ . `E2986 2 536
- 533 ]
-"649
-[e :U 533 ]
-[; ;main.c: 650: break ;
-"650
-[e $U 511  ]
-"652
+[e $ ! && != -> . . . _events_ 1 1 3 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 524  ]
+{
+[; ;main.c: 643: tempoCounter_ = 0 ;
+"643
+[e = _tempoCounter_ -> -> -> 0 `i `m `um ]
+[; ;main.c: 644: beatCounter_ = 0 ;
+"644
+[e = _beatCounter_ -> -> 0 `i `uc ]
+[; ;main.c: 645: events_.sound.click=1 ;
+"645
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
+"646
 }
-[; ;main.c: 652: }
-[e $U 511  ]
-"564
-[e :U 512 ]
-[e [\ _machineState_ , $ . `E2963 1 513
- , $ . `E2963 2 514
- , $ . `E2963 3 515
- , $ . `E2963 4 516
- , $ . `E2963 14 517
- , $ . `E2963 12 518
- , $ . `E2963 16 519
- , $ . `E2963 5 520
- , $ . `E2963 6 521
- , $ . `E2963 7 522
- , $ . `E2963 8 523
- , $ . `E2963 10 524
- , $ . `E2963 9 525
- , $ . `E2963 11 526
- , $ . `E2963 0 527
- , $ . `E2963 17 528
- , $ . `E2963 15 529
- , $ . `E2963 13 530
- , $ . `E2963 18 531
- , $ . `E2963 19 532
- 511 ]
-"652
-[e :U 511 ]
+[; ;main.c: 646: }
+[e $U 525  ]
+"647
+[e :U 524 ]
+[; ;main.c: 647: else {
+{
+[; ;main.c: 648: if( tempoCounter_ >= ( 32000000UL * 3 / 20 ) ) {
+"648
+[e $ ! >= -> _tempoCounter_ `ul / * -> 32000000 `ul -> -> -> 3 `i `l `ul -> -> -> 20 `i `l `ul 526  ]
+{
+[; ;main.c: 649: tempoCounter_ -= ( 32000000UL * 3 / 20 ) ;
+"649
+[e =- _tempoCounter_ -> / * -> 32000000 `ul -> -> -> 3 `i `l `ul -> -> -> 20 `i `l `ul `um ]
+[; ;main.c: 650: if( ++beatCounter_ >= ( configration_.beatCount << 1 ) )
+"650
+[e $ ! >= -> =+ _beatCounter_ -> -> 1 `i `uc `i << -> . _configration_ 3 `i -> 1 `i 527  ]
+[; ;main.c: 651: beatCounter_ = 0 ;
+"651
+[e = _beatCounter_ -> -> 0 `i `uc ]
+[e :U 527 ]
+[; ;main.c: 653: events_.sound.click=1 ;
+"653
+[e = . . . _events_ 2 1 1 -> -> 1 `i `uc ]
 "654
 }
-[e :U 510 ]
+[e :U 526 ]
+"655
+}
+[e :U 525 ]
 [; ;main.c: 654: }
-[; ;main.c: 657: if( (events_.output.accessEeprom&&!(events_.output.accessEeprom=0)) ) {
-"657
-[e $ ! && != -> . . . _events_ 1 1 7 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 7 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 537  ]
-{
-[; ;main.c: 659: INTCONbits.GIE=0 ;
+[; ;main.c: 655: }
+[; ;main.c: 656: INTCONbits.GIE=1 ;
+"656
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+[; ;main.c: 659: if( (events_.sound.key&&!(events_.sound.key=0)) ) {
 "659
-[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
+[e $ ! && != -> . . . _events_ 2 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 2 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 528  ]
+{
+[; ;main.c: 660: if( !soundState_.byte ) {
+"660
+[e $ ! ! != -> . _soundState_ 0 `i -> -> -> 0 `i `uc `i 529  ]
+{
+[; ;main.c: 661: soundDurationCount_.key = configration_.duration.key ;
 "661
-[v _returnCode `E2863 ~T0 @X0 1 a ]
-[; ;main.c: 661: ReturnCode returnCode = RETURN_CODE_NOERROR ;
-[e = _returnCode . `E2863 0 ]
-[; ;main.c: 663: events_.output.resetMetronome=1 ;
-"663
-[e = . . . _events_ 1 1 6 -> -> 1 `i `uc ]
-[; ;main.c: 664: events_.output.changeMessage=1 ;
-"664
-[e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
-[; ;main.c: 665: stateReturnCounter_ = 100 ;
-"665
-[e = _stateReturnCounter_ -> -> 100 `i `uc ]
-[; ;main.c: 667: switch( machineState_ ) {
-"667
-[e $U 539  ]
-{
-[; ;main.c: 669: case STATE_BOOT:
-"669
-[e :U 540 ]
-[; ;main.c: 670: returnCode = Configuration_Load( &configration_ ) ;
-"670
-[e = _returnCode ( _Configuration_Load (1 &U _configration_ ]
-[; ;main.c: 671: stateReturnCounter_ = 1 ;
-"671
-[e = _stateReturnCounter_ -> -> 1 `i `uc ]
-[; ;main.c: 672: break ;
-"672
-[e $U 538  ]
-[; ;main.c: 674: case STATE_LOAD:
-"674
-[e :U 541 ]
-[; ;main.c: 675: returnCode = Configuration_Load( &configration_ ) ;
-"675
-[e = _returnCode ( _Configuration_Load (1 &U _configration_ ]
-[; ;main.c: 676: currentSingleMessage_ = MESSAGE.MEMORY.LOAD ;
-"676
-[e = _currentSingleMessage_ -> . . _MESSAGE 2 0 `*Cuc ]
-[; ;main.c: 677: break ;
-"677
-[e $U 538  ]
-[; ;main.c: 679: case STATE_INITIALIZE:
-"679
-[e :U 542 ]
-[; ;main.c: 680: returnCode = Configuration_Save( &configration_ ) ;
-"680
-[e = _returnCode ( _Configuration_Save (1 &U _configration_ ]
-[; ;main.c: 681: currentSingleMessage_ = MESSAGE.MEMORY.INITIALIZE ;
-"681
-[e = _currentSingleMessage_ -> . . _MESSAGE 2 2 `*Cuc ]
-[; ;main.c: 682: break ;
-"682
-[e $U 538  ]
-[; ;main.c: 684: case STATE_SAVE:
-"684
-[e :U 543 ]
-[; ;main.c: 685: returnCode = Configuration_Save( &configration_ ) ;
-"685
-[e = _returnCode ( _Configuration_Save (1 &U _configration_ ]
-[; ;main.c: 686: currentSingleMessage_ = MESSAGE.MEMORY.SAVE ;
-"686
-[e = _currentSingleMessage_ -> . . _MESSAGE 2 1 `*Cuc ]
-[; ;main.c: 687: break ;
-"687
-[e $U 538  ]
-"689
-}
-[; ;main.c: 689: }
-[e $U 538  ]
-"667
-[e :U 539 ]
-[e [\ _machineState_ , $ . `E2963 0 540
- , $ . `E2963 15 541
- , $ . `E2963 17 542
- , $ . `E2963 13 543
- 538 ]
-"689
-[e :U 538 ]
-[; ;main.c: 691: informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][4] = HEX_TABLE[ configration_.romOffset >> 4 ] ;
-"691
-[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 1 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 4 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 1 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> >> -> . _configration_ 1 `i -> 4 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
-[; ;main.c: 692: informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][5] = HEX_TABLE[ configration_.romOffset & 0x0F ] ;
-"692
-[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 1 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 5 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 1 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> & -> . _configration_ 1 `i -> 15 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
-[; ;main.c: 693: informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][4] = HEX_TABLE[ configration_.writeCount >> 4 ] ;
-"693
-[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 2 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 4 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 2 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> >> -> . _configration_ 0 `i -> 4 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
-[; ;main.c: 694: informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][5] = HEX_TABLE[ configration_.writeCount & 0x0F ] ;
-"694
-[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 2 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 5 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 2 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> & -> . _configration_ 0 `i -> 15 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
-[; ;main.c: 695: informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][4] = HEX_TABLE[ returnCode >> 4 ] ;
-"695
-[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 3 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 4 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 3 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> >> -> _returnCode `i -> 4 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
-[; ;main.c: 696: informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][5] = HEX_TABLE[ returnCode & 0x0F ] ;
-"696
-[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 3 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 5 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 3 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> & -> _returnCode `i -> 15 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
-[; ;main.c: 698: if( returnCode )
-"698
-[e $ ! != -> _returnCode `i -> -> -> 0 `i `E2863 `i 544  ]
-[; ;main.c: 699: machineError_ = ERROR_EEPROM ;
-"699
-[e = _machineError_ . `E2986 1 ]
-[e :U 544 ]
-[; ;main.c: 701: INTCONbits.GIE=1 ;
-"701
-[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
-"703
-}
-[e :U 537 ]
-[; ;main.c: 703: }
-[; ;main.c: 706: switch( machineState_ ) {
-"706
-[e $U 546  ]
-{
-[; ;main.c: 708: case STATE_MENU_MAIN:
-"708
-[e :U 547 ]
-"709
-[e :U 548 ]
-"710
-[e :U 549 ]
-"711
-[e :U 550 ]
-"712
-[e :U 551 ]
-"713
-[e :U 552 ]
-"714
-[e :U 553 ]
-[; ;main.c: 709: case STATE_MENU_TONE:
-[; ;main.c: 710: case STATE_MENU_DURATION:
-[; ;main.c: 711: case STATE_CONFIRM_LOAD:
-[; ;main.c: 712: case STATE_CONFIRM_SAVE:
-[; ;main.c: 713: case STATE_CONFIRM_RESET:
-[; ;main.c: 714: case STATE_INFORMATION:
-[; ;main.c: 715: if( (events_.input.keyPressDown&&!(events_.input.keyPressDown=0)) ) {
-"715
-[e $ ! && != -> . . . _events_ 0 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 554  ]
-{
-[; ;main.c: 716: if( currentMenuInfoPtr_->select != currentMenuInfoPtr_->limit ) {
-"716
-[e $ ! != -> . *U _currentMenuInfoPtr_ 0 `i -> . *U _currentMenuInfoPtr_ 2 `i 555  ]
-{
-[; ;main.c: 717: currentMenuInfoPtr_->select++ ;
-"717
-[e ++ . *U _currentMenuInfoPtr_ 0 -> -> 1 `i `uc ]
-[; ;main.c: 718: if( !currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition++ ;
-"718
-[e $ ! ! != -> . *U _currentMenuInfoPtr_ 1 `i -> -> -> 0 `i `uc `i 556  ]
-[e ++ . *U _currentMenuInfoPtr_ 1 -> -> 1 `i `uc ]
-[e :U 556 ]
-[; ;main.c: 719: events_.output.changeMessage=1 ;
-"719
-[e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
-"720
-}
-[e :U 555 ]
-"721
-}
-[e :U 554 ]
-[; ;main.c: 720: }
-[; ;main.c: 721: }
-[; ;main.c: 722: if( (events_.input.keyPressUp&&!(events_.input.keyPressUp=0)) ) {
-"722
-[e $ ! && != -> . . . _events_ 0 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 557  ]
-{
-[; ;main.c: 723: if( currentMenuInfoPtr_->select ) {
-"723
-[e $ ! != -> . *U _currentMenuInfoPtr_ 0 `i -> -> -> 0 `i `uc `i 558  ]
-{
-[; ;main.c: 724: currentMenuInfoPtr_->select-- ;
-"724
-[e -- . *U _currentMenuInfoPtr_ 0 -> -> 1 `i `uc ]
-[; ;main.c: 725: if( currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition-- ;
-"725
-[e $ ! != -> . *U _currentMenuInfoPtr_ 1 `i -> -> -> 0 `i `uc `i 559  ]
-[e -- . *U _currentMenuInfoPtr_ 1 -> -> 1 `i `uc ]
-[e :U 559 ]
-[; ;main.c: 726: events_.output.changeMessage=1 ;
-"726
-[e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
-"727
-}
-[e :U 558 ]
-"728
-}
-[e :U 557 ]
-[; ;main.c: 727: }
-[; ;main.c: 728: }
-[; ;main.c: 729: break ;
-"729
-[e $U 545  ]
-[; ;main.c: 731: case STATE_METRONOME:
-"731
-[e :U 560 ]
-[; ;main.c: 732: if( (events_.input.keyPressUp&&!(events_.input.keyPressUp=0)) ) {
-"732
-[e $ ! && != -> . . . _events_ 0 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 561  ]
-{
-[; ;main.c: 733: if( configration_.tempo < 999 ) {
-"733
-[e $ ! < . _configration_ 2 -> -> 999 `i `ui 562  ]
-{
-[; ;main.c: 734: configration_.tempo++ ;
-"734
-[e ++ . _configration_ 2 -> -> 1 `i `ui ]
-[; ;main.c: 735: events_.output.changeValue=1 ;
-"735
-[e = . . . _events_ 1 1 2 -> -> 1 `i `uc ]
-"736
-}
-[e :U 562 ]
-[; ;main.c: 736: }
-[; ;main.c: 737: events_.output.resetMetronome=1 ;
-"737
-[e = . . . _events_ 1 1 6 -> -> 1 `i `uc ]
-"738
-}
-[e :U 561 ]
-[; ;main.c: 738: }
-[; ;main.c: 739: if( (events_.input.keyPressDown&&!(events_.input.keyPressDown=0)) ) {
-"739
-[e $ ! && != -> . . . _events_ 0 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 563  ]
-{
-[; ;main.c: 740: if( configration_.tempo > 1 ) {
-"740
-[e $ ! > . _configration_ 2 -> -> 1 `i `ui 564  ]
-{
-[; ;main.c: 741: configration_.tempo-- ;
-"741
-[e -- . _configration_ 2 -> -> 1 `i `ui ]
-[; ;main.c: 742: events_.output.changeValue=1 ;
-"742
-[e = . . . _events_ 1 1 2 -> -> 1 `i `uc ]
-"743
-}
-[e :U 564 ]
-[; ;main.c: 743: }
-[; ;main.c: 744: events_.output.resetMetronome=1 ;
-"744
-[e = . . . _events_ 1 1 6 -> -> 1 `i `uc ]
-"745
-}
-[e :U 563 ]
-[; ;main.c: 745: }
-[; ;main.c: 746: break ;
-"746
-[e $U 545  ]
-[; ;main.c: 748: case STATE_ADJUST_BEAT_COUNT:
-"748
-[e :U 565 ]
-"749
-[e :U 566 ]
-"750
-[e :U 567 ]
-"751
-[e :U 568 ]
-"752
-[e :U 569 ]
-"753
-[e :U 570 ]
-[; ;main.c: 749: case STATE_ADJUST_PULSE_WIDTH:
-[; ;main.c: 750: case STATE_ADJUST_DURATION_CLICK:
-[; ;main.c: 751: case STATE_ADJUST_DURATION_KEY:
-[; ;main.c: 752: case STATE_ADJUST_TONE:
-[; ;main.c: 753: case STATE_ADJUST_OSCILLATOR_TUNE:
-[; ;main.c: 754: if( (events_.input.keyPressUp&&!(events_.input.keyPressUp=0)) ) {
-"754
-[e $ ! && != -> . . . _events_ 0 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 571  ]
-{
-[; ;main.c: 755: if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.upper ) {
-"755
-[e $ ! != -> *U . *U _currentValueInfoPtr_ 0 `i -> . . *U _currentValueInfoPtr_ 1 0 `i 572  ]
-{
-[; ;main.c: 756: ( *currentValueInfoPtr_->valuePtr )++ ;
-"756
-[e ++ *U . *U _currentValueInfoPtr_ 0 -> -> 1 `i `uc ]
-[; ;main.c: 757: events_.output.changeValue=1 ;
-"757
-[e = . . . _events_ 1 1 2 -> -> 1 `i `uc ]
-"758
-}
-[e :U 572 ]
-"759
-}
-[e :U 571 ]
-[; ;main.c: 758: }
-[; ;main.c: 759: }
-[; ;main.c: 760: if( (events_.input.keyPressDown&&!(events_.input.keyPressDown=0)) ) {
-"760
-[e $ ! && != -> . . . _events_ 0 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 573  ]
-{
-[; ;main.c: 761: if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.lower ) {
-"761
-[e $ ! != -> *U . *U _currentValueInfoPtr_ 0 `i -> . . *U _currentValueInfoPtr_ 1 1 `i 574  ]
-{
-[; ;main.c: 762: ( *currentValueInfoPtr_->valuePtr )-- ;
-"762
-[e -- *U . *U _currentValueInfoPtr_ 0 -> -> 1 `i `uc ]
-[; ;main.c: 763: events_.output.changeValue=1 ;
-"763
-[e = . . . _events_ 1 1 2 -> -> 1 `i `uc ]
-"764
-}
-[e :U 574 ]
-"765
-}
-[e :U 573 ]
-[; ;main.c: 764: }
-[; ;main.c: 765: }
-[; ;main.c: 766: break ;
-"766
-[e $U 545  ]
-"768
-}
-[; ;main.c: 768: }
-[e $U 545  ]
-"706
-[e :U 546 ]
-[e [\ _machineState_ , $ . `E2963 2 547
- , $ . `E2963 3 548
- , $ . `E2963 4 549
- , $ . `E2963 14 550
- , $ . `E2963 12 551
- , $ . `E2963 16 552
- , $ . `E2963 11 553
- , $ . `E2963 1 560
- , $ . `E2963 5 565
- , $ . `E2963 8 566
- , $ . `E2963 6 567
- , $ . `E2963 7 568
- , $ . `E2963 9 569
- , $ . `E2963 10 570
- 545 ]
-"768
-[e :U 545 ]
-[; ;main.c: 771: INTCONbits.GIE=0 ;
-"771
-[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
-[; ;main.c: 772: if( (events_.output.resetMetronome&&!(events_.output.resetMetronome=0)) ) {
-"772
-[e $ ! && != -> . . . _events_ 1 1 6 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 6 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 575  ]
-{
-[; ;main.c: 773: tempoCounter_ = 0 ;
-"773
-[e = _tempoCounter_ -> -> -> 0 `i `m `um ]
-[; ;main.c: 774: beatCounter_ = 0 ;
-"774
-[e = _beatCounter_ -> -> 0 `i `uc ]
-[; ;main.c: 775: events_.output.soundOnClick=1 ;
-"775
-[e = . . . _events_ 1 1 3 -> -> 1 `i `uc ]
-"776
-}
-[; ;main.c: 776: }
-[e $U 576  ]
-"777
-[e :U 575 ]
-[; ;main.c: 777: else {
-{
-[; ;main.c: 778: if( tempoCounter_ >= ( 32000000UL * 3 / 20 ) ) {
-"778
-[e $ ! >= -> _tempoCounter_ `ul / * -> 32000000 `ul -> -> -> 3 `i `l `ul -> -> -> 20 `i `l `ul 577  ]
-{
-[; ;main.c: 779: tempoCounter_ -= ( 32000000UL * 3 / 20 ) ;
-"779
-[e =- _tempoCounter_ -> / * -> 32000000 `ul -> -> -> 3 `i `l `ul -> -> -> 20 `i `l `ul `um ]
-[; ;main.c: 780: if( ++beatCounter_ >= ( configration_.beatCount << 1 ) )
-"780
-[e $ ! >= -> =+ _beatCounter_ -> -> 1 `i `uc `i << -> . _configration_ 3 `i -> 1 `i 578  ]
-[; ;main.c: 781: beatCounter_ = 0 ;
-"781
-[e = _beatCounter_ -> -> 0 `i `uc ]
-[e :U 578 ]
-[; ;main.c: 783: events_.output.soundOnClick=1 ;
-"783
-[e = . . . _events_ 1 1 3 -> -> 1 `i `uc ]
-"784
-}
-[e :U 577 ]
-"785
-}
-[e :U 576 ]
-[; ;main.c: 784: }
-[; ;main.c: 785: }
-[; ;main.c: 786: INTCONbits.GIE=1 ;
-"786
-[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
-[; ;main.c: 789: switch( machineState_ ) {
-"789
-[e $U 580  ]
-{
-[; ;main.c: 791: case STATE_BOOT:
-"791
-[e :U 581 ]
-"792
-[e :U 582 ]
-"793
-[e :U 583 ]
-"794
-[e :U 584 ]
-"795
-[e :U 585 ]
-[; ;main.c: 792: case STATE_INITIALIZE:
-[; ;main.c: 793: case STATE_LOAD:
-[; ;main.c: 794: case STATE_SAVE:
-[; ;main.c: 795: case STATE_ERROR:
-[; ;main.c: 797: break ;
-"797
-[e $U 579  ]
-[; ;main.c: 799: case STATE_ADJUST_TONE:
-"799
-[e :U 586 ]
-[; ;main.c: 800: break ;
-"800
-[e $U 579  ]
-[; ;main.c: 801: case STATE_ADJUST_OSCILLATOR_TUNE:
-"801
-[e :U 587 ]
-[; ;main.c: 802: break ;
-"802
-[e $U 579  ]
-[; ;main.c: 804: default:
-"804
-[e :U 588 ]
-[; ;main.c: 805: if( (events_.output.soundOnKey&&!(events_.output.soundOnKey=0)) ) {
-"805
-[e $ ! && != -> . . . _events_ 1 1 4 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 4 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 589  ]
-{
-[; ;main.c: 806: soundDurationCount_.key = configration_.duration.key ;
-"806
 [e = . _soundDurationCount_ 1 . . _configration_ 4 1 ]
-[; ;main.c: 807: PR2 = 124 ;
-"807
+[; ;main.c: 662: PR2 = 124 ;
+"662
 [e = _PR2 -> -> 124 `i `uc ]
-[; ;main.c: 808: {CCPR4L=(PR2>>1);} ;
-"808
+[; ;main.c: 663: {CCPR4L=(PR2>>1);} ;
+"663
 {
 [e = _CCPR4L -> >> -> _PR2 `i -> 1 `i `uc ]
 }
-[; ;main.c: 809: T2CONbits.TMR2ON = 1 ;
-"809
+[; ;main.c: 664: T2CONbits.TMR2ON = 1 ;
+"664
 [e = . . _T2CONbits 0 2 -> -> 1 `i `uc ]
-"810
+"665
 }
-[e :U 589 ]
-[; ;main.c: 810: }
-[; ;main.c: 811: if( (events_.output.soundOnClick&&!(events_.output.soundOnClick=0)) && !isMute_ && !soundDurationCount_.key ) {
-"811
-[e $ ! && && && != -> . . . _events_ 1 1 3 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i ! != -> _isMute_ `i -> -> -> 0 `i `E2778 `i ! != -> . _soundDurationCount_ 1 `i -> -> -> 0 `i `uc `i 590  ]
+[e :U 529 ]
+"666
+}
+[e :U 528 ]
+[; ;main.c: 665: }
+[; ;main.c: 666: }
+[; ;main.c: 669: if( (events_.sound.click&&!(events_.sound.click=0)) ) {
+"669
+[e $ ! && != -> . . . _events_ 2 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 2 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 530  ]
 {
-[; ;main.c: 813: soundDurationCount_.click = configration_.duration.click ;
-"813
+[; ;main.c: 671: if( !soundState_.byte && !soundDurationCount_.key ) {
+"671
+[e $ ! && ! != -> . _soundState_ 0 `i -> -> -> 0 `i `uc `i ! != -> . _soundDurationCount_ 1 `i -> -> -> 0 `i `uc `i 531  ]
+{
+[; ;main.c: 673: soundDurationCount_.click = configration_.duration.click ;
+"673
 [e = . _soundDurationCount_ 0 . . _configration_ 4 0 ]
-[; ;main.c: 815: if( beatCounter_ == 0 )
-"815
-[e $ ! == -> _beatCounter_ `i -> 0 `i 591  ]
-[; ;main.c: 816: PR2 = configration_.tone[ 1 ] ;
-"816
+[; ;main.c: 675: if( beatCounter_ == 0 )
+"675
+[e $ ! == -> _beatCounter_ `i -> 0 `i 532  ]
+[; ;main.c: 676: PR2 = configration_.tone[ 1 ] ;
+"676
 [e = _PR2 *U + &U . _configration_ 5 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _configration_ 5 `ui `ux ]
-[e $U 592  ]
-"817
-[e :U 591 ]
-[; ;main.c: 817: else if( beatCounter_ == configration_.beatCount )
-[e $ ! == -> _beatCounter_ `i -> . _configration_ 3 `i 593  ]
-[; ;main.c: 818: PR2 = configration_.tone[ 2 ] ;
-"818
+[e $U 533  ]
+"677
+[e :U 532 ]
+[; ;main.c: 677: else if( beatCounter_ == configration_.beatCount )
+[e $ ! == -> _beatCounter_ `i -> . _configration_ 3 `i 534  ]
+[; ;main.c: 678: PR2 = configration_.tone[ 2 ] ;
+"678
 [e = _PR2 *U + &U . _configration_ 5 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _configration_ 5 `ui `ux ]
-[e $U 594  ]
-"819
-[e :U 593 ]
-[; ;main.c: 819: else
-[; ;main.c: 820: PR2 = configration_.tone[ 0 ] ;
-"820
+[e $U 535  ]
+"679
+[e :U 534 ]
+[; ;main.c: 679: else
+[; ;main.c: 680: PR2 = configration_.tone[ 0 ] ;
+"680
 [e = _PR2 *U + &U . _configration_ 5 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _configration_ 5 `ui `ux ]
-[e :U 594 ]
-[e :U 592 ]
-[; ;main.c: 822: {CCPR4L=(PR2>>configration_.pulseWidth);} ;
-"822
+[e :U 535 ]
+[e :U 533 ]
+[; ;main.c: 682: {CCPR4L=(PR2>>configration_.pulseWidth);} ;
+"682
 {
 [e = _CCPR4L -> >> -> _PR2 `i . _configration_ 6 `uc ]
 }
-[; ;main.c: 823: T2CONbits.TMR2ON = 1 ;
-"823
+[; ;main.c: 683: T2CONbits.TMR2ON = 1 ;
+"683
 [e = . . _T2CONbits 0 2 -> -> 1 `i `uc ]
-"824
+"684
 }
-[e :U 590 ]
-[; ;main.c: 824: }
+[e :U 531 ]
+"686
+}
+[e :U 530 ]
+[; ;main.c: 684: }
+[; ;main.c: 686: }
+[; ;main.c: 689: if( (events_.sound.oscillatorTune&&!(events_.sound.oscillatorTune=0)) ) {
+"689
+[e $ ! && != -> . . . _events_ 2 1 3 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 2 1 3 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 536  ]
+{
+[; ;main.c: 690: PR2 = 141 ;
+"690
+[e = _PR2 -> -> 141 `i `uc ]
+[; ;main.c: 691: {CCPR4L=(PR2>>1);} ;
+"691
+{
+[e = _CCPR4L -> >> -> _PR2 `i -> 1 `i `uc ]
+}
+[; ;main.c: 692: T2CONbits.TMR2ON = 1 ;
+"692
+[e = . . _T2CONbits 0 2 -> -> 1 `i `uc ]
+"693
+}
+[e :U 536 ]
+[; ;main.c: 693: }
+[; ;main.c: 696: if( (events_.sound.off&&!(events_.sound.off=0)) ) {
+"696
+[e $ ! && != -> . . . _events_ 2 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 2 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 537  ]
+{
+[; ;main.c: 697: soundDurationCount_.click = 0 ;
+"697
+[e = . _soundDurationCount_ 0 -> -> 0 `i `uc ]
+[; ;main.c: 698: soundDurationCount_.key = 0 ;
+"698
+[e = . _soundDurationCount_ 1 -> -> 0 `i `uc ]
+[; ;main.c: 699: T2CONbits.TMR2ON = 0 ;
+"699
+[e = . . _T2CONbits 0 2 -> -> 0 `i `uc ]
+"700
+}
+[e :U 537 ]
+[; ;main.c: 700: }
+[; ;main.c: 703: if( (events_.output.accessEeprom&&!(events_.output.accessEeprom=0)) ) {
+"703
+[e $ ! && != -> . . . _events_ 1 1 4 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 4 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 538  ]
+{
+[; ;main.c: 705: INTCONbits.GIE=0 ;
+"705
+[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
+"707
+[v _returnCode `E2863 ~T0 @X0 1 a ]
+[; ;main.c: 707: ReturnCode returnCode = RETURN_CODE_NOERROR ;
+[e = _returnCode . `E2863 0 ]
+[; ;main.c: 709: events_.output.resetMetronome=1 ;
+"709
+[e = . . . _events_ 1 1 3 -> -> 1 `i `uc ]
+[; ;main.c: 710: events_.output.changeMessage=1 ;
+"710
+[e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
+[; ;main.c: 711: stateReturnCounter_ = 100 ;
+"711
+[e = _stateReturnCounter_ -> -> 100 `i `uc ]
+[; ;main.c: 713: switch( machineState_ ) {
+"713
+[e $U 540  ]
+{
+[; ;main.c: 715: case STATE_BOOT:
+"715
+[e :U 541 ]
+[; ;main.c: 716: returnCode = Configuration_Load( &configration_ ) ;
+"716
+[e = _returnCode ( _Configuration_Load (1 &U _configration_ ]
+[; ;main.c: 717: stateReturnCounter_ = 1 ;
+"717
+[e = _stateReturnCounter_ -> -> 1 `i `uc ]
+[; ;main.c: 718: break ;
+"718
+[e $U 539  ]
+[; ;main.c: 720: case STATE_LOAD:
+"720
+[e :U 542 ]
+[; ;main.c: 721: returnCode = Configuration_Load( &configration_ ) ;
+"721
+[e = _returnCode ( _Configuration_Load (1 &U _configration_ ]
+[; ;main.c: 722: currentSingleMessage_ = MESSAGE.MEMORY.LOAD ;
+"722
+[e = _currentSingleMessage_ -> . . _MESSAGE 2 0 `*Cuc ]
+[; ;main.c: 723: break ;
+"723
+[e $U 539  ]
+[; ;main.c: 725: case STATE_INITIALIZE:
+"725
+[e :U 543 ]
+[; ;main.c: 726: returnCode = Configuration_Save( &configration_ ) ;
+"726
+[e = _returnCode ( _Configuration_Save (1 &U _configration_ ]
+[; ;main.c: 727: currentSingleMessage_ = MESSAGE.MEMORY.INITIALIZE ;
+"727
+[e = _currentSingleMessage_ -> . . _MESSAGE 2 2 `*Cuc ]
+[; ;main.c: 728: break ;
+"728
+[e $U 539  ]
+[; ;main.c: 730: case STATE_SAVE:
+"730
+[e :U 544 ]
+[; ;main.c: 731: returnCode = Configuration_Save( &configration_ ) ;
+"731
+[e = _returnCode ( _Configuration_Save (1 &U _configration_ ]
+[; ;main.c: 732: currentSingleMessage_ = MESSAGE.MEMORY.SAVE ;
+"732
+[e = _currentSingleMessage_ -> . . _MESSAGE 2 1 `*Cuc ]
+[; ;main.c: 733: break ;
+"733
+[e $U 539  ]
+"735
+}
+[; ;main.c: 735: }
+[e $U 539  ]
+"713
+[e :U 540 ]
+[e [\ _machineState_ , $ . `E2960 0 541
+ , $ . `E2960 10 542
+ , $ . `E2960 11 543
+ , $ . `E2960 9 544
+ 539 ]
+"735
+[e :U 539 ]
+[; ;main.c: 737: informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][4] = HEX_TABLE[ configration_.romOffset >> 4 ] ;
+"737
+[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 1 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 4 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 1 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> >> -> . _configration_ 1 `i -> 4 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
+[; ;main.c: 738: informationValueBuffer[ INFORMATION_ITEM_ROM_OFFSET ][5] = HEX_TABLE[ configration_.romOffset & 0x0F ] ;
+"738
+[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 1 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 5 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 1 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> & -> . _configration_ 1 `i -> 15 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
+[; ;main.c: 739: informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][4] = HEX_TABLE[ configration_.writeCount >> 4 ] ;
+"739
+[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 2 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 4 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 2 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> >> -> . _configration_ 0 `i -> 4 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
+[; ;main.c: 740: informationValueBuffer[ INFORMATION_ITEM_WRITE_COUNT ][5] = HEX_TABLE[ configration_.writeCount & 0x0F ] ;
+"740
+[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 2 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 5 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 2 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> & -> . _configration_ 0 `i -> 15 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
+[; ;main.c: 741: informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][4] = HEX_TABLE[ returnCode >> 4 ] ;
+"741
+[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 3 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 4 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 3 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> >> -> _returnCode `i -> 4 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
+[; ;main.c: 742: informationValueBuffer[ INFORMATION_ITEM_ERROR_CODE ][5] = HEX_TABLE[ returnCode & 0x0F ] ;
+"742
+[e = *U + &U *U + &U _informationValueBuffer * -> . `E2925 3 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux * -> -> -> 5 `i `ui `ux -> -> # *U &U *U + &U _informationValueBuffer * -> . `E2925 3 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `ui `ux *U + &U _HEX_TABLE * -> -> & -> _returnCode `i -> 15 `i `ui `ux -> -> # *U &U _HEX_TABLE `ui `ux ]
+[; ;main.c: 744: if( returnCode )
+"744
+[e $ ! != -> _returnCode `i -> -> -> 0 `i `E2863 `i 545  ]
+[; ;main.c: 745: machineError_ = ERROR_EEPROM ;
+"745
+[e = _machineError_ . `E2977 1 ]
+[e :U 545 ]
+[; ;main.c: 747: INTCONbits.GIE=1 ;
+"747
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+"749
+}
+[e :U 538 ]
+[; ;main.c: 749: }
+[; ;main.c: 752: if( (events_.keyPress.up&&!(events_.keyPress.up=0)) ) {
+"752
+[e $ ! && != -> . . . _events_ 0 1 0 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 0 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 546  ]
+{
+[; ;main.c: 753: switch( machineState_ ) {
+"753
+[e $U 548  ]
+{
+[; ;main.c: 754: case STATE_MENU_MAIN:
+"754
+[e :U 549 ]
+"755
+[e :U 550 ]
+"756
+[e :U 551 ]
+"757
+[e :U 552 ]
+[; ;main.c: 755: case STATE_MENU_TONE:
+[; ;main.c: 756: case STATE_MENU_DURATION:
+[; ;main.c: 757: case STATE_INFORMATION:
+[; ;main.c: 758: if( currentMenuInfoPtr_->select ) {
+"758
+[e $ ! != -> . *U _currentMenuInfoPtr_ 0 `i -> -> -> 0 `i `uc `i 553  ]
+{
+[; ;main.c: 759: currentMenuInfoPtr_->select-- ;
+"759
+[e -- . *U _currentMenuInfoPtr_ 0 -> -> 1 `i `uc ]
+[; ;main.c: 760: if( currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition-- ;
+"760
+[e $ ! != -> . *U _currentMenuInfoPtr_ 1 `i -> -> -> 0 `i `uc `i 554  ]
+[e -- . *U _currentMenuInfoPtr_ 1 -> -> 1 `i `uc ]
+[e :U 554 ]
+[; ;main.c: 761: events_.output.changeMessage=1 ;
+"761
+[e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
+"762
+}
+[e :U 553 ]
+[; ;main.c: 762: }
+[; ;main.c: 763: break ;
+"763
+[e $U 547  ]
+[; ;main.c: 765: case STATE_CONFIRM:
+"765
+[e :U 555 ]
+[; ;main.c: 766: if( currentConfirmationInfoPtr_->isSelectYes ) {
+"766
+[e $ ! != -> . *U _currentConfirmationInfoPtr_ 0 `i -> -> -> 0 `i `E2778 `i 556  ]
+{
+[; ;main.c: 767: currentConfirmationInfoPtr_->isSelectYes = BOOL_FALSE ;
+"767
+[e = . *U _currentConfirmationInfoPtr_ 0 . `E2778 0 ]
+[; ;main.c: 768: events_.output.changeMessage=1 ;
+"768
+[e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
+"769
+}
+[e :U 556 ]
+[; ;main.c: 769: }
+[; ;main.c: 770: break ;
+"770
+[e $U 547  ]
+[; ;main.c: 772: case STATE_ADJUST_VALUE:
+"772
+[e :U 557 ]
+"773
+[e :U 558 ]
+[; ;main.c: 773: case STATE_ADJUST_OSCILLATOR_TUNE:
+[; ;main.c: 774: if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.upper ) {
+"774
+[e $ ! != -> *U . *U _currentValueInfoPtr_ 0 `i -> . . *U _currentValueInfoPtr_ 2 0 `i 559  ]
+{
+[; ;main.c: 775: ( *currentValueInfoPtr_->valuePtr )++ ;
+"775
+[e ++ *U . *U _currentValueInfoPtr_ 0 -> -> 1 `i `uc ]
+[; ;main.c: 776: events_.output.changeValue=1 ;
+"776
+[e = . . . _events_ 1 1 2 -> -> 1 `i `uc ]
+"777
+}
+[e :U 559 ]
+[; ;main.c: 777: }
+[; ;main.c: 778: break ;
+"778
+[e $U 547  ]
+[; ;main.c: 780: case STATE_METRONOME:
+"780
+[e :U 560 ]
+[; ;main.c: 781: if( configration_.tempo != 999 ) {
+"781
+[e $ ! != . _configration_ 2 -> -> 999 `i `ui 561  ]
+{
+[; ;main.c: 782: configration_.tempo++ ;
+"782
+[e ++ . _configration_ 2 -> -> 1 `i `ui ]
+[; ;main.c: 783: events_.output.changeValue=1 ;
+"783
+[e = . . . _events_ 1 1 2 -> -> 1 `i `uc ]
+"784
+}
+[e :U 561 ]
+[; ;main.c: 784: }
+[; ;main.c: 785: events_.output.resetMetronome=1 ;
+"785
+[e = . . . _events_ 1 1 3 -> -> 1 `i `uc ]
+[; ;main.c: 786: break ;
+"786
+[e $U 547  ]
+"787
+}
+[; ;main.c: 787: }
+[e $U 547  ]
+"753
+[e :U 548 ]
+[e [\ _machineState_ , $ . `E2960 2 549
+ , $ . `E2960 3 550
+ , $ . `E2960 4 551
+ , $ . `E2960 7 552
+ , $ . `E2960 8 555
+ , $ . `E2960 5 557
+ , $ . `E2960 6 558
+ , $ . `E2960 1 560
+ 547 ]
+"787
+[e :U 547 ]
+"788
+}
+[e :U 546 ]
+[; ;main.c: 788: }
+[; ;main.c: 791: if( (events_.keyPress.down&&!(events_.keyPress.down=0)) ) {
+"791
+[e $ ! && != -> . . . _events_ 0 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 0 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 562  ]
+{
+[; ;main.c: 792: switch( machineState_ ) {
+"792
+[e $U 564  ]
+{
+[; ;main.c: 793: case STATE_MENU_MAIN:
+"793
+[e :U 565 ]
+"794
+[e :U 566 ]
+"795
+[e :U 567 ]
+"796
+[e :U 568 ]
+[; ;main.c: 794: case STATE_MENU_TONE:
+[; ;main.c: 795: case STATE_MENU_DURATION:
+[; ;main.c: 796: case STATE_INFORMATION:
+[; ;main.c: 797: if( currentMenuInfoPtr_->select != currentMenuInfoPtr_->limit ) {
+"797
+[e $ ! != -> . *U _currentMenuInfoPtr_ 0 `i -> . *U _currentMenuInfoPtr_ 2 `i 569  ]
+{
+[; ;main.c: 798: currentMenuInfoPtr_->select++ ;
+"798
+[e ++ . *U _currentMenuInfoPtr_ 0 -> -> 1 `i `uc ]
+[; ;main.c: 799: if( !currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition++ ;
+"799
+[e $ ! ! != -> . *U _currentMenuInfoPtr_ 1 `i -> -> -> 0 `i `uc `i 570  ]
+[e ++ . *U _currentMenuInfoPtr_ 1 -> -> 1 `i `uc ]
+[e :U 570 ]
+[; ;main.c: 800: events_.output.changeMessage=1 ;
+"800
+[e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
+"801
+}
+[e :U 569 ]
+[; ;main.c: 801: }
+[; ;main.c: 802: break ;
+"802
+[e $U 563  ]
+[; ;main.c: 804: case STATE_CONFIRM:
+"804
+[e :U 571 ]
+[; ;main.c: 805: if( !currentConfirmationInfoPtr_->isSelectYes ) {
+"805
+[e $ ! ! != -> . *U _currentConfirmationInfoPtr_ 0 `i -> -> -> 0 `i `E2778 `i 572  ]
+{
+[; ;main.c: 806: currentConfirmationInfoPtr_->isSelectYes = BOOL_TRUE ;
+"806
+[e = . *U _currentConfirmationInfoPtr_ 0 . `E2778 1 ]
+[; ;main.c: 807: events_.output.changeMessage=1 ;
+"807
+[e = . . . _events_ 1 1 1 -> -> 1 `i `uc ]
+"808
+}
+[e :U 572 ]
+[; ;main.c: 808: }
+[; ;main.c: 809: break ;
+"809
+[e $U 563  ]
+[; ;main.c: 811: case STATE_ADJUST_VALUE:
+"811
+[e :U 573 ]
+"812
+[e :U 574 ]
+[; ;main.c: 812: case STATE_ADJUST_OSCILLATOR_TUNE:
+[; ;main.c: 813: if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.lower ) {
+"813
+[e $ ! != -> *U . *U _currentValueInfoPtr_ 0 `i -> . . *U _currentValueInfoPtr_ 2 1 `i 575  ]
+{
+[; ;main.c: 814: ( *currentValueInfoPtr_->valuePtr )-- ;
+"814
+[e -- *U . *U _currentValueInfoPtr_ 0 -> -> 1 `i `uc ]
+[; ;main.c: 815: events_.output.changeValue=1 ;
+"815
+[e = . . . _events_ 1 1 2 -> -> 1 `i `uc ]
+"816
+}
+[e :U 575 ]
+[; ;main.c: 816: }
+[; ;main.c: 817: break ;
+"817
+[e $U 563  ]
+[; ;main.c: 819: case STATE_METRONOME:
+"819
+[e :U 576 ]
+[; ;main.c: 820: if( configration_.tempo != 1 ) {
+"820
+[e $ ! != . _configration_ 2 -> -> 1 `i `ui 577  ]
+{
+[; ;main.c: 821: configration_.tempo-- ;
+"821
+[e -- . _configration_ 2 -> -> 1 `i `ui ]
+[; ;main.c: 822: events_.output.changeValue=1 ;
+"822
+[e = . . . _events_ 1 1 2 -> -> 1 `i `uc ]
+"823
+}
+[e :U 577 ]
+[; ;main.c: 823: }
+[; ;main.c: 824: events_.output.resetMetronome=1 ;
+"824
+[e = . . . _events_ 1 1 3 -> -> 1 `i `uc ]
 [; ;main.c: 825: break ;
 "825
-[e $U 579  ]
+[e $U 563  ]
+"826
+}
+[; ;main.c: 826: }
+[e $U 563  ]
+"792
+[e :U 564 ]
+[e [\ _machineState_ , $ . `E2960 2 565
+ , $ . `E2960 3 566
+ , $ . `E2960 4 567
+ , $ . `E2960 7 568
+ , $ . `E2960 8 571
+ , $ . `E2960 5 573
+ , $ . `E2960 6 574
+ , $ . `E2960 1 576
+ 563 ]
+"826
+[e :U 563 ]
 "827
 }
+[e :U 562 ]
 [; ;main.c: 827: }
-[e $U 579  ]
-"789
-[e :U 580 ]
-[e [\ _machineState_ , $ . `E2963 0 581
- , $ . `E2963 17 582
- , $ . `E2963 15 583
- , $ . `E2963 13 584
- , $ . `E2963 19 585
- , $ . `E2963 9 586
- , $ . `E2963 10 587
- 588 ]
-"827
-[e :U 579 ]
-[; ;main.c: 830: switch( machineState_ ) {
+[; ;main.c: 830: if( (events_.output.changeMessage&&!(events_.output.changeMessage=0)) ) {
 "830
-[e $U 596  ]
+[e $ ! && != -> . . . _events_ 1 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 578  ]
 {
-[; ;main.c: 832: case STATE_BOOT:
+[; ;main.c: 832: switch( machineState_ ) {
 "832
-[e :U 597 ]
-"833
-[e :U 598 ]
+[e $U 580  ]
+{
+[; ;main.c: 834: case STATE_MENU_MAIN:
 "834
-[e :U 599 ]
+[e :U 581 ]
 "835
-[e :U 600 ]
+[e :U 582 ]
 "836
-[e :U 601 ]
-[; ;main.c: 833: case STATE_INITIALIZE:
-[; ;main.c: 834: case STATE_LOAD:
-[; ;main.c: 835: case STATE_SAVE:
-[; ;main.c: 836: case STATE_ERROR:
-[; ;main.c: 837: T2CONbits.TMR2ON = 0 ;
+[e :U 583 ]
+[; ;main.c: 835: case STATE_MENU_TONE:
+[; ;main.c: 836: case STATE_MENU_DURATION:
+[; ;main.c: 837: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x1 , currentMenuInfoPtr_->menuMessage[ currentMenuInfoPtr_->select - currentMenuInfoPtr_->cursorPosition ] ) ;
 "837
-[e = . . _T2CONbits 0 2 -> -> 0 `i `uc ]
-[; ;main.c: 838: break ;
-"838
-[e $U 595  ]
-[; ;main.c: 840: case STATE_ADJUST_TONE:
-"840
-[e :U 602 ]
-"841
-[e :U 603 ]
-[; ;main.c: 841: case STATE_ADJUST_OSCILLATOR_TUNE:
-[; ;main.c: 843: break ;
-"843
-[e $U 595  ]
-[; ;main.c: 845: default:
-"845
-[e :U 604 ]
-[; ;main.c: 846: if( (events_.output.soundOff&&!(events_.output.soundOff=0)) )
-"846
-[e $ ! && != -> . . . _events_ 1 1 5 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 5 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 605  ]
-[; ;main.c: 847: T2CONbits.TMR2ON = 0 ;
-"847
-[e = . . _T2CONbits 0 2 -> -> 0 `i `uc ]
-[e :U 605 ]
-[; ;main.c: 849: break ;
-"849
-[e $U 595  ]
-"850
-}
-[; ;main.c: 850: }
-[e $U 595  ]
-"830
-[e :U 596 ]
-[e [\ _machineState_ , $ . `E2963 0 597
- , $ . `E2963 17 598
- , $ . `E2963 15 599
- , $ . `E2963 13 600
- , $ . `E2963 19 601
- , $ . `E2963 9 602
- , $ . `E2963 10 603
- 604 ]
-"850
-[e :U 595 ]
-[; ;main.c: 853: if( (events_.output.changeMessage&&!(events_.output.changeMessage=0)) ) {
-"853
-[e $ ! && != -> . . . _events_ 1 1 1 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 606  ]
-{
-[; ;main.c: 855: switch( machineState_ ) {
-"855
-[e $U 608  ]
-{
-[; ;main.c: 857: case STATE_MENU_MAIN:
-"857
-[e :U 609 ]
-"858
-[e :U 610 ]
-"859
-[e :U 611 ]
-[; ;main.c: 858: case STATE_MENU_TONE:
-[; ;main.c: 859: case STATE_MENU_DURATION:
-[; ;main.c: 860: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x1 , currentMenuInfoPtr_->menuMessage[ currentMenuInfoPtr_->select - currentMenuInfoPtr_->cursorPosition ] ) ;
-"860
 [e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 0 `i -> 1 `i `E2805 *U + . *U _currentMenuInfoPtr_ 3 * -> - -> . *U _currentMenuInfoPtr_ 0 `i -> . *U _currentMenuInfoPtr_ 1 `i `x -> -> # *U . *U _currentMenuInfoPtr_ 3 `i `x ]
-[; ;main.c: 861: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x1 , currentMenuInfoPtr_->menuMessage[ currentMenuInfoPtr_->select - currentMenuInfoPtr_->cursorPosition + 1 ] ) ;
-"861
+[; ;main.c: 838: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x1 , currentMenuInfoPtr_->menuMessage[ currentMenuInfoPtr_->select - currentMenuInfoPtr_->cursorPosition + 1 ] ) ;
+"838
 [e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 1 `i -> 1 `i `E2805 *U + . *U _currentMenuInfoPtr_ 3 * -> + - -> . *U _currentMenuInfoPtr_ 0 `i -> . *U _currentMenuInfoPtr_ 1 `i -> 1 `i `x -> -> # *U . *U _currentMenuInfoPtr_ 3 `i `x ]
-[; ;main.c: 863: if( currentMenuInfoPtr_->select != currentMenuInfoPtr_->cursorPosition )
-"863
-[e $ ! != -> . *U _currentMenuInfoPtr_ 0 `i -> . *U _currentMenuInfoPtr_ 1 `i 612  ]
-[; ;main.c: 864: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_0 | 0xF , CHAR_CODE.CURSOR_UP ) ;
-"864
+[; ;main.c: 840: if( currentMenuInfoPtr_->select != currentMenuInfoPtr_->cursorPosition )
+"840
+[e $ ! != -> . *U _currentMenuInfoPtr_ 0 `i -> . *U _currentMenuInfoPtr_ 1 `i 584  ]
+[; ;main.c: 841: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_0 | 0xF , CHAR_CODE.CURSOR_UP ) ;
+"841
 [e ( _ParallelLCD_WriteCharacter (2 , -> | -> . `E2805 0 `i -> 15 `i `E2805 . _CHAR_CODE 1 ]
-[e :U 612 ]
-[; ;main.c: 865: if( currentMenuInfoPtr_->select != ( currentMenuInfoPtr_->limit + currentMenuInfoPtr_->cursorPosition - 1 ) )
-"865
-[e $ ! != -> . *U _currentMenuInfoPtr_ 0 `i - + -> . *U _currentMenuInfoPtr_ 2 `i -> . *U _currentMenuInfoPtr_ 1 `i -> 1 `i 613  ]
-[; ;main.c: 866: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0xF , CHAR_CODE.CURSOR_DOWN ) ;
-"866
+[e :U 584 ]
+[; ;main.c: 842: if( currentMenuInfoPtr_->select != ( currentMenuInfoPtr_->limit + currentMenuInfoPtr_->cursorPosition - 1 ) )
+"842
+[e $ ! != -> . *U _currentMenuInfoPtr_ 0 `i - + -> . *U _currentMenuInfoPtr_ 2 `i -> . *U _currentMenuInfoPtr_ 1 `i -> 1 `i 585  ]
+[; ;main.c: 843: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0xF , CHAR_CODE.CURSOR_DOWN ) ;
+"843
 [e ( _ParallelLCD_WriteCharacter (2 , -> | -> . `E2805 1 `i -> 15 `i `E2805 . _CHAR_CODE 2 ]
-[e :U 613 ]
-[; ;main.c: 868: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[currentMenuInfoPtr_->cursorPosition] | 0x0 , CHAR_CODE.CURSOR_RIGHT ) ;
-"868
+[e :U 585 ]
+[; ;main.c: 845: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[currentMenuInfoPtr_->cursorPosition] | 0x0 , CHAR_CODE.CURSOR_RIGHT ) ;
+"845
 [e ( _ParallelLCD_WriteCharacter (2 , -> | -> *U + &U _PARALLEL_LCD_ROW_SELECT * -> . *U _currentMenuInfoPtr_ 1 `ux -> -> # *U &U _PARALLEL_LCD_ROW_SELECT `ui `ux `i -> 0 `i `E2805 . _CHAR_CODE 0 ]
-[; ;main.c: 870: break ;
-"870
-[e $U 607  ]
-[; ;main.c: 872: case STATE_METRONOME:
-"872
-[e :U 614 ]
-"873
-[e :U 615 ]
-"874
-[e :U 616 ]
-"875
-[e :U 617 ]
-"876
-[e :U 618 ]
-"877
-[e :U 619 ]
-"878
-[e :U 620 ]
-[; ;main.c: 873: case STATE_ADJUST_BEAT_COUNT:
-[; ;main.c: 874: case STATE_ADJUST_TONE:
-[; ;main.c: 875: case STATE_ADJUST_DURATION_CLICK:
-[; ;main.c: 876: case STATE_ADJUST_DURATION_KEY:
-[; ;main.c: 877: case STATE_ADJUST_PULSE_WIDTH:
-[; ;main.c: 878: case STATE_ADJUST_OSCILLATOR_TUNE:
-[; ;main.c: 879: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentValueInfoPtr_->message.title ) ;
-"879
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 0 `i -> 0 `i `E2805 -> . . *U _currentValueInfoPtr_ 2 0 `*Cuc ]
-[; ;main.c: 880: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , currentValueInfoPtr_->message.value ) ;
-"880
-[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 1 `i -> 0 `i `E2805 -> . . *U _currentValueInfoPtr_ 2 1 `*Cuc ]
-[; ;main.c: 881: if( machineState_ == STATE_METRONOME ) {
-"881
-[e $ ! == -> _machineState_ `i -> . `E2963 1 `i 621  ]
+[; ;main.c: 847: break ;
+"847
+[e $U 579  ]
+[; ;main.c: 849: case STATE_METRONOME:
+"849
+[e :U 586 ]
+"850
+[e :U 587 ]
+"851
+[e :U 588 ]
+[; ;main.c: 850: case STATE_ADJUST_VALUE:
+[; ;main.c: 851: case STATE_ADJUST_OSCILLATOR_TUNE:
+[; ;main.c: 852: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentValueInfoPtr_->message.title ) ;
+"852
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 0 `i -> 0 `i `E2805 -> . . *U _currentValueInfoPtr_ 3 0 `*Cuc ]
+[; ;main.c: 853: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , currentValueInfoPtr_->message.value ) ;
+"853
+[e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 1 `i -> 0 `i `E2805 -> . . *U _currentValueInfoPtr_ 3 1 `*Cuc ]
+[; ;main.c: 854: if( machineState_ == STATE_METRONOME ) {
+"854
+[e $ ! == -> _machineState_ `i -> . `E2960 1 `i 589  ]
 {
-[; ;main.c: 882: if( isMute_ )
-"882
-[e $ ! != -> _isMute_ `i -> -> -> 0 `i `E2778 `i 622  ]
-[; ;main.c: 883: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , MESSAGE.METRONOME.MUTE ) ;
-"883
+[; ;main.c: 855: if( soundState_.isUserMute )
+"855
+[e $ ! != -> . . _soundState_ 1 0 `i -> -> -> 0 `i `uc `i 590  ]
+[; ;main.c: 856: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , MESSAGE.METRONOME.MUTE ) ;
+"856
 [e ( _ParallelLCD_WriteString (2 , -> | -> . `E2805 0 `i -> 10 `i `E2805 -> . . _MESSAGE 0 1 `*Cuc ]
-[e :U 622 ]
-"884
+[e :U 590 ]
+"857
 }
-[; ;main.c: 884: }
-[e $U 623  ]
-"885
-[e :U 621 ]
-[; ;main.c: 885: else if( machineState_ == STATE_ADJUST_TONE )
-[e $ ! == -> _machineState_ `i -> . `E2963 9 `i 624  ]
-[; ;main.c: 886: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0x5 , menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 + '0' ) ;
-"886
-[e ( _ParallelLCD_WriteCharacter (2 , -> | -> . `E2805 1 `i -> 5 `i `E2805 -> + -> - -> . _menuInfoTone_ 0 `i -> . `E2912 1 `i `ui -> 48 `ui `uc ]
-[e :U 624 ]
-"888
-[e :U 623 ]
-[; ;main.c: 888: events_.output.changeValue=1 ;
+[e :U 589 ]
+[; ;main.c: 857: }
+[; ;main.c: 859: events_.output.changeValue=1 ;
+"859
 [e = . . . _events_ 1 1 2 -> -> 1 `i `uc ]
-[; ;main.c: 889: break ;
-"889
-[e $U 607  ]
-[; ;main.c: 891: case STATE_INFORMATION:
-"891
-[e :U 625 ]
-[; ;main.c: 892: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE_INFORMATION[ menuInfoInformation_.select ] ) ;
-"892
+[; ;main.c: 860: break ;
+"860
+[e $U 579  ]
+[; ;main.c: 862: case STATE_INFORMATION:
+"862
+[e :U 591 ]
+[; ;main.c: 863: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE_INFORMATION[ menuInfoInformation_.select ] ) ;
+"863
 [e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 0 `i -> 0 `i `E2805 *U + &U _MESSAGE_INFORMATION * -> . _menuInfoInformation_ 0 `ux -> -> # *U &U _MESSAGE_INFORMATION `ui `ux ]
-[; ;main.c: 893: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , &informationValueBuffer[ menuInfoInformation_.select ] ) ;
-"893
+[; ;main.c: 864: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , &informationValueBuffer[ menuInfoInformation_.select ] ) ;
+"864
 [e ( _ParallelLCD_WriteString (2 , -> | -> . `E2805 0 `i -> 10 `i `E2805 -> &U *U + &U _informationValueBuffer * -> . _menuInfoInformation_ 0 `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `*Cuc ]
-[; ;main.c: 894: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFORMATION[ menuInfoInformation_.select + 1 ] ) ;
-"894
+[; ;main.c: 865: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFORMATION[ menuInfoInformation_.select + 1 ] ) ;
+"865
 [e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 1 `i -> 0 `i `E2805 *U + &U _MESSAGE_INFORMATION * -> -> + -> . _menuInfoInformation_ 0 `i -> 1 `i `ui `ux -> -> # *U &U _MESSAGE_INFORMATION `ui `ux ]
-[; ;main.c: 895: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ menuInfoInformation_.select + 1 ] ) ;
-"895
+[; ;main.c: 866: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ menuInfoInformation_.select + 1 ] ) ;
+"866
 [e ( _ParallelLCD_WriteString (2 , -> | -> . `E2805 1 `i -> 10 `i `E2805 -> &U *U + &U _informationValueBuffer * -> -> + -> . _menuInfoInformation_ 0 `i -> 1 `i `ui `ux -> * -> # *U &U *U &U _informationValueBuffer `ui -> -> 7 `i `ui `ux `*Cuc ]
-[; ;main.c: 896: break ;
-"896
-[e $U 607  ]
-[; ;main.c: 899: case STATE_CONFIRM_LOAD:
-"899
-[e :U 626 ]
-"900
-[e :U 627 ]
-"901
-[e :U 628 ]
-[; ;main.c: 900: case STATE_CONFIRM_SAVE:
-[; ;main.c: 901: case STATE_CONFIRM_RESET:
-[; ;main.c: 902: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0xD , MESSAGE.CONFIRM.NO ) ;
-"902
+[; ;main.c: 867: break ;
+"867
+[e $U 579  ]
+[; ;main.c: 869: case STATE_CONFIRM:
+"869
+[e :U 592 ]
+[; ;main.c: 870: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0xD , MESSAGE.CONFIRM.NO ) ;
+"870
 [e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 0 `i -> 13 `i `E2805 -> . . _MESSAGE 1 0 `*Cuc ]
-[; ;main.c: 903: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xD , MESSAGE.CONFIRM.YES ) ;
-"903
+[; ;main.c: 871: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xD , MESSAGE.CONFIRM.YES ) ;
+"871
 [e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 1 `i -> 13 `i `E2805 -> . . _MESSAGE 1 1 `*Cuc ]
-[; ;main.c: 904: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentMenuInfoPtr_->singleMessage ) ;
-"904
-[e ( _ParallelLCD_WriteString (2 , -> | -> . `E2805 0 `i -> 0 `i `E2805 . *U _currentMenuInfoPtr_ 4 ]
-[; ;main.c: 905: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[ currentMenuInfoPtr_->cursorPosition ] | 0xC , CHAR_CODE.CURSOR_RIGHT ) ;
-"905
-[e ( _ParallelLCD_WriteCharacter (2 , -> | -> *U + &U _PARALLEL_LCD_ROW_SELECT * -> . *U _currentMenuInfoPtr_ 1 `ux -> -> # *U &U _PARALLEL_LCD_ROW_SELECT `ui `ux `i -> 12 `i `E2805 . _CHAR_CODE 0 ]
-[; ;main.c: 906: break ;
-"906
-[e $U 607  ]
-[; ;main.c: 908: case STATE_LOAD:
-"908
-[e :U 629 ]
-"909
-[e :U 630 ]
-"910
-[e :U 631 ]
-[; ;main.c: 909: case STATE_SAVE:
-[; ;main.c: 910: case STATE_INITIALIZE:
-[; ;main.c: 911: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentSingleMessage_ ) ;
-"911
+[; ;main.c: 872: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentConfirmationInfoPtr_->message ) ;
+"872
+[e ( _ParallelLCD_WriteString (2 , -> | -> . `E2805 0 `i -> 0 `i `E2805 . *U _currentConfirmationInfoPtr_ 3 ]
+[; ;main.c: 873: ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[ currentConfirmationInfoPtr_->isSelectYes ] | 0xC , CHAR_CODE.CURSOR_RIGHT ) ;
+"873
+[e ( _ParallelLCD_WriteCharacter (2 , -> | -> *U + &U _PARALLEL_LCD_ROW_SELECT * -> . *U _currentConfirmationInfoPtr_ 0 `ux -> -> # *U &U _PARALLEL_LCD_ROW_SELECT `ui `ux `i -> 12 `i `E2805 . _CHAR_CODE 0 ]
+[; ;main.c: 874: break ;
+"874
+[e $U 579  ]
+[; ;main.c: 876: case STATE_LOAD:
+"876
+[e :U 593 ]
+"877
+[e :U 594 ]
+"878
+[e :U 595 ]
+[; ;main.c: 877: case STATE_SAVE:
+[; ;main.c: 878: case STATE_INITIALIZE:
+[; ;main.c: 879: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentSingleMessage_ ) ;
+"879
 [e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 0 `i -> 0 `i `E2805 _currentSingleMessage_ ]
-[; ;main.c: 912: ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
-"912
+[; ;main.c: 880: ParallelLCD_ClearRow( PARALLEL_LCD_ROW_SELECT_1 ) ;
+"880
 [e ( _ParallelLCD_ClearRow (1 . `E2805 1 ]
-[; ;main.c: 913: break ;
-"913
-[e $U 607  ]
-[; ;main.c: 915: case STATE_ERROR:
-"915
-[e :U 632 ]
-[; ;main.c: 916: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.ERROR.TITLE ) ;
-"916
+[; ;main.c: 881: break ;
+"881
+[e $U 579  ]
+[; ;main.c: 883: case STATE_ERROR:
+"883
+[e :U 596 ]
+[; ;main.c: 884: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , MESSAGE.ERROR.TITLE ) ;
+"884
 [e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 0 `i -> 0 `i `E2805 -> . . _MESSAGE 3 0 `*Cuc ]
-[; ;main.c: 917: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , currentSingleMessage_ ) ;
-"917
+[; ;main.c: 885: ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , currentSingleMessage_ ) ;
+"885
 [e ( _ParallelLCD_WriteStringClearing (2 , -> | -> . `E2805 1 `i -> 0 `i `E2805 _currentSingleMessage_ ]
+[; ;main.c: 886: break ;
+"886
+[e $U 579  ]
+"888
+}
+[; ;main.c: 888: }
+[e $U 579  ]
+"832
+[e :U 580 ]
+[e [\ _machineState_ , $ . `E2960 2 581
+ , $ . `E2960 3 582
+ , $ . `E2960 4 583
+ , $ . `E2960 1 586
+ , $ . `E2960 5 587
+ , $ . `E2960 6 588
+ , $ . `E2960 7 591
+ , $ . `E2960 8 592
+ , $ . `E2960 10 593
+ , $ . `E2960 9 594
+ , $ . `E2960 11 595
+ , $ . `E2960 13 596
+ 579 ]
+"888
+[e :U 579 ]
+"890
+}
+[e :U 578 ]
+[; ;main.c: 890: }
+[; ;main.c: 893: if( (events_.output.changeValue&&!(events_.output.changeValue=0)) ) {
+"893
+[e $ ! && != -> . . . _events_ 1 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 597  ]
+{
+"895
+[v _tmpValue `ui ~T0 @X0 1 a ]
+"896
+[v _valueString `uc ~T0 @X0 -> 6 `i a ]
+[; ;main.c: 895: Uint16_t tmpValue ;
+[; ;main.c: 896: Char_t valueString[6] ;
+[; ;main.c: 897: valueString[0] = '=' ;
+"897
+[e = *U + &U _valueString * -> -> -> 0 `i `ui `ux -> -> # *U &U _valueString `ui `ux -> -> 61 `ui `uc ]
+[; ;main.c: 898: valueString[1] = ' ' ;
+"898
+[e = *U + &U _valueString * -> -> -> 1 `i `ui `ux -> -> # *U &U _valueString `ui `ux -> -> 32 `ui `uc ]
+[; ;main.c: 900: switch( machineState_ ) {
+"900
+[e $U 599  ]
+{
+[; ;main.c: 902: case STATE_METRONOME:
+"902
+[e :U 600 ]
+[; ;main.c: 903: tmpValue = configration_.tempo ;
+"903
+[e = _tmpValue . _configration_ 2 ]
+[; ;main.c: 904: break ;
+"904
+[e $U 598  ]
+[; ;main.c: 906: case STATE_ADJUST_OSCILLATOR_TUNE:
+"906
+[e :U 601 ]
+[; ;main.c: 907: if( (Uint08_t)configration_.oscillatorTune & 0x80 ) {
+"907
+[e $ ! != & -> -> . _configration_ 7 `uc `i -> 128 `i -> 0 `i 602  ]
+{
+[; ;main.c: 908: tmpValue = -configration_.oscillatorTune ;
+"908
+[e = _tmpValue -> -U -> . _configration_ 7 `i `ui ]
+[; ;main.c: 909: valueString[1] = '-' ;
+"909
+[e = *U + &U _valueString * -> -> -> 1 `i `ui `ux -> -> # *U &U _valueString `ui `ux -> -> 45 `ui `uc ]
+"910
+}
+[; ;main.c: 910: }
+[e $U 603  ]
+"911
+[e :U 602 ]
+[; ;main.c: 911: else {
+{
+[; ;main.c: 912: tmpValue = (Uint16_t)configration_.oscillatorTune ;
+"912
+[e = _tmpValue -> . _configration_ 7 `ui ]
+"913
+}
+[e :U 603 ]
+[; ;main.c: 913: }
+[; ;main.c: 914: break ;
+"914
+[e $U 598  ]
+[; ;main.c: 916: default:
+"916
+[e :U 604 ]
+[; ;main.c: 917: tmpValue = *currentValueInfoPtr_->valuePtr ;
+"917
+[e = _tmpValue -> *U . *U _currentValueInfoPtr_ 0 `ui ]
 [; ;main.c: 918: break ;
 "918
-[e $U 607  ]
-"920
+[e $U 598  ]
+"919
 }
-[; ;main.c: 920: }
-[e $U 607  ]
-"855
-[e :U 608 ]
-[e [\ _machineState_ , $ . `E2963 2 609
- , $ . `E2963 3 610
- , $ . `E2963 4 611
- , $ . `E2963 1 614
- , $ . `E2963 5 615
- , $ . `E2963 9 616
- , $ . `E2963 6 617
- , $ . `E2963 7 618
- , $ . `E2963 8 619
- , $ . `E2963 10 620
- , $ . `E2963 11 625
- , $ . `E2963 14 626
- , $ . `E2963 12 627
- , $ . `E2963 16 628
- , $ . `E2963 15 629
- , $ . `E2963 13 630
- , $ . `E2963 17 631
- , $ . `E2963 19 632
- 607 ]
-"920
-[e :U 607 ]
-"922
-}
-[e :U 606 ]
-[; ;main.c: 922: }
-[; ;main.c: 925: if( (events_.output.changeValue&&!(events_.output.changeValue=0)) ) {
-"925
-[e $ ! && != -> . . . _events_ 1 1 2 `i -> -> -> 0 `i `uc `i ! != -> = . . . _events_ 1 1 2 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 633  ]
-{
-"927
-[v _tmpValue `ui ~T0 @X0 1 a ]
-[v F3100 `uc ~T0 @X0 -> 6 `i s ]
-[i F3100
-:U ..
--> 61 `c
--> 32 `c
--> 48 `c
--> 48 `c
--> 48 `c
--> 0 `c
-..
-]
-"928
-[v _valueString `uc ~T0 @X0 -> 6 `i a ]
-[; ;main.c: 927: Uint16_t tmpValue ;
-[; ;main.c: 928: Char_t valueString[6] = "= 000" ;
-[e = _valueString F3100 ]
-[; ;main.c: 930: switch( machineState_ ) {
-"930
-[e $U 635  ]
-{
-[; ;main.c: 932: case STATE_METRONOME:
-"932
-[e :U 636 ]
-[; ;main.c: 933: tmpValue = configration_.tempo ;
-"933
-[e = _tmpValue . _configration_ 2 ]
-[; ;main.c: 934: break ;
-"934
-[e $U 634  ]
-[; ;main.c: 936: case STATE_ADJUST_OSCILLATOR_TUNE:
-"936
-[e :U 637 ]
-[; ;main.c: 937: if( (Uint08_t)configration_.oscillatorTune & 0x80 ) {
-"937
-[e $ ! != & -> -> . _configration_ 7 `uc `i -> 128 `i -> 0 `i 638  ]
-{
-[; ;main.c: 938: tmpValue = -configration_.oscillatorTune ;
-"938
-[e = _tmpValue -> -U -> . _configration_ 7 `i `ui ]
-[; ;main.c: 939: valueString[1] = '-' ;
-"939
-[e = *U + &U _valueString * -> -> -> 1 `i `ui `ux -> -> # *U &U _valueString `ui `ux -> -> 45 `ui `uc ]
-"940
-}
-[; ;main.c: 940: }
-[e $U 639  ]
-"941
-[e :U 638 ]
-[; ;main.c: 941: else {
-{
-[; ;main.c: 942: tmpValue = (Uint16_t)configration_.oscillatorTune ;
-"942
-[e = _tmpValue -> . _configration_ 7 `ui ]
-"943
-}
-[e :U 639 ]
-[; ;main.c: 943: }
-[; ;main.c: 944: break ;
-"944
-[e $U 634  ]
-[; ;main.c: 946: default:
-"946
-[e :U 640 ]
-[; ;main.c: 947: tmpValue = *currentValueInfoPtr_->valuePtr ;
-"947
-[e = _tmpValue -> *U . *U _currentValueInfoPtr_ 0 `ui ]
-[; ;main.c: 948: break ;
-"948
-[e $U 634  ]
-"949
-}
-[; ;main.c: 949: }
-[e $U 634  ]
-"930
-[e :U 635 ]
-[e [\ _machineState_ , $ . `E2963 1 636
- , $ . `E2963 10 637
- 640 ]
-"949
-[e :U 634 ]
-"951
+[; ;main.c: 919: }
+[e $U 598  ]
+"900
+[e :U 599 ]
+[e [\ _machineState_ , $ . `E2960 1 600
+ , $ . `E2960 6 601
+ 604 ]
+"919
+[e :U 598 ]
+"921
 [v _isNonZero `E2778 ~T0 @X0 1 a ]
-[; ;main.c: 951: Bool_t isNonZero = BOOL_FALSE ;
+[; ;main.c: 921: Bool_t isNonZero = BOOL_FALSE ;
 [e = _isNonZero . `E2778 0 ]
-"952
-[v F3104 `Cuc ~T0 @X0 -> 0 `x s COMPARE_UNITS ]
-[i F3104
+"922
+[v F3114 `Cuc ~T0 @X0 -> 0 `x s COMPARE_UNITS ]
+[i F3114
 :U ..
 -> -> 100 `i `uc
 -> -> 10 `i `uc
 -> -> 1 `i `uc
 ..
 ]
-[; ;main.c: 952: const Uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 , } ;
-[; ;main.c: 953: for( Uint08_t i = 0 ; i < 3 ; i++ ) {
-"953
+[; ;main.c: 922: const Uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 , } ;
+[; ;main.c: 923: for( Uint08_t i = 0 ; i < 3 ; i++ ) {
+"923
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 3 `i 641  ]
-[e $U 642  ]
-[e :U 641 ]
+[e $ < -> _i `i -> 3 `i 605  ]
+[e $U 606  ]
+[e :U 605 ]
 {
-"954
+"924
 [v _chr `uc ~T0 @X0 1 a ]
-[; ;main.c: 954: Char_t chr = '0' ;
+[; ;main.c: 924: Char_t chr = '0' ;
 [e = _chr -> -> 48 `ui `uc ]
-[; ;main.c: 955: while( tmpValue >= COMPARE_UNITS[i] ) {
-"955
-[e $U 644  ]
-[e :U 645 ]
+"925
+[v _compareUnit `uc ~T0 @X0 1 a ]
+[; ;main.c: 925: Uint08_t compareUnit = COMPARE_UNITS[i] ;
+[e = _compareUnit *U + &U F3114 * -> _i `ux -> -> # *U &U F3114 `ui `ux ]
+[; ;main.c: 926: while( tmpValue >= compareUnit ) {
+"926
+[e $U 608  ]
+[e :U 609 ]
 {
-[; ;main.c: 956: tmpValue -= COMPARE_UNITS[i] ;
-"956
-[e =- _tmpValue -> *U + &U F3104 * -> _i `ux -> -> # *U &U F3104 `ui `ux `ui ]
-[; ;main.c: 957: chr++ ;
-"957
+[; ;main.c: 927: tmpValue -= compareUnit ;
+"927
+[e =- _tmpValue -> _compareUnit `ui ]
+[; ;main.c: 928: chr++ ;
+"928
 [e ++ _chr -> -> 1 `i `uc ]
-"958
+"929
 }
-[e :U 644 ]
-"955
-[e $ >= _tmpValue -> *U + &U F3104 * -> _i `ux -> -> # *U &U F3104 `ui `ux `ui 645  ]
-[e :U 646 ]
-[; ;main.c: 958: }
-[; ;main.c: 960: if( isNonZero || chr > '0' || i == 2 ) {
-"960
-[e $ ! || || != -> _isNonZero `i -> -> -> 0 `i `E2778 `i > -> _chr `ui -> 48 `ui == -> _i `i -> 2 `i 647  ]
+[e :U 608 ]
+"926
+[e $ >= _tmpValue -> _compareUnit `ui 609  ]
+[e :U 610 ]
+[; ;main.c: 929: }
+[; ;main.c: 931: if( isNonZero || chr > '0' || i == 2 ) {
+"931
+[e $ ! || || != -> _isNonZero `i -> -> -> 0 `i `E2778 `i > -> _chr `ui -> 48 `ui == -> _i `i -> 2 `i 611  ]
 {
-[; ;main.c: 961: valueString[ i + 2 ] = chr ;
-"961
+[; ;main.c: 932: valueString[ i + 2 ] = chr ;
+"932
 [e = *U + &U _valueString * -> -> + -> _i `i -> 2 `i `ui `ux -> -> # *U &U _valueString `ui `ux _chr ]
-[; ;main.c: 962: isNonZero = BOOL_TRUE ;
-"962
+[; ;main.c: 933: isNonZero = BOOL_TRUE ;
+"933
 [e = _isNonZero . `E2778 1 ]
-"963
+"934
 }
-[; ;main.c: 963: }
-[e $U 648  ]
-"964
-[e :U 647 ]
-[; ;main.c: 964: else {
+[; ;main.c: 934: }
+[e $U 612  ]
+"935
+[e :U 611 ]
+[; ;main.c: 935: else {
 {
-[; ;main.c: 965: valueString[ i + 2 ] = valueString[ i + 1 ] ;
-"965
+[; ;main.c: 936: valueString[ i + 2 ] = valueString[ i + 1 ] ;
+"936
 [e = *U + &U _valueString * -> -> + -> _i `i -> 2 `i `ui `ux -> -> # *U &U _valueString `ui `ux *U + &U _valueString * -> -> + -> _i `i -> 1 `i `ui `ux -> -> # *U &U _valueString `ui `ux ]
-[; ;main.c: 966: valueString[ i + 1 ] = ' ' ;
-"966
+[; ;main.c: 937: valueString[ i + 1 ] = ' ' ;
+"937
 [e = *U + &U _valueString * -> -> + -> _i `i -> 1 `i `ui `ux -> -> # *U &U _valueString `ui `ux -> -> 32 `ui `uc ]
-"967
+"938
 }
-[e :U 648 ]
-"968
+[e :U 612 ]
+"939
 }
-"953
+"923
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 3 `i 641  ]
-[e :U 642 ]
-"968
+[e $ < -> _i `i -> 3 `i 605  ]
+[e :U 606 ]
+"939
 }
-[; ;main.c: 967: }
-[; ;main.c: 968: }
-[; ;main.c: 970: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xB , &valueString ) ;
-"970
+[; ;main.c: 938: }
+[; ;main.c: 939: }
+[; ;main.c: 941: ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xB , &valueString ) ;
+"941
 [e ( _ParallelLCD_WriteString (2 , -> | -> . `E2805 1 `i -> 11 `i `E2805 -> &U _valueString `*Cuc ]
-[; ;main.c: 972: switch( machineState_ ) {
-"972
-[e $U 650  ]
+[; ;main.c: 943: switch( machineState_ ) {
+"943
+[e $U 614  ]
 {
-[; ;main.c: 973: case STATE_ADJUST_OSCILLATOR_TUNE:
-"973
-[e :U 651 ]
-[; ;main.c: 974: OSCTUNE = configration_.oscillatorTune ;
-"974
+[; ;main.c: 944: case STATE_ADJUST_OSCILLATOR_TUNE:
+"944
+[e :U 615 ]
+[; ;main.c: 945: OSCTUNE = configration_.oscillatorTune ;
+"945
 [e = _OSCTUNE -> . _configration_ 7 `uc ]
-[; ;main.c: 975: break ;
-"975
-[e $U 649  ]
-[; ;main.c: 976: case STATE_ADJUST_TONE:
-"976
-[e :U 652 ]
-[; ;main.c: 977: PR2 = *currentValueInfoPtr_->valuePtr ;
-"977
-[e = _PR2 *U . *U _currentValueInfoPtr_ 0 ]
-[; ;main.c: 978: {CCPR4L=(PR2>>configration_.pulseWidth);} ;
-"978
+[; ;main.c: 946: break ;
+"946
+[e $U 613  ]
+"947
+}
+[; ;main.c: 947: }
+[e $U 613  ]
+"943
+[e :U 614 ]
+[e [\ _machineState_ , $ . `E2960 6 615
+ 613 ]
+"947
+[e :U 613 ]
+"948
+}
+[e :U 597 ]
+"950
+}
+[; ;main.c: 948: }
+[; ;main.c: 950: }
+[e $U 451  ]
+[e :U 452 ]
+}
+[; ;main.c: 952: }
+"952
+[e :UE 432 ]
+}
+[v F3120 `(v ~T0 @X0 1 tf ]
+"957
+[v _isr `IF3120 ~T0 @X0 1 e ]
 {
-[e = _CCPR4L -> >> -> _PR2 `i . _configration_ 6 `uc ]
-}
-[; ;main.c: 979: break ;
-"979
-[e $U 649  ]
-"980
-}
-[; ;main.c: 980: }
-[e $U 649  ]
-"972
-[e :U 650 ]
-[e [\ _machineState_ , $ . `E2963 10 651
- , $ . `E2963 9 652
- 649 ]
-"980
-[e :U 649 ]
-"981
-}
-[e :U 633 ]
-"983
-}
-[; ;main.c: 981: }
-[; ;main.c: 983: }
-[e $U 446  ]
-[e :U 447 ]
-}
-[; ;main.c: 985: }
-"985
-[e :UE 427 ]
-}
-[v F3109 `(v ~T0 @X0 1 tf ]
-"990
-[v _isr `IF3109 ~T0 @X0 1 e ]
-{
-[; ;main.c: 990: void interrupt isr( void ) {
+[; ;main.c: 957: void interrupt isr( void ) {
 [e :U _isr ]
 [f ]
-"991
-[s S653 `uc 1 `uc 1 ]
-[n S653 . count1ms count10ms ]
-"994
-[v F3113 `S653 ~T0 @X0 1 s prescaler ]
-[i F3113
+"958
+[s S616 `uc 1 `uc 1 ]
+[n S616 . count1ms count10ms ]
+"961
+[v F3124 `S616 ~T0 @X0 1 s prescaler ]
+[i F3124
 :U ..
 :U ..
 -> -> 0 `i `uc
@@ -6974,73 +6877,73 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;main.c: 991: static struct {
-[; ;main.c: 992: Uint08_t count1ms ;
-[; ;main.c: 993: Uint08_t count10ms ;
-[; ;main.c: 994: } prescaler = { 0 , 0 } ;
-[; ;main.c: 996: if( !PIR3bits.TMR6IF ) return ;
-"996
-[e $ ! ! != -> . . _PIR3bits 0 3 `i -> -> -> 0 `i `Vuc `i 655  ]
-[e $UE 654  ]
-[e :U 655 ]
-[; ;main.c: 997: PIR3bits.TMR6IF = 0 ;
-"997
+[; ;main.c: 958: static struct {
+[; ;main.c: 959: Uint08_t count1ms ;
+[; ;main.c: 960: Uint08_t count10ms ;
+[; ;main.c: 961: } prescaler = { 0 , 0 } ;
+[; ;main.c: 963: if( !PIR3bits.TMR6IF ) return ;
+"963
+[e $ ! ! != -> . . _PIR3bits 0 3 `i -> -> -> 0 `i `Vuc `i 618  ]
+[e $UE 617  ]
+[e :U 618 ]
+[; ;main.c: 964: PIR3bits.TMR6IF = 0 ;
+"964
 [e = . . _PIR3bits 0 3 -> -> 0 `i `uc ]
-[; ;main.c: 1000: tempoCounter_ += configration_.tempo ;
-"1000
+[; ;main.c: 967: tempoCounter_ += configration_.tempo ;
+"967
 [e =+ _tempoCounter_ -> . _configration_ 2 `um ]
-[; ;main.c: 1003: if( --prescaler.count1ms ) return ;
-"1003
-[e $ ! != -> =- . F3113 0 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 656  ]
-[e $UE 654  ]
-[e :U 656 ]
-[; ;main.c: 1004: prescaler.count1ms = 80 ;
-"1004
-[e = . F3113 0 -> -> 80 `i `uc ]
-[; ;main.c: 1007: if( soundDurationCount_.click && !--soundDurationCount_.click && !soundDurationCount_.key )
-"1007
-[e $ ! && && != -> . _soundDurationCount_ 0 `i -> -> -> 0 `i `uc `i ! != -> =- . _soundDurationCount_ 0 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i ! != -> . _soundDurationCount_ 1 `i -> -> -> 0 `i `uc `i 657  ]
-[; ;main.c: 1008: events_.output.soundOff=1 ;
-"1008
-[e = . . . _events_ 1 1 5 -> -> 1 `i `uc ]
-[e :U 657 ]
-[; ;main.c: 1009: if( soundDurationCount_.key && ! --soundDurationCount_.key )
-"1009
-[e $ ! && != -> . _soundDurationCount_ 1 `i -> -> -> 0 `i `uc `i ! != -> =- . _soundDurationCount_ 1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 658  ]
-[; ;main.c: 1010: events_.output.soundOff=1 ;
-"1010
-[e = . . . _events_ 1 1 5 -> -> 1 `i `uc ]
-[e :U 658 ]
-[; ;main.c: 1013: if( --prescaler.count10ms ) return ;
-"1013
-[e $ ! != -> =- . F3113 1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 659  ]
-[e $UE 654  ]
-[e :U 659 ]
-[; ;main.c: 1014: prescaler.count10ms = 10 ;
-"1014
-[e = . F3113 1 -> -> 10 `i `uc ]
-[; ;main.c: 1017: if( stateReturnCounter_ && ! --stateReturnCounter_ ) {
-"1017
-[e $ ! && != -> _stateReturnCounter_ `i -> -> -> 0 `i `uc `i ! != -> =- _stateReturnCounter_ -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 660  ]
+[; ;main.c: 970: if( --prescaler.count1ms ) return ;
+"970
+[e $ ! != -> =- . F3124 0 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 619  ]
+[e $UE 617  ]
+[e :U 619 ]
+[; ;main.c: 971: prescaler.count1ms = 80 ;
+"971
+[e = . F3124 0 -> -> 80 `i `uc ]
+[; ;main.c: 974: if( soundDurationCount_.click && !--soundDurationCount_.click && !soundDurationCount_.key )
+"974
+[e $ ! && && != -> . _soundDurationCount_ 0 `i -> -> -> 0 `i `uc `i ! != -> =- . _soundDurationCount_ 0 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i ! != -> . _soundDurationCount_ 1 `i -> -> -> 0 `i `uc `i 620  ]
+[; ;main.c: 975: events_.sound.off=1 ;
+"975
+[e = . . . _events_ 2 1 0 -> -> 1 `i `uc ]
+[e :U 620 ]
+[; ;main.c: 976: if( soundDurationCount_.key && ! --soundDurationCount_.key )
+"976
+[e $ ! && != -> . _soundDurationCount_ 1 `i -> -> -> 0 `i `uc `i ! != -> =- . _soundDurationCount_ 1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 621  ]
+[; ;main.c: 977: events_.sound.off=1 ;
+"977
+[e = . . . _events_ 2 1 0 -> -> 1 `i `uc ]
+[e :U 621 ]
+[; ;main.c: 980: if( --prescaler.count10ms ) return ;
+"980
+[e $ ! != -> =- . F3124 1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 622  ]
+[e $UE 617  ]
+[e :U 622 ]
+[; ;main.c: 981: prescaler.count10ms = 10 ;
+"981
+[e = . F3124 1 -> -> 10 `i `uc ]
+[; ;main.c: 984: if( stateReturnCounter_ && ! --stateReturnCounter_ ) {
+"984
+[e $ ! && != -> _stateReturnCounter_ `i -> -> -> 0 `i `uc `i ! != -> =- _stateReturnCounter_ -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 623  ]
 {
-[; ;main.c: 1018: events_.output.changeState=1 ;
-"1018
+[; ;main.c: 985: events_.output.changeState=1 ;
+"985
 [e = . . . _events_ 1 1 0 -> -> 1 `i `uc ]
-[; ;main.c: 1019: events_.output.resetMetronome=1 ;
-"1019
-[e = . . . _events_ 1 1 6 -> -> 1 `i `uc ]
-[; ;main.c: 1020: machineState_ = STATE_METRONOME ;
-"1020
-[e = _machineState_ . `E2963 1 ]
-"1021
+[; ;main.c: 986: events_.output.resetMetronome=1 ;
+"986
+[e = . . . _events_ 1 1 3 -> -> 1 `i `uc ]
+[; ;main.c: 987: machineState_ = STATE_METRONOME ;
+"987
+[e = _machineState_ . `E2960 1 ]
+"988
 }
-[e :U 660 ]
-"1024
-[s S661 `uc 1 `uc 1 ]
-[n S661 . Up Down ]
-"1027
-[v F3117 `S661 ~T0 @X0 1 s keyHoldCount ]
-[i F3117
+[e :U 623 ]
+"991
+[s S624 `uc 1 `uc 1 ]
+[n S624 . Up Down ]
+"994
+[v F3128 `S624 ~T0 @X0 1 s keyHoldCount ]
+[i F3128
 :U ..
 :U ..
 -> -> 0 `i `uc
@@ -7048,80 +6951,80 @@ Version 3.2 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-[; ;main.c: 1021: }
-[; ;main.c: 1024: static struct {
-[; ;main.c: 1025: Uint08_t Up ;
-[; ;main.c: 1026: Uint08_t Down ;
-[; ;main.c: 1027: } keyHoldCount = { 0 , 0 } ;
-[; ;main.c: 1029: sampledPortAState_.byte = (~PORTA&0xE0) ;
-"1029
+[; ;main.c: 988: }
+[; ;main.c: 991: static struct {
+[; ;main.c: 992: Uint08_t Up ;
+[; ;main.c: 993: Uint08_t Down ;
+[; ;main.c: 994: } keyHoldCount = { 0 , 0 } ;
+[; ;main.c: 996: sampledPortAState_.byte = (~PORTA&0xE0) ;
+"996
 [e = . _sampledPortAState_ 0 -> & ~ -> _PORTA `i -> 224 `i `uc ]
-[; ;main.c: 1031: if( sampledPortAState_.keyUp && !sampledPortAState_.keyDown ) {
-"1031
-[e $ ! && != -> . . _sampledPortAState_ 1 3 `i -> -> -> 0 `i `uc `i ! != -> . . _sampledPortAState_ 1 2 `i -> -> -> 0 `i `uc `i 662  ]
+[; ;main.c: 998: if( sampledPortAState_.keyUp && !sampledPortAState_.keyDown ) {
+"998
+[e $ ! && != -> . . _sampledPortAState_ 1 3 `i -> -> -> 0 `i `uc `i ! != -> . . _sampledPortAState_ 1 2 `i -> -> -> 0 `i `uc `i 625  ]
 {
-[; ;main.c: 1032: if( ++keyHoldCount.Up == 0x40 ) {
-"1032
-[e $ ! == -> =+ . F3117 0 -> -> 1 `i `uc `i -> 64 `i 663  ]
+[; ;main.c: 999: if( !--keyHoldCount.Up ) {
+"999
+[e $ ! ! != -> =- . F3128 0 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 626  ]
 {
-[; ;main.c: 1033: keyHoldCount.Up = 0x3C ;
-"1033
-[e = . F3117 0 -> -> 60 `i `uc ]
-[; ;main.c: 1034: events_.input.keyPressHeldUp=1 ;
-"1034
+[; ;main.c: 1000: keyHoldCount.Up = 4 ;
+"1000
+[e = . F3128 0 -> -> 4 `i `uc ]
+[; ;main.c: 1001: events_.keyPress.upHold=1 ;
+"1001
 [e = . . . _events_ 0 1 4 -> -> 1 `i `uc ]
-"1035
+"1002
 }
-[e :U 663 ]
-"1036
+[e :U 626 ]
+"1003
 }
-[; ;main.c: 1035: }
-[; ;main.c: 1036: }
-[e $U 664  ]
-"1037
-[e :U 662 ]
-[; ;main.c: 1037: else
-[; ;main.c: 1038: keyHoldCount.Up = 0 ;
-"1038
-[e = . F3117 0 -> -> 0 `i `uc ]
-[e :U 664 ]
-[; ;main.c: 1040: if( sampledPortAState_.keyDown && !sampledPortAState_.keyUp ) {
-"1040
-[e $ ! && != -> . . _sampledPortAState_ 1 2 `i -> -> -> 0 `i `uc `i ! != -> . . _sampledPortAState_ 1 3 `i -> -> -> 0 `i `uc `i 665  ]
+[; ;main.c: 1002: }
+[; ;main.c: 1003: }
+[e $U 627  ]
+"1004
+[e :U 625 ]
+[; ;main.c: 1004: else
+[; ;main.c: 1005: keyHoldCount.Up = 0x40 ;
+"1005
+[e = . F3128 0 -> -> 64 `i `uc ]
+[e :U 627 ]
+[; ;main.c: 1007: if( sampledPortAState_.keyDown && !sampledPortAState_.keyUp ) {
+"1007
+[e $ ! && != -> . . _sampledPortAState_ 1 2 `i -> -> -> 0 `i `uc `i ! != -> . . _sampledPortAState_ 1 3 `i -> -> -> 0 `i `uc `i 628  ]
 {
-[; ;main.c: 1041: if( ++keyHoldCount.Down == 0x40 ) {
-"1041
-[e $ ! == -> =+ . F3117 1 -> -> 1 `i `uc `i -> 64 `i 666  ]
+[; ;main.c: 1008: if( !--keyHoldCount.Down ) {
+"1008
+[e $ ! ! != -> =- . F3128 1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 629  ]
 {
-[; ;main.c: 1042: keyHoldCount.Down = 0x3C ;
-"1042
-[e = . F3117 1 -> -> 60 `i `uc ]
-[; ;main.c: 1043: events_.input.keyPressHeldDown=1 ;
-"1043
+[; ;main.c: 1009: keyHoldCount.Down = 4 ;
+"1009
+[e = . F3128 1 -> -> 4 `i `uc ]
+[; ;main.c: 1010: events_.keyPress.downHold=1 ;
+"1010
 [e = . . . _events_ 0 1 5 -> -> 1 `i `uc ]
-"1044
+"1011
 }
-[e :U 666 ]
-"1045
+[e :U 629 ]
+"1012
 }
-[; ;main.c: 1044: }
-[; ;main.c: 1045: }
-[e $U 667  ]
-"1046
-[e :U 665 ]
-[; ;main.c: 1046: else
-[; ;main.c: 1047: keyHoldCount.Down = 0 ;
-"1047
-[e = . F3117 1 -> -> 0 `i `uc ]
-[e :U 667 ]
-[; ;main.c: 1049: if( PIR3bits.TMR6IF ) machineError_ = ERROR_INTERRUPT ;
-"1049
-[e $ ! != -> . . _PIR3bits 0 3 `i -> -> -> 0 `i `Vuc `i 668  ]
-[e = _machineError_ . `E2986 2 ]
-[e :U 668 ]
-[; ;main.c: 1051: }
-"1051
-[e :UE 654 ]
+[; ;main.c: 1011: }
+[; ;main.c: 1012: }
+[e $U 630  ]
+"1013
+[e :U 628 ]
+[; ;main.c: 1013: else
+[; ;main.c: 1014: keyHoldCount.Down = 0x40 ;
+"1014
+[e = . F3128 1 -> -> 64 `i `uc ]
+[e :U 630 ]
+[; ;main.c: 1016: if( PIR3bits.TMR6IF ) machineError_ = ERROR_INTERRUPT ;
+"1016
+[e $ ! != -> . . _PIR3bits 0 3 `i -> -> -> 0 `i `Vuc `i 631  ]
+[e = _machineError_ . `E2977 2 ]
+[e :U 631 ]
+[; ;main.c: 1018: }
+"1018
+[e :UE 617 ]
 }
 [a 31C 73 110 116 101 114 114 117 112 116 0 ]
 [a 2C 66 101 97 116 32 67 111 117 110 116 0 ]
@@ -7130,28 +7033,29 @@ Version 3.2 HI-TECH Software Intermediate Code
 [a 19C 82 79 77 32 79 102 102 115 101 116 0 ]
 [a 10C 82 101 115 101 116 0 ]
 [a 25C 89 101 115 0 ]
-[a 44C 75 101 121 32 66 101 101 112 0 ]
+[a 48C 75 101 121 32 66 101 101 112 0 ]
 [a 36C 84 101 109 112 111 0 ]
 [a 9C 73 110 102 111 0 ]
 [a 1C 60 32 82 101 116 117 114 110 0 ]
 [a 11C 60 32 82 101 116 117 114 110 0 ]
 [a 15C 60 32 82 101 116 117 114 110 0 ]
 [a 37C 67 111 110 102 105 103 117 114 97 116 105 111 110 0 ]
-[a 45C 67 111 110 102 105 103 117 114 97 116 105 111 110 0 ]
-[a 47C 67 111 110 102 105 103 117 114 97 116 105 111 110 0 ]
+[a 49C 67 111 110 102 105 103 117 114 97 116 105 111 110 0 ]
+[a 51C 67 111 110 102 105 103 117 114 97 116 105 111 110 0 ]
 [a 4C 65 100 106 46 32 68 117 114 97 116 105 111 110 0 ]
-[a 41C 68 117 114 97 116 105 111 110 0 ]
-[a 43C 68 117 114 97 116 105 111 110 0 ]
+[a 45C 68 117 114 97 116 105 111 110 0 ]
+[a 47C 68 117 114 97 116 105 111 110 0 ]
 [a 18C 86 101 114 115 105 111 110 0 ]
-[a 42C 67 108 105 99 107 0 ]
+[a 46C 67 108 105 99 107 0 ]
 [a 5C 65 100 106 46 32 80 45 87 105 100 116 104 0 ]
-[a 46C 80 117 108 115 101 32 87 105 100 116 104 0 ]
+[a 50C 80 117 108 115 101 32 87 105 100 116 104 0 ]
 [a 8C 83 97 118 101 0 ]
 [a 6C 65 100 106 46 32 84 117 110 101 0 ]
-[a 48C 79 115 99 46 32 84 117 110 101 0 ]
+[a 52C 79 115 99 46 32 84 117 110 101 0 ]
 [a 3C 65 100 106 46 32 84 111 110 101 0 ]
 [a 39C 84 111 110 101 0 ]
-[a 40C 84 111 110 101 0 ]
+[a 41C 84 111 110 101 0 ]
+[a 43C 84 111 110 101 0 ]
 [a 22C 77 101 116 114 111 110 111 109 101 0 ]
 [a 35C 77 101 116 114 111 110 111 109 101 0 ]
 [a 21C 69 114 114 111 114 32 67 111 100 101 0 ]
@@ -7166,8 +7070,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [a 33C 83 97 118 101 32 63 0 ]
 [a 32C 76 111 97 100 32 63 0 ]
 [a 14C 84 111 110 101 50 0 ]
+[a 44C 84 111 110 101 50 0 ]
 [a 13C 84 111 110 101 49 0 ]
+[a 42C 84 111 110 101 49 0 ]
 [a 12C 84 111 110 101 48 0 ]
+[a 40C 84 111 110 101 48 0 ]
 [a 29C 69 114 114 111 114 32 111 110 32 46 46 46 0 ]
 [a 23C 35 77 117 116 101 35 0 ]
 [a 24C 78 111 32 0 ]

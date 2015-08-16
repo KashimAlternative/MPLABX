@@ -66,7 +66,7 @@ enum {
 
 //--------------------------------
 // Information
-#define MENU_SIZE_INFORMATION ( sizeof ( MESSAGE_INFORMATION ) / sizeof ( MESSAGE_INFORMATION[0] ) )
+#  define MENU_SIZE_INFORMATION ( sizeof ( MESSAGE_INFORMATION ) / sizeof ( MESSAGE_INFORMATION[0] ) )
 const Char_t* MESSAGE_INFORMATION[] = {
   //23456789ABCDEF
   "Version" ,
@@ -85,14 +85,6 @@ enum {
   INFORMATION_ITEM_ROM_OFFSET ,
   INFORMATION_ITEM_WRITE_COUNT ,
   INFORMATION_ITEM_ERROR_CODE ,
-} ;
-
-//--------------------------------
-// Confirm Menu
-#define MENU_SIZE_CONFIRM 2
-enum {
-  MENU_ITEM_CONFIRM_NO = 0 ,
-  MENU_ITEM_CONFIRM_YES ,
 } ;
 
 #endif	/* MENU_H */

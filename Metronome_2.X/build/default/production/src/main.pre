@@ -2,10 +2,8 @@
 # 1 "src/main.c"
 
 
-#pragma warning disable 758
 
 
-# 10
 #pragma config FOSC = INTOSC
 #pragma config WDTE = ON
 #pragma config PWRTE = ON
@@ -3853,6 +3851,10 @@ BOOL_TRUE = 1 ,
 } EnBool ;
 typedef EnBool Bool_t;
 
+
+# 11 "src/../../_Common/Util.h"
+#pragma warning disable 758
+
 # 25 "src/../../_Common/ParallelLCD.h"
 typedef enum {
 PARALLEL_LCD_CONFIG_FUNCTION_NONE = 0x00 ,
@@ -4225,14 +4227,6 @@ INFORMATION_ITEM_WRITE_COUNT ,
 INFORMATION_ITEM_ERROR_CODE ,
 } ;
 
-
-
-
-enum {
-MENU_ITEM_CONFIRM_NO = 0 ,
-MENU_ITEM_CONFIRM_YES ,
-} ;
-
 # 6 "src/message.h"
 const struct {
 const struct {
@@ -4326,25 +4320,19 @@ BITMAP = {
 
 } ;
 
-# 72 "src/main.c"
+# 67 "src/main.c"
 typedef enum {
 STATE_BOOT ,
 STATE_METRONOME ,
 STATE_MENU_MAIN ,
 STATE_MENU_TONE ,
 STATE_MENU_DURATION ,
-STATE_ADJUST_BEAT_COUNT ,
-STATE_ADJUST_DURATION_CLICK ,
-STATE_ADJUST_DURATION_KEY ,
-STATE_ADJUST_PULSE_WIDTH ,
-STATE_ADJUST_TONE ,
+STATE_ADJUST_VALUE ,
 STATE_ADJUST_OSCILLATOR_TUNE ,
 STATE_INFORMATION ,
-STATE_CONFIRM_SAVE ,
+STATE_CONFIRM ,
 STATE_SAVE ,
-STATE_CONFIRM_LOAD ,
 STATE_LOAD ,
-STATE_CONFIRM_RESET ,
 STATE_INITIALIZE ,
 STATE_RESET ,
 STATE_ERROR ,
@@ -4363,14 +4351,21 @@ EnErrorType machineError_ = ERROR_NONE ;
 
 
 Uint08_t stateReturnCounter_ = 0 ;
-Bool_t isMute_ = BOOL_FALSE ;
+union {
+Uint08_t byte ;
+struct {
+unsigned isUserMute : 1 ;
+unsigned isSystemMute : 1 ;
+unsigned isBusy : 1 ;
+} ;
+} soundState_ = { 0x00 , } ;
 
 
 
 
 ConfigurationData configration_ = { 0 , 0 , 120 , 4 , { 30 , 30 , } , { 249 , 62 , 82 , } , 1 , 0 , 0 } ;
 
-# 122
+# 118
 Uint24_t tempoCounter_ = 0 ;
 Uint08_t beatCounter_ = 0 ;
 
@@ -4388,31 +4383,40 @@ unsigned keyUp : 1 ;
 
 UniPortAState sampledPortAState_ = { 0x00 } ;
 
-# 146
+# 142
 typedef struct {
 Uint08_t select ;
 Uint08_t cursorPosition ;
 const Uint08_t limit ;
 const Char_t** menuMessage ;
-const Char_t* singleMessage ;
 } StMenuInfo ;
-StMenuInfo menuInfoMain_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_MAIN ) / sizeof( MESSAGE_MENU_ITEM_MAIN[0] ) ) - 1 , &MESSAGE_MENU_ITEM_MAIN , 0 , } ;
-StMenuInfo menuInfoTone_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_TONE ) / sizeof( MESSAGE_MENU_ITEM_TONE[0] ) ) - 1 , &MESSAGE_MENU_ITEM_TONE , 0 , } ;
-StMenuInfo menuInfoDuration_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_DURATION ) / sizeof( MESSAGE_MENU_ITEM_DURATION[0] ) ) - 1 , &MESSAGE_MENU_ITEM_DURATION , 0 , } ;
-StMenuInfo menuInfoConfirmLoad_ = { 0 , 0 , 2 - 1 , 0 , "Load ?" , } ;
-StMenuInfo menuInfoConfirmSave_ = { 0 , 0 , 2 - 1 , 0 , "Save ?" , } ;
-StMenuInfo menuInfoConfirmReset_ = { 0 , 0 , 2 - 1 , 0 , "Reset ?" , } ;
-StMenuInfo menuInfoInformation_ = { 0 , 0 , ( sizeof ( MESSAGE_INFORMATION ) / sizeof ( MESSAGE_INFORMATION[0] ) ) - 2 , 0 , 0 , } ;
+StMenuInfo menuInfoMain_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_MAIN ) / sizeof( MESSAGE_MENU_ITEM_MAIN[0] ) ) - 1 , &MESSAGE_MENU_ITEM_MAIN , } ;
+StMenuInfo menuInfoTone_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_TONE ) / sizeof( MESSAGE_MENU_ITEM_TONE[0] ) ) - 1 , &MESSAGE_MENU_ITEM_TONE , } ;
+StMenuInfo menuInfoDuration_ = { 0 , 0 , ( sizeof( MESSAGE_MENU_ITEM_DURATION ) / sizeof( MESSAGE_MENU_ITEM_DURATION[0] ) ) - 1 , &MESSAGE_MENU_ITEM_DURATION , } ;
+StMenuInfo menuInfoInformation_ = { 0 , 0 , ( sizeof ( MESSAGE_INFORMATION ) / sizeof ( MESSAGE_INFORMATION[0] ) ) - 2 , 0 , } ;
 StMenuInfo* currentMenuInfoPtr_ = 0 ;
+
+
+
+typedef struct {
+Bool_t isSelectYes ;
+EnMachineState stateYes ;
+EnMachineState stateNo ;
+const Char_t* message ;
+} StConfirmationInfo ;
+StConfirmationInfo confirmationLoad_ = { BOOL_FALSE , STATE_LOAD , STATE_MENU_MAIN , "Load ?" , } ;
+StConfirmationInfo ConfirmationSave_ = { BOOL_FALSE , STATE_SAVE , STATE_MENU_MAIN , "Save ?" , } ;
+StConfirmationInfo confirmationReset_ = { BOOL_FALSE , STATE_RESET , STATE_MENU_MAIN , "Reset ?" , } ;
+StConfirmationInfo* currentConfirmationInfoPtr_ = 0 ;
 
 
 
 const Char_t* currentSingleMessage_ = 0 ;
 
-
-
+# 175
 typedef struct {
 Uint08_t* valuePtr ;
+EnMachineState parentState ;
 const struct {
 const Uint08_t upper ;
 const Uint08_t lower ;
@@ -4424,30 +4428,49 @@ const Char_t* value ;
 } StValueInfo ;
 StValueInfo* currentValueInfoPtr_ = 0 ;
 StValueInfo valueInfoTempo_ = { 0 ,
+STATE_METRONOME ,
 { 0 , 0 } ,
 "Metronome" ,
 "Tempo" , } ;
 StValueInfo valueInfoBeatCount_ = { 0 ,
+STATE_MENU_MAIN ,
 { 64 , 0 } ,
 "Configuration" ,
 "Beat Count" , } ;
-StValueInfo valueInfoTone_ = { 0 ,
+StValueInfo valueInfoTone_[3] = {
+{ 0 ,
+STATE_MENU_TONE ,
 { 0xFF , 0x00 } ,
 "Tone" ,
-"Tone" , } ;
+"Tone0" , } ,
+{ 0 ,
+STATE_MENU_TONE ,
+{ 0xFF , 0x00 } ,
+"Tone" ,
+"Tone1" , } ,
+{ 0 ,
+STATE_MENU_TONE ,
+{ 0xFF , 0x00 } ,
+"Tone" ,
+"Tone2" , }
+} ;
 StValueInfo valueInfoDurationClick_ = { 0 ,
+STATE_MENU_DURATION ,
 { 0xFF , 0x00 } ,
 "Duration" ,
 "Click" , } ;
 StValueInfo valueInfoDurationKey_ = { 0 ,
+STATE_MENU_DURATION ,
 { 0xFF , 0x00 } ,
 "Duration" ,
 "Key Beep" , } ;
 StValueInfo valueInfoPulseWidth_ = { 0 ,
+STATE_MENU_MAIN ,
 { 7 , 1 } ,
 "Configuration" ,
 "Pulse Width" , } ;
 StValueInfo valueInfoOscillatorTune_ = { 0 ,
+STATE_MENU_MAIN ,
 { (Uint08_t)30 , (Uint08_t)( -30 ) } ,
 "Configuration" ,
 "Osc. Tune" , } ;
@@ -4458,32 +4481,36 @@ struct {
 union {
 Uint08_t byte ;
 struct {
-unsigned keyPressUp : 1 ;
-unsigned keyPressDown : 1 ;
-unsigned keyPressMenu : 1 ;
-unsigned keyPressUpDown : 1 ;
-unsigned keyPressHeldUp : 1 ;
-unsigned keyPressHeldDown : 1 ;
+unsigned up : 1 ;
+unsigned down : 1 ;
+unsigned menu : 1 ;
+unsigned bothUpDown : 1 ;
+unsigned upHold : 1 ;
+unsigned downHold : 1 ;
 } ;
-} input ;
+} keyPress ;
 union {
 Uint08_t byte ;
 struct {
 unsigned changeState : 1 ;
 unsigned changeMessage : 1 ;
 unsigned changeValue : 1 ;
-unsigned soundOnClick : 1 ;
-unsigned soundOnKey : 1 ;
-unsigned soundOff : 1 ;
 unsigned resetMetronome : 1 ;
 unsigned accessEeprom : 1 ;
 } ;
 } output ;
+union {
+Uint08_t byte ;
+struct {
+unsigned off : 1 ;
+unsigned click : 1 ;
+unsigned key : 1 ;
+unsigned oscillatorTune : 1 ;
+} ;
+} sound ;
+} events_ = { 0x00 , 0x00 , 0x00 , } ;
 
-# 243
-} events_ = { 0x00 , 0x00 , } ;
-
-# 249
+# 276
 struct {
 Uint08_t click ;
 Uint08_t key ;
@@ -4562,6 +4589,9 @@ ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuff
 
 case 0x5:
 valueInfoBeatCount_.valuePtr = &configration_.beatCount ;
+valueInfoTone_[0].valuePtr = &configration_.tone[0] ;
+valueInfoTone_[1].valuePtr = &configration_.tone[1] ;
+valueInfoTone_[2].valuePtr = &configration_.tone[2] ;
 valueInfoDurationClick_.valuePtr = &configration_.duration.click ;
 valueInfoDurationKey_.valuePtr = &configration_.duration.key ;
 valueInfoPulseWidth_.valuePtr = &configration_.pulseWidth ;
@@ -4606,43 +4636,43 @@ keyPressed.byte = ( portAState.byte ^ prevPortAState.byte ) & portAState.byte ;
 prevPortAState.byte = portAState.byte ;
 
 if( keyPressed.keyMenu ) {
-events_.input.keyPressMenu=1 ;
+events_.keyPress.menu=1 ;
 }
 
 if( keyPressed.keyUp ) {
 if( portAState.keyDown )
-events_.input.keyPressUpDown=1 ;
+events_.keyPress.bothUpDown=1 ;
 else
-events_.input.keyPressUp=1 ;
+events_.keyPress.up=1 ;
 }
 
 if( keyPressed.keyDown ) {
 if( portAState.keyUp )
-events_.input.keyPressUpDown=1 ;
+events_.keyPress.bothUpDown=1 ;
 else
-events_.input.keyPressDown=1 ;
+events_.keyPress.down=1 ;
 }
 
-if( (events_.input.keyPressHeldUp&&!(events_.input.keyPressHeldUp=0)) )
-events_.input.keyPressUp=1 ;
+if( (events_.keyPress.upHold&&!(events_.keyPress.upHold=0)) )
+events_.keyPress.up=1 ;
 
-if( (events_.input.keyPressHeldDown&&!(events_.input.keyPressHeldDown=0)) )
-events_.input.keyPressDown=1 ;
+if( (events_.keyPress.downHold&&!(events_.keyPress.downHold=0)) )
+events_.keyPress.down=1 ;
 
-if( events_.input.byte ) {
-events_.output.soundOnKey=1 ;
+if( events_.keyPress.byte ) {
+events_.sound.key=1 ;
 }
 
 
-if( (events_.input.keyPressUpDown&&!(events_.input.keyPressUpDown=0)) ) {
+if( (events_.keyPress.bothUpDown&&!(events_.keyPress.bothUpDown=0)) ) {
 if( machineState_ == STATE_METRONOME ) {
-{if(isMute_){isMute_=0;}else{isMute_=1;}} ;
+{if(soundState_.isUserMute){soundState_.isUserMute=0;}else{soundState_.isUserMute=1;}} ;
 events_.output.changeMessage=1 ;
 }
 }
 
 
-if( (events_.input.keyPressMenu&&!(events_.input.keyPressMenu=0)) ) {
+if( (events_.keyPress.menu&&!(events_.keyPress.menu=0)) ) {
 events_.output.changeState=1 ;
 
 switch( machineState_ ) {
@@ -4656,7 +4686,8 @@ break ;
 case STATE_MENU_MAIN:
 switch( menuInfoMain_.select ) {
 case MENU_ITEM_MAIN_BEAT_COUNT:
-machineState_ = STATE_ADJUST_BEAT_COUNT ;
+machineState_ = STATE_ADJUST_VALUE ;
+currentValueInfoPtr_ = &valueInfoBeatCount_ ;
 break ;
 
 case MENU_ITEM_MAIN_TONE_MENU:
@@ -4672,7 +4703,8 @@ menuInfoDuration_.cursorPosition = 0 ;
 break ;
 
 case MENU_ITEM_MAIN_PULSE_WIDTH:
-machineState_ = STATE_ADJUST_PULSE_WIDTH ;
+currentValueInfoPtr_ = &valueInfoPulseWidth_ ;
+machineState_ = STATE_ADJUST_VALUE ;
 break ;
 
 case MENU_ITEM_MAIN_ADJUST_OSCILLATOR_TUNE:
@@ -4684,21 +4716,21 @@ machineState_ = STATE_INFORMATION ;
 break ;
 
 case MENU_ITEM_MAIN_LOAD_CONFIGURATION:
-machineState_ = STATE_CONFIRM_LOAD ;
-menuInfoConfirmLoad_.select = 0 ;
-menuInfoConfirmLoad_.cursorPosition = 0 ;
+machineState_ = STATE_CONFIRM ;
+confirmationLoad_.isSelectYes = BOOL_FALSE ;
+currentConfirmationInfoPtr_ = &confirmationLoad_ ;
 break ;
 
 case MENU_ITEM_MAIN_SAVE_CONFIGURATION:
-machineState_ = STATE_CONFIRM_SAVE ;
-menuInfoConfirmSave_.select = 0 ;
-menuInfoConfirmSave_.cursorPosition = 0 ;
+machineState_ = STATE_CONFIRM ;
+ConfirmationSave_.isSelectYes = BOOL_FALSE ;
+currentConfirmationInfoPtr_ = &ConfirmationSave_ ;
 break ;
 
 case MENU_ITEM_MAIN_RESET:
-machineState_ = STATE_CONFIRM_RESET ;
-menuInfoConfirmReset_.select = 0 ;
-menuInfoConfirmReset_.cursorPosition = 0 ;
+machineState_ = STATE_CONFIRM ;
+confirmationReset_.isSelectYes = BOOL_FALSE ;
+currentConfirmationInfoPtr_ = &confirmationReset_ ;
 break ;
 
 case MENU_ITEM_MAIN_RETURN:
@@ -4712,18 +4744,22 @@ break ;
 case STATE_MENU_TONE:
 if( menuInfoTone_.select == MENU_ITEM_TONE_RETURN )
 machineState_ = STATE_MENU_MAIN ;
-else
-machineState_ = STATE_ADJUST_TONE ;
+else {
+machineState_ = STATE_ADJUST_VALUE ;
+currentValueInfoPtr_ = &valueInfoTone_[ menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 ] ;
+}
 break ;
 
 case STATE_MENU_DURATION:
 switch( currentMenuInfoPtr_->select ) {
 case MENU_ITEM_DURATION_ADJUST_CLICK:
-machineState_ = STATE_ADJUST_DURATION_CLICK ;
+machineState_ = STATE_ADJUST_VALUE ;
+currentValueInfoPtr_ = &valueInfoDurationClick_ ;
 break ;
 
 case MENU_ITEM_DURATION_ADJUST_KEY:
-machineState_ = STATE_ADJUST_DURATION_KEY ;
+machineState_ = STATE_ADJUST_VALUE ;
+currentValueInfoPtr_ = &valueInfoDurationKey_ ;
 break ;
 
 case MENU_ITEM_DURATION_RETURN:
@@ -4734,46 +4770,25 @@ break ;
 }
 break ;
 
-case STATE_CONFIRM_LOAD:
-if( menuInfoConfirmLoad_.select )
-machineState_ = STATE_LOAD ;
+case STATE_CONFIRM:
+if( currentConfirmationInfoPtr_->isSelectYes )
+machineState_ = currentConfirmationInfoPtr_->stateYes ;
 else
-machineState_ = STATE_MENU_MAIN ;
+machineState_ = currentConfirmationInfoPtr_->stateNo ;
 break ;
 
-case STATE_CONFIRM_SAVE:
-if( menuInfoConfirmSave_.select )
-machineState_ = STATE_SAVE ;
-else
-machineState_ = STATE_MENU_MAIN ;
-break ;
-
-case STATE_CONFIRM_RESET:
-if( menuInfoConfirmReset_.select )
-machineState_ = STATE_RESET ;
-else
-machineState_ = STATE_MENU_MAIN ;
-break ;
-
-case STATE_ADJUST_BEAT_COUNT:
-case STATE_ADJUST_PULSE_WIDTH:
 case STATE_INFORMATION:
-machineState_ = STATE_MENU_MAIN ;
+machineError_ = STATE_MENU_MAIN ;
 break ;
 
-case STATE_ADJUST_DURATION_CLICK:
-case STATE_ADJUST_DURATION_KEY:
-machineState_ = STATE_MENU_DURATION ;
+case STATE_ADJUST_VALUE:
+machineState_ = currentValueInfoPtr_->parentState ;
 break ;
 
 case STATE_ADJUST_OSCILLATOR_TUNE:
 machineState_ = STATE_MENU_MAIN ;
-events_.output.soundOff=1 ;
-break ;
-
-case STATE_ADJUST_TONE:
-machineState_ = STATE_MENU_TONE ;
-events_.output.soundOff=1 ;
+soundState_.isBusy = BOOL_FALSE ;
+events_.sound.off=1 ;
 break ;
 
 case STATE_ERROR:
@@ -4802,6 +4817,7 @@ events_.output.changeMessage=1 ;
 switch( machineState_ ) {
 case STATE_METRONOME:
 currentValueInfoPtr_ = &valueInfoTempo_ ;
+soundState_.isSystemMute = BOOL_FALSE ;
 break ;
 
 case STATE_MENU_MAIN:
@@ -4816,47 +4832,10 @@ case STATE_MENU_DURATION:
 currentMenuInfoPtr_ = &menuInfoDuration_ ;
 break ;
 
-case STATE_CONFIRM_LOAD:
-currentMenuInfoPtr_ = &menuInfoConfirmLoad_ ;
-break ;
-
-case STATE_CONFIRM_SAVE:
-currentMenuInfoPtr_ = &menuInfoConfirmSave_ ;
-break ;
-
-case STATE_CONFIRM_RESET:
-currentMenuInfoPtr_ = &menuInfoConfirmReset_ ;
-break ;
-
-case STATE_ADJUST_BEAT_COUNT:
-currentValueInfoPtr_ = &valueInfoBeatCount_ ;
-break ;
-
-case STATE_ADJUST_DURATION_CLICK:
-currentValueInfoPtr_ = &valueInfoDurationClick_ ;
-break ;
-
-case STATE_ADJUST_DURATION_KEY:
-currentValueInfoPtr_ = &valueInfoDurationKey_ ;
-break ;
-
-case STATE_ADJUST_PULSE_WIDTH:
-currentValueInfoPtr_ = &valueInfoPulseWidth_ ;
-break ;
-
 case STATE_ADJUST_OSCILLATOR_TUNE:
 currentValueInfoPtr_ = &valueInfoOscillatorTune_ ;
-PR2 = 141 ;
-{CCPR4L=(PR2>>1);} ;
-T2CONbits.TMR2ON = 1 ;
-break ;
-
-case STATE_ADJUST_TONE:
-valueInfoTone_.valuePtr = &configration_.tone[ menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 ] ;
-currentValueInfoPtr_ = &valueInfoTone_ ;
-PR2 = *currentValueInfoPtr_->valuePtr ;
-{CCPR4L=(PR2>>configration_.pulseWidth);} ;
-T2CONbits.TMR2ON = 1 ;
+soundState_.isBusy = BOOL_TRUE ;
+events_.sound.oscillatorTune=1 ;
 break ;
 
 case STATE_INFORMATION:
@@ -4869,6 +4848,8 @@ case STATE_BOOT:
 case STATE_INITIALIZE:
 case STATE_LOAD:
 case STATE_SAVE:
+soundState_.isSystemMute = BOOL_TRUE ;
+events_.sound.off=1 ;
 events_.output.accessEeprom=1 ;
 break ;
 
@@ -4877,6 +4858,8 @@ ParallelLCD_ClearDisplay( ) ;
 asm("reset") ;
 
 case STATE_ERROR:
+soundState_.isSystemMute = BOOL_TRUE ;
+events_.sound.off=1 ;
 switch( machineError_ ) {
 case ERROR_EEPROM:
 currentSingleMessage_ = MESSAGE.ERROR.EEPROM ;
@@ -4889,6 +4872,69 @@ break ;
 
 }
 
+}
+
+
+
+INTCONbits.GIE=0 ;
+if( (events_.output.resetMetronome&&!(events_.output.resetMetronome=0)) ) {
+tempoCounter_ = 0 ;
+beatCounter_ = 0 ;
+events_.sound.click=1 ;
+}
+else {
+if( tempoCounter_ >= ( 32000000UL * 3 / 20 ) ) {
+tempoCounter_ -= ( 32000000UL * 3 / 20 ) ;
+if( ++beatCounter_ >= ( configration_.beatCount << 1 ) )
+beatCounter_ = 0 ;
+
+events_.sound.click=1 ;
+}
+}
+INTCONbits.GIE=1 ;
+
+
+if( (events_.sound.key&&!(events_.sound.key=0)) ) {
+if( !soundState_.byte ) {
+soundDurationCount_.key = configration_.duration.key ;
+PR2 = 124 ;
+{CCPR4L=(PR2>>1);} ;
+T2CONbits.TMR2ON = 1 ;
+}
+}
+
+
+if( (events_.sound.click&&!(events_.sound.click=0)) ) {
+
+if( !soundState_.byte && !soundDurationCount_.key ) {
+
+soundDurationCount_.click = configration_.duration.click ;
+
+if( beatCounter_ == 0 )
+PR2 = configration_.tone[ 1 ] ;
+else if( beatCounter_ == configration_.beatCount )
+PR2 = configration_.tone[ 2 ] ;
+else
+PR2 = configration_.tone[ 0 ] ;
+
+{CCPR4L=(PR2>>configration_.pulseWidth);} ;
+T2CONbits.TMR2ON = 1 ;
+}
+
+}
+
+
+if( (events_.sound.oscillatorTune&&!(events_.sound.oscillatorTune=0)) ) {
+PR2 = 141 ;
+{CCPR4L=(PR2>>1);} ;
+T2CONbits.TMR2ON = 1 ;
+}
+
+
+if( (events_.sound.off&&!(events_.sound.off=0)) ) {
+soundDurationCount_.click = 0 ;
+soundDurationCount_.key = 0 ;
+T2CONbits.TMR2ON = 0 ;
 }
 
 
@@ -4941,150 +4987,81 @@ INTCONbits.GIE=1 ;
 }
 
 
+if( (events_.keyPress.up&&!(events_.keyPress.up=0)) ) {
 switch( machineState_ ) {
-
 case STATE_MENU_MAIN:
 case STATE_MENU_TONE:
 case STATE_MENU_DURATION:
-case STATE_CONFIRM_LOAD:
-case STATE_CONFIRM_SAVE:
-case STATE_CONFIRM_RESET:
 case STATE_INFORMATION:
-if( (events_.input.keyPressDown&&!(events_.input.keyPressDown=0)) ) {
-if( currentMenuInfoPtr_->select != currentMenuInfoPtr_->limit ) {
-currentMenuInfoPtr_->select++ ;
-if( !currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition++ ;
-events_.output.changeMessage=1 ;
-}
-}
-if( (events_.input.keyPressUp&&!(events_.input.keyPressUp=0)) ) {
 if( currentMenuInfoPtr_->select ) {
 currentMenuInfoPtr_->select-- ;
 if( currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition-- ;
 events_.output.changeMessage=1 ;
 }
+break ;
+
+case STATE_CONFIRM:
+if( currentConfirmationInfoPtr_->isSelectYes ) {
+currentConfirmationInfoPtr_->isSelectYes = BOOL_FALSE ;
+events_.output.changeMessage=1 ;
 }
 break ;
 
-case STATE_METRONOME:
-if( (events_.input.keyPressUp&&!(events_.input.keyPressUp=0)) ) {
-if( configration_.tempo < 999 ) {
-configration_.tempo++ ;
-events_.output.changeValue=1 ;
-}
-events_.output.resetMetronome=1 ;
-}
-if( (events_.input.keyPressDown&&!(events_.input.keyPressDown=0)) ) {
-if( configration_.tempo > 1 ) {
-configration_.tempo-- ;
-events_.output.changeValue=1 ;
-}
-events_.output.resetMetronome=1 ;
-}
-break ;
-
-case STATE_ADJUST_BEAT_COUNT:
-case STATE_ADJUST_PULSE_WIDTH:
-case STATE_ADJUST_DURATION_CLICK:
-case STATE_ADJUST_DURATION_KEY:
-case STATE_ADJUST_TONE:
+case STATE_ADJUST_VALUE:
 case STATE_ADJUST_OSCILLATOR_TUNE:
-if( (events_.input.keyPressUp&&!(events_.input.keyPressUp=0)) ) {
 if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.upper ) {
 ( *currentValueInfoPtr_->valuePtr )++ ;
 events_.output.changeValue=1 ;
 }
+break ;
+
+case STATE_METRONOME:
+if( configration_.tempo != 999 ) {
+configration_.tempo++ ;
+events_.output.changeValue=1 ;
 }
-if( (events_.input.keyPressDown&&!(events_.input.keyPressDown=0)) ) {
+events_.output.resetMetronome=1 ;
+break ;
+}
+}
+
+
+if( (events_.keyPress.down&&!(events_.keyPress.down=0)) ) {
+switch( machineState_ ) {
+case STATE_MENU_MAIN:
+case STATE_MENU_TONE:
+case STATE_MENU_DURATION:
+case STATE_INFORMATION:
+if( currentMenuInfoPtr_->select != currentMenuInfoPtr_->limit ) {
+currentMenuInfoPtr_->select++ ;
+if( !currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition++ ;
+events_.output.changeMessage=1 ;
+}
+break ;
+
+case STATE_CONFIRM:
+if( !currentConfirmationInfoPtr_->isSelectYes ) {
+currentConfirmationInfoPtr_->isSelectYes = BOOL_TRUE ;
+events_.output.changeMessage=1 ;
+}
+break ;
+
+case STATE_ADJUST_VALUE:
+case STATE_ADJUST_OSCILLATOR_TUNE:
 if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.lower ) {
 ( *currentValueInfoPtr_->valuePtr )-- ;
 events_.output.changeValue=1 ;
 }
-}
 break ;
 
+case STATE_METRONOME:
+if( configration_.tempo != 1 ) {
+configration_.tempo-- ;
+events_.output.changeValue=1 ;
 }
-
-
-INTCONbits.GIE=0 ;
-if( (events_.output.resetMetronome&&!(events_.output.resetMetronome=0)) ) {
-tempoCounter_ = 0 ;
-beatCounter_ = 0 ;
-events_.output.soundOnClick=1 ;
+events_.output.resetMetronome=1 ;
+break ;
 }
-else {
-if( tempoCounter_ >= ( 32000000UL * 3 / 20 ) ) {
-tempoCounter_ -= ( 32000000UL * 3 / 20 ) ;
-if( ++beatCounter_ >= ( configration_.beatCount << 1 ) )
-beatCounter_ = 0 ;
-
-events_.output.soundOnClick=1 ;
-}
-}
-INTCONbits.GIE=1 ;
-
-
-switch( machineState_ ) {
-
-case STATE_BOOT:
-case STATE_INITIALIZE:
-case STATE_LOAD:
-case STATE_SAVE:
-case STATE_ERROR:
-
-break ;
-
-case STATE_ADJUST_TONE:
-break ;
-case STATE_ADJUST_OSCILLATOR_TUNE:
-break ;
-
-default:
-if( (events_.output.soundOnKey&&!(events_.output.soundOnKey=0)) ) {
-soundDurationCount_.key = configration_.duration.key ;
-PR2 = 124 ;
-{CCPR4L=(PR2>>1);} ;
-T2CONbits.TMR2ON = 1 ;
-}
-if( (events_.output.soundOnClick&&!(events_.output.soundOnClick=0)) && !isMute_ && !soundDurationCount_.key ) {
-
-soundDurationCount_.click = configration_.duration.click ;
-
-if( beatCounter_ == 0 )
-PR2 = configration_.tone[ 1 ] ;
-else if( beatCounter_ == configration_.beatCount )
-PR2 = configration_.tone[ 2 ] ;
-else
-PR2 = configration_.tone[ 0 ] ;
-
-{CCPR4L=(PR2>>configration_.pulseWidth);} ;
-T2CONbits.TMR2ON = 1 ;
-}
-break ;
-
-}
-
-
-switch( machineState_ ) {
-
-case STATE_BOOT:
-case STATE_INITIALIZE:
-case STATE_LOAD:
-case STATE_SAVE:
-case STATE_ERROR:
-T2CONbits.TMR2ON = 0 ;
-break ;
-
-case STATE_ADJUST_TONE:
-case STATE_ADJUST_OSCILLATOR_TUNE:
-
-break ;
-
-default:
-if( (events_.output.soundOff&&!(events_.output.soundOff=0)) )
-T2CONbits.TMR2ON = 0 ;
-
-break ;
 }
 
 
@@ -5108,20 +5085,14 @@ ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[currentMenuInfoPtr_->cursorP
 break ;
 
 case STATE_METRONOME:
-case STATE_ADJUST_BEAT_COUNT:
-case STATE_ADJUST_TONE:
-case STATE_ADJUST_DURATION_CLICK:
-case STATE_ADJUST_DURATION_KEY:
-case STATE_ADJUST_PULSE_WIDTH:
+case STATE_ADJUST_VALUE:
 case STATE_ADJUST_OSCILLATOR_TUNE:
 ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentValueInfoPtr_->message.title ) ;
 ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , currentValueInfoPtr_->message.value ) ;
 if( machineState_ == STATE_METRONOME ) {
-if( isMute_ )
+if( soundState_.isUserMute )
 ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , MESSAGE.METRONOME.MUTE ) ;
 }
-else if( machineState_ == STATE_ADJUST_TONE )
-ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0x5 , menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 + '0' ) ;
 
 events_.output.changeValue=1 ;
 break ;
@@ -5133,14 +5104,11 @@ ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , MESSAGE_INFOR
 ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ menuInfoInformation_.select + 1 ] ) ;
 break ;
 
-
-case STATE_CONFIRM_LOAD:
-case STATE_CONFIRM_SAVE:
-case STATE_CONFIRM_RESET:
+case STATE_CONFIRM:
 ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0xD , MESSAGE.CONFIRM.NO ) ;
 ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xD , MESSAGE.CONFIRM.YES ) ;
-ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentMenuInfoPtr_->singleMessage ) ;
-ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[ currentMenuInfoPtr_->cursorPosition ] | 0xC , CHAR_CODE.CURSOR_RIGHT ) ;
+ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentConfirmationInfoPtr_->message ) ;
+ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[ currentConfirmationInfoPtr_->isSelectYes ] | 0xC , CHAR_CODE.CURSOR_RIGHT ) ;
 break ;
 
 case STATE_LOAD:
@@ -5163,7 +5131,9 @@ break ;
 if( (events_.output.changeValue&&!(events_.output.changeValue=0)) ) {
 
 Uint16_t tmpValue ;
-Char_t valueString[6] = "= 000" ;
+Char_t valueString[6] ;
+valueString[0] = '=' ;
+valueString[1] = ' ' ;
 
 switch( machineState_ ) {
 
@@ -5190,8 +5160,9 @@ Bool_t isNonZero = BOOL_FALSE ;
 const Uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 , } ;
 for( Uint08_t i = 0 ; i < 3 ; i++ ) {
 Char_t chr = '0' ;
-while( tmpValue >= COMPARE_UNITS[i] ) {
-tmpValue -= COMPARE_UNITS[i] ;
+Uint08_t compareUnit = COMPARE_UNITS[i] ;
+while( tmpValue >= compareUnit ) {
+tmpValue -= compareUnit ;
 chr++ ;
 }
 
@@ -5210,10 +5181,6 @@ ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xB , &valueString ) ;
 switch( machineState_ ) {
 case STATE_ADJUST_OSCILLATOR_TUNE:
 OSCTUNE = configration_.oscillatorTune ;
-break ;
-case STATE_ADJUST_TONE:
-PR2 = *currentValueInfoPtr_->valuePtr ;
-{CCPR4L=(PR2>>configration_.pulseWidth);} ;
 break ;
 }
 }
@@ -5243,9 +5210,9 @@ prescaler.count1ms = 80 ;
 
 
 if( soundDurationCount_.click && !--soundDurationCount_.click && !soundDurationCount_.key )
-events_.output.soundOff=1 ;
+events_.sound.off=1 ;
 if( soundDurationCount_.key && ! --soundDurationCount_.key )
-events_.output.soundOff=1 ;
+events_.sound.off=1 ;
 
 
 if( --prescaler.count10ms ) return ;
@@ -5267,22 +5234,22 @@ Uint08_t Down ;
 sampledPortAState_.byte = (~PORTA&0xE0) ;
 
 if( sampledPortAState_.keyUp && !sampledPortAState_.keyDown ) {
-if( ++keyHoldCount.Up == 0x40 ) {
-keyHoldCount.Up = 0x3C ;
-events_.input.keyPressHeldUp=1 ;
+if( !--keyHoldCount.Up ) {
+keyHoldCount.Up = 4 ;
+events_.keyPress.upHold=1 ;
 }
 }
 else
-keyHoldCount.Up = 0 ;
+keyHoldCount.Up = 0x40 ;
 
 if( sampledPortAState_.keyDown && !sampledPortAState_.keyUp ) {
-if( ++keyHoldCount.Down == 0x40 ) {
-keyHoldCount.Down = 0x3C ;
-events_.input.keyPressHeldDown=1 ;
+if( !--keyHoldCount.Down ) {
+keyHoldCount.Down = 4 ;
+events_.keyPress.downHold=1 ;
 }
 }
 else
-keyHoldCount.Down = 0 ;
+keyHoldCount.Down = 0x40 ;
 
 if( PIR3bits.TMR6IF ) machineError_ = ERROR_INTERRUPT ;
 

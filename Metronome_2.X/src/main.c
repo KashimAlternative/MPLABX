@@ -1,8 +1,3 @@
-// ################################################################
-// Ignore Warning for "possible use of "=" instead of "=="
-#pragma warning disable 758
-// ################################################################
-
 // ----------------------------------------------------------------
 // Configuration Bits
 
@@ -75,18 +70,12 @@ typedef enum {
   STATE_MENU_MAIN ,
   STATE_MENU_TONE ,
   STATE_MENU_DURATION ,
-  STATE_ADJUST_BEAT_COUNT ,
-  STATE_ADJUST_DURATION_CLICK ,
-  STATE_ADJUST_DURATION_KEY ,
-  STATE_ADJUST_PULSE_WIDTH ,
-  STATE_ADJUST_TONE ,
+  STATE_ADJUST_VALUE ,
   STATE_ADJUST_OSCILLATOR_TUNE ,
   STATE_INFORMATION ,
-  STATE_CONFIRM_SAVE ,
+  STATE_CONFIRM ,
   STATE_SAVE ,
-  STATE_CONFIRM_LOAD ,
   STATE_LOAD ,
-  STATE_CONFIRM_RESET ,
   STATE_INITIALIZE ,
   STATE_RESET ,
   STATE_ERROR ,
@@ -105,7 +94,14 @@ EnErrorType machineError_ = ERROR_NONE ;
 // ----------------------------------------------------------------
 // Other
 Uint08_t stateReturnCounter_ = 0 ;
-Bool_t isMute_ = BOOL_FALSE ;
+union {
+  Uint08_t byte ;
+  struct {
+    unsigned isUserMute : 1 ;
+    unsigned isSystemMute : 1 ;
+    unsigned isBusy : 1 ;
+  } ;
+} soundState_ = { 0x00 , } ;
 #define RETURN_STATE_INTERVAL 100
 
 // ----------------------------------------------------------------
@@ -138,26 +134,35 @@ UniPortAState sampledPortAState_ = { 0x00 } ;
 
 // ----------------------------------------------------------------
 // Key Count
-#define KEY_COUNT_LOOP_START 0x3C
-#define KEY_COUNT_LOOP_END 0x40
+#define KEY_COUNT_LOOP_INTERVAL 4
+#define KEY_COUNT_LOOP_START 0x40
 
 // ----------------------------------------------------------------
-// Menu State
+// Menu
 typedef struct {
   Uint08_t select ;
   Uint08_t cursorPosition ;
   const Uint08_t limit ;
   const Char_t** menuMessage ;
-  const Char_t* singleMessage ;
 } StMenuInfo ;
-StMenuInfo menuInfoMain_ = { 0 , 0 , MENU_SIZE_MAIN - 1 , &MESSAGE_MENU_ITEM_MAIN , NULL , } ;
-StMenuInfo menuInfoTone_ = { 0 , 0 , MENU_SIZE_TONE - 1 , &MESSAGE_MENU_ITEM_TONE , NULL , } ;
-StMenuInfo menuInfoDuration_ = { 0 , 0 , MENU_SIZE_DURATION - 1 , &MESSAGE_MENU_ITEM_DURATION , NULL , } ;
-StMenuInfo menuInfoConfirmLoad_ = { 0 , 0 , MENU_SIZE_CONFIRM - 1 , NULL , "Load ?" , } ;
-StMenuInfo menuInfoConfirmSave_ = { 0 , 0 , MENU_SIZE_CONFIRM - 1 , NULL , "Save ?" , } ;
-StMenuInfo menuInfoConfirmReset_ = { 0 , 0 , MENU_SIZE_CONFIRM - 1 , NULL , "Reset ?" , } ;
-StMenuInfo menuInfoInformation_ = { 0 , 0 , MENU_SIZE_INFORMATION - 2 , NULL , NULL , } ;
+StMenuInfo menuInfoMain_ = { 0 , 0 , MENU_SIZE_MAIN - 1 , &MESSAGE_MENU_ITEM_MAIN , } ;
+StMenuInfo menuInfoTone_ = { 0 , 0 , MENU_SIZE_TONE - 1 , &MESSAGE_MENU_ITEM_TONE , } ;
+StMenuInfo menuInfoDuration_ = { 0 , 0 , MENU_SIZE_DURATION - 1 , &MESSAGE_MENU_ITEM_DURATION , } ;
+StMenuInfo menuInfoInformation_ = { 0 , 0 , MENU_SIZE_INFORMATION - 2 , NULL , } ;
 StMenuInfo* currentMenuInfoPtr_ = NULL ;
+
+// ----------------------------------------------------------------
+// Confirmation
+typedef struct {
+  Bool_t isSelectYes ;
+  EnMachineState stateYes ;
+  EnMachineState stateNo ;
+  const Char_t* message ;
+} StConfirmationInfo ;
+StConfirmationInfo confirmationLoad_ = { BOOL_FALSE , STATE_LOAD , STATE_MENU_MAIN , "Load ?" , } ;
+StConfirmationInfo ConfirmationSave_ = { BOOL_FALSE , STATE_SAVE , STATE_MENU_MAIN , "Save ?" , } ;
+StConfirmationInfo confirmationReset_ = { BOOL_FALSE , STATE_RESET , STATE_MENU_MAIN , "Reset ?" , } ;
+StConfirmationInfo* currentConfirmationInfoPtr_ = NULL ;
 
 // ----------------------------------------------------------------
 // Single Message
@@ -165,8 +170,11 @@ const Char_t* currentSingleMessage_ = NULL ;
 
 // ----------------------------------------------------------------
 // Value
+#define MAX_TEMPO 999
+#define MIN_TEMPO 1
 typedef struct {
   Uint08_t* valuePtr ;
+  EnMachineState parentState ;
   const struct {
     const Uint08_t upper ;
     const Uint08_t lower ;
@@ -178,30 +186,49 @@ typedef struct {
 } StValueInfo ;
 StValueInfo* currentValueInfoPtr_ = NULL ;
 StValueInfo valueInfoTempo_ = { NULL ,
+  STATE_METRONOME ,
   { 0 , 0 } ,
   "Metronome" ,
   "Tempo" , } ;
 StValueInfo valueInfoBeatCount_ = { NULL ,
+  STATE_MENU_MAIN ,
   { 64 , 0 } ,
   "Configuration" ,
   "Beat Count" , } ;
-StValueInfo valueInfoTone_ = { NULL ,
-  { 0xFF , 0x00 } ,
-  "Tone" ,
-  "Tone" , } ;
+StValueInfo valueInfoTone_[3] = {
+  { NULL ,
+    STATE_MENU_TONE ,
+    { 0xFF , 0x00 } ,
+    "Tone" ,
+    "Tone0" , } ,
+  { NULL ,
+    STATE_MENU_TONE ,
+    { 0xFF , 0x00 } ,
+    "Tone" ,
+    "Tone1" , } ,
+  { NULL ,
+    STATE_MENU_TONE ,
+    { 0xFF , 0x00 } ,
+    "Tone" ,
+    "Tone2" , }
+} ;
 StValueInfo valueInfoDurationClick_ = { NULL ,
+  STATE_MENU_DURATION ,
   { 0xFF , 0x00 } ,
   "Duration" ,
   "Click" , } ;
 StValueInfo valueInfoDurationKey_ = { NULL ,
+  STATE_MENU_DURATION ,
   { 0xFF , 0x00 } ,
   "Duration" ,
   "Key Beep" , } ;
 StValueInfo valueInfoPulseWidth_ = { NULL ,
+  STATE_MENU_MAIN ,
   { 7 , 1 } ,
   "Configuration" ,
   "Pulse Width" , } ;
 StValueInfo valueInfoOscillatorTune_ = { NULL ,
+  STATE_MENU_MAIN ,
   { (Uint08_t)30 , (Uint08_t)( -30 ) } ,
   "Configuration" ,
   "Osc. Tune" , } ;
@@ -212,35 +239,35 @@ struct {
   union {
     Uint08_t byte ;
     struct {
-      unsigned keyPressUp : 1 ;
-      unsigned keyPressDown : 1 ;
-      unsigned keyPressMenu : 1 ;
-      unsigned keyPressUpDown : 1 ;
-      unsigned keyPressHeldUp : 1 ;
-      unsigned keyPressHeldDown : 1 ;
+      unsigned up : 1 ;
+      unsigned down : 1 ;
+      unsigned menu : 1 ;
+      unsigned bothUpDown : 1 ;
+      unsigned upHold : 1 ;
+      unsigned downHold : 1 ;
     } ;
-  } input ;
+  } keyPress ;
   union {
     Uint08_t byte ;
     struct {
       unsigned changeState : 1 ;
       unsigned changeMessage : 1 ;
       unsigned changeValue : 1 ;
-      unsigned soundOnClick : 1 ;
-      unsigned soundOnKey : 1 ;
-      unsigned soundOff : 1 ;
       unsigned resetMetronome : 1 ;
       unsigned accessEeprom : 1 ;
     } ;
   } output ;
-  //  union {
-  //    Uint08_t byte ;
-  //    struct {
-  //      unsigned onEeprom : 1 ;
-  //      unsigned onInterrupt : 1 ;
-  //    } ;
-  //  } error ;
-} events_ = { 0x00 , 0x00 , /*0x00*/ } ;
+  union {
+    Uint08_t byte ;
+    struct {
+      unsigned off : 1 ;
+      unsigned click : 1 ;
+      unsigned key : 1 ;
+      unsigned oscillatorTune : 1 ;
+    } ;
+  } sound ;
+} events_ = { 0x00 , 0x00 , 0x00 , } ;
+
 // ----------------------------------------------------------------
 // Tone
 #define TONE_OFF 0
@@ -324,6 +351,9 @@ void main( void ) {
 
       case 0x5:
         valueInfoBeatCount_.valuePtr = &configration_.beatCount ;
+        valueInfoTone_[0].valuePtr = &configration_.tone[0] ;
+        valueInfoTone_[1].valuePtr = &configration_.tone[1] ;
+        valueInfoTone_[2].valuePtr = &configration_.tone[2] ;
         valueInfoDurationClick_.valuePtr = &configration_.duration.click ;
         valueInfoDurationKey_.valuePtr = &configration_.duration.key ;
         valueInfoPulseWidth_.valuePtr = &configration_.pulseWidth ;
@@ -368,43 +398,43 @@ void main( void ) {
     prevPortAState.byte = portAState.byte ;
 
     if( keyPressed.keyMenu ) {
-      SetEvent( events_.input.keyPressMenu ) ;
+      SetEvent( events_.keyPress.menu ) ;
     }
 
     if( keyPressed.keyUp ) {
       if( portAState.keyDown )
-        SetEvent( events_.input.keyPressUpDown ) ;
+        SetEvent( events_.keyPress.bothUpDown ) ;
       else
-        SetEvent( events_.input.keyPressUp ) ;
+        SetEvent( events_.keyPress.up ) ;
     }
 
     if( keyPressed.keyDown ) {
       if( portAState.keyUp )
-        SetEvent( events_.input.keyPressUpDown ) ;
+        SetEvent( events_.keyPress.bothUpDown ) ;
       else
-        SetEvent( events_.input.keyPressDown ) ;
+        SetEvent( events_.keyPress.down ) ;
     }
 
-    if( EvalEvent( events_.input.keyPressHeldUp ) )
-      SetEvent( events_.input.keyPressUp ) ;
+    if( EvalEvent( events_.keyPress.upHold ) )
+      SetEvent( events_.keyPress.up ) ;
 
-    if( EvalEvent( events_.input.keyPressHeldDown ) )
-      SetEvent( events_.input.keyPressDown ) ;
+    if( EvalEvent( events_.keyPress.downHold ) )
+      SetEvent( events_.keyPress.down ) ;
 
-    if( events_.input.byte ) {
-      SetEvent( events_.output.soundOnKey ) ;
+    if( events_.keyPress.byte ) {
+      SetEvent( events_.sound.key ) ;
     }
 
     // Both Up & Donw ----------------
-    if( EvalEvent( events_.input.keyPressUpDown ) ) {
+    if( EvalEvent( events_.keyPress.bothUpDown ) ) {
       if( machineState_ == STATE_METRONOME ) {
-        ToggleBool( isMute_ ) ;
+        ToggleBool( soundState_.isUserMute ) ;
         SetEvent( events_.output.changeMessage ) ;
       }
     }
 
     // Apply Menu Key Event (Action Before State Change) ----------------
-    if( EvalEvent( events_.input.keyPressMenu ) ) {
+    if( EvalEvent( events_.keyPress.menu ) ) {
       SetEvent( events_.output.changeState ) ;
 
       switch( machineState_ ) {
@@ -418,7 +448,8 @@ void main( void ) {
         case STATE_MENU_MAIN:
           switch( menuInfoMain_.select ) {
             case MENU_ITEM_MAIN_BEAT_COUNT:
-              machineState_ = STATE_ADJUST_BEAT_COUNT ;
+              machineState_ = STATE_ADJUST_VALUE ;
+              currentValueInfoPtr_ = &valueInfoBeatCount_ ;
               break ;
 
             case MENU_ITEM_MAIN_TONE_MENU:
@@ -434,7 +465,8 @@ void main( void ) {
               break ;
 
             case MENU_ITEM_MAIN_PULSE_WIDTH:
-              machineState_ = STATE_ADJUST_PULSE_WIDTH ;
+              currentValueInfoPtr_ = &valueInfoPulseWidth_ ;
+              machineState_ = STATE_ADJUST_VALUE ;
               break ;
 
             case MENU_ITEM_MAIN_ADJUST_OSCILLATOR_TUNE:
@@ -446,21 +478,21 @@ void main( void ) {
               break ;
 
             case MENU_ITEM_MAIN_LOAD_CONFIGURATION:
-              machineState_ = STATE_CONFIRM_LOAD ;
-              menuInfoConfirmLoad_.select = 0 ;
-              menuInfoConfirmLoad_.cursorPosition = 0 ;
+              machineState_ = STATE_CONFIRM ;
+              confirmationLoad_.isSelectYes = BOOL_FALSE ;
+              currentConfirmationInfoPtr_ = &confirmationLoad_ ;
               break ;
 
             case MENU_ITEM_MAIN_SAVE_CONFIGURATION:
-              machineState_ = STATE_CONFIRM_SAVE ;
-              menuInfoConfirmSave_.select = 0 ;
-              menuInfoConfirmSave_.cursorPosition = 0 ;
+              machineState_ = STATE_CONFIRM ;
+              ConfirmationSave_.isSelectYes = BOOL_FALSE ;
+              currentConfirmationInfoPtr_ = &ConfirmationSave_ ;
               break ;
 
             case MENU_ITEM_MAIN_RESET:
-              machineState_ = STATE_CONFIRM_RESET ;
-              menuInfoConfirmReset_.select = 0 ;
-              menuInfoConfirmReset_.cursorPosition = 0 ;
+              machineState_ = STATE_CONFIRM ;
+              confirmationReset_.isSelectYes = BOOL_FALSE ;
+              currentConfirmationInfoPtr_ = &confirmationReset_ ;
               break ;
 
             case MENU_ITEM_MAIN_RETURN:
@@ -474,18 +506,22 @@ void main( void ) {
         case STATE_MENU_TONE:
           if( menuInfoTone_.select == MENU_ITEM_TONE_RETURN )
             machineState_ = STATE_MENU_MAIN ;
-          else
-            machineState_ = STATE_ADJUST_TONE ;
+          else {
+            machineState_ = STATE_ADJUST_VALUE ;
+            currentValueInfoPtr_ = &valueInfoTone_[ menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 ] ;
+          }
           break ;
 
         case STATE_MENU_DURATION:
           switch( currentMenuInfoPtr_->select ) {
             case MENU_ITEM_DURATION_ADJUST_CLICK:
-              machineState_ = STATE_ADJUST_DURATION_CLICK ;
+              machineState_ = STATE_ADJUST_VALUE ;
+              currentValueInfoPtr_ = &valueInfoDurationClick_ ;
               break ;
 
             case MENU_ITEM_DURATION_ADJUST_KEY:
-              machineState_ = STATE_ADJUST_DURATION_KEY ;
+              machineState_ = STATE_ADJUST_VALUE ;
+              currentValueInfoPtr_ = &valueInfoDurationKey_ ;
               break ;
 
             case MENU_ITEM_DURATION_RETURN:
@@ -496,46 +532,25 @@ void main( void ) {
           }
           break ;
 
-        case STATE_CONFIRM_LOAD:
-          if( menuInfoConfirmLoad_.select )
-            machineState_ = STATE_LOAD ;
+        case STATE_CONFIRM:
+          if( currentConfirmationInfoPtr_->isSelectYes )
+            machineState_ = currentConfirmationInfoPtr_->stateYes ;
           else
-            machineState_ = STATE_MENU_MAIN ;
+            machineState_ = currentConfirmationInfoPtr_->stateNo ;
           break ;
 
-        case STATE_CONFIRM_SAVE:
-          if( menuInfoConfirmSave_.select )
-            machineState_ = STATE_SAVE ;
-          else
-            machineState_ = STATE_MENU_MAIN ;
-          break ;
-
-        case STATE_CONFIRM_RESET:
-          if( menuInfoConfirmReset_.select )
-            machineState_ = STATE_RESET ;
-          else
-            machineState_ = STATE_MENU_MAIN ;
-          break ;
-
-        case STATE_ADJUST_BEAT_COUNT:
-        case STATE_ADJUST_PULSE_WIDTH:
         case STATE_INFORMATION:
-          machineState_ = STATE_MENU_MAIN ;
+          machineError_ = STATE_MENU_MAIN ;
           break ;
 
-        case STATE_ADJUST_DURATION_CLICK:
-        case STATE_ADJUST_DURATION_KEY:
-          machineState_ = STATE_MENU_DURATION ;
+        case STATE_ADJUST_VALUE:
+          machineState_ = currentValueInfoPtr_->parentState ;
           break ;
 
         case STATE_ADJUST_OSCILLATOR_TUNE:
           machineState_ = STATE_MENU_MAIN ;
-          SetEvent( events_.output.soundOff ) ;
-          break ;
-
-        case STATE_ADJUST_TONE:
-          machineState_ = STATE_MENU_TONE ;
-          SetEvent( events_.output.soundOff ) ;
+          soundState_.isBusy = BOOL_FALSE ;
+          SetEvent( events_.sound.off ) ;
           break ;
 
         case STATE_ERROR:
@@ -564,6 +579,7 @@ void main( void ) {
       switch( machineState_ ) {
         case STATE_METRONOME:
           currentValueInfoPtr_ = &valueInfoTempo_ ;
+          soundState_.isSystemMute = BOOL_FALSE ;
           break ;
 
         case STATE_MENU_MAIN:
@@ -578,47 +594,10 @@ void main( void ) {
           currentMenuInfoPtr_ = &menuInfoDuration_ ;
           break ;
 
-        case STATE_CONFIRM_LOAD:
-          currentMenuInfoPtr_ = &menuInfoConfirmLoad_ ;
-          break ;
-
-        case STATE_CONFIRM_SAVE:
-          currentMenuInfoPtr_ = &menuInfoConfirmSave_ ;
-          break ;
-
-        case STATE_CONFIRM_RESET:
-          currentMenuInfoPtr_ = &menuInfoConfirmReset_ ;
-          break ;
-
-        case STATE_ADJUST_BEAT_COUNT:
-          currentValueInfoPtr_ = &valueInfoBeatCount_ ;
-          break ;
-
-        case STATE_ADJUST_DURATION_CLICK:
-          currentValueInfoPtr_ = &valueInfoDurationClick_ ;
-          break ;
-
-        case STATE_ADJUST_DURATION_KEY:
-          currentValueInfoPtr_ = &valueInfoDurationKey_ ;
-          break ;
-
-        case STATE_ADJUST_PULSE_WIDTH:
-          currentValueInfoPtr_ = &valueInfoPulseWidth_ ;
-          break ;
-
         case STATE_ADJUST_OSCILLATOR_TUNE:
           currentValueInfoPtr_ = &valueInfoOscillatorTune_ ;
-          SetSoundTimerPeriod( TONE_TUNE ) ;
-          SetSoundPulseWidth( 1 ) ;
-          SoundOn( ) ;
-          break ;
-
-        case STATE_ADJUST_TONE:
-          valueInfoTone_.valuePtr = &configration_.tone[ menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 ] ;
-          currentValueInfoPtr_ = &valueInfoTone_ ;
-          SetSoundTimerPeriod( *currentValueInfoPtr_->valuePtr ) ;
-          SetSoundPulseWidth( configration_.pulseWidth ) ;
-          SoundOn( ) ;
+          soundState_.isBusy = BOOL_TRUE ;
+          SetEvent( events_.sound.oscillatorTune ) ;
           break ;
 
         case STATE_INFORMATION:
@@ -631,6 +610,8 @@ void main( void ) {
         case STATE_INITIALIZE:
         case STATE_LOAD:
         case STATE_SAVE:
+          soundState_.isSystemMute = BOOL_TRUE ;
+          SetEvent( events_.sound.off ) ;
           SetEvent( events_.output.accessEeprom ) ;
           break ;
 
@@ -639,6 +620,8 @@ void main( void ) {
           RESET( ) ;
 
         case STATE_ERROR:
+          soundState_.isSystemMute = BOOL_TRUE ;
+          SetEvent( events_.sound.off ) ;
           switch( machineError_ ) {
             case ERROR_EEPROM:
               currentSingleMessage_ = MESSAGE.ERROR.EEPROM ;
@@ -651,6 +634,69 @@ void main( void ) {
 
       }
 
+    }
+
+
+    // Reset Metronome ----------------
+    DisableAllInterrupt( ) ;
+    if( EvalEvent( events_.output.resetMetronome ) ) {
+      tempoCounter_ = 0 ;
+      beatCounter_ = 0 ;
+      SetEvent( events_.sound.click ) ;
+    }
+    else {
+      if( tempoCounter_ >= TOTAL_TEMOPO_COUNT ) {
+        tempoCounter_ -= TOTAL_TEMOPO_COUNT ;
+        if( ++beatCounter_ >= ( configration_.beatCount << 1 ) )
+          beatCounter_ = 0 ;
+
+        SetEvent( events_.sound.click ) ;
+      }
+    }
+    EnableAllInterrupt( ) ;
+
+    // Key Sound ----------------
+    if( EvalEvent( events_.sound.key ) ) {
+      if( !soundState_.byte ) {
+        soundDurationCount_.key = configration_.duration.key ;
+        SetSoundTimerPeriod( TONE_SYSTEM ) ;
+        SetSoundPulseWidth( 1 ) ;
+        SoundOn( ) ;
+      }
+    }
+
+    // Click Sound ----------------
+    if( EvalEvent( events_.sound.click ) ) {
+
+      if( !soundState_.byte && !soundDurationCount_.key ) {
+
+        soundDurationCount_.click = configration_.duration.click ;
+
+        if( beatCounter_ == 0 )
+          SetSoundTimerPeriod( configration_.tone[ 1 ] ) ;
+        else if( beatCounter_ == configration_.beatCount )
+          SetSoundTimerPeriod( configration_.tone[ 2 ] ) ;
+        else
+          SetSoundTimerPeriod( configration_.tone[ 0 ] ) ;
+
+        SetSoundPulseWidth( configration_.pulseWidth ) ;
+        SoundOn( ) ;
+      }
+
+    }
+
+    // Oscillator Tune ----------------
+    if( EvalEvent( events_.sound.oscillatorTune ) ) {
+      SetSoundTimerPeriod( TONE_TUNE ) ;
+      SetSoundPulseWidth( 1 ) ;
+      SoundOn( ) ;
+    }
+
+    // Sound Off ----------------
+    if( EvalEvent( events_.sound.off ) ) {
+      soundDurationCount_.click = 0 ;
+      soundDurationCount_.key = 0 ;
+      SoundOff( ) ;
     }
 
     // EEPROM ----------------
@@ -702,151 +748,82 @@ void main( void ) {
 
     }
 
-    // Apply Up/Down Key Event ----------------
-    switch( machineState_ ) {
-
-      case STATE_MENU_MAIN:
-      case STATE_MENU_TONE:
-      case STATE_MENU_DURATION:
-      case STATE_CONFIRM_LOAD:
-      case STATE_CONFIRM_SAVE:
-      case STATE_CONFIRM_RESET:
-      case STATE_INFORMATION:
-        if( EvalEvent( events_.input.keyPressDown ) ) {
-          if( currentMenuInfoPtr_->select != currentMenuInfoPtr_->limit ) {
-            currentMenuInfoPtr_->select++ ;
-            if( !currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition++ ;
-            SetEvent( events_.output.changeMessage ) ;
-          }
-        }
-        if( EvalEvent( events_.input.keyPressUp ) ) {
+    // Apply Up Key Press Event ----------------
+    if( EvalEvent( events_.keyPress.up ) ) {
+      switch( machineState_ ) {
+        case STATE_MENU_MAIN:
+        case STATE_MENU_TONE:
+        case STATE_MENU_DURATION:
+        case STATE_INFORMATION:
           if( currentMenuInfoPtr_->select ) {
             currentMenuInfoPtr_->select-- ;
             if( currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition-- ;
             SetEvent( events_.output.changeMessage ) ;
           }
-        }
-        break ;
+          break ;
 
-      case STATE_METRONOME:
-        if( EvalEvent( events_.input.keyPressUp ) ) {
-          if( configration_.tempo < 999 ) {
-            configration_.tempo++ ;
-            SetEvent( events_.output.changeValue ) ;
+        case STATE_CONFIRM:
+          if( currentConfirmationInfoPtr_->isSelectYes ) {
+            currentConfirmationInfoPtr_->isSelectYes = BOOL_FALSE ;
+            SetEvent( events_.output.changeMessage ) ;
           }
-          SetEvent( events_.output.resetMetronome ) ;
-        }
-        if( EvalEvent( events_.input.keyPressDown ) ) {
-          if( configration_.tempo > 1 ) {
-            configration_.tempo-- ;
-            SetEvent( events_.output.changeValue ) ;
-          }
-          SetEvent( events_.output.resetMetronome ) ;
-        }
-        break ;
+          break ;
 
-      case STATE_ADJUST_BEAT_COUNT:
-      case STATE_ADJUST_PULSE_WIDTH:
-      case STATE_ADJUST_DURATION_CLICK:
-      case STATE_ADJUST_DURATION_KEY:
-      case STATE_ADJUST_TONE:
-      case STATE_ADJUST_OSCILLATOR_TUNE:
-        if( EvalEvent( events_.input.keyPressUp ) ) {
+        case STATE_ADJUST_VALUE:
+        case STATE_ADJUST_OSCILLATOR_TUNE:
           if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.upper ) {
             ( *currentValueInfoPtr_->valuePtr )++ ;
             SetEvent( events_.output.changeValue ) ;
           }
-        }
-        if( EvalEvent( events_.input.keyPressDown ) ) {
+          break ;
+
+        case STATE_METRONOME:
+          if( configration_.tempo != MAX_TEMPO ) {
+            configration_.tempo++ ;
+            SetEvent( events_.output.changeValue ) ;
+          }
+          SetEvent( events_.output.resetMetronome ) ;
+          break ;
+      }
+    }
+
+    // Apply Down Key Press Event ----------------
+    if( EvalEvent( events_.keyPress.down ) ) {
+      switch( machineState_ ) {
+        case STATE_MENU_MAIN:
+        case STATE_MENU_TONE:
+        case STATE_MENU_DURATION:
+        case STATE_INFORMATION:
+          if( currentMenuInfoPtr_->select != currentMenuInfoPtr_->limit ) {
+            currentMenuInfoPtr_->select++ ;
+            if( !currentMenuInfoPtr_->cursorPosition ) currentMenuInfoPtr_->cursorPosition++ ;
+            SetEvent( events_.output.changeMessage ) ;
+          }
+          break ;
+
+        case STATE_CONFIRM:
+          if( !currentConfirmationInfoPtr_->isSelectYes ) {
+            currentConfirmationInfoPtr_->isSelectYes = BOOL_TRUE ;
+            SetEvent( events_.output.changeMessage ) ;
+          }
+          break ;
+
+        case STATE_ADJUST_VALUE:
+        case STATE_ADJUST_OSCILLATOR_TUNE:
           if( *currentValueInfoPtr_->valuePtr != currentValueInfoPtr_->limit.lower ) {
             ( *currentValueInfoPtr_->valuePtr )-- ;
             SetEvent( events_.output.changeValue ) ;
           }
-        }
-        break ;
+          break ;
 
-    }
-
-    // Reset Metronome ----------------
-    DisableAllInterrupt( ) ;
-    if( EvalEvent( events_.output.resetMetronome ) ) {
-      tempoCounter_ = 0 ;
-      beatCounter_ = 0 ;
-      SetEvent( events_.output.soundOnClick ) ;
-    }
-    else {
-      if( tempoCounter_ >= TOTAL_TEMOPO_COUNT ) {
-        tempoCounter_ -= TOTAL_TEMOPO_COUNT ;
-        if( ++beatCounter_ >= ( configration_.beatCount << 1 ) )
-          beatCounter_ = 0 ;
-
-        SetEvent( events_.output.soundOnClick ) ;
+        case STATE_METRONOME:
+          if( configration_.tempo != MIN_TEMPO ) {
+            configration_.tempo-- ;
+            SetEvent( events_.output.changeValue ) ;
+          }
+          SetEvent( events_.output.resetMetronome ) ;
+          break ;
       }
-    }
-    EnableAllInterrupt( ) ;
-
-    // Sound On ----------------
-    switch( machineState_ ) {
-
-      case STATE_BOOT:
-      case STATE_INITIALIZE:
-      case STATE_LOAD:
-      case STATE_SAVE:
-      case STATE_ERROR:
-        // Do Noting
-        break ;
-
-      case STATE_ADJUST_TONE:
-        break ;
-      case STATE_ADJUST_OSCILLATOR_TUNE:
-        break ;
-
-      default:
-        if( EvalEvent( events_.output.soundOnKey ) ) {
-          soundDurationCount_.key = configration_.duration.key ;
-          SetSoundTimerPeriod( TONE_SYSTEM ) ;
-          SetSoundPulseWidth( 1 ) ;
-          SoundOn( ) ;
-        }
-        if( EvalEvent( events_.output.soundOnClick ) && !isMute_ && !soundDurationCount_.key ) {
-
-          soundDurationCount_.click = configration_.duration.click ;
-
-          if( beatCounter_ == 0 )
-            SetSoundTimerPeriod( configration_.tone[ 1 ] ) ;
-          else if( beatCounter_ == configration_.beatCount )
-            SetSoundTimerPeriod( configration_.tone[ 2 ] ) ;
-          else
-            SetSoundTimerPeriod( configration_.tone[ 0 ] ) ;
-
-          SetSoundPulseWidth( configration_.pulseWidth ) ;
-          SoundOn( ) ;
-        }
-        break ;
-
-    }
-
-    // Sound Off ----------------
-    switch( machineState_ ) {
-
-      case STATE_BOOT:
-      case STATE_INITIALIZE:
-      case STATE_LOAD:
-      case STATE_SAVE:
-      case STATE_ERROR:
-        SoundOff( ) ;
-        break ;
-
-      case STATE_ADJUST_TONE:
-      case STATE_ADJUST_OSCILLATOR_TUNE:
-        // Do Nothing
-        break ;
-
-      default:
-        if( EvalEvent( events_.output.soundOff ) )
-          SoundOff( ) ;
-
-        break ;
     }
 
     // Message ----------------
@@ -870,20 +847,14 @@ void main( void ) {
           break ;
 
         case STATE_METRONOME:
-        case STATE_ADJUST_BEAT_COUNT:
-        case STATE_ADJUST_TONE:
-        case STATE_ADJUST_DURATION_CLICK:
-        case STATE_ADJUST_DURATION_KEY:
-        case STATE_ADJUST_PULSE_WIDTH:
+        case STATE_ADJUST_VALUE:
         case STATE_ADJUST_OSCILLATOR_TUNE:
           ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentValueInfoPtr_->message.title ) ;
           ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0x0 , currentValueInfoPtr_->message.value ) ;
           if( machineState_ == STATE_METRONOME ) {
-            if( isMute_ )
+            if( soundState_.isUserMute )
               ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0xA , MESSAGE.METRONOME.MUTE ) ;
           }
-          else if( machineState_ == STATE_ADJUST_TONE )
-            ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT_1 | 0x5 , menuInfoTone_.select - MENU_ITEM_TONE_ADJUST_TONE0 + '0' ) ;
 
           SetEvent( events_.output.changeValue ) ;
           break ;
@@ -895,14 +866,11 @@ void main( void ) {
           ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_1 | 0xA , &informationValueBuffer[ menuInfoInformation_.select + 1 ] ) ;
           break ;
 
-
-        case STATE_CONFIRM_LOAD:
-        case STATE_CONFIRM_SAVE:
-        case STATE_CONFIRM_RESET:
+        case STATE_CONFIRM:
           ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_0 | 0xD , MESSAGE.CONFIRM.NO ) ;
           ParallelLCD_WriteStringClearing( PARALLEL_LCD_ROW_SELECT_1 | 0xD , MESSAGE.CONFIRM.YES ) ;
-          ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentMenuInfoPtr_->singleMessage ) ;
-          ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[ currentMenuInfoPtr_->cursorPosition ] | 0xC , CHAR_CODE.CURSOR_RIGHT ) ;
+          ParallelLCD_WriteString( PARALLEL_LCD_ROW_SELECT_0 | 0x0 , currentConfirmationInfoPtr_->message ) ;
+          ParallelLCD_WriteCharacter( PARALLEL_LCD_ROW_SELECT[ currentConfirmationInfoPtr_->isSelectYes ] | 0xC , CHAR_CODE.CURSOR_RIGHT ) ;
           break ;
 
         case STATE_LOAD:
@@ -925,7 +893,9 @@ void main( void ) {
     if( EvalEvent( events_.output.changeValue ) ) {
 
       Uint16_t tmpValue ;
-      Char_t valueString[6] = "= 000" ;
+      Char_t valueString[6] ;
+      valueString[0] = '=' ;
+      valueString[1] = ' ' ;
 
       switch( machineState_ ) {
 
@@ -952,8 +922,9 @@ void main( void ) {
       const Uint08_t COMPARE_UNITS[] = { 100 , 10 , 1 , } ;
       for( Uint08_t i = 0 ; i < 3 ; i++ ) {
         Char_t chr = '0' ;
-        while( tmpValue >= COMPARE_UNITS[i] ) {
-          tmpValue -= COMPARE_UNITS[i] ;
+        Uint08_t compareUnit = COMPARE_UNITS[i] ;
+        while( tmpValue >= compareUnit ) {
+          tmpValue -= compareUnit ;
           chr++ ;
         }
 
@@ -972,10 +943,6 @@ void main( void ) {
       switch( machineState_ ) {
         case STATE_ADJUST_OSCILLATOR_TUNE:
           SetOscillatorTune( configration_.oscillatorTune ) ;
-          break ;
-        case STATE_ADJUST_TONE:
-          SetSoundTimerPeriod( *currentValueInfoPtr_->valuePtr ) ;
-          SetSoundPulseWidth( configration_.pulseWidth ) ;
           break ;
       }
     }
@@ -1005,9 +972,9 @@ void interrupt isr( void ) {
 
   // Decrement Sound Duration ----------------
   if( soundDurationCount_.click && !--soundDurationCount_.click && !soundDurationCount_.key )
-    SetEvent( events_.output.soundOff ) ;
+    SetEvent( events_.sound.off ) ;
   if( soundDurationCount_.key && ! --soundDurationCount_.key )
-    SetEvent( events_.output.soundOff ) ;
+    SetEvent( events_.sound.off ) ;
 
   // Prescale 10ms ----------------
   if( --prescaler.count10ms ) return ;
@@ -1029,22 +996,22 @@ void interrupt isr( void ) {
   sampledPortAState_.byte = ReadKeyState( ) ;
 
   if( sampledPortAState_.keyUp && !sampledPortAState_.keyDown ) {
-    if( ++keyHoldCount.Up == KEY_COUNT_LOOP_END ) {
-      keyHoldCount.Up = KEY_COUNT_LOOP_START ;
-      SetEvent( events_.input.keyPressHeldUp ) ;
+    if( !--keyHoldCount.Up ) {
+      keyHoldCount.Up = KEY_COUNT_LOOP_INTERVAL ;
+      SetEvent( events_.keyPress.upHold ) ;
     }
   }
   else
-    keyHoldCount.Up = 0 ;
+    keyHoldCount.Up = KEY_COUNT_LOOP_START ;
 
   if( sampledPortAState_.keyDown && !sampledPortAState_.keyUp ) {
-    if( ++keyHoldCount.Down == KEY_COUNT_LOOP_END ) {
-      keyHoldCount.Down = KEY_COUNT_LOOP_START ;
-      SetEvent( events_.input.keyPressHeldDown ) ;
+    if( !--keyHoldCount.Down ) {
+      keyHoldCount.Down = KEY_COUNT_LOOP_INTERVAL ;
+      SetEvent( events_.keyPress.downHold ) ;
     }
   }
   else
-    keyHoldCount.Down = 0 ;
+    keyHoldCount.Down = KEY_COUNT_LOOP_START ;
 
   if( INTERRUPT_FLAG ) machineError_ = ERROR_INTERRUPT ;
 
