@@ -17,7 +17,7 @@ const Char_t* MESSAGE_MENU_ITEM_MAIN[] = {
   "Load" ,
   "Save" ,
   "Info" ,
-  "Reset" ,
+  "CPU Reset" ,
 } ;
 enum {
   MENU_ITEM_MAIN_RETURN = 0 ,
