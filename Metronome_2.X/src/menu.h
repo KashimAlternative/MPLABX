@@ -16,8 +16,8 @@ const Char_t* MESSAGE_MENU_ITEM_MAIN[] = {
   "Adj. Tune" ,
   "Load" ,
   "Save" ,
-  "Info" ,
-  "CPU Reset" ,
+  "Show Info" ,
+  "Reset CPU" ,
 } ;
 enum {
   MENU_ITEM_MAIN_RETURN = 0 ,
