@@ -540,7 +540,7 @@ void main( void ) {
           break ;
 
         case STATE_INFORMATION:
-          machineError_ = STATE_MENU_MAIN ;
+          machineState_ = STATE_MENU_MAIN ;
           break ;
 
         case STATE_ADJUST_VALUE:
